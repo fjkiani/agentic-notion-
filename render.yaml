@@ -5,9 +5,8 @@ services:
     runtime: node
     region: oregon
     plan: free
-    rootDir: apps/web
-    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/web
-    startCommand: pnpm start
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/web run build
+    startCommand: cd apps/web && pnpm start
     healthCheckPath: /
     envVars:
       - key: NODE_ENV
@@ -19,6 +18,8 @@ services:
       - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         sync: false
       - key: CLERK_SECRET_KEY
+        sync: false
+      - key: CLERK_WEBHOOK_SECRET
         sync: false
       - key: MCP_AUTH_TOKEN
         sync: false
@@ -37,9 +38,8 @@ services:
     runtime: node
     region: oregon
     plan: free
-    rootDir: apps/mcp-server
-    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/mcp-server
-    startCommand: node dist/index.js
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/db run db:push && pnpm --filter @zeta/mcp-server run build
+    startCommand: cd apps/mcp-server && node dist/index.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
@@ -61,9 +61,8 @@ services:
     runtime: node
     region: oregon
     plan: free
-    rootDir: apps/agent-api
-    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/agent-api
-    startCommand: node dist/index.js
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/agent-api run build
+    startCommand: cd apps/agent-api && node dist/index.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
