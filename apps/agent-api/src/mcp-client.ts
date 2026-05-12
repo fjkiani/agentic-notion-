@@ -25,6 +25,8 @@ export class MCPClient {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        // MCP HTTP transport requires both JSON and SSE in Accept
+        "Accept": "application/json, text/event-stream",
         "Authorization": `Bearer ${this.token}`,
       },
       body: JSON.stringify({
@@ -39,7 +41,19 @@ export class MCPClient {
       throw new Error(`MCP request failed: ${res.status} ${res.statusText}`);
     }
 
-    const data = await res.json() as { result?: unknown; error?: { message: string } };
+    // MCP HTTP transport returns SSE: "event: message\ndata: {...}\n\n"
+    // Parse the data line from the SSE response
+    const text = await res.text();
+    let jsonStr = text;
+
+    // If SSE format, extract the data line
+    if (text.includes("event: message")) {
+      const dataLine = text.split("\n").find((line) => line.startsWith("data: "));
+      if (!dataLine) throw new Error("No data line in SSE response");
+      jsonStr = dataLine.slice(6); // strip "data: "
+    }
+
+    const data = JSON.parse(jsonStr) as { result?: unknown; error?: { message: string } };
     if (data.error) throw new Error(data.error.message);
     return data.result;
   }
