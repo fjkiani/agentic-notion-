@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, "archon/**"]
+    branches: [main, master, "archon/**"]
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
   validate:
@@ -42,8 +42,10 @@ jobs:
         run: pnpm run build
         env:
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/zeta_caid_test"
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_placeholder"
-          CLERK_SECRET_KEY: "sk_test_placeholder"
+          # Clerk v6 validates publishable key format at build time (SSG).
+          # pk_test_ + base64("clerk.example.clerk.accounts.dev$") passes the validator.
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_Y2xlcmsuZXhhbXBsZS5jbGVyay5hY2NvdW50cy5kZXYk"
+          CLERK_SECRET_KEY: "sk_test_Y2xlcmsuZXhhbXBsZS5jbGVyay5hY2NvdW50cy5kZXYk"
           MCP_AUTH_TOKEN: "ci-token"
           AGENT_API_TOKEN: "ci-token"
           OPENROUTER_API_KEY: "sk-or-placeholder"
