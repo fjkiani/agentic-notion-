@@ -1,0 +1,36 @@
+name: fix-issue
+description: |
+  Fix a bug or issue in CAID.
+  Archon diagnoses the issue, implements a fix, validates, and creates a PR.
+  Use when: User reports a bug or unexpected behavior.
+
+nodes:
+  - id: diagnose
+    command: explore-zeta
+    prompt: |
+      Diagnose this issue in CAID: $USER_MESSAGE
+      
+      1. Identify the affected files
+      2. Understand the root cause
+      3. Propose a fix
+      4. Identify tests to add
+
+  - id: fix
+    loop:
+      prompt: |
+        Fix the CAID issue: $USER_MESSAGE
+        
+        Read diagnosis from $ARTIFACTS_DIR/diagnosis.md
+        Implement the fix following CAID conventions.
+        Run: pnpm run validate
+        Fix any new errors introduced.
+        When fixed and validated: <promise>DONE</promise>
+      until: DONE
+      max_iterations: 10
+      fresh_context: true
+    depends_on: [diagnose]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [fix]
+    context: fresh

@@ -1,0 +1,887 @@
+// Cancer Advocacy Intelligence Database — Prisma Schema
+// Hierarchy: Workspace → AdvocacyOrg → Campaign → Initiative → Task → Evidence
+// Parallel: ClinicalTrial, Biomarker, PatientStory, Coalition, PolicyTarget
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// IDENTITY & AUTH (Clerk webhook sync)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(cuid())
+  clerkId       String   @unique
+  email         String   @unique
+  name          String?
+  avatarUrl     String?
+  role          UserRole @default(MEMBER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  workspaceMemberships WorkspaceMember[]
+  assignedTasks        Task[]            @relation("TaskAssignee")
+  createdTasks         Task[]            @relation("TaskCreator")
+  agentRuns            AgentRun[]
+  comments             Comment[]
+  patientStories       PatientStory[]    @relation("StoryAuthor")
+  auditLogs            AuditLog[]
+
+  @@index([clerkId])
+  @@index([email])
+}
+
+enum UserRole {
+  ADMIN
+  MEMBER
+  VIEWER
+  AGENT
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WORKSPACE (top-level tenant)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Workspace {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String?
+  logoUrl     String?
+  settings    Json     @default("{}")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members       WorkspaceMember[]
+  advocacyOrgs  AdvocacyOrg[]
+  pages         Page[]
+  agentRuns     AgentRun[]
+  dataSources   DataSource[]
+  auditLogs     AuditLog[]
+
+  @@index([slug])
+}
+
+model WorkspaceMember {
+  id          String          @id @default(cuid())
+  workspaceId String
+  userId      String
+  role        WorkspaceRole   @default(MEMBER)
+  joinedAt    DateTime        @default(now())
+
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId])
+  @@index([workspaceId])
+  @@index([userId])
+}
+
+enum WorkspaceRole {
+  OWNER
+  ADMIN
+  MEMBER
+  VIEWER
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ADVOCACY ORG (cancer advocacy organization)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AdvocacyOrg {
+  id              String          @id @default(cuid())
+  slug            String
+  workspaceId     String
+  name            String
+  shortName       String?
+  description     String?
+  mission         String?
+  website         String?
+  logoUrl         String?
+  cancerTypes     String[]        // e.g. ["breast", "lung", "colorectal"]
+  orgType         OrgType         @default(NONPROFIT)
+  taxId           String?
+  foundedYear     Int?
+  memberCount     Int?
+  annualBudget    Float?
+  headquarters    String?
+  socialLinks     Json            @default("{}")
+  metadata        Json            @default("{}")
+  status          OrgStatus       @default(ACTIVE)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  workspace       Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaigns       Campaign[]
+  coalitionLinks  CoalitionMember[]
+  patientStories  PatientStory[]
+  policyTargets   PolicyTarget[]
+  contacts        OrgContact[]
+  pages           Page[]
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId])
+  @@index([cancerTypes])
+  @@index([status])
+}
+
+enum OrgType {
+  NONPROFIT
+  FOUNDATION
+  PATIENT_GROUP
+  RESEARCH_INSTITUTE
+  GOVERNMENT
+  INDUSTRY
+  COALITION
+}
+
+enum OrgStatus {
+  ACTIVE
+  INACTIVE
+  MERGED
+  DISSOLVED
+}
+
+model OrgContact {
+  id            String      @id @default(cuid())
+  orgId         String
+  name          String
+  title         String?
+  email         String?
+  phone         String?
+  role          ContactRole @default(GENERAL)
+  isPrimary     Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+
+  org           AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+enum ContactRole {
+  EXECUTIVE
+  SCIENTIFIC
+  POLICY
+  COMMUNICATIONS
+  FUNDRAISING
+  GENERAL
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAMPAIGN (major advocacy campaign within an org)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Campaign {
+  id              String          @id @default(cuid())
+  slug            String
+  orgId           String
+  name            String
+  description     String?
+  objective       String?
+  cancerTypes     String[]
+  targetAudience  String[]        // ["FDA", "Congress", "Public", "Oncologists"]
+  status          CampaignStatus  @default(PLANNING)
+  priority        Priority        @default(MEDIUM)
+  startDate       DateTime?
+  endDate         DateTime?
+  budget          Float?
+  budgetSpent     Float?          @default(0)
+  kpis            Json            @default("[]")  // [{metric, target, current}]
+  tags            String[]
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  org             AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  initiatives     Initiative[]
+  policyTargets   PolicyTarget[]
+  clinicalTrials  CampaignTrial[]
+  biomarkers      CampaignBiomarker[]
+  pages           Page[]
+
+  @@unique([orgId, slug])
+  @@index([orgId])
+  @@index([status])
+  @@index([cancerTypes])
+}
+
+enum CampaignStatus {
+  PLANNING
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum Priority {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INITIATIVE (workstream within a campaign)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Initiative {
+  id              String              @id @default(cuid())
+  slug            String
+  campaignId      String
+  name            String
+  description     String?
+  type            InitiativeType      @default(GENERAL)
+  status          InitiativeStatus    @default(BACKLOG)
+  priority        Priority            @default(MEDIUM)
+  startDate       DateTime?
+  dueDate         DateTime?
+  completedAt     DateTime?
+  estimatedHours  Float?
+  actualHours     Float?
+  successCriteria String?
+  metadata        Json                @default("{}")
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  campaign        Campaign            @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  tasks           Task[]
+  evidence        Evidence[]
+  pages           Page[]
+
+  @@unique([campaignId, slug])
+  @@index([campaignId])
+  @@index([status])
+  @@index([type])
+}
+
+enum InitiativeType {
+  POLICY_ADVOCACY
+  RESEARCH_FUNDING
+  PATIENT_SUPPORT
+  AWARENESS
+  COALITION_BUILDING
+  REGULATORY_ENGAGEMENT
+  CLINICAL_TRIAL_ACCESS
+  BIOMARKER_ADVOCACY
+  MEDIA_CAMPAIGN
+  GENERAL
+}
+
+enum InitiativeStatus {
+  BACKLOG
+  PLANNING
+  IN_PROGRESS
+  REVIEW
+  BLOCKED
+  COMPLETED
+  CANCELLED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TASK (atomic unit of work)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Task {
+  id              String      @id @default(cuid())
+  slug            String
+  initiativeId    String
+  parentTaskId    String?
+  title           String
+  description     String?
+  type            TaskType    @default(ACTION)
+  status          TaskStatus  @default(TODO)
+  priority        Priority    @default(MEDIUM)
+  assigneeId      String?
+  creatorId       String
+  dueDate         DateTime?
+  completedAt     DateTime?
+  estimatedHours  Float?
+  actualHours     Float?
+  storyPoints     Int?
+  labels          String[]
+  agentCreated    Boolean     @default(false)
+  agentRunId      String?
+  metadata        Json        @default("{}")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  initiative      Initiative  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  parentTask      Task?       @relation("SubTasks", fields: [parentTaskId], references: [id])
+  subTasks        Task[]      @relation("SubTasks")
+  assignee        User?       @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  creator         User        @relation("TaskCreator", fields: [creatorId], references: [id])
+  agentRun        AgentRun?   @relation(fields: [agentRunId], references: [id])
+  comments        Comment[]
+  evidence        Evidence[]
+
+  @@unique([initiativeId, slug])
+  @@index([initiativeId])
+  @@index([assigneeId])
+  @@index([status])
+  @@index([agentCreated])
+}
+
+enum TaskType {
+  ACTION
+  RESEARCH
+  MEETING
+  DOCUMENT
+  OUTREACH
+  REVIEW
+  APPROVAL
+  MILESTONE
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  IN_REVIEW
+  BLOCKED
+  DONE
+  CANCELLED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EVIDENCE (scientific/policy evidence supporting advocacy)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Evidence {
+  id              String          @id @default(cuid())
+  initiativeId    String?
+  taskId          String?
+  title           String
+  summary         String?
+  content         String?         // full text or abstract
+  evidenceType    EvidenceType    @default(PUBLICATION)
+  source          String?         // journal, agency, org name
+  sourceUrl       String?
+  doi             String?
+  pmid            String?
+  publishedAt     DateTime?
+  authors         String[]
+  cancerTypes     String[]
+  biomarkers      String[]
+  strength        EvidenceStrength @default(MODERATE)
+  relevanceScore  Float?          // 0-1, set by AI
+  aiSummary       String?         // AI-generated summary
+  tags            String[]
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  initiative      Initiative?     @relation(fields: [initiativeId], references: [id])
+  task            Task?           @relation(fields: [taskId], references: [id])
+
+  @@index([initiativeId])
+  @@index([taskId])
+  @@index([evidenceType])
+  @@index([cancerTypes])
+  @@index([biomarkers])
+  @@index([doi])
+  @@index([pmid])
+}
+
+enum EvidenceType {
+  PUBLICATION
+  CLINICAL_TRIAL
+  FDA_GUIDANCE
+  CONGRESSIONAL_RECORD
+  PRESS_RELEASE
+  PATIENT_TESTIMONY
+  EXPERT_OPINION
+  SYSTEMATIC_REVIEW
+  META_ANALYSIS
+  REAL_WORLD_DATA
+  BIOMARKER_DATA
+  POLICY_BRIEF
+}
+
+enum EvidenceStrength {
+  STRONG
+  MODERATE
+  WEAK
+  ANECDOTAL
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CLINICAL TRIAL (NCT-linked trial tracking)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model ClinicalTrial {
+  id              String          @id @default(cuid())
+  nctId           String          @unique
+  title           String
+  phase           TrialPhase?
+  status          TrialStatus     @default(UNKNOWN)
+  sponsor         String?
+  conditions      String[]
+  interventions   String[]
+  biomarkers      String[]
+  primaryEndpoint String?
+  enrollment      Int?
+  startDate       DateTime?
+  completionDate  DateTime?
+  resultsUrl      String?
+  summary         String?
+  aiSummary       String?
+  advocacyNotes   String?
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  campaigns       CampaignTrial[]
+  biomarkerLinks  TrialBiomarker[]
+
+  @@index([status])
+  @@index([conditions])
+  @@index([biomarkers])
+}
+
+enum TrialPhase {
+  PHASE_1
+  PHASE_1_2
+  PHASE_2
+  PHASE_2_3
+  PHASE_3
+  PHASE_4
+  NOT_APPLICABLE
+}
+
+enum TrialStatus {
+  NOT_YET_RECRUITING
+  RECRUITING
+  ACTIVE_NOT_RECRUITING
+  COMPLETED
+  TERMINATED
+  WITHDRAWN
+  SUSPENDED
+  UNKNOWN
+}
+
+model CampaignTrial {
+  id          String        @id @default(cuid())
+  campaignId  String
+  trialId     String
+  notes       String?
+  addedAt     DateTime      @default(now())
+
+  campaign    Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  trial       ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, trialId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BIOMARKER (cancer biomarker tracking)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Biomarker {
+  id              String          @id @default(cuid())
+  symbol          String          @unique  // e.g. BRCA1, EGFR, PD-L1
+  name            String
+  aliases         String[]
+  geneId          String?         // NCBI Gene ID
+  cancerTypes     String[]
+  biomarkerType   BiomarkerType   @default(GENETIC)
+  clinicalSignificance String?
+  fdaApproved     Boolean         @default(false)
+  fdaApprovedDrugs String[]
+  companionDx     String[]
+  prevalence      Json            @default("{}")  // {cancerType: percentage}
+  advocacyPriority Priority       @default(MEDIUM)
+  aiSummary       String?
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  campaigns       CampaignBiomarker[]
+  trials          TrialBiomarker[]
+
+  @@index([symbol])
+  @@index([cancerTypes])
+  @@index([fdaApproved])
+}
+
+enum BiomarkerType {
+  GENETIC
+  PROTEIN_EXPRESSION
+  EPIGENETIC
+  METABOLIC
+  IMAGING
+  LIQUID_BIOPSY
+}
+
+model CampaignBiomarker {
+  id          String    @id @default(cuid())
+  campaignId  String
+  biomarkerId String
+  notes       String?
+  addedAt     DateTime  @default(now())
+
+  campaign    Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  biomarker   Biomarker @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, biomarkerId])
+}
+
+model TrialBiomarker {
+  id          String        @id @default(cuid())
+  trialId     String
+  biomarkerId String
+  role        String?       // "inclusion criterion", "primary endpoint", etc.
+
+  trial       ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  biomarker   Biomarker     @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
+
+  @@unique([trialId, biomarkerId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PATIENT STORY (patient narrative / testimony)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PatientStory {
+  id              String          @id @default(cuid())
+  orgId           String
+  authorId        String?
+  title           String
+  slug            String
+  content         String
+  summary         String?
+  cancerType      String
+  diagnosisYear   Int?
+  stage           String?
+  biomarkers      String[]
+  treatmentPath   String?
+  outcome         StoryOutcome    @default(ONGOING)
+  isAnonymized    Boolean         @default(false)
+  consentGiven    Boolean         @default(false)
+  publishedAt     DateTime?
+  status          StoryStatus     @default(DRAFT)
+  aiSummary       String?
+  advocacyThemes  String[]        // ["access", "biomarker testing", "clinical trial"]
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  org             AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  author          User?           @relation("StoryAuthor", fields: [authorId], references: [id])
+
+  @@unique([orgId, slug])
+  @@index([orgId])
+  @@index([cancerType])
+  @@index([status])
+}
+
+enum StoryOutcome {
+  ONGOING
+  REMISSION
+  SURVIVOR
+  DECEASED
+  UNKNOWN
+}
+
+enum StoryStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+  ARCHIVED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COALITION (multi-org advocacy coalition)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Coalition {
+  id              String          @id @default(cuid())
+  slug            String          @unique
+  name            String
+  description     String?
+  focusAreas      String[]
+  status          CoalitionStatus @default(FORMING)
+  foundedAt       DateTime?
+  website         String?
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  members         CoalitionMember[]
+  policyTargets   PolicyTarget[]
+
+  @@index([status])
+}
+
+enum CoalitionStatus {
+  FORMING
+  ACTIVE
+  INACTIVE
+  DISSOLVED
+}
+
+model CoalitionMember {
+  id            String      @id @default(cuid())
+  coalitionId   String
+  orgId         String
+  role          String?     // "lead", "member", "observer"
+  joinedAt      DateTime    @default(now())
+
+  coalition     Coalition   @relation(fields: [coalitionId], references: [id], onDelete: Cascade)
+  org           AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([coalitionId, orgId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POLICY TARGET (legislative / regulatory target)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model PolicyTarget {
+  id              String          @id @default(cuid())
+  orgId           String?
+  campaignId      String?
+  coalitionId     String?
+  title           String
+  description     String?
+  targetType      PolicyTargetType @default(LEGISLATION)
+  jurisdiction    String?         // "US Federal", "California", "EU"
+  agency          String?         // "FDA", "CMS", "Congress"
+  billNumber      String?
+  status          PolicyStatus    @default(MONITORING)
+  priority        Priority        @default(MEDIUM)
+  deadline        DateTime?
+  aiSummary       String?
+  metadata        Json            @default("{}")
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  org             AdvocacyOrg?    @relation(fields: [orgId], references: [id])
+  campaign        Campaign?       @relation(fields: [campaignId], references: [id])
+  coalition       Coalition?      @relation(fields: [coalitionId], references: [id])
+
+  @@index([orgId])
+  @@index([campaignId])
+  @@index([status])
+  @@index([targetType])
+}
+
+enum PolicyTargetType {
+  LEGISLATION
+  REGULATION
+  GUIDANCE
+  COVERAGE_POLICY
+  REIMBURSEMENT
+  GRANT_PROGRAM
+}
+
+enum PolicyStatus {
+  MONITORING
+  ACTIVE_ENGAGEMENT
+  SUBMITTED
+  UNDER_REVIEW
+  PASSED
+  FAILED
+  WITHDRAWN
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE / BLOCK (Notion-like rich content)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Page {
+  id            String      @id @default(cuid())
+  workspaceId   String
+  orgId         String?
+  campaignId    String?
+  initiativeId  String?
+  parentPageId  String?
+  title         String
+  slug          String
+  icon          String?
+  coverUrl      String?
+  isPublic      Boolean     @default(false)
+  publishedAt   DateTime?
+  metadata      Json        @default("{}")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  workspace     Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org           AdvocacyOrg? @relation(fields: [orgId], references: [id])
+  campaign      Campaign?   @relation(fields: [campaignId], references: [id])
+  initiative    Initiative? @relation(fields: [initiativeId], references: [id])
+  parentPage    Page?       @relation("SubPages", fields: [parentPageId], references: [id])
+  subPages      Page[]      @relation("SubPages")
+  blocks        Block[]
+
+  @@unique([workspaceId, slug])
+  @@index([workspaceId])
+  @@index([orgId])
+  @@index([campaignId])
+}
+
+model Block {
+  id            String    @id @default(cuid())
+  pageId        String
+  parentBlockId String?
+  type          String    // "paragraph", "heading_1", "bulleted_list", "callout", "evidence_card", "trial_embed", etc.
+  content       Json      @default("{}")
+  order         Int
+  metadata      Json      @default("{}")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  page          Page      @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  parentBlock   Block?    @relation("NestedBlocks", fields: [parentBlockId], references: [id])
+  childBlocks   Block[]   @relation("NestedBlocks")
+
+  @@index([pageId])
+  @@index([type])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AGENT RUN (LangGraph execution log)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AgentRun {
+  id              String          @id @default(cuid())
+  workspaceId     String
+  userId          String
+  role            AgentRole
+  status          AgentRunStatus  @default(PENDING)
+  input           Json
+  output          Json?
+  graphState      Json?           // full LangGraph state for replay
+  mcpToolCalls    Json            @default("[]")
+  errorMessage    String?
+  startedAt       DateTime        @default(now())
+  completedAt     DateTime?
+  durationMs      Int?
+  tokenCount      Int?
+  model           String?
+  metadata        Json            @default("{}")
+
+  workspace       Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user            User            @relation(fields: [userId], references: [id])
+  messages        AgentMessage[]
+  tasks           Task[]
+
+  @@index([workspaceId])
+  @@index([userId])
+  @@index([role])
+  @@index([status])
+}
+
+enum AgentRole {
+  ADVOCACY_PM
+  RESEARCH_INTELLIGENCE
+  COALITION_BUILDER
+  STANDUP_REPORTER
+}
+
+enum AgentRunStatus {
+  PENDING
+  RUNNING
+  AWAITING_APPROVAL
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model AgentMessage {
+  id          String      @id @default(cuid())
+  runId       String
+  role        String      // "human", "ai", "tool"
+  content     String
+  toolName    String?
+  toolInput   Json?
+  toolOutput  Json?
+  thinking    String?     // reasoning traces from thinking models
+  order       Int
+  createdAt   DateTime    @default(now())
+
+  run         AgentRun    @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// DATA SOURCE (external data integrations)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model DataSource {
+  id            String          @id @default(cuid())
+  workspaceId   String
+  name          String
+  type          DataSourceType
+  config        Json            @default("{}")
+  lastSyncAt    DateTime?
+  syncStatus    String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  workspace     Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([type])
+}
+
+enum DataSourceType {
+  PUBMED
+  CLINICALTRIALS_GOV
+  FDA_DRUGS
+  CONGRESS_GOV
+  OPEN_PAYMENTS
+  CUSTOM_API
+  CSV_UPLOAD
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMMENT
+// ─────────────────────────────────────────────────────────────────────────────
+
+model Comment {
+  id            String    @id @default(cuid())
+  taskId        String
+  authorId      String
+  content       String
+  isResolved    Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  author        User      @relation(fields: [authorId], references: [id])
+
+  @@index([taskId])
+  @@index([authorId])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────────────────────────────────────
+
+model AuditLog {
+  id            String    @id @default(cuid())
+  workspaceId   String
+  userId        String?
+  action        String    // "task.created", "campaign.updated", etc.
+  entityType    String
+  entityId      String
+  before        Json?
+  after         Json?
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+
+  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user          User?     @relation(fields: [userId], references: [id])
+
+  @@index([workspaceId])
+  @@index([userId])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+}

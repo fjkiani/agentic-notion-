@@ -1,0 +1,53 @@
+name: add-feature
+description: |
+  Add a new feature to CAID. Explores codebase, plans implementation,
+  implements following CAID conventions, validates, and creates a PR.
+  Use when: User describes any new capability for CAID.
+
+nodes:
+  - id: explore
+    command: explore-zeta
+    description: "Explore the CAID codebase to understand structure and conventions"
+
+  - id: plan
+    command: plan-zeta-feature
+    depends_on: [explore]
+    context: fresh
+    description: "Create a detailed implementation plan"
+
+  - id: approve-plan
+    approval:
+      message: "Review the implementation plan above. Approve to proceed with implementation."
+      capture_response: true
+      on_reject:
+        prompt: "Revise the plan based on this feedback: $REJECTION_REASON"
+        max_attempts: 3
+    depends_on: [plan]
+
+  - id: implement
+    loop:
+      prompt: |
+        You are implementing a feature for CAID (Cancer Advocacy Intelligence Database).
+        
+        Read the implementation plan from $ARTIFACTS_DIR/plan.md
+        Read the progress tracker from $ARTIFACTS_DIR/progress.json (create if missing)
+        
+        Implement the NEXT INCOMPLETE task from the plan.
+        Follow CAID conventions from .archon/skills/zeta-codebase.md
+        
+        After each implementation step:
+        1. Run: pnpm run validate (typecheck + lint + build)
+        2. Fix any errors before moving to the next task
+        3. Update $ARTIFACTS_DIR/progress.json with completed tasks
+        
+        When ALL tasks are complete: <promise>DONE</promise>
+      until: DONE
+      max_iterations: 20
+      fresh_context: true
+    depends_on: [approve-plan]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [implement]
+    context: fresh
+    description: "Create a GitHub PR with the implemented feature"

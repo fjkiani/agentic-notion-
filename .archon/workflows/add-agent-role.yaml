@@ -1,0 +1,38 @@
+name: add-agent-role
+description: |
+  Add a new AI agent role to the CAID agent API.
+  The agent will be auto-registered via the agent registry.
+  Use when: User wants a new AI agent with a specific role.
+  Examples: "Grant Writer agent", "Media Relations agent", "Patient Advocate agent"
+
+nodes:
+  - id: design
+    command: plan-zeta-feature
+    prompt: |
+      Design a new LangGraph agent role for CAID.
+      User request: $USER_MESSAGE
+      
+      Follow the agent pattern in apps/agent-api/src/agents/*.ts
+      Each agent file exports a createXxxAgent() function.
+      
+      Plan:
+      1. Agent role name (SCREAMING_SNAKE_CASE, e.g. "GRANT_WRITER")
+      2. System prompt (what the agent does, its expertise)
+      3. Which MCP tools it needs (from the tool registry)
+      4. Which LLM to use (see config/llm.ts for options)
+      5. Graph structure (nodes, edges, routing logic)
+      6. Example prompts for the UI
+
+  - id: implement
+    command: implement-agent-role
+    depends_on: [design]
+    context: fresh
+
+  - id: validate
+    bash: "cd apps/agent-api && pnpm run typecheck && pnpm run build"
+    depends_on: [implement]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh

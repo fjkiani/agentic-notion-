@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "zeta-caid": {
+      "url": "https://agentic-notion-mcp.onrender.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${MCP_AUTH_TOKEN}"
+      }
+    },
+    "zeta-caid-local": {
+      "command": "node",
+      "args": ["apps/mcp-server/dist/index.js", "--transport", "stdio"],
+      "env": {
+        "DATABASE_URL": "${DATABASE_URL}",
+        "MCP_AUTH_TOKEN": "${MCP_AUTH_TOKEN}",
+        "MCP_TRANSPORT": "stdio"
+      }
+    }
+  }
+}

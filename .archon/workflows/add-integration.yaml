@@ -1,0 +1,41 @@
+name: add-integration
+description: |
+  Integrate CAID with an external service (Slack, Linear, GitHub, Zapier, etc.)
+  Use when: User wants CAID to connect to an external tool.
+
+nodes:
+  - id: design
+    command: plan-zeta-feature
+    prompt: |
+      Design an integration between CAID and an external service.
+      User request: $USER_MESSAGE
+      
+      Plan:
+      1. Integration type (webhook, API polling, OAuth, etc.)
+      2. Data flow (what CAID data goes where, what comes back)
+      3. New MCP tools needed (if any)
+      4. New environment variables needed
+      5. UI changes (settings page, notification preferences, etc.)
+      6. Error handling and retry logic
+
+  - id: implement
+    loop:
+      prompt: |
+        Implement the CAID integration.
+        Read plan from $ARTIFACTS_DIR/plan.md
+        Follow CAID conventions from .archon/skills/zeta-codebase.md
+        Run: pnpm run validate
+        When done: <promise>DONE</promise>
+      until: DONE
+      max_iterations: 15
+      fresh_context: true
+    depends_on: [design]
+
+  - id: validate
+    bash: "pnpm run validate"
+    depends_on: [implement]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh

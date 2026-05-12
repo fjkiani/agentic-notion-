@@ -1,0 +1,37 @@
+name: add-mcp-tool
+description: |
+  Add a new MCP tool to the CAID MCP server.
+  The tool will be auto-registered via the plugin registry.
+  All agents automatically gain access on next restart.
+  Use when: User wants agents/Cursor to be able to do X via MCP.
+
+nodes:
+  - id: design
+    command: plan-zeta-feature
+    prompt: |
+      Design a new MCP tool for CAID.
+      User request: $USER_MESSAGE
+      
+      Follow the tool registry pattern in apps/mcp-server/src/tools/*.ts
+      Each tool file exports an array of MCPToolDefinition objects.
+      
+      Plan:
+      1. Tool name (snake_case, e.g. "fda_drug_search")
+      2. Tool description (what it does, when to use it)
+      3. Input schema (Zod schema)
+      4. Handler implementation (what API/DB it calls)
+      5. Which tool file to add it to (or create new file)
+
+  - id: implement
+    command: implement-mcp-tool
+    depends_on: [design]
+    context: fresh
+
+  - id: validate
+    bash: "cd apps/mcp-server && pnpm run typecheck && pnpm run build"
+    depends_on: [implement]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh

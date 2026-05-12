@@ -1,0 +1,45 @@
+name: add-view
+description: |
+  Add a new UI view to CAID (timeline, calendar, table, map, chart, etc.)
+  The view will be registered in the view registry and accessible via a new route.
+  Use when: User wants a new way to visualize CAID data.
+
+nodes:
+  - id: design
+    command: plan-zeta-feature
+    prompt: |
+      Design a new UI view for CAID.
+      User request: $USER_MESSAGE
+      
+      Follow the view registry pattern in apps/web/src/views/registry.ts
+      
+      Plan:
+      1. View name and route (e.g. "timeline" → /[workspaceSlug]/campaigns/[id]/timeline)
+      2. Data requirements (which MCP tools to call)
+      3. Component structure (main view + sub-components)
+      4. Interactions (click, drag, filter, etc.)
+      5. Registration in view registry
+
+  - id: implement
+    loop:
+      prompt: |
+        Implement the new CAID view.
+        Read plan from $ARTIFACTS_DIR/plan.md
+        Follow Next.js 15 App Router conventions.
+        Use Tailwind CSS for styling.
+        Call MCP tools via the callMCPTool() helper in apps/web/src/lib/api.ts
+        Run: cd apps/web && pnpm run typecheck
+        When done: <promise>DONE</promise>
+      until: DONE
+      max_iterations: 15
+      fresh_context: true
+    depends_on: [design]
+
+  - id: validate
+    bash: "cd apps/web && pnpm run typecheck && pnpm run lint"
+    depends_on: [implement]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh

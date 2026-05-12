@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "archon/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Typecheck + Lint + Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+      
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+      
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      
+      - name: Generate Prisma client
+        run: pnpm run db:generate
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/zeta_caid_test"
+      
+      - name: Typecheck
+        run: pnpm run typecheck
+      
+      - name: Lint
+        run: pnpm run lint
+        continue-on-error: true
+      
+      - name: Build
+        run: pnpm run build
+        env:
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/zeta_caid_test"
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_placeholder"
+          CLERK_SECRET_KEY: "sk_test_placeholder"
+          MCP_AUTH_TOKEN: "ci-token"
+          AGENT_API_TOKEN: "ci-token"
+          OPENROUTER_API_KEY: "sk-or-placeholder"
+          MCP_SERVER_URL: "http://localhost:3001"
+          NEXT_PUBLIC_MCP_SERVER_URL: "http://localhost:3001"
+          NEXT_PUBLIC_AGENT_API_URL: "http://localhost:3002"
+          APP_URL: "http://localhost:3000"

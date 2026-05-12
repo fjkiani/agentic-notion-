@@ -1,0 +1,93 @@
+services:
+  # ─── Web App (Next.js 15) ─────────────────────────────────────────────────
+  - type: web
+    name: agentic-notion-web
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: apps/web
+    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/web
+    startCommand: pnpm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      - key: MCP_AUTH_TOKEN
+        sync: false
+      - key: NEXT_PUBLIC_MCP_SERVER_URL
+        sync: false
+      - key: AGENT_API_TOKEN
+        sync: false
+      - key: NEXT_PUBLIC_AGENT_API_URL
+        sync: false
+      - key: APP_URL
+        sync: false
+
+  # ─── MCP Server ───────────────────────────────────────────────────────────
+  - type: web
+    name: agentic-notion-mcp
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: apps/mcp-server
+    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/mcp-server
+    startCommand: node dist/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3001"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
+      - key: MCP_AUTH_TOKEN
+        sync: false
+      - key: MCP_TRANSPORT
+        value: http
+
+  # ─── Agent API (LangGraph) ────────────────────────────────────────────────
+  - type: web
+    name: agentic-notion-agents
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: apps/agent-api
+    buildCommand: cd ../.. && npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm run build --filter=@zeta/agent-api
+    startCommand: node dist/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3002"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: MCP_SERVER_URL
+        sync: false
+      - key: MCP_AUTH_TOKEN
+        sync: false
+      - key: AGENT_API_TOKEN
+        sync: false
+      - key: APP_URL
+        sync: false
+
+databases:
+  - name: zeta-caid-db
+    databaseName: zeta_caid
+    user: zeta_caid_user
+    region: oregon
+    plan: free

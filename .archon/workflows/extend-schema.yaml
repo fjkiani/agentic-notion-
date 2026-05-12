@@ -1,0 +1,57 @@
+name: extend-schema
+description: |
+  Add new Prisma models or fields to the CAID database schema.
+  Runs prisma migrate dev, regenerates the client, and updates TypeScript types.
+  Use when: User needs a new database model or field.
+  IMPORTANT: Always additive — never destructive. Never drop columns or tables.
+
+nodes:
+  - id: design
+    command: plan-zeta-feature
+    prompt: |
+      Design a schema extension for CAID.
+      User request: $USER_MESSAGE
+      
+      Read the existing schema at packages/db/prisma/schema.prisma
+      
+      Plan:
+      1. New model(s) or field(s) to add
+      2. Relationships to existing models
+      3. Indexes needed
+      4. MCP tools to add/update for the new model
+      5. Migration name (snake_case, e.g. "add_grant_model")
+      
+      RULES:
+      - Always additive — never drop columns or tables
+      - Use String for enums that Archon might extend later
+      - Add metadata Json field for future extensibility
+      - Add createdAt/updatedAt to all new models
+
+  - id: approve-schema
+    approval:
+      message: "Review the schema changes. This will run a database migration. Approve?"
+      capture_response: true
+    depends_on: [design]
+
+  - id: migrate
+    bash: "cd packages/db && pnpm run db:migrate -- --name $MIGRATION_NAME"
+    depends_on: [approve-schema]
+
+  - id: generate
+    bash: "cd packages/db && pnpm run db:generate"
+    depends_on: [migrate]
+
+  - id: update-mcp
+    command: implement-mcp-tool
+    depends_on: [generate]
+    context: fresh
+    prompt: "Add MCP tools for the new schema models following the tool registry pattern."
+
+  - id: validate
+    bash: "pnpm run validate"
+    depends_on: [update-mcp]
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh
