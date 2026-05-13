@@ -20,11 +20,10 @@ done
 
 if [ -z "$PNPM_BIN" ]; then
   echo "pnpm not found in standard locations, using npx..."
-  PNPM_BIN="npx --yes pnpm@9.15.0"
+  PNPM_BIN="npx pnpm@9.15.0"
 fi
 
-echo "Using: $PNPM_BIN"
-$PNPM_BIN --version
+echo "Using pnpm: $PNPM_BIN"
 
 # Install dependencies
 echo "Running pnpm install..."
