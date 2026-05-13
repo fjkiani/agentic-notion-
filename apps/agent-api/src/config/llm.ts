@@ -1,51 +1,44 @@
 import { ChatOpenAI } from "@langchain/openai";
 
-// ─── Model assignments (state-of-the-art free tier) ──────────────────────────
+// ─── Model assignments ────────────────────────────────────────────────────────
 //
-// ADVOCACY_PM        → Gemma 4 26B A4B (MoE, native function calling, thinking mode)
-//                      Best for: structured planning, sprint decomposition, MCP tool calls
+// Using OpenAI OSS models via OpenRouter (currently the most reliable free tier)
 //
-// RESEARCH_INTEL     → Qwen3 Coder 480B A35B (480B total / 35B active, 262K ctx)
-//                      Best for: literature search, evidence synthesis, biomarker analysis
-//                      Note: "Coder" is misleading — it's the best free model for tool use + long-context reasoning
-//
-// COALITION_BUILDER  → Arcee Trinity Large Thinking (reasoning model, agentic workloads)
-//                      Best for: stakeholder mapping, coalition strategy, policy analysis
-//
-// STANDUP_REPORTER   → Qwen3 Next 80B A3B (RAG, multi-turn, deterministic summaries)
-//                      Best for: aggregating task state, generating standup reports
-//
-// FALLBACK           → Nous Hermes 3 405B (frontier function calling, 131K ctx)
-// EMERGENCY          → openrouter/free (auto-router, 200K ctx)
+// ADVOCACY_PM        → GPT-OSS 120B (best for structured planning, tool calls)
+// RESEARCH_INTEL     → GPT-OSS 120B (best for long-context reasoning, evidence synthesis)
+// COALITION_BUILDER  → GPT-OSS 120B (best for stakeholder analysis)
+// STANDUP_REPORTER   → GPT-OSS 20B  (lighter model, good for summarization)
+// FALLBACK           → GPT-OSS 20B
+// EMERGENCY          → GPT-OSS 20B
 
 export const llmConfig = {
   ADVOCACY_PM: {
-    model: "google/gemma-4-26b-a4b:free",
+    model: "openai/gpt-oss-120b:free",
     temperature: 0.3,
     maxTokens: 4096,
   },
   RESEARCH_INTELLIGENCE: {
-    model: "qwen/qwen3-coder-480b-a35b:free",
+    model: "openai/gpt-oss-120b:free",
     temperature: 0.1,
     maxTokens: 8192,
   },
   COALITION_BUILDER: {
-    model: "arcee-ai/trinity-large-thinking:free",
+    model: "openai/gpt-oss-120b:free",
     temperature: 0.2,
     maxTokens: 8192,
   },
   STANDUP_REPORTER: {
-    model: "qwen/qwen3-next-80b-a3b:free",
+    model: "openai/gpt-oss-20b:free",
     temperature: 0.2,
     maxTokens: 2048,
   },
   FALLBACK: {
-    model: "nousresearch/hermes-3-405b-instruct:free",
+    model: "openai/gpt-oss-20b:free",
     temperature: 0.3,
     maxTokens: 4096,
   },
   EMERGENCY: {
-    model: "openrouter/free",
+    model: "openai/gpt-oss-20b:free",
     temperature: 0.3,
     maxTokens: 4096,
   },
@@ -63,7 +56,7 @@ export function createLLM(role: AgentRoleKey, overrides?: { temperature?: number
     configuration: {
       baseURL: "https://openrouter.ai/api/v1",
       defaultHeaders: {
-        "HTTP-Referer": process.env.APP_URL ?? "https://zeta-caid.onrender.com",
+        "HTTP-Referer": process.env.APP_URL ?? "https://agentic-notion-web.onrender.com",
         "X-Title": "Zeta CAID — Cancer Advocacy Intelligence Database",
       },
     },
