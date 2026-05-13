@@ -16,12 +16,12 @@ fi
 echo "Running pnpm install..."
 pnpm install
 
-# Generate Prisma client first
-echo "Generating Prisma client..."
-pnpm run db:generate
-echo "Prisma client generated"
+# Check if Prisma client exists
+echo "Checking Prisma client..."
+ls node_modules/.prisma/client/ 2>/dev/null | head -5 || echo "No .prisma/client in root"
+ls node_modules/@prisma/client/ 2>/dev/null | head -5 || echo "No @prisma/client in root"
 
-# Build all packages using turbo
+# Build all packages using turbo (skip db:generate)
 echo "Building all packages with turbo..."
 pnpm run build
 
