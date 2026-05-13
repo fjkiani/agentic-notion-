@@ -1,21 +1,36 @@
 #!/bin/bash
 set -e
 
-echo "Step 1: Install pnpm"
+echo "=== Zeta CAID MCP Server Build ==="
+echo "Node: $(node --version)"
+echo "npm: $(npm --version)"
+
+# Install pnpm globally
+echo "Installing pnpm..."
 npm install -g pnpm@9.15.0
 echo "pnpm: $(pnpm --version)"
 
-echo "Step 2: pnpm install"
+# Install workspace dependencies
+echo "Running pnpm install..."
 pnpm install
 
-echo "Step 3: Check workspace"
-pnpm ls --depth=0 2>&1 | head -20 || echo "pnpm ls failed"
+# Generate Prisma client (uses library engine, no binary download needed)
+echo "Generating Prisma client..."
+pnpm --filter @zeta/db run db:generate
+echo "Prisma client generated"
 
-echo "Step 4: Build @zeta/db (cd approach)"
-cd packages/db
-tsc --version || echo "no tsc in packages/db"
-../../node_modules/.bin/tsc || npx tsc
-cd ../..
-echo "db build OK"
+# Build packages in dependency order
+echo "Building @zeta/db..."
+pnpm --filter @zeta/db run build
 
-echo "BUILD SCRIPT COMPLETE"
+echo "Building @zeta/shared..."
+pnpm --filter @zeta/shared run build
+
+echo "Building @zeta/types..."
+pnpm --filter @zeta/types run build
+
+echo "Building @zeta/mcp-server..."
+pnpm --filter @zeta/mcp-server run build
+
+echo "=== Build Complete ==="
+ls apps/mcp-server/dist/ | head -5
