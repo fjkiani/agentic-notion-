@@ -4,26 +4,24 @@ set -e
 echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
 echo "npm: $(npm --version)"
+echo "Working dir: $(pwd)"
+echo "Files: $(ls)"
 
-# Install pnpm via npx (most reliable on Render)
+# Install pnpm via npx
 echo "Installing pnpm..."
-npx pnpm@9.15.0 install --ignore-scripts
+npx --yes pnpm@9.15.0 install --ignore-scripts
 
-# Generate Prisma client (skip postinstall, run explicitly)
+echo "pnpm installed, checking node_modules..."
+ls node_modules/.bin/ | grep -E "prisma|pnpm" || echo "No prisma/pnpm in .bin"
+
+# Generate Prisma client using the installed prisma binary
 echo "Generating Prisma client..."
-cd packages/db && npx prisma generate && cd ../..
+node_modules/.bin/prisma generate --schema=packages/db/prisma/schema.prisma || npx --yes prisma@5.22.0 generate --schema=packages/db/prisma/schema.prisma
 
-# Build packages in dependency order
-echo "Building @zeta/db..."
-npx pnpm@9.15.0 --filter @zeta/db run build
-
-echo "Building @zeta/shared..."
-npx pnpm@9.15.0 --filter @zeta/shared run build
-
-echo "Building @zeta/types..."
-npx pnpm@9.15.0 --filter @zeta/types run build
-
-echo "Building @zeta/mcp-server..."
-npx pnpm@9.15.0 --filter @zeta/mcp-server run build
+echo "Building packages..."
+node_modules/.bin/pnpm --filter @zeta/db run build
+node_modules/.bin/pnpm --filter @zeta/shared run build
+node_modules/.bin/pnpm --filter @zeta/types run build
+node_modules/.bin/pnpm --filter @zeta/mcp-server run build
 
 echo "=== Build Complete ==="
