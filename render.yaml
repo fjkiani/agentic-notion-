@@ -5,7 +5,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/web run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/web run build
     startCommand: cd apps/web && pnpm start
     healthCheckPath: /
     envVars:
@@ -38,7 +38,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/db run db:push && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/mcp-server run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install && pnpm --filter @zeta/db run db:push && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/mcp-server run build
     startCommand: cd apps/mcp-server && node dist/index.js
     healthCheckPath: /health
     envVars:
@@ -61,7 +61,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --frozen-lockfile && pnpm --filter @zeta/db run db:generate && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/agent-api run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/agent-api run build
     startCommand: cd apps/agent-api && node dist/index.js
     healthCheckPath: /health
     envVars:
