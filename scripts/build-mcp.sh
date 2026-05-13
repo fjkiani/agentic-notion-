@@ -11,7 +11,6 @@ pnpm install
 echo "pnpm install done"
 
 echo "Skipping prisma generate (binary is pre-committed to repo)"
-echo "Note: Run 'prisma db push' separately to apply schema"
 
 # Build @zeta/db
 echo "Building @zeta/db..."
@@ -31,6 +30,11 @@ cd packages/types && ../../node_modules/.bin/tsc && cd ../..
 
 echo "Building @zeta/mcp-server..."
 cd apps/mcp-server && ../../node_modules/.bin/tsc && cd ../..
+
+# Apply database schema (runs inside Render's network, same region as DB)
+echo "Applying database schema..."
+cd packages/db && ../../node_modules/.bin/prisma db push --schema=prisma/schema.prisma --skip-generate --accept-data-loss && cd ../..
+echo "Database schema applied"
 
 echo "=== Build Complete ==="
 ls apps/mcp-server/dist/
