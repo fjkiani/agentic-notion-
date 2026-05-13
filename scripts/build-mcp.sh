@@ -14,24 +14,22 @@ fi
 # Install workspace dependencies
 pnpm install
 
-# Generate Prisma client
+# Generate Prisma client to src/generated/client
 echo "Generating Prisma client..."
-PRISMA_BIN=$(find node_modules -name "prisma" -type f 2>/dev/null | grep -v "node_modules/prisma/node_modules" | grep "bin/prisma" | head -1)
-if [ -z "$PRISMA_BIN" ]; then
-  PRISMA_BIN=$(find node_modules/.pnpm -name "prisma" -type f 2>/dev/null | grep "bin/prisma" | head -1)
-fi
-echo "Prisma binary: ${PRISMA_BIN:-NOT FOUND}"
+cd packages/db
+../node_modules/.bin/prisma generate 2>&1 || ../../node_modules/.bin/prisma generate 2>&1 || node_modules/.bin/prisma generate 2>&1
+echo "Prisma generate done"
+cd ../..
 
-if [ -n "$PRISMA_BIN" ]; then
-  node "$PRISMA_BIN" generate --schema=packages/db/prisma/schema.prisma
-else
-  # Try using the prisma package directly
-  node -e "require('./node_modules/.pnpm/prisma@5.22.0/node_modules/prisma/build/index.js')" generate --schema=packages/db/prisma/schema.prisma || true
-fi
-
-# Build @zeta/db
+# Build @zeta/db (compiles src/ to dist/)
 echo "Building @zeta/db..."
 cd packages/db && ../../node_modules/.bin/tsc && cd ../..
+
+# Copy generated client to dist/ (needed for runtime imports)
+echo "Copying generated client to dist/..."
+mkdir -p packages/db/dist/generated/client
+cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
+echo "Generated client copied"
 
 # Build @zeta/shared
 echo "Building @zeta/shared..."

@@ -40,3 +40,7 @@ coverage/
 
 # Archon artifacts
 .archon/artifacts/
+
+# Prisma generated client - exclude platform-specific binaries
+packages/db/src/generated/client/*.node
+packages/db/dist/generated/client/*.node
