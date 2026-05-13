@@ -57,7 +57,7 @@ export function createLLM(role: AgentRoleKey, overrides?: { temperature?: number
       baseURL: "https://openrouter.ai/api/v1",
       defaultHeaders: {
         "HTTP-Referer": process.env.APP_URL ?? "https://agentic-notion-web.onrender.com",
-        "X-Title": "Zeta CAID — Cancer Advocacy Intelligence Database",
+        "X-Title": "Zeta CAID - Cancer Advocacy Intelligence Database",
       },
     },
   });
