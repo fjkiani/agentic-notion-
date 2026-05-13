@@ -1,25 +1,35 @@
 #!/bin/bash
 set -e
-
 echo "=== Zeta CAID Agent API Build ==="
-echo "Node: $(node --version)"
+node --version
+npm --version
+pnpm --version
 
-echo "Installing pnpm..."
-npx pnpm@9.15.0 install --ignore-scripts
+# Install dependencies
+echo "Installing dependencies..."
+pnpm install
+echo "pnpm install done"
 
-echo "Generating Prisma client..."
-cd packages/db && npx prisma generate && cd ../..
+echo "Skipping prisma generate (binary is pre-committed to repo)"
 
+# Build @zeta/db
 echo "Building @zeta/db..."
-npx pnpm@9.15.0 --filter @zeta/db run build
+cd packages/db && ../../node_modules/.bin/tsc && cd ../..
+
+# Copy generated client to dist/ (includes pre-committed .node binary)
+echo "Copying generated client..."
+mkdir -p packages/db/dist/generated/client
+cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
+echo "Generated client copied (including .node binary)"
 
 echo "Building @zeta/shared..."
-npx pnpm@9.15.0 --filter @zeta/shared run build
+cd packages/shared && ../../node_modules/.bin/tsc && cd ../..
 
 echo "Building @zeta/types..."
-npx pnpm@9.15.0 --filter @zeta/types run build
+cd packages/types && ../../node_modules/.bin/tsc && cd ../..
 
 echo "Building @zeta/agent-api..."
-npx pnpm@9.15.0 --filter @zeta/agent-api run build
+cd apps/agent-api && ../../node_modules/.bin/tsc && cd ../..
 
 echo "=== Build Complete ==="
+ls apps/agent-api/dist/
