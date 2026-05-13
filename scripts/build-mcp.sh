@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo "=== Workspace Diagnostic v3 ==="
+echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
-echo "Working dir: $(pwd)"
 
 # Use pnpm if available
 if command -v pnpm &> /dev/null; then
@@ -11,15 +10,51 @@ else
   npm install -g pnpm@9.15.0
 fi
 
+# Install workspace dependencies
 pnpm install
 
-echo "=== Workspace packages ==="
-pnpm ls --recursive --depth=0 2>&1 | head -50
+# Generate Prisma client using direct binary path
+echo "Generating Prisma client..."
+PRISMA_BIN=$(find node_modules -name "prisma" -type f -path "*/bin/prisma" 2>/dev/null | head -1)
+if [ -z "$PRISMA_BIN" ]; then
+  PRISMA_BIN=$(find node_modules -name "prisma" -type f 2>/dev/null | grep -v node_modules/prisma/node_modules | head -1)
+fi
+echo "Prisma binary: $PRISMA_BIN"
+if [ -n "$PRISMA_BIN" ]; then
+  node "$PRISMA_BIN" generate --schema=packages/db/prisma/schema.prisma
+else
+  echo "Prisma not found, trying npx..."
+  npx prisma generate --schema=packages/db/prisma/schema.prisma
+fi
+echo "Prisma generate exit: $?"
 
-echo "=== Filter test ==="
-echo "Testing: pnpm --filter @zeta/db run build"
-pnpm --filter @zeta/db run build
-FILTER_EXIT=$?
-echo "Filter exit code: $FILTER_EXIT"
+# Build @zeta/db
+echo "Building @zeta/db..."
+cd packages/db
+../../node_modules/.bin/tsc 2>&1
+echo "db build exit: $?"
+cd ../..
 
-echo "=== Done ==="
+# Build @zeta/shared
+echo "Building @zeta/shared..."
+cd packages/shared
+../../node_modules/.bin/tsc 2>&1
+echo "shared build exit: $?"
+cd ../..
+
+# Build @zeta/types
+echo "Building @zeta/types..."
+cd packages/types
+../../node_modules/.bin/tsc 2>&1
+echo "types build exit: $?"
+cd ../..
+
+# Build @zeta/mcp-server
+echo "Building @zeta/mcp-server..."
+cd apps/mcp-server
+../../node_modules/.bin/tsc 2>&1
+echo "mcp build exit: $?"
+cd ../..
+
+echo "=== Build Complete ==="
+ls apps/mcp-server/dist/ | head -5
