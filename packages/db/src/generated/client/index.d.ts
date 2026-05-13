@@ -26127,7 +26127,7 @@ export namespace Prisma {
   export type AgentRunGroupByOutputType = {
     id: string
     workspaceId: string
-    userId: string
+    userId: string | null
     role: $Enums.AgentRole
     status: $Enums.AgentRunStatus
     input: JsonValue
@@ -26180,7 +26180,7 @@ export namespace Prisma {
     model?: boolean
     metadata?: boolean
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AgentRun$userArgs<ExtArgs>
     messages?: boolean | AgentRun$messagesArgs<ExtArgs>
     tasks?: boolean | AgentRun$tasksArgs<ExtArgs>
     _count?: boolean | AgentRunCountOutputTypeDefaultArgs<ExtArgs>
@@ -26204,7 +26204,7 @@ export namespace Prisma {
     model?: boolean
     metadata?: boolean
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AgentRun$userArgs<ExtArgs>
   }, ExtArgs["result"]["agentRun"]>
 
   export type AgentRunSelectScalar = {
@@ -26228,28 +26228,28 @@ export namespace Prisma {
 
   export type AgentRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AgentRun$userArgs<ExtArgs>
     messages?: boolean | AgentRun$messagesArgs<ExtArgs>
     tasks?: boolean | AgentRun$tasksArgs<ExtArgs>
     _count?: boolean | AgentRunCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AgentRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    user?: boolean | AgentRun$userArgs<ExtArgs>
   }
 
   export type $AgentRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AgentRun"
     objects: {
       workspace: Prisma.$WorkspacePayload<ExtArgs>
-      user: Prisma.$UserPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs> | null
       messages: Prisma.$AgentMessagePayload<ExtArgs>[]
       tasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       workspaceId: string
-      userId: string
+      userId: string | null
       role: $Enums.AgentRole
       status: $Enums.AgentRunStatus
       input: Prisma.JsonValue
@@ -26628,7 +26628,7 @@ export namespace Prisma {
   export interface Prisma__AgentRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    user<T extends AgentRun$userArgs<ExtArgs> = {}>(args?: Subset<T, AgentRun$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     messages<T extends AgentRun$messagesArgs<ExtArgs> = {}>(args?: Subset<T, AgentRun$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentMessagePayload<ExtArgs>, T, "findMany"> | Null>
     tasks<T extends AgentRun$tasksArgs<ExtArgs> = {}>(args?: Subset<T, AgentRun$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany"> | Null>
     /**
@@ -26991,6 +26991,21 @@ export namespace Prisma {
      * Filter which AgentRuns to delete
      */
     where?: AgentRunWhereInput
+  }
+
+  /**
+   * AgentRun.user
+   */
+  export type AgentRun$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -34059,7 +34074,7 @@ export namespace Prisma {
     NOT?: AgentRunWhereInput | AgentRunWhereInput[]
     id?: StringFilter<"AgentRun"> | string
     workspaceId?: StringFilter<"AgentRun"> | string
-    userId?: StringFilter<"AgentRun"> | string
+    userId?: StringNullableFilter<"AgentRun"> | string | null
     role?: EnumAgentRoleFilter<"AgentRun"> | $Enums.AgentRole
     status?: EnumAgentRunStatusFilter<"AgentRun"> | $Enums.AgentRunStatus
     input?: JsonFilter<"AgentRun">
@@ -34074,7 +34089,7 @@ export namespace Prisma {
     model?: StringNullableFilter<"AgentRun"> | string | null
     metadata?: JsonFilter<"AgentRun">
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     messages?: AgentMessageListRelationFilter
     tasks?: TaskListRelationFilter
   }
@@ -34082,7 +34097,7 @@ export namespace Prisma {
   export type AgentRunOrderByWithRelationInput = {
     id?: SortOrder
     workspaceId?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     role?: SortOrder
     status?: SortOrder
     input?: SortOrder
@@ -34108,7 +34123,7 @@ export namespace Prisma {
     OR?: AgentRunWhereInput[]
     NOT?: AgentRunWhereInput | AgentRunWhereInput[]
     workspaceId?: StringFilter<"AgentRun"> | string
-    userId?: StringFilter<"AgentRun"> | string
+    userId?: StringNullableFilter<"AgentRun"> | string | null
     role?: EnumAgentRoleFilter<"AgentRun"> | $Enums.AgentRole
     status?: EnumAgentRunStatusFilter<"AgentRun"> | $Enums.AgentRunStatus
     input?: JsonFilter<"AgentRun">
@@ -34123,7 +34138,7 @@ export namespace Prisma {
     model?: StringNullableFilter<"AgentRun"> | string | null
     metadata?: JsonFilter<"AgentRun">
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
-    user?: XOR<UserRelationFilter, UserWhereInput>
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     messages?: AgentMessageListRelationFilter
     tasks?: TaskListRelationFilter
   }, "id">
@@ -34131,7 +34146,7 @@ export namespace Prisma {
   export type AgentRunOrderByWithAggregationInput = {
     id?: SortOrder
     workspaceId?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
     role?: SortOrder
     status?: SortOrder
     input?: SortOrder
@@ -34158,7 +34173,7 @@ export namespace Prisma {
     NOT?: AgentRunScalarWhereWithAggregatesInput | AgentRunScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"AgentRun"> | string
     workspaceId?: StringWithAggregatesFilter<"AgentRun"> | string
-    userId?: StringWithAggregatesFilter<"AgentRun"> | string
+    userId?: StringNullableWithAggregatesFilter<"AgentRun"> | string | null
     role?: EnumAgentRoleWithAggregatesFilter<"AgentRun"> | $Enums.AgentRole
     status?: EnumAgentRunStatusWithAggregatesFilter<"AgentRun"> | $Enums.AgentRunStatus
     input?: JsonWithAggregatesFilter<"AgentRun">
@@ -36873,7 +36888,7 @@ export namespace Prisma {
     model?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace: WorkspaceCreateNestedOneWithoutAgentRunsInput
-    user: UserCreateNestedOneWithoutAgentRunsInput
+    user?: UserCreateNestedOneWithoutAgentRunsInput
     messages?: AgentMessageCreateNestedManyWithoutRunInput
     tasks?: TaskCreateNestedManyWithoutAgentRunInput
   }
@@ -36881,7 +36896,7 @@ export namespace Prisma {
   export type AgentRunUncheckedCreateInput = {
     id?: string
     workspaceId: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -36915,7 +36930,7 @@ export namespace Prisma {
     model?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace?: WorkspaceUpdateOneRequiredWithoutAgentRunsNestedInput
-    user?: UserUpdateOneRequiredWithoutAgentRunsNestedInput
+    user?: UserUpdateOneWithoutAgentRunsNestedInput
     messages?: AgentMessageUpdateManyWithoutRunNestedInput
     tasks?: TaskUpdateManyWithoutAgentRunNestedInput
   }
@@ -36923,7 +36938,7 @@ export namespace Prisma {
   export type AgentRunUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue
@@ -36944,7 +36959,7 @@ export namespace Prisma {
   export type AgentRunCreateManyInput = {
     id?: string
     workspaceId: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -36980,7 +36995,7 @@ export namespace Prisma {
   export type AgentRunUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue
@@ -42067,10 +42082,12 @@ export namespace Prisma {
     update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutAgentRunsInput, WorkspaceUpdateWithoutAgentRunsInput>, WorkspaceUncheckedUpdateWithoutAgentRunsInput>
   }
 
-  export type UserUpdateOneRequiredWithoutAgentRunsNestedInput = {
+  export type UserUpdateOneWithoutAgentRunsNestedInput = {
     create?: XOR<UserCreateWithoutAgentRunsInput, UserUncheckedCreateWithoutAgentRunsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAgentRunsInput
     upsert?: UserUpsertWithoutAgentRunsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAgentRunsInput, UserUpdateWithoutAgentRunsInput>, UserUncheckedUpdateWithoutAgentRunsInput>
   }
@@ -43323,7 +43340,7 @@ export namespace Prisma {
     NOT?: AgentRunScalarWhereInput | AgentRunScalarWhereInput[]
     id?: StringFilter<"AgentRun"> | string
     workspaceId?: StringFilter<"AgentRun"> | string
-    userId?: StringFilter<"AgentRun"> | string
+    userId?: StringNullableFilter<"AgentRun"> | string | null
     role?: EnumAgentRoleFilter<"AgentRun"> | $Enums.AgentRole
     status?: EnumAgentRunStatusFilter<"AgentRun"> | $Enums.AgentRunStatus
     input?: JsonFilter<"AgentRun">
@@ -43600,14 +43617,14 @@ export namespace Prisma {
     tokenCount?: number | null
     model?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
-    user: UserCreateNestedOneWithoutAgentRunsInput
+    user?: UserCreateNestedOneWithoutAgentRunsInput
     messages?: AgentMessageCreateNestedManyWithoutRunInput
     tasks?: TaskCreateNestedManyWithoutAgentRunInput
   }
 
   export type AgentRunUncheckedCreateWithoutWorkspaceInput = {
     id?: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -45767,14 +45784,14 @@ export namespace Prisma {
     model?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace: WorkspaceCreateNestedOneWithoutAgentRunsInput
-    user: UserCreateNestedOneWithoutAgentRunsInput
+    user?: UserCreateNestedOneWithoutAgentRunsInput
     messages?: AgentMessageCreateNestedManyWithoutRunInput
   }
 
   export type AgentRunUncheckedCreateWithoutTasksInput = {
     id?: string
     workspaceId: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -46135,14 +46152,14 @@ export namespace Prisma {
     model?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace?: WorkspaceUpdateOneRequiredWithoutAgentRunsNestedInput
-    user?: UserUpdateOneRequiredWithoutAgentRunsNestedInput
+    user?: UserUpdateOneWithoutAgentRunsNestedInput
     messages?: AgentMessageUpdateManyWithoutRunNestedInput
   }
 
   export type AgentRunUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue
@@ -49294,14 +49311,14 @@ export namespace Prisma {
     model?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace: WorkspaceCreateNestedOneWithoutAgentRunsInput
-    user: UserCreateNestedOneWithoutAgentRunsInput
+    user?: UserCreateNestedOneWithoutAgentRunsInput
     tasks?: TaskCreateNestedManyWithoutAgentRunInput
   }
 
   export type AgentRunUncheckedCreateWithoutMessagesInput = {
     id?: string
     workspaceId: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -49350,14 +49367,14 @@ export namespace Prisma {
     model?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     workspace?: WorkspaceUpdateOneRequiredWithoutAgentRunsNestedInput
-    user?: UserUpdateOneRequiredWithoutAgentRunsNestedInput
+    user?: UserUpdateOneWithoutAgentRunsNestedInput
     tasks?: TaskUpdateManyWithoutAgentRunNestedInput
   }
 
   export type AgentRunUncheckedUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue
@@ -50367,7 +50384,7 @@ export namespace Prisma {
 
   export type AgentRunCreateManyWorkspaceInput = {
     id?: string
-    userId: string
+    userId?: string | null
     role: $Enums.AgentRole
     status?: $Enums.AgentRunStatus
     input: JsonNullValueInput | InputJsonValue
@@ -50579,14 +50596,14 @@ export namespace Prisma {
     tokenCount?: NullableIntFieldUpdateOperationsInput | number | null
     model?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
-    user?: UserUpdateOneRequiredWithoutAgentRunsNestedInput
+    user?: UserUpdateOneWithoutAgentRunsNestedInput
     messages?: AgentMessageUpdateManyWithoutRunNestedInput
     tasks?: TaskUpdateManyWithoutAgentRunNestedInput
   }
 
   export type AgentRunUncheckedUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue
@@ -50606,7 +50623,7 @@ export namespace Prisma {
 
   export type AgentRunUncheckedUpdateManyWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumAgentRoleFieldUpdateOperationsInput | $Enums.AgentRole
     status?: EnumAgentRunStatusFieldUpdateOperationsInput | $Enums.AgentRunStatus
     input?: JsonNullValueInput | InputJsonValue

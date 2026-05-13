@@ -752,7 +752,7 @@ model Block {
 model AgentRun {
   id              String          @id @default(cuid())
   workspaceId     String
-  userId          String
+  userId          String?
   role            AgentRole
   status          AgentRunStatus  @default(PENDING)
   input           Json
@@ -768,7 +768,7 @@ model AgentRun {
   metadata        Json            @default("{}")
 
   workspace       Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user            User            @relation(fields: [userId], references: [id])
+  user            User?           @relation(fields: [userId], references: [id])
   messages        AgentMessage[]
   tasks           Task[]
 
