@@ -41,6 +41,6 @@ coverage/
 # Archon artifacts
 .archon/artifacts/
 
-# Prisma generated client - exclude platform-specific binaries
-packages/db/src/generated/client/*.node
+# Prisma generated client - exclude musl binary (not needed for Render/Debian)
+packages/db/src/generated/client/libquery_engine-linux-musl-openssl-3.0.x.so.node
 packages/db/dist/generated/client/*.node
