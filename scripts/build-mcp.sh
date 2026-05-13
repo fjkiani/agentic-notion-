@@ -4,35 +4,14 @@ echo "=== Zeta CAID MCP Server Build ==="
 node --version
 npm --version
 
-# Install pnpm globally
-echo "Installing pnpm..."
-npm install -g pnpm@9.15.0
-
-# Find pnpm binary - try multiple locations
-PNPM_BIN=""
-for dir in /usr/local/bin /usr/bin ~/.npm-global/bin; do
-  if [ -f "$dir/pnpm" ]; then
-    PNPM_BIN="$dir/pnpm"
-    echo "Found pnpm at: $PNPM_BIN"
-    break
-  fi
-done
-
-if [ -z "$PNPM_BIN" ]; then
-  echo "pnpm not found in standard locations, using npx..."
-  PNPM_BIN="npx pnpm@9.15.0"
-fi
-
-echo "Using pnpm: $PNPM_BIN"
-
-# Install dependencies
-echo "Running pnpm install..."
-$PNPM_BIN install
+# Use npx to run pnpm (no global install needed)
+echo "Installing dependencies with npx pnpm..."
+npx pnpm@9.15.0 install
 echo "pnpm install done"
 
-# Generate Prisma client (downloads query engine binary for Render)
+# Generate Prisma client
 echo "Generating Prisma client..."
-$PNPM_BIN exec prisma generate --schema=packages/db/prisma/schema.prisma
+npx pnpm@9.15.0 exec prisma generate --schema=packages/db/prisma/schema.prisma
 echo "Prisma generate done"
 
 # Build @zeta/db
@@ -42,7 +21,7 @@ cd packages/db
 echo "@zeta/db built"
 cd ../..
 
-# Copy generated client to dist/ (includes .node binary)
+# Copy generated client to dist/
 echo "Copying generated client..."
 mkdir -p packages/db/dist/generated/client
 cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
