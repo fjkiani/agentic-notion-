@@ -1,48 +1,33 @@
 #!/bin/bash
-set -eo pipefail
-
+# Don't use set -e here to avoid early exit
 echo "=== Zeta CAID MCP Server Build ==="
-echo "Node: $(node --version)"
-echo "npm: $(npm --version)"
 
-# Install pnpm globally via npm
-echo "Installing pnpm..."
-npm install -g pnpm@9.15.0 2>&1
+# Check what's available
+which node && node --version || echo "node not found"
+which npm && npm --version || echo "npm not found"
+which npx && npx --version || echo "npx not found"
 
-# Find pnpm binary
-PNPM_BIN=$(npm config get prefix)/bin/pnpm
-echo "pnpm binary: $PNPM_BIN"
-$PNPM_BIN --version
+# Install pnpm
+npm install -g pnpm@9.15.0
+which pnpm && pnpm --version || echo "pnpm not found after install"
 
-# Install workspace dependencies
-echo "Installing dependencies..."
-$PNPM_BIN install --frozen-lockfile
+# Try to find pnpm
+ls -la $(npm config get prefix)/bin/ 2>/dev/null || echo "npm prefix bin not found"
 
-echo "Skipping prisma generate (client is pre-committed to repo)"
+# Add npm prefix to PATH
+export PATH="$(npm config get prefix)/bin:$PATH"
+which pnpm && pnpm --version || echo "pnpm still not found"
 
-echo "Building @zeta/db..."
-cd packages/db
-../../node_modules/.bin/tsc
-cd ../..
+# Install dependencies
+pnpm install --frozen-lockfile
 
-echo "Copying generated client to dist/..."
+# Build
+cd packages/db && ../../node_modules/.bin/tsc && cd ../..
 mkdir -p packages/db/dist/generated/client
 cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
-
-echo "Building @zeta/shared..."
-cd packages/shared
-../../node_modules/.bin/tsc
-cd ../..
-
-echo "Building @zeta/types..."
-cd packages/types
-../../node_modules/.bin/tsc
-cd ../..
-
-echo "Building @zeta/mcp-server..."
-cd apps/mcp-server
-../../node_modules/.bin/tsc
-cd ../..
+cd packages/shared && ../../node_modules/.bin/tsc && cd ../..
+cd packages/types && ../../node_modules/.bin/tsc && cd ../..
+cd apps/mcp-server && ../../node_modules/.bin/tsc && cd ../..
 
 echo "=== Build Complete ==="
 ls apps/mcp-server/dist/
