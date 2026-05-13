@@ -2,7 +2,7 @@
   "name": "zeta-caid",
   "version": "0.0.1",
   "private": true,
-  "description": "Cancer Advocacy Intelligence Database — MCP-first AI-native platform with LangGraph agents and Archon coding engine",
+  "description": "Cancer Advocacy Intelligence Database \u2014 MCP-first AI-native platform with LangGraph agents and Archon coding engine",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -25,6 +25,5 @@
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
-  },
-  "packageManager": "pnpm@9.15.0"
+  }
 }
