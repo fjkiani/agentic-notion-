@@ -4,14 +4,31 @@ echo "=== Zeta CAID MCP Server Build ==="
 node --version
 npm --version
 
-# Install pnpm
+# Install pnpm globally
+echo "Installing pnpm..."
 npm install -g pnpm@9.15.0
-export PATH="$(npm config get prefix)/bin:$PATH"
-pnpm --version
+
+# Find pnpm binary - try multiple locations
+PNPM_BIN=""
+for dir in /usr/local/bin /usr/bin ~/.npm-global/bin $(npm config get prefix)/bin; do
+  if [ -f "$dir/pnpm" ]; then
+    PNPM_BIN="$dir/pnpm"
+    echo "Found pnpm at: $PNPM_BIN"
+    break
+  fi
+done
+
+if [ -z "$PNPM_BIN" ]; then
+  echo "pnpm not found, trying npx..."
+  PNPM_BIN="npx pnpm@9.15.0"
+fi
+
+echo "Using pnpm: $PNPM_BIN"
+$PNPM_BIN --version
 
 # Install dependencies
 echo "Running pnpm install..."
-pnpm install
+$PNPM_BIN install
 echo "pnpm install done"
 
 # Build @zeta/db
