@@ -28,6 +28,8 @@ echo "Building @zeta/types..."
 cd packages/types && ../../node_modules/.bin/tsc && cd ../..
 
 echo "Building @zeta/web (Next.js)..."
-cd apps/web && ../../node_modules/.bin/next build && cd ../..
+# Use apps/web/node_modules/.bin/next (pnpm workspace package)
+cd apps/web && node_modules/.bin/next build && cd ../..
 
 echo "=== Build Complete ==="
+ls apps/web/.next/
