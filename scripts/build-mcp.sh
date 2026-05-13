@@ -3,24 +3,36 @@ set -e
 
 echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
-echo "npm: $(npm --version)"
-echo "Working dir: $(pwd)"
-echo "Files: $(ls | head -10)"
 
-# Try to use pnpm if already available
+# Use pnpm if available, otherwise install
 if command -v pnpm &> /dev/null; then
-  echo "pnpm already available: $(pnpm --version)"
+  echo "pnpm available: $(pnpm --version)"
 else
-  echo "Installing pnpm via npm..."
-  npm install -g pnpm@9.15.0 2>&1
-  echo "npm install exit code: $?"
+  echo "Installing pnpm..."
+  npm install -g pnpm@9.15.0
 fi
-
-echo "pnpm version: $(pnpm --version 2>&1 || echo 'pnpm not found')"
 
 # Install workspace dependencies
 echo "Running pnpm install..."
-pnpm install 2>&1
-echo "pnpm install exit code: $?"
+pnpm install
 
-echo "BUILD SCRIPT REACHED END"
+# Generate Prisma client
+echo "Generating Prisma client..."
+pnpm --filter @zeta/db run db:generate
+echo "Prisma client generated OK"
+
+# Build packages
+echo "Building @zeta/db..."
+pnpm --filter @zeta/db run build
+
+echo "Building @zeta/shared..."
+pnpm --filter @zeta/shared run build
+
+echo "Building @zeta/types..."
+pnpm --filter @zeta/types run build
+
+echo "Building @zeta/mcp-server..."
+pnpm --filter @zeta/mcp-server run build
+
+echo "=== Build Complete ==="
+ls apps/mcp-server/dist/ | head -5
