@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-echo "=== Zeta CAID MCP Server Build ==="
+echo "=== Diagnostic Build Script ==="
 echo "Node: $(node --version)"
+echo "Working dir: $(pwd)"
+echo "Files: $(ls)"
 
 # Use pnpm if available, otherwise install
 if command -v pnpm &> /dev/null; then
@@ -16,14 +18,16 @@ fi
 echo "Running pnpm install..."
 pnpm install
 
-# Check if Prisma client exists
-echo "Checking Prisma client..."
-ls node_modules/.prisma/client/ 2>/dev/null | head -5 || echo "No .prisma/client in root"
-ls node_modules/@prisma/client/ 2>/dev/null | head -5 || echo "No @prisma/client in root"
+echo "=== Workspace check ==="
+echo "pnpm-workspace.yaml:"
+cat pnpm-workspace.yaml
 
-# Build all packages using turbo (skip db:generate)
-echo "Building all packages with turbo..."
-pnpm run build
+echo "pnpm ls --recursive:"
+pnpm ls --depth=0 --recursive 2>&1 | head -30
 
-echo "=== Build Complete ==="
-ls apps/mcp-server/dist/ | head -5
+echo "=== Testing filter ==="
+echo "Testing pnpm --filter @zeta/db run build..."
+pnpm --filter @zeta/db run build 2>&1
+echo "Exit code: $?"
+
+echo "BUILD SCRIPT REACHED END"
