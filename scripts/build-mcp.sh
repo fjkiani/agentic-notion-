@@ -3,6 +3,8 @@ set -e
 
 echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
+echo "Working dir: $(pwd)"
+echo "Files: $(ls)"
 
 # Use pnpm if available, otherwise install
 if command -v pnpm &> /dev/null; then
@@ -16,18 +18,14 @@ fi
 echo "Running pnpm install..."
 pnpm install
 
-# Skip prisma generate for now - test if TypeScript build works
-echo "Building @zeta/db (without prisma generate)..."
-pnpm --filter @zeta/db run build || echo "db build failed (expected without prisma generate)"
+echo "After install, checking workspace..."
+pnpm ls --depth=0 2>&1 | head -30 || echo "pnpm ls failed with $?"
 
-echo "Building @zeta/shared..."
-pnpm --filter @zeta/shared run build
+echo "Checking pnpm-workspace.yaml..."
+cat pnpm-workspace.yaml || echo "no pnpm-workspace.yaml"
 
-echo "Building @zeta/types..."
-pnpm --filter @zeta/types run build
+echo "Checking packages..."
+ls packages/ || echo "no packages dir"
+ls apps/ || echo "no apps dir"
 
-echo "Building @zeta/mcp-server..."
-pnpm --filter @zeta/mcp-server run build
-
-echo "=== Build Complete ==="
-ls apps/mcp-server/dist/ | head -5
+echo "BUILD SCRIPT REACHED END"
