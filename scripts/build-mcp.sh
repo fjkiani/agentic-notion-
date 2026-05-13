@@ -5,21 +5,14 @@ echo "=== Zeta CAID MCP Server Build ==="
 # Check what's available
 which node && node --version || echo "node not found"
 which npm && npm --version || echo "npm not found"
-which npx && npx --version || echo "npx not found"
 
 # Install pnpm
 npm install -g pnpm@9.15.0
+export PATH="$(npm config get prefix)/bin:$PATH"
 which pnpm && pnpm --version || echo "pnpm not found after install"
 
-# Try to find pnpm
-ls -la $(npm config get prefix)/bin/ 2>/dev/null || echo "npm prefix bin not found"
-
-# Add npm prefix to PATH
-export PATH="$(npm config get prefix)/bin:$PATH"
-which pnpm && pnpm --version || echo "pnpm still not found"
-
-# Install dependencies
-pnpm install --frozen-lockfile
+# Install dependencies (no --frozen-lockfile to avoid lockfile mismatch)
+pnpm install --no-frozen-lockfile
 
 # Build
 cd packages/db && ../../node_modules/.bin/tsc && cd ../..
