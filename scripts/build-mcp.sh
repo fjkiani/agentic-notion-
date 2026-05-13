@@ -4,8 +4,12 @@ echo "=== Zeta CAID MCP Server Build ==="
 node --version
 npm --version
 
-# Use npx to run pnpm (no global install needed)
-echo "Installing dependencies with npx pnpm..."
+# Install pnpm globally first (caches it for npx)
+echo "Installing pnpm globally..."
+npm install -g pnpm@9.15.0 || echo "Global install failed, continuing..."
+
+# Use npx to run pnpm (works even if global install failed)
+echo "Installing dependencies..."
 npx pnpm@9.15.0 install
 echo "pnpm install done"
 
