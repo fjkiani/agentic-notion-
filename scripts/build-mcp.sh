@@ -17,7 +17,7 @@ pnpm install
 # Generate Prisma client to src/generated/client
 echo "Generating Prisma client..."
 cd packages/db
-../node_modules/.bin/prisma generate 2>&1 || ../../node_modules/.bin/prisma generate 2>&1 || node_modules/.bin/prisma generate 2>&1
+../../node_modules/.bin/prisma generate 2>&1
 echo "Prisma generate done"
 cd ../..
 
