@@ -1,23 +1,18 @@
 #!/bin/bash
 set -e
 
-echo "Step 1: Node version"
-node --version
-
-echo "Step 2: npm version"
-npm --version
-
-echo "Step 3: Install pnpm"
+echo "Step 1: Install pnpm"
 npm install -g pnpm@9.15.0
 echo "pnpm: $(pnpm --version)"
 
-echo "Step 4: pnpm install"
+echo "Step 2: pnpm install"
 pnpm install
 
-echo "Step 5: Check pnpm still works"
+echo "Step 3: Check pnpm still works"
 pnpm --version
 
-echo "Step 6: List node_modules/.bin"
-ls node_modules/.bin/ | head -20
+echo "Step 4: Build @zeta/db"
+pnpm --filter @zeta/db run build
+echo "db build OK"
 
 echo "BUILD SCRIPT COMPLETE"
