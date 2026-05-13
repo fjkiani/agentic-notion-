@@ -32,8 +32,9 @@ echo "Building @zeta/mcp-server..."
 cd apps/mcp-server && ../../node_modules/.bin/tsc && cd ../..
 
 # Apply database schema (runs inside Render's network, same region as DB)
+# prisma binary lives in packages/db/node_modules/.bin/prisma (pnpm workspace)
 echo "Applying database schema..."
-cd packages/db && ../../node_modules/.bin/prisma db push --schema=prisma/schema.prisma --skip-generate --accept-data-loss && cd ../..
+cd packages/db && node_modules/.bin/prisma db push --schema=prisma/schema.prisma --skip-generate --accept-data-loss && cd ../..
 echo "Database schema applied"
 
 echo "=== Build Complete ==="
