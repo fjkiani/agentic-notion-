@@ -51,7 +51,7 @@ app.post("/api/agents/run", async (req, res) => {
     const agentRun = await prisma.agentRun.create({
       data: {
         workspaceId,
-        userId: req.headers["x-user-id"] as string ?? "system",
+        userId: (req.headers["x-user-id"] as string) || null,
         role,
         status: "RUNNING",
         input: { message, context },
