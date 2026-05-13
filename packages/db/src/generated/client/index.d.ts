@@ -12082,7 +12082,7 @@ export namespace Prisma {
     status: $Enums.TaskStatus
     priority: $Enums.Priority
     assigneeId: string | null
-    creatorId: string
+    creatorId: string | null
     dueDate: Date | null
     completedAt: Date | null
     estimatedHours: number | null
@@ -12142,7 +12142,7 @@ export namespace Prisma {
     parentTask?: boolean | Task$parentTaskArgs<ExtArgs>
     subTasks?: boolean | Task$subTasksArgs<ExtArgs>
     assignee?: boolean | Task$assigneeArgs<ExtArgs>
-    creator?: boolean | UserDefaultArgs<ExtArgs>
+    creator?: boolean | Task$creatorArgs<ExtArgs>
     agentRun?: boolean | Task$agentRunArgs<ExtArgs>
     comments?: boolean | Task$commentsArgs<ExtArgs>
     evidence?: boolean | Task$evidenceArgs<ExtArgs>
@@ -12175,7 +12175,7 @@ export namespace Prisma {
     initiative?: boolean | InitiativeDefaultArgs<ExtArgs>
     parentTask?: boolean | Task$parentTaskArgs<ExtArgs>
     assignee?: boolean | Task$assigneeArgs<ExtArgs>
-    creator?: boolean | UserDefaultArgs<ExtArgs>
+    creator?: boolean | Task$creatorArgs<ExtArgs>
     agentRun?: boolean | Task$agentRunArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
@@ -12209,7 +12209,7 @@ export namespace Prisma {
     parentTask?: boolean | Task$parentTaskArgs<ExtArgs>
     subTasks?: boolean | Task$subTasksArgs<ExtArgs>
     assignee?: boolean | Task$assigneeArgs<ExtArgs>
-    creator?: boolean | UserDefaultArgs<ExtArgs>
+    creator?: boolean | Task$creatorArgs<ExtArgs>
     agentRun?: boolean | Task$agentRunArgs<ExtArgs>
     comments?: boolean | Task$commentsArgs<ExtArgs>
     evidence?: boolean | Task$evidenceArgs<ExtArgs>
@@ -12219,7 +12219,7 @@ export namespace Prisma {
     initiative?: boolean | InitiativeDefaultArgs<ExtArgs>
     parentTask?: boolean | Task$parentTaskArgs<ExtArgs>
     assignee?: boolean | Task$assigneeArgs<ExtArgs>
-    creator?: boolean | UserDefaultArgs<ExtArgs>
+    creator?: boolean | Task$creatorArgs<ExtArgs>
     agentRun?: boolean | Task$agentRunArgs<ExtArgs>
   }
 
@@ -12230,7 +12230,7 @@ export namespace Prisma {
       parentTask: Prisma.$TaskPayload<ExtArgs> | null
       subTasks: Prisma.$TaskPayload<ExtArgs>[]
       assignee: Prisma.$UserPayload<ExtArgs> | null
-      creator: Prisma.$UserPayload<ExtArgs>
+      creator: Prisma.$UserPayload<ExtArgs> | null
       agentRun: Prisma.$AgentRunPayload<ExtArgs> | null
       comments: Prisma.$CommentPayload<ExtArgs>[]
       evidence: Prisma.$EvidencePayload<ExtArgs>[]
@@ -12246,7 +12246,7 @@ export namespace Prisma {
       status: $Enums.TaskStatus
       priority: $Enums.Priority
       assigneeId: string | null
-      creatorId: string
+      creatorId: string | null
       dueDate: Date | null
       completedAt: Date | null
       estimatedHours: number | null
@@ -12626,7 +12626,7 @@ export namespace Prisma {
     parentTask<T extends Task$parentTaskArgs<ExtArgs> = {}>(args?: Subset<T, Task$parentTaskArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     subTasks<T extends Task$subTasksArgs<ExtArgs> = {}>(args?: Subset<T, Task$subTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany"> | Null>
     assignee<T extends Task$assigneeArgs<ExtArgs> = {}>(args?: Subset<T, Task$assigneeArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
-    creator<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    creator<T extends Task$creatorArgs<ExtArgs> = {}>(args?: Subset<T, Task$creatorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     agentRun<T extends Task$agentRunArgs<ExtArgs> = {}>(args?: Subset<T, Task$agentRunArgs<ExtArgs>>): Prisma__AgentRunClient<$Result.GetResult<Prisma.$AgentRunPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     comments<T extends Task$commentsArgs<ExtArgs> = {}>(args?: Subset<T, Task$commentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CommentPayload<ExtArgs>, T, "findMany"> | Null>
     evidence<T extends Task$evidenceArgs<ExtArgs> = {}>(args?: Subset<T, Task$evidenceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvidencePayload<ExtArgs>, T, "findMany"> | Null>
@@ -13037,6 +13037,21 @@ export namespace Prisma {
    * Task.assignee
    */
   export type Task$assigneeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Task.creator
+   */
+  export type Task$creatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the User
      */
@@ -32697,7 +32712,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
     priority?: EnumPriorityFilter<"Task"> | $Enums.Priority
     assigneeId?: StringNullableFilter<"Task"> | string | null
-    creatorId?: StringFilter<"Task"> | string
+    creatorId?: StringNullableFilter<"Task"> | string | null
     dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
     estimatedHours?: FloatNullableFilter<"Task"> | number | null
@@ -32713,7 +32728,7 @@ export namespace Prisma {
     parentTask?: XOR<TaskNullableRelationFilter, TaskWhereInput> | null
     subTasks?: TaskListRelationFilter
     assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
-    creator?: XOR<UserRelationFilter, UserWhereInput>
+    creator?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     agentRun?: XOR<AgentRunNullableRelationFilter, AgentRunWhereInput> | null
     comments?: CommentListRelationFilter
     evidence?: EvidenceListRelationFilter
@@ -32730,7 +32745,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     assigneeId?: SortOrderInput | SortOrder
-    creatorId?: SortOrder
+    creatorId?: SortOrderInput | SortOrder
     dueDate?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     estimatedHours?: SortOrderInput | SortOrder
@@ -32767,7 +32782,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
     priority?: EnumPriorityFilter<"Task"> | $Enums.Priority
     assigneeId?: StringNullableFilter<"Task"> | string | null
-    creatorId?: StringFilter<"Task"> | string
+    creatorId?: StringNullableFilter<"Task"> | string | null
     dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
     estimatedHours?: FloatNullableFilter<"Task"> | number | null
@@ -32783,7 +32798,7 @@ export namespace Prisma {
     parentTask?: XOR<TaskNullableRelationFilter, TaskWhereInput> | null
     subTasks?: TaskListRelationFilter
     assignee?: XOR<UserNullableRelationFilter, UserWhereInput> | null
-    creator?: XOR<UserRelationFilter, UserWhereInput>
+    creator?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     agentRun?: XOR<AgentRunNullableRelationFilter, AgentRunWhereInput> | null
     comments?: CommentListRelationFilter
     evidence?: EvidenceListRelationFilter
@@ -32800,7 +32815,7 @@ export namespace Prisma {
     status?: SortOrder
     priority?: SortOrder
     assigneeId?: SortOrderInput | SortOrder
-    creatorId?: SortOrder
+    creatorId?: SortOrderInput | SortOrder
     dueDate?: SortOrderInput | SortOrder
     completedAt?: SortOrderInput | SortOrder
     estimatedHours?: SortOrderInput | SortOrder
@@ -32833,7 +32848,7 @@ export namespace Prisma {
     status?: EnumTaskStatusWithAggregatesFilter<"Task"> | $Enums.TaskStatus
     priority?: EnumPriorityWithAggregatesFilter<"Task"> | $Enums.Priority
     assigneeId?: StringNullableWithAggregatesFilter<"Task"> | string | null
-    creatorId?: StringWithAggregatesFilter<"Task"> | string
+    creatorId?: StringNullableWithAggregatesFilter<"Task"> | string | null
     dueDate?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
     completedAt?: DateTimeNullableWithAggregatesFilter<"Task"> | Date | string | null
     estimatedHours?: FloatNullableWithAggregatesFilter<"Task"> | number | null
@@ -35352,7 +35367,7 @@ export namespace Prisma {
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
@@ -35369,7 +35384,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -35408,7 +35423,7 @@ export namespace Prisma {
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
@@ -35425,7 +35440,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -35453,7 +35468,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -35498,7 +35513,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -41024,10 +41039,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedTasksInput, UserUpdateWithoutAssignedTasksInput>, UserUncheckedUpdateWithoutAssignedTasksInput>
   }
 
-  export type UserUpdateOneRequiredWithoutCreatedTasksNestedInput = {
+  export type UserUpdateOneWithoutCreatedTasksNestedInput = {
     create?: XOR<UserCreateWithoutCreatedTasksInput, UserUncheckedCreateWithoutCreatedTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutCreatedTasksInput
     upsert?: UserUpsertWithoutCreatedTasksInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedTasksInput, UserUpdateWithoutCreatedTasksInput>, UserUncheckedUpdateWithoutCreatedTasksInput>
   }
@@ -42918,7 +42935,7 @@ export namespace Prisma {
     initiative: InitiativeCreateNestedOneWithoutTasksInput
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
@@ -42934,7 +42951,7 @@ export namespace Prisma {
     type?: $Enums.TaskType
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -43254,7 +43271,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFilter<"Task"> | $Enums.TaskStatus
     priority?: EnumPriorityFilter<"Task"> | $Enums.Priority
     assigneeId?: StringNullableFilter<"Task"> | string | null
-    creatorId?: StringFilter<"Task"> | string
+    creatorId?: StringNullableFilter<"Task"> | string | null
     dueDate?: DateTimeNullableFilter<"Task"> | Date | string | null
     completedAt?: DateTimeNullableFilter<"Task"> | Date | string | null
     estimatedHours?: FloatNullableFilter<"Task"> | number | null
@@ -45196,7 +45213,7 @@ export namespace Prisma {
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
@@ -45212,7 +45229,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -45554,7 +45571,7 @@ export namespace Prisma {
     initiative: InitiativeCreateNestedOneWithoutTasksInput
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
@@ -45571,7 +45588,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -45613,7 +45630,7 @@ export namespace Prisma {
     initiative: InitiativeCreateNestedOneWithoutTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
@@ -45629,7 +45646,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -45952,7 +45969,7 @@ export namespace Prisma {
     initiative?: InitiativeUpdateOneRequiredWithoutTasksNestedInput
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
@@ -45969,7 +45986,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -46245,7 +46262,7 @@ export namespace Prisma {
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
   }
@@ -46261,7 +46278,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -46370,7 +46387,7 @@ export namespace Prisma {
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
   }
@@ -46386,7 +46403,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -49083,7 +49100,7 @@ export namespace Prisma {
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     comments?: CommentCreateNestedManyWithoutTaskInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
   }
@@ -49099,7 +49116,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -49459,7 +49476,7 @@ export namespace Prisma {
     parentTask?: TaskCreateNestedOneWithoutSubTasksInput
     subTasks?: TaskCreateNestedManyWithoutParentTaskInput
     assignee?: UserCreateNestedOneWithoutAssignedTasksInput
-    creator: UserCreateNestedOneWithoutCreatedTasksInput
+    creator?: UserCreateNestedOneWithoutCreatedTasksInput
     agentRun?: AgentRunCreateNestedOneWithoutTasksInput
     evidence?: EvidenceCreateNestedManyWithoutTaskInput
   }
@@ -49475,7 +49492,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -49568,7 +49585,7 @@ export namespace Prisma {
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
   }
@@ -49584,7 +49601,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -49826,7 +49843,7 @@ export namespace Prisma {
     type?: $Enums.TaskType
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -49970,7 +49987,7 @@ export namespace Prisma {
     initiative?: InitiativeUpdateOneRequiredWithoutTasksNestedInput
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
@@ -49986,7 +50003,7 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -50013,7 +50030,7 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -51383,7 +51400,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -51459,7 +51476,7 @@ export namespace Prisma {
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
@@ -51475,7 +51492,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -51502,7 +51519,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -51653,7 +51670,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -51721,7 +51738,7 @@ export namespace Prisma {
     initiative?: InitiativeUpdateOneRequiredWithoutTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     agentRun?: AgentRunUpdateOneWithoutTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
@@ -51737,7 +51754,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -51764,7 +51781,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -52272,7 +52289,7 @@ export namespace Prisma {
     status?: $Enums.TaskStatus
     priority?: $Enums.Priority
     assigneeId?: string | null
-    creatorId: string
+    creatorId?: string | null
     dueDate?: Date | string | null
     completedAt?: Date | string | null
     estimatedHours?: number | null
@@ -52343,7 +52360,7 @@ export namespace Prisma {
     parentTask?: TaskUpdateOneWithoutSubTasksNestedInput
     subTasks?: TaskUpdateManyWithoutParentTaskNestedInput
     assignee?: UserUpdateOneWithoutAssignedTasksNestedInput
-    creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
+    creator?: UserUpdateOneWithoutCreatedTasksNestedInput
     comments?: CommentUpdateManyWithoutTaskNestedInput
     evidence?: EvidenceUpdateManyWithoutTaskNestedInput
   }
@@ -52359,7 +52376,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -52386,7 +52403,7 @@ export namespace Prisma {
     status?: EnumTaskStatusFieldUpdateOperationsInput | $Enums.TaskStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     assigneeId?: NullableStringFieldUpdateOperationsInput | string | null
-    creatorId?: StringFieldUpdateOperationsInput | string
+    creatorId?: NullableStringFieldUpdateOperationsInput | string | null
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     estimatedHours?: NullableFloatFieldUpdateOperationsInput | number | null

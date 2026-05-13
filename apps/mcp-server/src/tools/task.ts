@@ -88,7 +88,7 @@ export const taskTools: MCPToolDefinition[] = [
       status: z.enum(["TODO", "IN_PROGRESS", "IN_REVIEW", "BLOCKED", "DONE", "CANCELLED"]).default("TODO"),
       priority: z.enum(["CRITICAL", "HIGH", "MEDIUM", "LOW"]).default("MEDIUM"),
       assigneeId: z.string().optional(),
-      creatorId: z.string(),
+      creatorId: z.string().optional(),
       dueDate: z.string().optional(),
       estimatedHours: z.number().optional(),
       storyPoints: z.number().optional(),
@@ -101,7 +101,7 @@ export const taskTools: MCPToolDefinition[] = [
       const i = input as {
         initiativeId: string; title: string; description?: string;
         type?: import("@zeta/db").TaskType; status?: import("@zeta/db").TaskStatus;
-        priority?: import("@zeta/db").Priority; assigneeId?: string; creatorId: string;
+        priority?: import("@zeta/db").Priority; assigneeId?: string; creatorId?: string;
         dueDate?: string; estimatedHours?: number; storyPoints?: number;
         labels?: string[]; agentCreated?: boolean; agentRunId?: string; parentTaskId?: string;
       };
@@ -168,7 +168,7 @@ export const taskTools: MCPToolDefinition[] = [
     description: "Create multiple tasks at once — used by agents to populate a sprint or initiative",
     inputSchema: z.object({
       initiativeId: z.string(),
-      creatorId: z.string(),
+      creatorId: z.string().optional(),
       agentRunId: z.string().optional(),
       tasks: z.array(z.object({
         title: z.string(),

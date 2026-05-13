@@ -300,7 +300,7 @@ model Task {
   status          TaskStatus  @default(TODO)
   priority        Priority    @default(MEDIUM)
   assigneeId      String?
-  creatorId       String
+  creatorId       String?
   dueDate         DateTime?
   completedAt     DateTime?
   estimatedHours  Float?
@@ -317,7 +317,7 @@ model Task {
   parentTask      Task?       @relation("SubTasks", fields: [parentTaskId], references: [id])
   subTasks        Task[]      @relation("SubTasks")
   assignee        User?       @relation("TaskAssignee", fields: [assigneeId], references: [id])
-  creator         User        @relation("TaskCreator", fields: [creatorId], references: [id])
+  creator         User?       @relation("TaskCreator", fields: [creatorId], references: [id])
   agentRun        AgentRun?   @relation(fields: [agentRunId], references: [id])
   comments        Comment[]
   evidence        Evidence[]
