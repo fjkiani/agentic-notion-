@@ -8,9 +8,9 @@ npm --version
 echo "Installing pnpm..."
 npm install -g pnpm@9.15.0
 
-# Find pnpm binary
+# Find pnpm binary - try multiple locations
 PNPM_BIN=""
-for dir in /usr/local/bin /usr/bin ~/.npm-global/bin $(npm config get prefix)/bin; do
+for dir in /usr/local/bin /usr/bin ~/.npm-global/bin; do
   if [ -f "$dir/pnpm" ]; then
     PNPM_BIN="$dir/pnpm"
     echo "Found pnpm at: $PNPM_BIN"
@@ -19,10 +19,11 @@ for dir in /usr/local/bin /usr/bin ~/.npm-global/bin $(npm config get prefix)/bi
 done
 
 if [ -z "$PNPM_BIN" ]; then
-  echo "ERROR: pnpm not found after install"
-  exit 1
+  echo "pnpm not found in standard locations, using npx..."
+  PNPM_BIN="npx --yes pnpm@9.15.0"
 fi
 
+echo "Using: $PNPM_BIN"
 $PNPM_BIN --version
 
 # Install dependencies
@@ -30,9 +31,9 @@ echo "Running pnpm install..."
 $PNPM_BIN install
 echo "pnpm install done"
 
-# Generate Prisma client (downloads query engine binary)
+# Generate Prisma client (downloads query engine binary for Render)
 echo "Generating Prisma client..."
-node_modules/.bin/prisma generate --schema=packages/db/prisma/schema.prisma
+$PNPM_BIN exec prisma generate --schema=packages/db/prisma/schema.prisma
 echo "Prisma generate done"
 
 # Build @zeta/db
