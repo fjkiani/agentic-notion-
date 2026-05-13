@@ -5,9 +5,15 @@ echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
 echo "npm: $(npm --version)"
 
-# Use npx to run pnpm (avoids PATH issues with global installs)
+# Enable corepack to use pnpm from packageManager field
+corepack enable || true
+corepack prepare pnpm@9.15.0 --activate || true
+
+echo "pnpm: $(pnpm --version)"
+
+# Install workspace dependencies
 echo "Installing dependencies..."
-npx --yes pnpm@9.15.0 install
+pnpm install --frozen-lockfile
 
 echo "Skipping prisma generate (client is pre-committed to repo)"
 
