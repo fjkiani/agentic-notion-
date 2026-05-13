@@ -6,37 +6,37 @@ echo "Node: $(node --version)"
 echo "npm: $(npm --version)"
 echo "Working dir: $(pwd)"
 
-# Install pnpm via npx
+# Install pnpm globally
 echo "Installing pnpm..."
-npx --yes pnpm@9.15.0 install --ignore-scripts
+npm install -g pnpm@9.15.0
+echo "pnpm version: $(pnpm --version)"
 
-echo "Checking for prisma binary..."
-find . -name "prisma" -type f -not -path "*/node_modules/prisma/node_modules/*" 2>/dev/null | head -5 || echo "prisma not found as file"
-ls node_modules/.bin/ 2>/dev/null | head -20 || echo "no root .bin"
+# Install workspace dependencies
+echo "Running pnpm install..."
+pnpm install
+
+echo "Checking node_modules/.bin..."
+ls node_modules/.bin/ | grep -E "prisma|tsc" | head -10 || echo "checking packages..."
+ls packages/db/node_modules/.bin/ 2>/dev/null | grep prisma || echo "no prisma in packages/db"
 
 # Generate Prisma client
 echo "Generating Prisma client..."
-PRISMA_BIN=$(find . -path "*/node_modules/.bin/prisma" -not -path "*/node_modules/prisma/node_modules/*" 2>/dev/null | head -1)
-if [ -n "$PRISMA_BIN" ]; then
-  echo "Found prisma at: $PRISMA_BIN"
-  $PRISMA_BIN generate --schema=packages/db/prisma/schema.prisma
-else
-  echo "Prisma not found in node_modules, using npx..."
-  npx --yes prisma@5 generate --schema=packages/db/prisma/schema.prisma
-fi
+cd packages/db
+npx --yes prisma@5 generate
+cd ../..
 
-echo "Building packages..."
-PNPM_BIN=$(find . -path "*/node_modules/.bin/pnpm" 2>/dev/null | head -1)
-if [ -n "$PNPM_BIN" ]; then
-  $PNPM_BIN --filter @zeta/db run build
-  $PNPM_BIN --filter @zeta/shared run build
-  $PNPM_BIN --filter @zeta/types run build
-  $PNPM_BIN --filter @zeta/mcp-server run build
-else
-  npx pnpm@9.15.0 --filter @zeta/db run build
-  npx pnpm@9.15.0 --filter @zeta/shared run build
-  npx pnpm@9.15.0 --filter @zeta/types run build
-  npx pnpm@9.15.0 --filter @zeta/mcp-server run build
-fi
+# Build packages in dependency order
+echo "Building @zeta/db..."
+pnpm --filter @zeta/db run build
+
+echo "Building @zeta/shared..."
+pnpm --filter @zeta/shared run build
+
+echo "Building @zeta/types..."
+pnpm --filter @zeta/types run build
+
+echo "Building @zeta/mcp-server..."
+pnpm --filter @zeta/mcp-server run build
 
 echo "=== Build Complete ==="
+ls apps/mcp-server/dist/ | head -5
