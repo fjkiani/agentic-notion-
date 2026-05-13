@@ -16,14 +16,9 @@ fi
 echo "Running pnpm install..."
 pnpm install
 
-# Generate Prisma client
-echo "Generating Prisma client..."
-pnpm --filter @zeta/db run db:generate
-echo "Prisma client generated OK"
-
-# Build packages
-echo "Building @zeta/db..."
-pnpm --filter @zeta/db run build
+# Skip prisma generate for now - test if TypeScript build works
+echo "Building @zeta/db (without prisma generate)..."
+pnpm --filter @zeta/db run build || echo "db build failed (expected without prisma generate)"
 
 echo "Building @zeta/shared..."
 pnpm --filter @zeta/shared run build
