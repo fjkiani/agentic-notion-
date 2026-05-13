@@ -11,11 +11,7 @@ pnpm install
 echo "pnpm install done"
 
 echo "Skipping prisma generate (binary is pre-committed to repo)"
-
-# Apply database schema
-echo "Applying database schema..."
-packages/db/node_modules/.bin/prisma db push --schema=packages/db/prisma/schema.prisma --accept-data-loss
-echo "Database schema applied"
+echo "Note: Run 'prisma db push' separately to apply schema"
 
 # Build @zeta/db
 echo "Building @zeta/db..."
