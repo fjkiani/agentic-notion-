@@ -3,13 +3,23 @@ set -eo pipefail
 
 echo "=== Zeta CAID MCP Server Build ==="
 echo "Node: $(node --version)"
+echo "PATH: $PATH"
+
+# Add npm global bin to PATH
+export PATH="$(npm config get prefix)/bin:$PATH"
+echo "Updated PATH: $PATH"
 
 # Use pnpm if available
 if command -v pnpm &> /dev/null; then
   echo "pnpm: $(pnpm --version)"
 else
+  echo "Installing pnpm..."
   npm install -g pnpm@9.15.0
+  export PATH="$(npm config get prefix)/bin:$PATH"
 fi
+
+echo "pnpm location: $(which pnpm)"
+echo "pnpm version: $(pnpm --version)"
 
 # Install workspace dependencies
 pnpm install
@@ -21,15 +31,14 @@ cd packages/db
 echo "Prisma generate done"
 cd ../..
 
-# Build @zeta/db (compiles src/ to dist/)
+# Build @zeta/db
 echo "Building @zeta/db..."
 cd packages/db && ../../node_modules/.bin/tsc && cd ../..
 
-# Copy generated client to dist/ (needed for runtime imports)
+# Copy generated client to dist/
 echo "Copying generated client to dist/..."
 mkdir -p packages/db/dist/generated/client
 cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
-echo "Generated client copied"
 
 # Build @zeta/shared
 echo "Building @zeta/shared..."
