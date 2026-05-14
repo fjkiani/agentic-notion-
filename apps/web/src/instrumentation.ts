@@ -11,7 +11,8 @@ export async function register() {
     setTimeout(() => {
       setInterval(async () => {
         try {
-          const res = await fetch(`${APP_URL}/api/health`);
+          // Ping the root page — always responds even without DB
+          const res = await fetch(`${APP_URL}/`, { method: "HEAD" });
           console.log(`[CAID Web] keep-alive ping → ${res.status}`);
         } catch (err) {
           console.warn(`[CAID Web] keep-alive ping failed: ${err}`);
