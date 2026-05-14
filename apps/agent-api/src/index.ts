@@ -267,12 +267,12 @@ async function runAgentAsync(
 
 function getModelForRole(role: string): string {
   const models: Record<string, string> = {
-    ADVOCACY_PM: "google/gemma-4-26b-a4b:free",
-    RESEARCH_INTELLIGENCE: "qwen/qwen3-coder-480b-a35b:free",
-    COALITION_BUILDER: "arcee-ai/trinity-large-thinking:free",
-    STANDUP_REPORTER: "qwen/qwen3-next-80b-a3b:free",
+    ADVOCACY_PM: "openai/gpt-oss-120b:free",
+    RESEARCH_INTELLIGENCE: "openai/gpt-oss-120b:free",
+    COALITION_BUILDER: "openai/gpt-oss-120b:free",
+    STANDUP_REPORTER: "openai/gpt-oss-20b:free",
   };
-  return models[role] ?? "openrouter/free";
+  return models[role] ?? "openai/gpt-oss-20b:free";
 }
 
 // ─── Start server ─────────────────────────────────────────────────────────────
@@ -285,6 +285,19 @@ agentRegistry.initialize()
     app.listen(port, () => {
       console.log(`[CAID Agents] Server running on port ${port}`);
       console.log(`[CAID Agents] Agents: ${agentRegistry.getRoles().join(", ")}`);
+
+      // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
+      const PING_INTERVAL_MS = 9 * 60 * 1000;
+      const selfUrl = `http://localhost:${port}/health`;
+      setInterval(async () => {
+        try {
+          const res = await fetch(selfUrl);
+          console.log(`[CAID Agents] keep-alive ping → ${res.status}`);
+        } catch (err) {
+          console.warn(`[CAID Agents] keep-alive ping failed: ${err}`);
+        }
+      }, PING_INTERVAL_MS);
+      console.log(`[CAID Agents] Keep-alive enabled (ping every 9 min)`);
     });
   })
   .catch((error) => {

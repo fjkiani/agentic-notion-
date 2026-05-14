@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       allowedOrigins: ["localhost:3000", "*.onrender.com"],
     },
+    instrumentationHook: true,
   },
 };
 

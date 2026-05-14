@@ -107,5 +107,18 @@ if (transport === "stdio") {
     console.log(`[CAID MCP] ${registry.size} tools available`);
     console.log(`[CAID MCP] Health: http://localhost:${port}/health`);
     console.log(`[CAID MCP] Tools:  http://localhost:${port}/tools`);
+
+    // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
+    const PING_INTERVAL_MS = 9 * 60 * 1000; // 9 minutes
+    const selfUrl = `http://localhost:${port}/health`;
+    setInterval(async () => {
+      try {
+        const res = await fetch(selfUrl);
+        console.log(`[CAID MCP] keep-alive ping → ${res.status}`);
+      } catch (err) {
+        console.warn(`[CAID MCP] keep-alive ping failed: ${err}`);
+      }
+    }, PING_INTERVAL_MS);
+    console.log(`[CAID MCP] Keep-alive enabled (ping every 9 min)`);
   });
 }
