@@ -1,7 +1,24 @@
-// ─── MCP Client (web → MCP server) ───────────────────────────────────────────
+// ─── MCP Client (web → MCP server, client-side) ──────────────────────────────
+// For server-side use, import callMCPServer from @/lib/mcp-server instead.
 
 const MCP_URL = process.env.NEXT_PUBLIC_MCP_SERVER_URL ?? "http://localhost:3001";
 const MCP_TOKEN = process.env.MCP_AUTH_TOKEN ?? "dev-token";
+
+function parseMCPBody(raw: string): {
+  result?: { content: Array<{ text: string }>; isError?: boolean };
+  error?: { message: string };
+} {
+  const trimmed = raw.trim();
+  if (trimmed.startsWith("event:") || trimmed.startsWith("data:")) {
+    for (const line of trimmed.split("\n")) {
+      if (line.startsWith("data: ")) {
+        try { return JSON.parse(line.slice(6)); } catch { /* continue */ }
+      }
+    }
+    throw new Error("Could not parse SSE response");
+  }
+  return JSON.parse(trimmed);
+}
 
 export async function callMCPTool<T = unknown>(
   toolName: string,
@@ -11,6 +28,7 @@ export async function callMCPTool<T = unknown>(
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "Accept": "application/json, text/event-stream",
       "Authorization": `Bearer ${MCP_TOKEN}`,
     },
     body: JSON.stringify({
@@ -23,10 +41,8 @@ export async function callMCPTool<T = unknown>(
 
   if (!res.ok) throw new Error(`MCP call failed: ${res.status}`);
 
-  const data = await res.json() as {
-    result?: { content: Array<{ text: string }>; isError?: boolean };
-    error?: { message: string };
-  };
+  const raw = await res.text();
+  const data = parseMCPBody(raw);
 
   if (data.error) throw new Error(data.error.message);
   if (data.result?.isError) throw new Error(data.result.content[0]?.text ?? "Tool error");
