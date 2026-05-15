@@ -17,6 +17,7 @@ import { biomarkerTools } from "./tools/biomarker.js";
 import { patientStoryTools } from "./tools/patient-story.js";
 import { coalitionTools } from "./tools/coalition.js";
 import { searchTools } from "./tools/search.js";
+import { userTools } from "./tools/user.js";
 
 // ─── Register all tools ───────────────────────────────────────────────────────
 
@@ -32,6 +33,7 @@ registry.registerAll([
   ...patientStoryTools,
   ...coalitionTools,
   ...searchTools,
+  ...userTools,
 ]);
 
 console.log(`[CAID MCP] Registered ${registry.size} tools`);
