@@ -62,6 +62,7 @@ model Workspace {
 
   members       WorkspaceMember[]
   advocacyOrgs  AdvocacyOrg[]
+  openGrants    OpenGrant[]
   pages         Page[]
   agentRuns     AgentRun[]
   dataSources   DataSource[]
@@ -112,6 +113,9 @@ model AdvocacyOrg {
   foundedYear     Int?
   memberCount     Int?
   annualBudget    Float?
+  researchSpend   Float?
+  country         String?
+  externalId      String?          // maps to Org_ID in CSV
   headquarters    String?
   socialLinks     Json            @default("{}")
   metadata        Json            @default("{}")
@@ -125,6 +129,7 @@ model AdvocacyOrg {
   patientStories  PatientStory[]
   policyTargets   PolicyTarget[]
   contacts        OrgContact[]
+  openGrants      OpenGrant[]
   pages           Page[]
 
   @@unique([workspaceId, slug])
@@ -174,6 +179,72 @@ enum ContactRole {
   FUNDRAISING
   GENERAL
 }
+// ─────────────────────────────────────────────────────────────────────────────
+// OPEN GRANT (funding opportunities tracked per org)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model OpenGrant {
+  id                    String          @id @default(cuid())
+  orgId                 String
+  workspaceId           String
+  title                 String
+  description           String?
+  fundingAmountMin      Float?
+  fundingAmountMax      Float?
+  currency              String          @default("USD")
+  deadline              DateTime?
+  deadlineRaw           String?         // original string e.g. "LOI due Apr 14 2026"
+  applicationUrl        String?
+  status                GrantStatus     @default(OPEN)
+  grantType             GrantType       @default(RESEARCH)
+  cancerTypes           String[]        // ["GBM", "brain", "pediatric"]
+  geographicScope       String[]        // ["UK", "USA", "Global"]
+  eligibilityCriteria   String?         // free-text eligibility requirements
+  eligibilityStages     String[]        // ["early_career", "established_PI", "startup"]
+  eligibilityOrgTypes   String[]        // ["academic", "nonprofit", "biotech", "startup"]
+  requiresLOI           Boolean         @default(false)
+  loiDeadline           DateTime?
+  loiDeadlineRaw        String?
+  awardDuration         String?         // e.g. "3 years", "1 year"
+  numberOfAwards        Int?
+  contactName           String?
+  contactEmail          String?
+  notes                 String?
+  sourceNotes           String?         // raw notes from CAID CSV
+  metadata              Json            @default("{}")
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  org                   AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  workspace             Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+  @@index([workspaceId])
+  @@index([status])
+  @@index([cancerTypes])
+  @@index([geographicScope])
+  @@index([deadline])
+}
+
+enum GrantStatus {
+  OPEN
+  CLOSED
+  UPCOMING
+  ROLLING
+  UNKNOWN
+}
+
+enum GrantType {
+  RESEARCH
+  CLINICAL_TRIAL
+  FELLOWSHIP
+  SEED
+  INNOVATION
+  PATIENT_SUPPORT
+  GENERAL
+}
+
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CAMPAIGN (major advocacy campaign within an org)

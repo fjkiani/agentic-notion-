@@ -168,6 +168,9 @@ exports.Prisma.AdvocacyOrgScalarFieldEnum = {
   foundedYear: 'foundedYear',
   memberCount: 'memberCount',
   annualBudget: 'annualBudget',
+  researchSpend: 'researchSpend',
+  country: 'country',
+  externalId: 'externalId',
   headquarters: 'headquarters',
   socialLinks: 'socialLinks',
   metadata: 'metadata',
@@ -186,6 +189,39 @@ exports.Prisma.OrgContactScalarFieldEnum = {
   role: 'role',
   isPrimary: 'isPrimary',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.OpenGrantScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  workspaceId: 'workspaceId',
+  title: 'title',
+  description: 'description',
+  fundingAmountMin: 'fundingAmountMin',
+  fundingAmountMax: 'fundingAmountMax',
+  currency: 'currency',
+  deadline: 'deadline',
+  deadlineRaw: 'deadlineRaw',
+  applicationUrl: 'applicationUrl',
+  status: 'status',
+  grantType: 'grantType',
+  cancerTypes: 'cancerTypes',
+  geographicScope: 'geographicScope',
+  eligibilityCriteria: 'eligibilityCriteria',
+  eligibilityStages: 'eligibilityStages',
+  eligibilityOrgTypes: 'eligibilityOrgTypes',
+  requiresLOI: 'requiresLOI',
+  loiDeadline: 'loiDeadline',
+  loiDeadlineRaw: 'loiDeadlineRaw',
+  awardDuration: 'awardDuration',
+  numberOfAwards: 'numberOfAwards',
+  contactName: 'contactName',
+  contactEmail: 'contactEmail',
+  notes: 'notes',
+  sourceNotes: 'sourceNotes',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CampaignScalarFieldEnum = {
@@ -580,6 +616,24 @@ exports.ContactRole = exports.$Enums.ContactRole = {
   GENERAL: 'GENERAL'
 };
 
+exports.GrantStatus = exports.$Enums.GrantStatus = {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED',
+  UPCOMING: 'UPCOMING',
+  ROLLING: 'ROLLING',
+  UNKNOWN: 'UNKNOWN'
+};
+
+exports.GrantType = exports.$Enums.GrantType = {
+  RESEARCH: 'RESEARCH',
+  CLINICAL_TRIAL: 'CLINICAL_TRIAL',
+  FELLOWSHIP: 'FELLOWSHIP',
+  SEED: 'SEED',
+  INNOVATION: 'INNOVATION',
+  PATIENT_SUPPORT: 'PATIENT_SUPPORT',
+  GENERAL: 'GENERAL'
+};
+
 exports.CampaignStatus = exports.$Enums.CampaignStatus = {
   PLANNING: 'PLANNING',
   ACTIVE: 'ACTIVE',
@@ -763,6 +817,7 @@ exports.Prisma.ModelName = {
   WorkspaceMember: 'WorkspaceMember',
   AdvocacyOrg: 'AdvocacyOrg',
   OrgContact: 'OrgContact',
+  OpenGrant: 'OpenGrant',
   Campaign: 'Campaign',
   Initiative: 'Initiative',
   Task: 'Task',

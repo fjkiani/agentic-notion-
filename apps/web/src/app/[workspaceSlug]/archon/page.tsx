@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useParams } from "next/navigation";
+
+const AGENT_API = process.env.NEXT_PUBLIC_AGENT_API_URL ?? "http://localhost:3002";
 
 const WORKFLOWS = [
   {
@@ -54,39 +57,157 @@ const WORKFLOWS = [
   },
 ];
 
+interface LogLine {
+  type: "stdout" | "stderr" | "info" | "error" | "done" | "approval";
+  text: string;
+  nodeId: string;
+  ts: string;
+}
+
 interface WorkflowRun {
   id: string;
+  runId?: string;
   workflow: string;
   message: string;
-  status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED";
-  prUrl?: string;
-  log: string[];
+  status: "PENDING" | "RUNNING" | "AWAITING_APPROVAL" | "COMPLETED" | "FAILED";
+  log: LogLine[];
   startedAt: string;
+  pendingApproval?: { message: string; nodeId: string };
+}
+
+function LogTerminal({ run, onApprove }: { run: WorkflowRun; onApprove: (runId: string, approved: boolean, feedback?: string) => void }) {
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const [feedback, setFeedback] = useState("");
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [run.log.length]);
+
+  const lineColor = (type: LogLine["type"]) => {
+    switch (type) {
+      case "stdout": return "text-green-400";
+      case "stderr": return "text-yellow-400";
+      case "error": return "text-red-400";
+      case "info": return "text-blue-300";
+      case "done": return "text-purple-300 font-bold";
+      case "approval": return "text-orange-300 font-bold";
+      default: return "text-gray-300";
+    }
+  };
+
+  return (
+    <div className="bg-gray-950 rounded-lg border border-gray-800 overflow-hidden">
+      {/* Terminal header */}
+      <div className="flex items-center gap-2 px-4 py-2 bg-gray-900 border-b border-gray-800">
+        <div className="w-3 h-3 rounded-full bg-red-500" />
+        <div className="w-3 h-3 rounded-full bg-yellow-500" />
+        <div className="w-3 h-3 rounded-full bg-green-500" />
+        <span className="ml-2 text-xs text-gray-400 font-mono">archon — {run.workflow}</span>
+        <span className={`ml-auto text-xs px-2 py-0.5 rounded-full font-mono ${
+          run.status === "COMPLETED" ? "bg-green-900 text-green-300" :
+          run.status === "RUNNING" ? "bg-blue-900 text-blue-300" :
+          run.status === "AWAITING_APPROVAL" ? "bg-orange-900 text-orange-300" :
+          run.status === "FAILED" ? "bg-red-900 text-red-300" :
+          "bg-gray-800 text-gray-400"
+        }`}>
+          {run.status}
+        </span>
+      </div>
+
+      {/* Log output */}
+      <div className="p-4 font-mono text-xs max-h-80 overflow-y-auto space-y-0.5">
+        {run.log.map((line, i) => (
+          <div key={i} className={`${lineColor(line.type)} leading-relaxed`}>
+            <span className="text-gray-600 mr-2 select-none">
+              {new Date(line.ts).toLocaleTimeString()}
+            </span>
+            {line.nodeId !== "runner" && (
+              <span className="text-gray-500 mr-2">[{line.nodeId}]</span>
+            )}
+            {line.text}
+          </div>
+        ))}
+        {run.status === "RUNNING" && (
+          <div className="text-gray-500 animate-pulse">▋</div>
+        )}
+        <div ref={bottomRef} />
+      </div>
+
+      {/* Approval gate UI */}
+      {run.status === "AWAITING_APPROVAL" && run.pendingApproval && run.runId && (
+        <div className="border-t border-orange-900 bg-orange-950 p-4">
+          <p className="text-orange-300 text-sm font-medium mb-2">
+            Approval Required — {run.pendingApproval.nodeId}
+          </p>
+          <p className="text-orange-200 text-xs mb-3">{run.pendingApproval.message}</p>
+          <textarea
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+            placeholder="Optional feedback or instructions..."
+            className="w-full bg-gray-900 border border-orange-800 rounded p-2 text-xs text-gray-200 resize-none mb-3 focus:outline-none focus:ring-1 focus:ring-orange-500"
+            rows={2}
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={() => { onApprove(run.runId!, true, feedback || undefined); setFeedback(""); }}
+              className="flex-1 bg-green-700 hover:bg-green-600 text-white text-xs py-2 rounded font-medium transition-colors"
+            >
+              Approve & Continue
+            </button>
+            <button
+              onClick={() => { onApprove(run.runId!, false, feedback || "Rejected by user"); setFeedback(""); }}
+              className="flex-1 bg-red-800 hover:bg-red-700 text-white text-xs py-2 rounded font-medium transition-colors"
+            >
+              Reject
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function ArchonPage() {
+  const params = useParams();
+  const workspaceSlug = params?.workspaceSlug as string;
+
   const [selectedWorkflow, setSelectedWorkflow] = useState("add-feature");
   const [message, setMessage] = useState("");
   const [runs, setRuns] = useState<WorkflowRun[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  const selectedWf = WORKFLOWS.find((w) => w.id === selectedWorkflow);
+
+  const appendLog = useCallback((runId: string, line: LogLine) => {
+    setRuns((prev) =>
+      prev.map((r) => r.id === runId ? { ...r, log: [...r.log, line] } : r)
+    );
+  }, []);
+
+  const updateRunStatus = useCallback((runId: string, status: WorkflowRun["status"], extra?: Partial<WorkflowRun>) => {
+    setRuns((prev) =>
+      prev.map((r) => r.id === runId ? { ...r, status, ...extra } : r)
+    );
+  }, []);
 
   const handleSubmit = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() || isSubmitting) return;
     setIsSubmitting(true);
+    setApiError(null);
 
-    // In production, this would call the Archon API
-    // For now, we simulate the workflow submission
+    const localId = `archon-${Date.now()}`;
     const run: WorkflowRun = {
-      id: `archon-${Date.now()}`,
+      id: localId,
       workflow: selectedWorkflow,
       message,
       status: "PENDING",
-      log: [
-        `[${new Date().toISOString()}] Workflow submitted: ${selectedWorkflow}`,
-        `[${new Date().toISOString()}] Message: ${message}`,
-        `[${new Date().toISOString()}] Archon will explore the codebase, plan the implementation, and create a PR.`,
-        `[${new Date().toISOString()}] Run: archon run ${selectedWorkflow} --message "${message}"`,
-      ],
+      log: [{
+        type: "info",
+        text: `Launching workflow: ${selectedWorkflow}`,
+        nodeId: "runner",
+        ts: new Date().toISOString(),
+      }],
       startedAt: new Date().toISOString(),
     };
 
@@ -94,28 +215,89 @@ export default function ArchonPage() {
     setMessage("");
     setIsSubmitting(false);
 
-    // Simulate workflow progression
-    setTimeout(() => {
+    // Open SSE connection to real Archon runner
+    try {
+      const resp = await fetch(`${AGENT_API}/api/archon/run`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ workflow: selectedWorkflow, message }),
+      });
+
+      if (!resp.ok || !resp.body) {
+        const errText = await resp.text().catch(() => resp.statusText);
+        setApiError(`Archon API error: ${resp.status} — ${errText}`);
+        updateRunStatus(localId, "FAILED");
+        return;
+      }
+
+      updateRunStatus(localId, "RUNNING");
+
+      // Read SSE stream
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+
+        let eventType = "log";
+        for (const line of lines) {
+          if (line.startsWith("event: ")) {
+            eventType = line.slice(7).trim();
+          } else if (line.startsWith("data: ")) {
+            try {
+              const payload = JSON.parse(line.slice(6)) as LogLine & { runId?: string; message?: string };
+
+              if (eventType === "done") {
+                updateRunStatus(localId, payload.text?.startsWith("SUCCESS") ? "COMPLETED" : "FAILED");
+                appendLog(localId, { ...payload, type: "done" });
+              } else if (eventType === "approval") {
+                updateRunStatus(localId, "AWAITING_APPROVAL", {
+                  runId: payload.runId,
+                  pendingApproval: { message: payload.message ?? "", nodeId: payload.nodeId },
+                });
+                appendLog(localId, { ...payload, type: "approval", text: `APPROVAL REQUIRED: ${payload.message ?? ""}` });
+              } else {
+                appendLog(localId, payload);
+              }
+            } catch {
+              // Non-JSON line, skip
+            }
+            eventType = "log"; // reset
+          }
+        }
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setApiError(`Connection error: ${msg}`);
+      updateRunStatus(localId, "FAILED");
+      appendLog(localId, { type: "error", text: msg, nodeId: "runner", ts: new Date().toISOString() });
+    }
+  };
+
+  const handleApprove = async (runId: string, approved: boolean, feedback?: string) => {
+    try {
+      await fetch(`${AGENT_API}/api/archon/run/${runId}/approve`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ approved, feedback }),
+      });
       setRuns((prev) =>
         prev.map((r) =>
-          r.id === run.id
-            ? {
-                ...r,
-                status: "RUNNING",
-                log: [
-                  ...r.log,
-                  `[${new Date().toISOString()}] Archon: Exploring CAID codebase...`,
-                  `[${new Date().toISOString()}] Archon: Loading zeta-codebase skill...`,
-                  `[${new Date().toISOString()}] Archon: Planning implementation...`,
-                ],
-              }
+          r.runId === runId
+            ? { ...r, status: "RUNNING", pendingApproval: undefined }
             : r
         )
       );
-    }, 2000);
+    } catch (err) {
+      setApiError(`Approval error: ${err}`);
+    }
   };
-
-  const selectedWf = WORKFLOWS.find((w) => w.id === selectedWorkflow);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -125,7 +307,10 @@ export default function ArchonPage() {
             <span className="text-2xl">⚡</span>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Archon Launcher</h1>
-              <p className="text-sm text-gray-500">Extend CAID from inside CAID. Describe a feature → Archon builds it.</p>
+              <p className="text-sm text-gray-500">
+                Extend CAID from inside CAID. Describe a feature → Archon builds it.
+                <span className="ml-2 text-xs text-green-600 font-medium">● Live execution</span>
+              </p>
             </div>
           </div>
         </div>
@@ -156,6 +341,12 @@ export default function ArchonPage() {
 
         {/* Launcher */}
         <div className="lg:col-span-2 space-y-4">
+          {apiError && (
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm text-red-700">
+              {apiError}
+            </div>
+          )}
+
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-2xl">{selectedWf?.icon}</span>
@@ -181,6 +372,7 @@ export default function ArchonPage() {
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) handleSubmit(); }}
               placeholder={`Describe what you want to ${selectedWf?.name.toLowerCase()}...`}
               className="w-full border border-gray-200 rounded-lg p-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-purple-300"
               rows={4}
@@ -189,13 +381,14 @@ export default function ArchonPage() {
             <div className="flex items-center justify-between mt-3">
               <p className="text-xs text-gray-400">
                 Archon will explore the codebase, plan, implement, validate, and create a PR.
+                <span className="ml-1 text-gray-300">Cmd+Enter to launch.</span>
               </p>
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting || !message.trim()}
                 className="bg-purple-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 disabled:opacity-50 transition-colors"
               >
-                {isSubmitting ? "Submitting..." : "Launch Workflow"}
+                {isSubmitting ? "Launching..." : "Launch Workflow"}
               </button>
             </div>
           </div>
@@ -204,60 +397,42 @@ export default function ArchonPage() {
           <div className="bg-purple-50 rounded-xl border border-purple-200 p-4">
             <h3 className="font-medium text-purple-900 mb-2 text-sm">How Archon works</h3>
             <div className="space-y-1 text-xs text-purple-700">
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">1</span>
-                <span>Archon reads the CAID codebase and loads the zeta-codebase skill</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">2</span>
-                <span>Creates an implementation plan — you review and approve</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">3</span>
-                <span>Implements the feature following CAID conventions</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">4</span>
-                <span>Runs validation (typecheck + lint + build)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">5</span>
-                <span>Creates a PR → you merge → Render auto-deploys</span>
-              </div>
+              {[
+                "Reads the CAID codebase and loads the zeta-codebase skill",
+                "Creates an implementation plan — you review and approve",
+                "Implements the feature following CAID conventions",
+                "Runs validation (typecheck + lint + build) — self-heals on failure",
+                "Creates a PR → you merge → Render auto-deploys",
+              ].map((step, i) => (
+                <div key={i} className="flex items-center gap-2">
+                  <span className="w-5 h-5 rounded-full bg-purple-200 flex items-center justify-center text-purple-800 font-bold flex-shrink-0">
+                    {i + 1}
+                  </span>
+                  <span>{step}</span>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Run history */}
           {runs.length > 0 && (
-            <div className="space-y-3">
-              <h3 className="font-semibold text-gray-700 text-sm">Recent Runs</h3>
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-700 text-sm">
+                Run History ({runs.length})
+              </h3>
               {runs.map((run) => (
-                <div key={run.id} className="bg-white rounded-xl border border-gray-200 p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-gray-900">{run.workflow}</span>
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        run.status === "COMPLETED" ? "bg-green-100 text-green-700" :
-                        run.status === "RUNNING" ? "bg-blue-100 text-blue-700" :
-                        run.status === "FAILED" ? "bg-red-100 text-red-700" :
-                        "bg-gray-100 text-gray-600"
-                      }`}>
-                        {run.status}
-                      </span>
-                    </div>
-                    {run.prUrl && (
-                      <a href={run.prUrl} className="text-xs text-blue-600 hover:underline">View PR →</a>
+                <div key={run.id} className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium text-gray-900">
+                      {WORKFLOWS.find((w) => w.id === run.workflow)?.icon} {run.workflow}
+                    </span>
+                    <span className="text-xs text-gray-400">—</span>
+                    <span className="text-xs text-gray-500 truncate max-w-xs">{run.message}</span>
+                    {run.runId && (
+                      <span className="ml-auto text-xs text-gray-400 font-mono">{run.runId.slice(0, 16)}</span>
                     )}
                   </div>
-                  <p className="text-xs text-gray-500 mb-2">{run.message}</p>
-                  <div className="bg-gray-900 rounded-lg p-3 font-mono text-xs text-green-400 max-h-32 overflow-y-auto">
-                    {run.log.map((line, i) => (
-                      <div key={i} className="opacity-80">{line}</div>
-                    ))}
-                    {run.status === "RUNNING" && (
-                      <div className="text-gray-500 animate-pulse">Running...</div>
-                    )}
-                  </div>
+                  <LogTerminal run={run} onApprove={handleApprove} />
                 </div>
               ))}
             </div>

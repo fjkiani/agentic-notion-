@@ -39,6 +39,11 @@ export type AdvocacyOrg = $Result.DefaultSelection<Prisma.$AdvocacyOrgPayload>
  */
 export type OrgContact = $Result.DefaultSelection<Prisma.$OrgContactPayload>
 /**
+ * Model OpenGrant
+ * 
+ */
+export type OpenGrant = $Result.DefaultSelection<Prisma.$OpenGrantPayload>
+/**
  * Model Campaign
  * 
  */
@@ -196,6 +201,30 @@ export const ContactRole: {
 };
 
 export type ContactRole = (typeof ContactRole)[keyof typeof ContactRole]
+
+
+export const GrantStatus: {
+  OPEN: 'OPEN',
+  CLOSED: 'CLOSED',
+  UPCOMING: 'UPCOMING',
+  ROLLING: 'ROLLING',
+  UNKNOWN: 'UNKNOWN'
+};
+
+export type GrantStatus = (typeof GrantStatus)[keyof typeof GrantStatus]
+
+
+export const GrantType: {
+  RESEARCH: 'RESEARCH',
+  CLINICAL_TRIAL: 'CLINICAL_TRIAL',
+  FELLOWSHIP: 'FELLOWSHIP',
+  SEED: 'SEED',
+  INNOVATION: 'INNOVATION',
+  PATIENT_SUPPORT: 'PATIENT_SUPPORT',
+  GENERAL: 'GENERAL'
+};
+
+export type GrantType = (typeof GrantType)[keyof typeof GrantType]
 
 
 export const CampaignStatus: {
@@ -453,6 +482,14 @@ export type ContactRole = $Enums.ContactRole
 
 export const ContactRole: typeof $Enums.ContactRole
 
+export type GrantStatus = $Enums.GrantStatus
+
+export const GrantStatus: typeof $Enums.GrantStatus
+
+export type GrantType = $Enums.GrantType
+
+export const GrantType: typeof $Enums.GrantType
+
 export type CampaignStatus = $Enums.CampaignStatus
 
 export const CampaignStatus: typeof $Enums.CampaignStatus
@@ -701,6 +738,16 @@ export class PrismaClient<
     * ```
     */
   get orgContact(): Prisma.OrgContactDelegate<ExtArgs>;
+
+  /**
+   * `prisma.openGrant`: Exposes CRUD operations for the **OpenGrant** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OpenGrants
+    * const openGrants = await prisma.openGrant.findMany()
+    * ```
+    */
+  get openGrant(): Prisma.OpenGrantDelegate<ExtArgs>;
 
   /**
    * `prisma.campaign`: Exposes CRUD operations for the **Campaign** model.
@@ -1347,6 +1394,7 @@ export namespace Prisma {
     WorkspaceMember: 'WorkspaceMember',
     AdvocacyOrg: 'AdvocacyOrg',
     OrgContact: 'OrgContact',
+    OpenGrant: 'OpenGrant',
     Campaign: 'Campaign',
     Initiative: 'Initiative',
     Task: 'Task',
@@ -1382,7 +1430,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog"
+      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "openGrant" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1733,6 +1781,76 @@ export namespace Prisma {
           count: {
             args: Prisma.OrgContactCountArgs<ExtArgs>
             result: $Utils.Optional<OrgContactCountAggregateOutputType> | number
+          }
+        }
+      }
+      OpenGrant: {
+        payload: Prisma.$OpenGrantPayload<ExtArgs>
+        fields: Prisma.OpenGrantFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OpenGrantFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OpenGrantFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          findFirst: {
+            args: Prisma.OpenGrantFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OpenGrantFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          findMany: {
+            args: Prisma.OpenGrantFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>[]
+          }
+          create: {
+            args: Prisma.OpenGrantCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          createMany: {
+            args: Prisma.OpenGrantCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OpenGrantCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>[]
+          }
+          delete: {
+            args: Prisma.OpenGrantDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          update: {
+            args: Prisma.OpenGrantUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          deleteMany: {
+            args: Prisma.OpenGrantDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OpenGrantUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OpenGrantUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OpenGrantPayload>
+          }
+          aggregate: {
+            args: Prisma.OpenGrantAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOpenGrant>
+          }
+          groupBy: {
+            args: Prisma.OpenGrantGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OpenGrantGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OpenGrantCountArgs<ExtArgs>
+            result: $Utils.Optional<OpenGrantCountAggregateOutputType> | number
           }
         }
       }
@@ -3384,6 +3502,7 @@ export namespace Prisma {
   export type WorkspaceCountOutputType = {
     members: number
     advocacyOrgs: number
+    openGrants: number
     pages: number
     agentRuns: number
     dataSources: number
@@ -3393,6 +3512,7 @@ export namespace Prisma {
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | WorkspaceCountOutputTypeCountMembersArgs
     advocacyOrgs?: boolean | WorkspaceCountOutputTypeCountAdvocacyOrgsArgs
+    openGrants?: boolean | WorkspaceCountOutputTypeCountOpenGrantsArgs
     pages?: boolean | WorkspaceCountOutputTypeCountPagesArgs
     agentRuns?: boolean | WorkspaceCountOutputTypeCountAgentRunsArgs
     dataSources?: boolean | WorkspaceCountOutputTypeCountDataSourcesArgs
@@ -3422,6 +3542,13 @@ export namespace Prisma {
    */
   export type WorkspaceCountOutputTypeCountAdvocacyOrgsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AdvocacyOrgWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountOpenGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OpenGrantWhereInput
   }
 
   /**
@@ -3463,6 +3590,7 @@ export namespace Prisma {
     patientStories: number
     policyTargets: number
     contacts: number
+    openGrants: number
     pages: number
   }
 
@@ -3472,6 +3600,7 @@ export namespace Prisma {
     patientStories?: boolean | AdvocacyOrgCountOutputTypeCountPatientStoriesArgs
     policyTargets?: boolean | AdvocacyOrgCountOutputTypeCountPolicyTargetsArgs
     contacts?: boolean | AdvocacyOrgCountOutputTypeCountContactsArgs
+    openGrants?: boolean | AdvocacyOrgCountOutputTypeCountOpenGrantsArgs
     pages?: boolean | AdvocacyOrgCountOutputTypeCountPagesArgs
   }
 
@@ -3519,6 +3648,13 @@ export namespace Prisma {
    */
   export type AdvocacyOrgCountOutputTypeCountContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OrgContactWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountOpenGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OpenGrantWhereInput
   }
 
   /**
@@ -5243,6 +5379,7 @@ export namespace Prisma {
     updatedAt?: boolean
     members?: boolean | Workspace$membersArgs<ExtArgs>
     advocacyOrgs?: boolean | Workspace$advocacyOrgsArgs<ExtArgs>
+    openGrants?: boolean | Workspace$openGrantsArgs<ExtArgs>
     pages?: boolean | Workspace$pagesArgs<ExtArgs>
     agentRuns?: boolean | Workspace$agentRunsArgs<ExtArgs>
     dataSources?: boolean | Workspace$dataSourcesArgs<ExtArgs>
@@ -5275,6 +5412,7 @@ export namespace Prisma {
   export type WorkspaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     members?: boolean | Workspace$membersArgs<ExtArgs>
     advocacyOrgs?: boolean | Workspace$advocacyOrgsArgs<ExtArgs>
+    openGrants?: boolean | Workspace$openGrantsArgs<ExtArgs>
     pages?: boolean | Workspace$pagesArgs<ExtArgs>
     agentRuns?: boolean | Workspace$agentRunsArgs<ExtArgs>
     dataSources?: boolean | Workspace$dataSourcesArgs<ExtArgs>
@@ -5288,6 +5426,7 @@ export namespace Prisma {
     objects: {
       members: Prisma.$WorkspaceMemberPayload<ExtArgs>[]
       advocacyOrgs: Prisma.$AdvocacyOrgPayload<ExtArgs>[]
+      openGrants: Prisma.$OpenGrantPayload<ExtArgs>[]
       pages: Prisma.$PagePayload<ExtArgs>[]
       agentRuns: Prisma.$AgentRunPayload<ExtArgs>[]
       dataSources: Prisma.$DataSourcePayload<ExtArgs>[]
@@ -5668,6 +5807,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     members<T extends Workspace$membersArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkspaceMemberPayload<ExtArgs>, T, "findMany"> | Null>
     advocacyOrgs<T extends Workspace$advocacyOrgsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$advocacyOrgsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findMany"> | Null>
+    openGrants<T extends Workspace$openGrantsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$openGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findMany"> | Null>
     pages<T extends Workspace$pagesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PagePayload<ExtArgs>, T, "findMany"> | Null>
     agentRuns<T extends Workspace$agentRunsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$agentRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentRunPayload<ExtArgs>, T, "findMany"> | Null>
     dataSources<T extends Workspace$dataSourcesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$dataSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findMany"> | Null>
@@ -6060,6 +6200,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AdvocacyOrgScalarFieldEnum | AdvocacyOrgScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.openGrants
+   */
+  export type Workspace$openGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    where?: OpenGrantWhereInput
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    cursor?: OpenGrantWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OpenGrantScalarFieldEnum | OpenGrantScalarFieldEnum[]
   }
 
   /**
@@ -7112,12 +7272,14 @@ export namespace Prisma {
     foundedYear: number | null
     memberCount: number | null
     annualBudget: number | null
+    researchSpend: number | null
   }
 
   export type AdvocacyOrgSumAggregateOutputType = {
     foundedYear: number | null
     memberCount: number | null
     annualBudget: number | null
+    researchSpend: number | null
   }
 
   export type AdvocacyOrgMinAggregateOutputType = {
@@ -7135,6 +7297,9 @@ export namespace Prisma {
     foundedYear: number | null
     memberCount: number | null
     annualBudget: number | null
+    researchSpend: number | null
+    country: string | null
+    externalId: string | null
     headquarters: string | null
     status: $Enums.OrgStatus | null
     createdAt: Date | null
@@ -7156,6 +7321,9 @@ export namespace Prisma {
     foundedYear: number | null
     memberCount: number | null
     annualBudget: number | null
+    researchSpend: number | null
+    country: string | null
+    externalId: string | null
     headquarters: string | null
     status: $Enums.OrgStatus | null
     createdAt: Date | null
@@ -7178,6 +7346,9 @@ export namespace Prisma {
     foundedYear: number
     memberCount: number
     annualBudget: number
+    researchSpend: number
+    country: number
+    externalId: number
     headquarters: number
     socialLinks: number
     metadata: number
@@ -7192,12 +7363,14 @@ export namespace Prisma {
     foundedYear?: true
     memberCount?: true
     annualBudget?: true
+    researchSpend?: true
   }
 
   export type AdvocacyOrgSumAggregateInputType = {
     foundedYear?: true
     memberCount?: true
     annualBudget?: true
+    researchSpend?: true
   }
 
   export type AdvocacyOrgMinAggregateInputType = {
@@ -7215,6 +7388,9 @@ export namespace Prisma {
     foundedYear?: true
     memberCount?: true
     annualBudget?: true
+    researchSpend?: true
+    country?: true
+    externalId?: true
     headquarters?: true
     status?: true
     createdAt?: true
@@ -7236,6 +7412,9 @@ export namespace Prisma {
     foundedYear?: true
     memberCount?: true
     annualBudget?: true
+    researchSpend?: true
+    country?: true
+    externalId?: true
     headquarters?: true
     status?: true
     createdAt?: true
@@ -7258,6 +7437,9 @@ export namespace Prisma {
     foundedYear?: true
     memberCount?: true
     annualBudget?: true
+    researchSpend?: true
+    country?: true
+    externalId?: true
     headquarters?: true
     socialLinks?: true
     metadata?: true
@@ -7369,6 +7551,9 @@ export namespace Prisma {
     foundedYear: number | null
     memberCount: number | null
     annualBudget: number | null
+    researchSpend: number | null
+    country: string | null
+    externalId: string | null
     headquarters: string | null
     socialLinks: JsonValue
     metadata: JsonValue
@@ -7412,6 +7597,9 @@ export namespace Prisma {
     foundedYear?: boolean
     memberCount?: boolean
     annualBudget?: boolean
+    researchSpend?: boolean
+    country?: boolean
+    externalId?: boolean
     headquarters?: boolean
     socialLinks?: boolean
     metadata?: boolean
@@ -7424,6 +7612,7 @@ export namespace Prisma {
     patientStories?: boolean | AdvocacyOrg$patientStoriesArgs<ExtArgs>
     policyTargets?: boolean | AdvocacyOrg$policyTargetsArgs<ExtArgs>
     contacts?: boolean | AdvocacyOrg$contactsArgs<ExtArgs>
+    openGrants?: boolean | AdvocacyOrg$openGrantsArgs<ExtArgs>
     pages?: boolean | AdvocacyOrg$pagesArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["advocacyOrg"]>
@@ -7444,6 +7633,9 @@ export namespace Prisma {
     foundedYear?: boolean
     memberCount?: boolean
     annualBudget?: boolean
+    researchSpend?: boolean
+    country?: boolean
+    externalId?: boolean
     headquarters?: boolean
     socialLinks?: boolean
     metadata?: boolean
@@ -7469,6 +7661,9 @@ export namespace Prisma {
     foundedYear?: boolean
     memberCount?: boolean
     annualBudget?: boolean
+    researchSpend?: boolean
+    country?: boolean
+    externalId?: boolean
     headquarters?: boolean
     socialLinks?: boolean
     metadata?: boolean
@@ -7484,6 +7679,7 @@ export namespace Prisma {
     patientStories?: boolean | AdvocacyOrg$patientStoriesArgs<ExtArgs>
     policyTargets?: boolean | AdvocacyOrg$policyTargetsArgs<ExtArgs>
     contacts?: boolean | AdvocacyOrg$contactsArgs<ExtArgs>
+    openGrants?: boolean | AdvocacyOrg$openGrantsArgs<ExtArgs>
     pages?: boolean | AdvocacyOrg$pagesArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -7500,6 +7696,7 @@ export namespace Prisma {
       patientStories: Prisma.$PatientStoryPayload<ExtArgs>[]
       policyTargets: Prisma.$PolicyTargetPayload<ExtArgs>[]
       contacts: Prisma.$OrgContactPayload<ExtArgs>[]
+      openGrants: Prisma.$OpenGrantPayload<ExtArgs>[]
       pages: Prisma.$PagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7518,6 +7715,9 @@ export namespace Prisma {
       foundedYear: number | null
       memberCount: number | null
       annualBudget: number | null
+      researchSpend: number | null
+      country: string | null
+      externalId: string | null
       headquarters: string | null
       socialLinks: Prisma.JsonValue
       metadata: Prisma.JsonValue
@@ -7894,6 +8094,7 @@ export namespace Prisma {
     patientStories<T extends AdvocacyOrg$patientStoriesArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$patientStoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PatientStoryPayload<ExtArgs>, T, "findMany"> | Null>
     policyTargets<T extends AdvocacyOrg$policyTargetsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$policyTargetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PolicyTargetPayload<ExtArgs>, T, "findMany"> | Null>
     contacts<T extends AdvocacyOrg$contactsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgContactPayload<ExtArgs>, T, "findMany"> | Null>
+    openGrants<T extends AdvocacyOrg$openGrantsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$openGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findMany"> | Null>
     pages<T extends AdvocacyOrg$pagesArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PagePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7939,6 +8140,9 @@ export namespace Prisma {
     readonly foundedYear: FieldRef<"AdvocacyOrg", 'Int'>
     readonly memberCount: FieldRef<"AdvocacyOrg", 'Int'>
     readonly annualBudget: FieldRef<"AdvocacyOrg", 'Float'>
+    readonly researchSpend: FieldRef<"AdvocacyOrg", 'Float'>
+    readonly country: FieldRef<"AdvocacyOrg", 'String'>
+    readonly externalId: FieldRef<"AdvocacyOrg", 'String'>
     readonly headquarters: FieldRef<"AdvocacyOrg", 'String'>
     readonly socialLinks: FieldRef<"AdvocacyOrg", 'Json'>
     readonly metadata: FieldRef<"AdvocacyOrg", 'Json'>
@@ -8360,6 +8564,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OrgContactScalarFieldEnum | OrgContactScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.openGrants
+   */
+  export type AdvocacyOrg$openGrantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    where?: OpenGrantWhereInput
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    cursor?: OpenGrantWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OpenGrantScalarFieldEnum | OpenGrantScalarFieldEnum[]
   }
 
   /**
@@ -9375,6 +9599,1267 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: OrgContactInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OpenGrant
+   */
+
+  export type AggregateOpenGrant = {
+    _count: OpenGrantCountAggregateOutputType | null
+    _avg: OpenGrantAvgAggregateOutputType | null
+    _sum: OpenGrantSumAggregateOutputType | null
+    _min: OpenGrantMinAggregateOutputType | null
+    _max: OpenGrantMaxAggregateOutputType | null
+  }
+
+  export type OpenGrantAvgAggregateOutputType = {
+    fundingAmountMin: number | null
+    fundingAmountMax: number | null
+    numberOfAwards: number | null
+  }
+
+  export type OpenGrantSumAggregateOutputType = {
+    fundingAmountMin: number | null
+    fundingAmountMax: number | null
+    numberOfAwards: number | null
+  }
+
+  export type OpenGrantMinAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    workspaceId: string | null
+    title: string | null
+    description: string | null
+    fundingAmountMin: number | null
+    fundingAmountMax: number | null
+    currency: string | null
+    deadline: Date | null
+    deadlineRaw: string | null
+    applicationUrl: string | null
+    status: $Enums.GrantStatus | null
+    grantType: $Enums.GrantType | null
+    eligibilityCriteria: string | null
+    requiresLOI: boolean | null
+    loiDeadline: Date | null
+    loiDeadlineRaw: string | null
+    awardDuration: string | null
+    numberOfAwards: number | null
+    contactName: string | null
+    contactEmail: string | null
+    notes: string | null
+    sourceNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OpenGrantMaxAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    workspaceId: string | null
+    title: string | null
+    description: string | null
+    fundingAmountMin: number | null
+    fundingAmountMax: number | null
+    currency: string | null
+    deadline: Date | null
+    deadlineRaw: string | null
+    applicationUrl: string | null
+    status: $Enums.GrantStatus | null
+    grantType: $Enums.GrantType | null
+    eligibilityCriteria: string | null
+    requiresLOI: boolean | null
+    loiDeadline: Date | null
+    loiDeadlineRaw: string | null
+    awardDuration: string | null
+    numberOfAwards: number | null
+    contactName: string | null
+    contactEmail: string | null
+    notes: string | null
+    sourceNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OpenGrantCountAggregateOutputType = {
+    id: number
+    orgId: number
+    workspaceId: number
+    title: number
+    description: number
+    fundingAmountMin: number
+    fundingAmountMax: number
+    currency: number
+    deadline: number
+    deadlineRaw: number
+    applicationUrl: number
+    status: number
+    grantType: number
+    cancerTypes: number
+    geographicScope: number
+    eligibilityCriteria: number
+    eligibilityStages: number
+    eligibilityOrgTypes: number
+    requiresLOI: number
+    loiDeadline: number
+    loiDeadlineRaw: number
+    awardDuration: number
+    numberOfAwards: number
+    contactName: number
+    contactEmail: number
+    notes: number
+    sourceNotes: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OpenGrantAvgAggregateInputType = {
+    fundingAmountMin?: true
+    fundingAmountMax?: true
+    numberOfAwards?: true
+  }
+
+  export type OpenGrantSumAggregateInputType = {
+    fundingAmountMin?: true
+    fundingAmountMax?: true
+    numberOfAwards?: true
+  }
+
+  export type OpenGrantMinAggregateInputType = {
+    id?: true
+    orgId?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    fundingAmountMin?: true
+    fundingAmountMax?: true
+    currency?: true
+    deadline?: true
+    deadlineRaw?: true
+    applicationUrl?: true
+    status?: true
+    grantType?: true
+    eligibilityCriteria?: true
+    requiresLOI?: true
+    loiDeadline?: true
+    loiDeadlineRaw?: true
+    awardDuration?: true
+    numberOfAwards?: true
+    contactName?: true
+    contactEmail?: true
+    notes?: true
+    sourceNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OpenGrantMaxAggregateInputType = {
+    id?: true
+    orgId?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    fundingAmountMin?: true
+    fundingAmountMax?: true
+    currency?: true
+    deadline?: true
+    deadlineRaw?: true
+    applicationUrl?: true
+    status?: true
+    grantType?: true
+    eligibilityCriteria?: true
+    requiresLOI?: true
+    loiDeadline?: true
+    loiDeadlineRaw?: true
+    awardDuration?: true
+    numberOfAwards?: true
+    contactName?: true
+    contactEmail?: true
+    notes?: true
+    sourceNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OpenGrantCountAggregateInputType = {
+    id?: true
+    orgId?: true
+    workspaceId?: true
+    title?: true
+    description?: true
+    fundingAmountMin?: true
+    fundingAmountMax?: true
+    currency?: true
+    deadline?: true
+    deadlineRaw?: true
+    applicationUrl?: true
+    status?: true
+    grantType?: true
+    cancerTypes?: true
+    geographicScope?: true
+    eligibilityCriteria?: true
+    eligibilityStages?: true
+    eligibilityOrgTypes?: true
+    requiresLOI?: true
+    loiDeadline?: true
+    loiDeadlineRaw?: true
+    awardDuration?: true
+    numberOfAwards?: true
+    contactName?: true
+    contactEmail?: true
+    notes?: true
+    sourceNotes?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OpenGrantAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OpenGrant to aggregate.
+     */
+    where?: OpenGrantWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpenGrants to fetch.
+     */
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OpenGrantWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpenGrants from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpenGrants.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OpenGrants
+    **/
+    _count?: true | OpenGrantCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OpenGrantAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OpenGrantSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OpenGrantMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OpenGrantMaxAggregateInputType
+  }
+
+  export type GetOpenGrantAggregateType<T extends OpenGrantAggregateArgs> = {
+        [P in keyof T & keyof AggregateOpenGrant]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOpenGrant[P]>
+      : GetScalarType<T[P], AggregateOpenGrant[P]>
+  }
+
+
+
+
+  export type OpenGrantGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OpenGrantWhereInput
+    orderBy?: OpenGrantOrderByWithAggregationInput | OpenGrantOrderByWithAggregationInput[]
+    by: OpenGrantScalarFieldEnum[] | OpenGrantScalarFieldEnum
+    having?: OpenGrantScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OpenGrantCountAggregateInputType | true
+    _avg?: OpenGrantAvgAggregateInputType
+    _sum?: OpenGrantSumAggregateInputType
+    _min?: OpenGrantMinAggregateInputType
+    _max?: OpenGrantMaxAggregateInputType
+  }
+
+  export type OpenGrantGroupByOutputType = {
+    id: string
+    orgId: string
+    workspaceId: string
+    title: string
+    description: string | null
+    fundingAmountMin: number | null
+    fundingAmountMax: number | null
+    currency: string
+    deadline: Date | null
+    deadlineRaw: string | null
+    applicationUrl: string | null
+    status: $Enums.GrantStatus
+    grantType: $Enums.GrantType
+    cancerTypes: string[]
+    geographicScope: string[]
+    eligibilityCriteria: string | null
+    eligibilityStages: string[]
+    eligibilityOrgTypes: string[]
+    requiresLOI: boolean
+    loiDeadline: Date | null
+    loiDeadlineRaw: string | null
+    awardDuration: string | null
+    numberOfAwards: number | null
+    contactName: string | null
+    contactEmail: string | null
+    notes: string | null
+    sourceNotes: string | null
+    metadata: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: OpenGrantCountAggregateOutputType | null
+    _avg: OpenGrantAvgAggregateOutputType | null
+    _sum: OpenGrantSumAggregateOutputType | null
+    _min: OpenGrantMinAggregateOutputType | null
+    _max: OpenGrantMaxAggregateOutputType | null
+  }
+
+  type GetOpenGrantGroupByPayload<T extends OpenGrantGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OpenGrantGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OpenGrantGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OpenGrantGroupByOutputType[P]>
+            : GetScalarType<T[P], OpenGrantGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OpenGrantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    fundingAmountMin?: boolean
+    fundingAmountMax?: boolean
+    currency?: boolean
+    deadline?: boolean
+    deadlineRaw?: boolean
+    applicationUrl?: boolean
+    status?: boolean
+    grantType?: boolean
+    cancerTypes?: boolean
+    geographicScope?: boolean
+    eligibilityCriteria?: boolean
+    eligibilityStages?: boolean
+    eligibilityOrgTypes?: boolean
+    requiresLOI?: boolean
+    loiDeadline?: boolean
+    loiDeadlineRaw?: boolean
+    awardDuration?: boolean
+    numberOfAwards?: boolean
+    contactName?: boolean
+    contactEmail?: boolean
+    notes?: boolean
+    sourceNotes?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["openGrant"]>
+
+  export type OpenGrantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    fundingAmountMin?: boolean
+    fundingAmountMax?: boolean
+    currency?: boolean
+    deadline?: boolean
+    deadlineRaw?: boolean
+    applicationUrl?: boolean
+    status?: boolean
+    grantType?: boolean
+    cancerTypes?: boolean
+    geographicScope?: boolean
+    eligibilityCriteria?: boolean
+    eligibilityStages?: boolean
+    eligibilityOrgTypes?: boolean
+    requiresLOI?: boolean
+    loiDeadline?: boolean
+    loiDeadlineRaw?: boolean
+    awardDuration?: boolean
+    numberOfAwards?: boolean
+    contactName?: boolean
+    contactEmail?: boolean
+    notes?: boolean
+    sourceNotes?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["openGrant"]>
+
+  export type OpenGrantSelectScalar = {
+    id?: boolean
+    orgId?: boolean
+    workspaceId?: boolean
+    title?: boolean
+    description?: boolean
+    fundingAmountMin?: boolean
+    fundingAmountMax?: boolean
+    currency?: boolean
+    deadline?: boolean
+    deadlineRaw?: boolean
+    applicationUrl?: boolean
+    status?: boolean
+    grantType?: boolean
+    cancerTypes?: boolean
+    geographicScope?: boolean
+    eligibilityCriteria?: boolean
+    eligibilityStages?: boolean
+    eligibilityOrgTypes?: boolean
+    requiresLOI?: boolean
+    loiDeadline?: boolean
+    loiDeadlineRaw?: boolean
+    awardDuration?: boolean
+    numberOfAwards?: boolean
+    contactName?: boolean
+    contactEmail?: boolean
+    notes?: boolean
+    sourceNotes?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OpenGrantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+  export type OpenGrantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+  }
+
+  export type $OpenGrantPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OpenGrant"
+    objects: {
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs>
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orgId: string
+      workspaceId: string
+      title: string
+      description: string | null
+      fundingAmountMin: number | null
+      fundingAmountMax: number | null
+      currency: string
+      deadline: Date | null
+      deadlineRaw: string | null
+      applicationUrl: string | null
+      status: $Enums.GrantStatus
+      grantType: $Enums.GrantType
+      cancerTypes: string[]
+      geographicScope: string[]
+      eligibilityCriteria: string | null
+      eligibilityStages: string[]
+      eligibilityOrgTypes: string[]
+      requiresLOI: boolean
+      loiDeadline: Date | null
+      loiDeadlineRaw: string | null
+      awardDuration: string | null
+      numberOfAwards: number | null
+      contactName: string | null
+      contactEmail: string | null
+      notes: string | null
+      sourceNotes: string | null
+      metadata: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["openGrant"]>
+    composites: {}
+  }
+
+  type OpenGrantGetPayload<S extends boolean | null | undefined | OpenGrantDefaultArgs> = $Result.GetResult<Prisma.$OpenGrantPayload, S>
+
+  type OpenGrantCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OpenGrantFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OpenGrantCountAggregateInputType | true
+    }
+
+  export interface OpenGrantDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OpenGrant'], meta: { name: 'OpenGrant' } }
+    /**
+     * Find zero or one OpenGrant that matches the filter.
+     * @param {OpenGrantFindUniqueArgs} args - Arguments to find a OpenGrant
+     * @example
+     * // Get one OpenGrant
+     * const openGrant = await prisma.openGrant.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OpenGrantFindUniqueArgs>(args: SelectSubset<T, OpenGrantFindUniqueArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one OpenGrant that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OpenGrantFindUniqueOrThrowArgs} args - Arguments to find a OpenGrant
+     * @example
+     * // Get one OpenGrant
+     * const openGrant = await prisma.openGrant.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OpenGrantFindUniqueOrThrowArgs>(args: SelectSubset<T, OpenGrantFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first OpenGrant that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantFindFirstArgs} args - Arguments to find a OpenGrant
+     * @example
+     * // Get one OpenGrant
+     * const openGrant = await prisma.openGrant.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OpenGrantFindFirstArgs>(args?: SelectSubset<T, OpenGrantFindFirstArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first OpenGrant that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantFindFirstOrThrowArgs} args - Arguments to find a OpenGrant
+     * @example
+     * // Get one OpenGrant
+     * const openGrant = await prisma.openGrant.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OpenGrantFindFirstOrThrowArgs>(args?: SelectSubset<T, OpenGrantFindFirstOrThrowArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more OpenGrants that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OpenGrants
+     * const openGrants = await prisma.openGrant.findMany()
+     * 
+     * // Get first 10 OpenGrants
+     * const openGrants = await prisma.openGrant.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const openGrantWithIdOnly = await prisma.openGrant.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OpenGrantFindManyArgs>(args?: SelectSubset<T, OpenGrantFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a OpenGrant.
+     * @param {OpenGrantCreateArgs} args - Arguments to create a OpenGrant.
+     * @example
+     * // Create one OpenGrant
+     * const OpenGrant = await prisma.openGrant.create({
+     *   data: {
+     *     // ... data to create a OpenGrant
+     *   }
+     * })
+     * 
+     */
+    create<T extends OpenGrantCreateArgs>(args: SelectSubset<T, OpenGrantCreateArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many OpenGrants.
+     * @param {OpenGrantCreateManyArgs} args - Arguments to create many OpenGrants.
+     * @example
+     * // Create many OpenGrants
+     * const openGrant = await prisma.openGrant.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OpenGrantCreateManyArgs>(args?: SelectSubset<T, OpenGrantCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OpenGrants and returns the data saved in the database.
+     * @param {OpenGrantCreateManyAndReturnArgs} args - Arguments to create many OpenGrants.
+     * @example
+     * // Create many OpenGrants
+     * const openGrant = await prisma.openGrant.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OpenGrants and only return the `id`
+     * const openGrantWithIdOnly = await prisma.openGrant.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OpenGrantCreateManyAndReturnArgs>(args?: SelectSubset<T, OpenGrantCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a OpenGrant.
+     * @param {OpenGrantDeleteArgs} args - Arguments to delete one OpenGrant.
+     * @example
+     * // Delete one OpenGrant
+     * const OpenGrant = await prisma.openGrant.delete({
+     *   where: {
+     *     // ... filter to delete one OpenGrant
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OpenGrantDeleteArgs>(args: SelectSubset<T, OpenGrantDeleteArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one OpenGrant.
+     * @param {OpenGrantUpdateArgs} args - Arguments to update one OpenGrant.
+     * @example
+     * // Update one OpenGrant
+     * const openGrant = await prisma.openGrant.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OpenGrantUpdateArgs>(args: SelectSubset<T, OpenGrantUpdateArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more OpenGrants.
+     * @param {OpenGrantDeleteManyArgs} args - Arguments to filter OpenGrants to delete.
+     * @example
+     * // Delete a few OpenGrants
+     * const { count } = await prisma.openGrant.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OpenGrantDeleteManyArgs>(args?: SelectSubset<T, OpenGrantDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OpenGrants.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OpenGrants
+     * const openGrant = await prisma.openGrant.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OpenGrantUpdateManyArgs>(args: SelectSubset<T, OpenGrantUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OpenGrant.
+     * @param {OpenGrantUpsertArgs} args - Arguments to update or create a OpenGrant.
+     * @example
+     * // Update or create a OpenGrant
+     * const openGrant = await prisma.openGrant.upsert({
+     *   create: {
+     *     // ... data to create a OpenGrant
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OpenGrant we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OpenGrantUpsertArgs>(args: SelectSubset<T, OpenGrantUpsertArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of OpenGrants.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantCountArgs} args - Arguments to filter OpenGrants to count.
+     * @example
+     * // Count the number of OpenGrants
+     * const count = await prisma.openGrant.count({
+     *   where: {
+     *     // ... the filter for the OpenGrants we want to count
+     *   }
+     * })
+    **/
+    count<T extends OpenGrantCountArgs>(
+      args?: Subset<T, OpenGrantCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OpenGrantCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OpenGrant.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OpenGrantAggregateArgs>(args: Subset<T, OpenGrantAggregateArgs>): Prisma.PrismaPromise<GetOpenGrantAggregateType<T>>
+
+    /**
+     * Group by OpenGrant.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OpenGrantGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OpenGrantGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OpenGrantGroupByArgs['orderBy'] }
+        : { orderBy?: OpenGrantGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OpenGrantGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOpenGrantGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OpenGrant model
+   */
+  readonly fields: OpenGrantFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OpenGrant.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OpenGrantClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OpenGrant model
+   */ 
+  interface OpenGrantFieldRefs {
+    readonly id: FieldRef<"OpenGrant", 'String'>
+    readonly orgId: FieldRef<"OpenGrant", 'String'>
+    readonly workspaceId: FieldRef<"OpenGrant", 'String'>
+    readonly title: FieldRef<"OpenGrant", 'String'>
+    readonly description: FieldRef<"OpenGrant", 'String'>
+    readonly fundingAmountMin: FieldRef<"OpenGrant", 'Float'>
+    readonly fundingAmountMax: FieldRef<"OpenGrant", 'Float'>
+    readonly currency: FieldRef<"OpenGrant", 'String'>
+    readonly deadline: FieldRef<"OpenGrant", 'DateTime'>
+    readonly deadlineRaw: FieldRef<"OpenGrant", 'String'>
+    readonly applicationUrl: FieldRef<"OpenGrant", 'String'>
+    readonly status: FieldRef<"OpenGrant", 'GrantStatus'>
+    readonly grantType: FieldRef<"OpenGrant", 'GrantType'>
+    readonly cancerTypes: FieldRef<"OpenGrant", 'String[]'>
+    readonly geographicScope: FieldRef<"OpenGrant", 'String[]'>
+    readonly eligibilityCriteria: FieldRef<"OpenGrant", 'String'>
+    readonly eligibilityStages: FieldRef<"OpenGrant", 'String[]'>
+    readonly eligibilityOrgTypes: FieldRef<"OpenGrant", 'String[]'>
+    readonly requiresLOI: FieldRef<"OpenGrant", 'Boolean'>
+    readonly loiDeadline: FieldRef<"OpenGrant", 'DateTime'>
+    readonly loiDeadlineRaw: FieldRef<"OpenGrant", 'String'>
+    readonly awardDuration: FieldRef<"OpenGrant", 'String'>
+    readonly numberOfAwards: FieldRef<"OpenGrant", 'Int'>
+    readonly contactName: FieldRef<"OpenGrant", 'String'>
+    readonly contactEmail: FieldRef<"OpenGrant", 'String'>
+    readonly notes: FieldRef<"OpenGrant", 'String'>
+    readonly sourceNotes: FieldRef<"OpenGrant", 'String'>
+    readonly metadata: FieldRef<"OpenGrant", 'Json'>
+    readonly createdAt: FieldRef<"OpenGrant", 'DateTime'>
+    readonly updatedAt: FieldRef<"OpenGrant", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OpenGrant findUnique
+   */
+  export type OpenGrantFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter, which OpenGrant to fetch.
+     */
+    where: OpenGrantWhereUniqueInput
+  }
+
+  /**
+   * OpenGrant findUniqueOrThrow
+   */
+  export type OpenGrantFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter, which OpenGrant to fetch.
+     */
+    where: OpenGrantWhereUniqueInput
+  }
+
+  /**
+   * OpenGrant findFirst
+   */
+  export type OpenGrantFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter, which OpenGrant to fetch.
+     */
+    where?: OpenGrantWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpenGrants to fetch.
+     */
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OpenGrants.
+     */
+    cursor?: OpenGrantWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpenGrants from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpenGrants.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OpenGrants.
+     */
+    distinct?: OpenGrantScalarFieldEnum | OpenGrantScalarFieldEnum[]
+  }
+
+  /**
+   * OpenGrant findFirstOrThrow
+   */
+  export type OpenGrantFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter, which OpenGrant to fetch.
+     */
+    where?: OpenGrantWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpenGrants to fetch.
+     */
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OpenGrants.
+     */
+    cursor?: OpenGrantWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpenGrants from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpenGrants.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OpenGrants.
+     */
+    distinct?: OpenGrantScalarFieldEnum | OpenGrantScalarFieldEnum[]
+  }
+
+  /**
+   * OpenGrant findMany
+   */
+  export type OpenGrantFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter, which OpenGrants to fetch.
+     */
+    where?: OpenGrantWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OpenGrants to fetch.
+     */
+    orderBy?: OpenGrantOrderByWithRelationInput | OpenGrantOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OpenGrants.
+     */
+    cursor?: OpenGrantWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OpenGrants from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OpenGrants.
+     */
+    skip?: number
+    distinct?: OpenGrantScalarFieldEnum | OpenGrantScalarFieldEnum[]
+  }
+
+  /**
+   * OpenGrant create
+   */
+  export type OpenGrantCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OpenGrant.
+     */
+    data: XOR<OpenGrantCreateInput, OpenGrantUncheckedCreateInput>
+  }
+
+  /**
+   * OpenGrant createMany
+   */
+  export type OpenGrantCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OpenGrants.
+     */
+    data: OpenGrantCreateManyInput | OpenGrantCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OpenGrant createManyAndReturn
+   */
+  export type OpenGrantCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many OpenGrants.
+     */
+    data: OpenGrantCreateManyInput | OpenGrantCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OpenGrant update
+   */
+  export type OpenGrantUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OpenGrant.
+     */
+    data: XOR<OpenGrantUpdateInput, OpenGrantUncheckedUpdateInput>
+    /**
+     * Choose, which OpenGrant to update.
+     */
+    where: OpenGrantWhereUniqueInput
+  }
+
+  /**
+   * OpenGrant updateMany
+   */
+  export type OpenGrantUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OpenGrants.
+     */
+    data: XOR<OpenGrantUpdateManyMutationInput, OpenGrantUncheckedUpdateManyInput>
+    /**
+     * Filter which OpenGrants to update
+     */
+    where?: OpenGrantWhereInput
+  }
+
+  /**
+   * OpenGrant upsert
+   */
+  export type OpenGrantUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OpenGrant to update in case it exists.
+     */
+    where: OpenGrantWhereUniqueInput
+    /**
+     * In case the OpenGrant found by the `where` argument doesn't exist, create a new OpenGrant with this data.
+     */
+    create: XOR<OpenGrantCreateInput, OpenGrantUncheckedCreateInput>
+    /**
+     * In case the OpenGrant was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OpenGrantUpdateInput, OpenGrantUncheckedUpdateInput>
+  }
+
+  /**
+   * OpenGrant delete
+   */
+  export type OpenGrantDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    /**
+     * Filter which OpenGrant to delete.
+     */
+    where: OpenGrantWhereUniqueInput
+  }
+
+  /**
+   * OpenGrant deleteMany
+   */
+  export type OpenGrantDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OpenGrants to delete
+     */
+    where?: OpenGrantWhereInput
+  }
+
+  /**
+   * OpenGrant without action
+   */
+  export type OpenGrantDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
   }
 
 
@@ -31109,6 +32594,9 @@ export namespace Prisma {
     foundedYear: 'foundedYear',
     memberCount: 'memberCount',
     annualBudget: 'annualBudget',
+    researchSpend: 'researchSpend',
+    country: 'country',
+    externalId: 'externalId',
     headquarters: 'headquarters',
     socialLinks: 'socialLinks',
     metadata: 'metadata',
@@ -31133,6 +32621,42 @@ export namespace Prisma {
   };
 
   export type OrgContactScalarFieldEnum = (typeof OrgContactScalarFieldEnum)[keyof typeof OrgContactScalarFieldEnum]
+
+
+  export const OpenGrantScalarFieldEnum: {
+    id: 'id',
+    orgId: 'orgId',
+    workspaceId: 'workspaceId',
+    title: 'title',
+    description: 'description',
+    fundingAmountMin: 'fundingAmountMin',
+    fundingAmountMax: 'fundingAmountMax',
+    currency: 'currency',
+    deadline: 'deadline',
+    deadlineRaw: 'deadlineRaw',
+    applicationUrl: 'applicationUrl',
+    status: 'status',
+    grantType: 'grantType',
+    cancerTypes: 'cancerTypes',
+    geographicScope: 'geographicScope',
+    eligibilityCriteria: 'eligibilityCriteria',
+    eligibilityStages: 'eligibilityStages',
+    eligibilityOrgTypes: 'eligibilityOrgTypes',
+    requiresLOI: 'requiresLOI',
+    loiDeadline: 'loiDeadline',
+    loiDeadlineRaw: 'loiDeadlineRaw',
+    awardDuration: 'awardDuration',
+    numberOfAwards: 'numberOfAwards',
+    contactName: 'contactName',
+    contactEmail: 'contactEmail',
+    notes: 'notes',
+    sourceNotes: 'sourceNotes',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OpenGrantScalarFieldEnum = (typeof OpenGrantScalarFieldEnum)[keyof typeof OpenGrantScalarFieldEnum]
 
 
   export const CampaignScalarFieldEnum: {
@@ -31712,6 +33236,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'GrantStatus'
+   */
+  export type EnumGrantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrantStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'GrantStatus[]'
+   */
+  export type ListEnumGrantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrantStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'GrantType'
+   */
+  export type EnumGrantTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrantType'>
+    
+
+
+  /**
+   * Reference to a field of type 'GrantType[]'
+   */
+  export type ListEnumGrantTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GrantType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'CampaignStatus'
    */
   export type EnumCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CampaignStatus'>
@@ -32082,6 +33634,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Workspace"> | Date | string
     members?: WorkspaceMemberListRelationFilter
     advocacyOrgs?: AdvocacyOrgListRelationFilter
+    openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
     agentRuns?: AgentRunListRelationFilter
     dataSources?: DataSourceListRelationFilter
@@ -32099,6 +33652,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     members?: WorkspaceMemberOrderByRelationAggregateInput
     advocacyOrgs?: AdvocacyOrgOrderByRelationAggregateInput
+    openGrants?: OpenGrantOrderByRelationAggregateInput
     pages?: PageOrderByRelationAggregateInput
     agentRuns?: AgentRunOrderByRelationAggregateInput
     dataSources?: DataSourceOrderByRelationAggregateInput
@@ -32119,6 +33673,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Workspace"> | Date | string
     members?: WorkspaceMemberListRelationFilter
     advocacyOrgs?: AdvocacyOrgListRelationFilter
+    openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
     agentRuns?: AgentRunListRelationFilter
     dataSources?: DataSourceListRelationFilter
@@ -32231,6 +33786,9 @@ export namespace Prisma {
     foundedYear?: IntNullableFilter<"AdvocacyOrg"> | number | null
     memberCount?: IntNullableFilter<"AdvocacyOrg"> | number | null
     annualBudget?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    researchSpend?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    country?: StringNullableFilter<"AdvocacyOrg"> | string | null
+    externalId?: StringNullableFilter<"AdvocacyOrg"> | string | null
     headquarters?: StringNullableFilter<"AdvocacyOrg"> | string | null
     socialLinks?: JsonFilter<"AdvocacyOrg">
     metadata?: JsonFilter<"AdvocacyOrg">
@@ -32243,6 +33801,7 @@ export namespace Prisma {
     patientStories?: PatientStoryListRelationFilter
     policyTargets?: PolicyTargetListRelationFilter
     contacts?: OrgContactListRelationFilter
+    openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
   }
 
@@ -32262,6 +33821,9 @@ export namespace Prisma {
     foundedYear?: SortOrderInput | SortOrder
     memberCount?: SortOrderInput | SortOrder
     annualBudget?: SortOrderInput | SortOrder
+    researchSpend?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    externalId?: SortOrderInput | SortOrder
     headquarters?: SortOrderInput | SortOrder
     socialLinks?: SortOrder
     metadata?: SortOrder
@@ -32274,6 +33836,7 @@ export namespace Prisma {
     patientStories?: PatientStoryOrderByRelationAggregateInput
     policyTargets?: PolicyTargetOrderByRelationAggregateInput
     contacts?: OrgContactOrderByRelationAggregateInput
+    openGrants?: OpenGrantOrderByRelationAggregateInput
     pages?: PageOrderByRelationAggregateInput
   }
 
@@ -32297,6 +33860,9 @@ export namespace Prisma {
     foundedYear?: IntNullableFilter<"AdvocacyOrg"> | number | null
     memberCount?: IntNullableFilter<"AdvocacyOrg"> | number | null
     annualBudget?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    researchSpend?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    country?: StringNullableFilter<"AdvocacyOrg"> | string | null
+    externalId?: StringNullableFilter<"AdvocacyOrg"> | string | null
     headquarters?: StringNullableFilter<"AdvocacyOrg"> | string | null
     socialLinks?: JsonFilter<"AdvocacyOrg">
     metadata?: JsonFilter<"AdvocacyOrg">
@@ -32309,6 +33875,7 @@ export namespace Prisma {
     patientStories?: PatientStoryListRelationFilter
     policyTargets?: PolicyTargetListRelationFilter
     contacts?: OrgContactListRelationFilter
+    openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
   }, "id" | "workspaceId_slug">
 
@@ -32328,6 +33895,9 @@ export namespace Prisma {
     foundedYear?: SortOrderInput | SortOrder
     memberCount?: SortOrderInput | SortOrder
     annualBudget?: SortOrderInput | SortOrder
+    researchSpend?: SortOrderInput | SortOrder
+    country?: SortOrderInput | SortOrder
+    externalId?: SortOrderInput | SortOrder
     headquarters?: SortOrderInput | SortOrder
     socialLinks?: SortOrder
     metadata?: SortOrder
@@ -32360,6 +33930,9 @@ export namespace Prisma {
     foundedYear?: IntNullableWithAggregatesFilter<"AdvocacyOrg"> | number | null
     memberCount?: IntNullableWithAggregatesFilter<"AdvocacyOrg"> | number | null
     annualBudget?: FloatNullableWithAggregatesFilter<"AdvocacyOrg"> | number | null
+    researchSpend?: FloatNullableWithAggregatesFilter<"AdvocacyOrg"> | number | null
+    country?: StringNullableWithAggregatesFilter<"AdvocacyOrg"> | string | null
+    externalId?: StringNullableWithAggregatesFilter<"AdvocacyOrg"> | string | null
     headquarters?: StringNullableWithAggregatesFilter<"AdvocacyOrg"> | string | null
     socialLinks?: JsonWithAggregatesFilter<"AdvocacyOrg">
     metadata?: JsonWithAggregatesFilter<"AdvocacyOrg">
@@ -32441,6 +34014,191 @@ export namespace Prisma {
     role?: EnumContactRoleWithAggregatesFilter<"OrgContact"> | $Enums.ContactRole
     isPrimary?: BoolWithAggregatesFilter<"OrgContact"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"OrgContact"> | Date | string
+  }
+
+  export type OpenGrantWhereInput = {
+    AND?: OpenGrantWhereInput | OpenGrantWhereInput[]
+    OR?: OpenGrantWhereInput[]
+    NOT?: OpenGrantWhereInput | OpenGrantWhereInput[]
+    id?: StringFilter<"OpenGrant"> | string
+    orgId?: StringFilter<"OpenGrant"> | string
+    workspaceId?: StringFilter<"OpenGrant"> | string
+    title?: StringFilter<"OpenGrant"> | string
+    description?: StringNullableFilter<"OpenGrant"> | string | null
+    fundingAmountMin?: FloatNullableFilter<"OpenGrant"> | number | null
+    fundingAmountMax?: FloatNullableFilter<"OpenGrant"> | number | null
+    currency?: StringFilter<"OpenGrant"> | string
+    deadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    deadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    applicationUrl?: StringNullableFilter<"OpenGrant"> | string | null
+    status?: EnumGrantStatusFilter<"OpenGrant"> | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFilter<"OpenGrant"> | $Enums.GrantType
+    cancerTypes?: StringNullableListFilter<"OpenGrant">
+    geographicScope?: StringNullableListFilter<"OpenGrant">
+    eligibilityCriteria?: StringNullableFilter<"OpenGrant"> | string | null
+    eligibilityStages?: StringNullableListFilter<"OpenGrant">
+    eligibilityOrgTypes?: StringNullableListFilter<"OpenGrant">
+    requiresLOI?: BoolFilter<"OpenGrant"> | boolean
+    loiDeadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    loiDeadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    awardDuration?: StringNullableFilter<"OpenGrant"> | string | null
+    numberOfAwards?: IntNullableFilter<"OpenGrant"> | number | null
+    contactName?: StringNullableFilter<"OpenGrant"> | string | null
+    contactEmail?: StringNullableFilter<"OpenGrant"> | string | null
+    notes?: StringNullableFilter<"OpenGrant"> | string | null
+    sourceNotes?: StringNullableFilter<"OpenGrant"> | string | null
+    metadata?: JsonFilter<"OpenGrant">
+    createdAt?: DateTimeFilter<"OpenGrant"> | Date | string
+    updatedAt?: DateTimeFilter<"OpenGrant"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+  }
+
+  export type OpenGrantOrderByWithRelationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fundingAmountMin?: SortOrderInput | SortOrder
+    fundingAmountMax?: SortOrderInput | SortOrder
+    currency?: SortOrder
+    deadline?: SortOrderInput | SortOrder
+    deadlineRaw?: SortOrderInput | SortOrder
+    applicationUrl?: SortOrderInput | SortOrder
+    status?: SortOrder
+    grantType?: SortOrder
+    cancerTypes?: SortOrder
+    geographicScope?: SortOrder
+    eligibilityCriteria?: SortOrderInput | SortOrder
+    eligibilityStages?: SortOrder
+    eligibilityOrgTypes?: SortOrder
+    requiresLOI?: SortOrder
+    loiDeadline?: SortOrderInput | SortOrder
+    loiDeadlineRaw?: SortOrderInput | SortOrder
+    awardDuration?: SortOrderInput | SortOrder
+    numberOfAwards?: SortOrderInput | SortOrder
+    contactName?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    sourceNotes?: SortOrderInput | SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    org?: AdvocacyOrgOrderByWithRelationInput
+    workspace?: WorkspaceOrderByWithRelationInput
+  }
+
+  export type OpenGrantWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OpenGrantWhereInput | OpenGrantWhereInput[]
+    OR?: OpenGrantWhereInput[]
+    NOT?: OpenGrantWhereInput | OpenGrantWhereInput[]
+    orgId?: StringFilter<"OpenGrant"> | string
+    workspaceId?: StringFilter<"OpenGrant"> | string
+    title?: StringFilter<"OpenGrant"> | string
+    description?: StringNullableFilter<"OpenGrant"> | string | null
+    fundingAmountMin?: FloatNullableFilter<"OpenGrant"> | number | null
+    fundingAmountMax?: FloatNullableFilter<"OpenGrant"> | number | null
+    currency?: StringFilter<"OpenGrant"> | string
+    deadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    deadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    applicationUrl?: StringNullableFilter<"OpenGrant"> | string | null
+    status?: EnumGrantStatusFilter<"OpenGrant"> | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFilter<"OpenGrant"> | $Enums.GrantType
+    cancerTypes?: StringNullableListFilter<"OpenGrant">
+    geographicScope?: StringNullableListFilter<"OpenGrant">
+    eligibilityCriteria?: StringNullableFilter<"OpenGrant"> | string | null
+    eligibilityStages?: StringNullableListFilter<"OpenGrant">
+    eligibilityOrgTypes?: StringNullableListFilter<"OpenGrant">
+    requiresLOI?: BoolFilter<"OpenGrant"> | boolean
+    loiDeadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    loiDeadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    awardDuration?: StringNullableFilter<"OpenGrant"> | string | null
+    numberOfAwards?: IntNullableFilter<"OpenGrant"> | number | null
+    contactName?: StringNullableFilter<"OpenGrant"> | string | null
+    contactEmail?: StringNullableFilter<"OpenGrant"> | string | null
+    notes?: StringNullableFilter<"OpenGrant"> | string | null
+    sourceNotes?: StringNullableFilter<"OpenGrant"> | string | null
+    metadata?: JsonFilter<"OpenGrant">
+    createdAt?: DateTimeFilter<"OpenGrant"> | Date | string
+    updatedAt?: DateTimeFilter<"OpenGrant"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+  }, "id">
+
+  export type OpenGrantOrderByWithAggregationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    fundingAmountMin?: SortOrderInput | SortOrder
+    fundingAmountMax?: SortOrderInput | SortOrder
+    currency?: SortOrder
+    deadline?: SortOrderInput | SortOrder
+    deadlineRaw?: SortOrderInput | SortOrder
+    applicationUrl?: SortOrderInput | SortOrder
+    status?: SortOrder
+    grantType?: SortOrder
+    cancerTypes?: SortOrder
+    geographicScope?: SortOrder
+    eligibilityCriteria?: SortOrderInput | SortOrder
+    eligibilityStages?: SortOrder
+    eligibilityOrgTypes?: SortOrder
+    requiresLOI?: SortOrder
+    loiDeadline?: SortOrderInput | SortOrder
+    loiDeadlineRaw?: SortOrderInput | SortOrder
+    awardDuration?: SortOrderInput | SortOrder
+    numberOfAwards?: SortOrderInput | SortOrder
+    contactName?: SortOrderInput | SortOrder
+    contactEmail?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    sourceNotes?: SortOrderInput | SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OpenGrantCountOrderByAggregateInput
+    _avg?: OpenGrantAvgOrderByAggregateInput
+    _max?: OpenGrantMaxOrderByAggregateInput
+    _min?: OpenGrantMinOrderByAggregateInput
+    _sum?: OpenGrantSumOrderByAggregateInput
+  }
+
+  export type OpenGrantScalarWhereWithAggregatesInput = {
+    AND?: OpenGrantScalarWhereWithAggregatesInput | OpenGrantScalarWhereWithAggregatesInput[]
+    OR?: OpenGrantScalarWhereWithAggregatesInput[]
+    NOT?: OpenGrantScalarWhereWithAggregatesInput | OpenGrantScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OpenGrant"> | string
+    orgId?: StringWithAggregatesFilter<"OpenGrant"> | string
+    workspaceId?: StringWithAggregatesFilter<"OpenGrant"> | string
+    title?: StringWithAggregatesFilter<"OpenGrant"> | string
+    description?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    fundingAmountMin?: FloatNullableWithAggregatesFilter<"OpenGrant"> | number | null
+    fundingAmountMax?: FloatNullableWithAggregatesFilter<"OpenGrant"> | number | null
+    currency?: StringWithAggregatesFilter<"OpenGrant"> | string
+    deadline?: DateTimeNullableWithAggregatesFilter<"OpenGrant"> | Date | string | null
+    deadlineRaw?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    applicationUrl?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    status?: EnumGrantStatusWithAggregatesFilter<"OpenGrant"> | $Enums.GrantStatus
+    grantType?: EnumGrantTypeWithAggregatesFilter<"OpenGrant"> | $Enums.GrantType
+    cancerTypes?: StringNullableListFilter<"OpenGrant">
+    geographicScope?: StringNullableListFilter<"OpenGrant">
+    eligibilityCriteria?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    eligibilityStages?: StringNullableListFilter<"OpenGrant">
+    eligibilityOrgTypes?: StringNullableListFilter<"OpenGrant">
+    requiresLOI?: BoolWithAggregatesFilter<"OpenGrant"> | boolean
+    loiDeadline?: DateTimeNullableWithAggregatesFilter<"OpenGrant"> | Date | string | null
+    loiDeadlineRaw?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    awardDuration?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    numberOfAwards?: IntNullableWithAggregatesFilter<"OpenGrant"> | number | null
+    contactName?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    contactEmail?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    sourceNotes?: StringNullableWithAggregatesFilter<"OpenGrant"> | string | null
+    metadata?: JsonWithAggregatesFilter<"OpenGrant">
+    createdAt?: DateTimeWithAggregatesFilter<"OpenGrant"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OpenGrant"> | Date | string
   }
 
   export type CampaignWhereInput = {
@@ -34618,6 +36376,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
@@ -34635,6 +36394,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -34652,6 +36412,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
@@ -34669,6 +36430,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -34777,6 +36539,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34789,6 +36554,7 @@ export namespace Prisma {
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -34808,6 +36574,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34819,6 +36588,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -34837,6 +36607,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34849,6 +36622,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -34868,6 +36642,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34879,6 +36656,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -34898,6 +36676,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34921,6 +36702,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -34945,6 +36729,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -35034,6 +36821,235 @@ export namespace Prisma {
     role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
+    workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+  }
+
+  export type OpenGrantUncheckedCreateInput = {
+    id?: string
+    orgId: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+  }
+
+  export type OpenGrantUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantCreateManyInput = {
+    id?: string
+    orgId: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CampaignCreateInput = {
@@ -37582,6 +39598,12 @@ export namespace Prisma {
     none?: AdvocacyOrgWhereInput
   }
 
+  export type OpenGrantListRelationFilter = {
+    every?: OpenGrantWhereInput
+    some?: OpenGrantWhereInput
+    none?: OpenGrantWhereInput
+  }
+
   export type PageListRelationFilter = {
     every?: PageWhereInput
     some?: PageWhereInput
@@ -37595,6 +39617,10 @@ export namespace Prisma {
   }
 
   export type AdvocacyOrgOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OpenGrantOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -37823,6 +39849,9 @@ export namespace Prisma {
     foundedYear?: SortOrder
     memberCount?: SortOrder
     annualBudget?: SortOrder
+    researchSpend?: SortOrder
+    country?: SortOrder
+    externalId?: SortOrder
     headquarters?: SortOrder
     socialLinks?: SortOrder
     metadata?: SortOrder
@@ -37835,6 +39864,7 @@ export namespace Prisma {
     foundedYear?: SortOrder
     memberCount?: SortOrder
     annualBudget?: SortOrder
+    researchSpend?: SortOrder
   }
 
   export type AdvocacyOrgMaxOrderByAggregateInput = {
@@ -37852,6 +39882,9 @@ export namespace Prisma {
     foundedYear?: SortOrder
     memberCount?: SortOrder
     annualBudget?: SortOrder
+    researchSpend?: SortOrder
+    country?: SortOrder
+    externalId?: SortOrder
     headquarters?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -37873,6 +39906,9 @@ export namespace Prisma {
     foundedYear?: SortOrder
     memberCount?: SortOrder
     annualBudget?: SortOrder
+    researchSpend?: SortOrder
+    country?: SortOrder
+    externalId?: SortOrder
     headquarters?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -37883,6 +39919,7 @@ export namespace Prisma {
     foundedYear?: SortOrder
     memberCount?: SortOrder
     annualBudget?: SortOrder
+    researchSpend?: SortOrder
   }
 
   export type EnumOrgTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -38008,6 +40045,166 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type EnumGrantStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantStatus | EnumGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantStatusFilter<$PrismaModel> | $Enums.GrantStatus
+  }
+
+  export type EnumGrantTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantType | EnumGrantTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantTypeFilter<$PrismaModel> | $Enums.GrantType
+  }
+
+  export type OpenGrantCountOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fundingAmountMin?: SortOrder
+    fundingAmountMax?: SortOrder
+    currency?: SortOrder
+    deadline?: SortOrder
+    deadlineRaw?: SortOrder
+    applicationUrl?: SortOrder
+    status?: SortOrder
+    grantType?: SortOrder
+    cancerTypes?: SortOrder
+    geographicScope?: SortOrder
+    eligibilityCriteria?: SortOrder
+    eligibilityStages?: SortOrder
+    eligibilityOrgTypes?: SortOrder
+    requiresLOI?: SortOrder
+    loiDeadline?: SortOrder
+    loiDeadlineRaw?: SortOrder
+    awardDuration?: SortOrder
+    numberOfAwards?: SortOrder
+    contactName?: SortOrder
+    contactEmail?: SortOrder
+    notes?: SortOrder
+    sourceNotes?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OpenGrantAvgOrderByAggregateInput = {
+    fundingAmountMin?: SortOrder
+    fundingAmountMax?: SortOrder
+    numberOfAwards?: SortOrder
+  }
+
+  export type OpenGrantMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fundingAmountMin?: SortOrder
+    fundingAmountMax?: SortOrder
+    currency?: SortOrder
+    deadline?: SortOrder
+    deadlineRaw?: SortOrder
+    applicationUrl?: SortOrder
+    status?: SortOrder
+    grantType?: SortOrder
+    eligibilityCriteria?: SortOrder
+    requiresLOI?: SortOrder
+    loiDeadline?: SortOrder
+    loiDeadlineRaw?: SortOrder
+    awardDuration?: SortOrder
+    numberOfAwards?: SortOrder
+    contactName?: SortOrder
+    contactEmail?: SortOrder
+    notes?: SortOrder
+    sourceNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OpenGrantMinOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    workspaceId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    fundingAmountMin?: SortOrder
+    fundingAmountMax?: SortOrder
+    currency?: SortOrder
+    deadline?: SortOrder
+    deadlineRaw?: SortOrder
+    applicationUrl?: SortOrder
+    status?: SortOrder
+    grantType?: SortOrder
+    eligibilityCriteria?: SortOrder
+    requiresLOI?: SortOrder
+    loiDeadline?: SortOrder
+    loiDeadlineRaw?: SortOrder
+    awardDuration?: SortOrder
+    numberOfAwards?: SortOrder
+    contactName?: SortOrder
+    contactEmail?: SortOrder
+    notes?: SortOrder
+    sourceNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OpenGrantSumOrderByAggregateInput = {
+    fundingAmountMin?: SortOrder
+    fundingAmountMax?: SortOrder
+    numberOfAwards?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumGrantStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantStatus | EnumGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantStatusWithAggregatesFilter<$PrismaModel> | $Enums.GrantStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGrantStatusFilter<$PrismaModel>
+    _max?: NestedEnumGrantStatusFilter<$PrismaModel>
+  }
+
+  export type EnumGrantTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantType | EnumGrantTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantTypeWithAggregatesFilter<$PrismaModel> | $Enums.GrantType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGrantTypeFilter<$PrismaModel>
+    _max?: NestedEnumGrantTypeFilter<$PrismaModel>
+  }
+
   export type EnumCampaignStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.CampaignStatus | EnumCampaignStatusFieldRefInput<$PrismaModel>
     in?: $Enums.CampaignStatus[] | ListEnumCampaignStatusFieldRefInput<$PrismaModel>
@@ -38020,17 +40217,6 @@ export namespace Prisma {
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type InitiativeListRelationFilter = {
@@ -38152,20 +40338,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumInitiativeTypeFilter<$PrismaModel = never> = {
@@ -39921,6 +42093,13 @@ export namespace Prisma {
     connect?: AdvocacyOrgWhereUniqueInput | AdvocacyOrgWhereUniqueInput[]
   }
 
+  export type OpenGrantCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput> | OpenGrantCreateWithoutWorkspaceInput[] | OpenGrantUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutWorkspaceInput | OpenGrantCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OpenGrantCreateManyWorkspaceInputEnvelope
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+  }
+
   export type PageCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<PageCreateWithoutWorkspaceInput, PageUncheckedCreateWithoutWorkspaceInput> | PageCreateWithoutWorkspaceInput[] | PageUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: PageCreateOrConnectWithoutWorkspaceInput | PageCreateOrConnectWithoutWorkspaceInput[]
@@ -39961,6 +42140,13 @@ export namespace Prisma {
     connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutWorkspaceInput | AdvocacyOrgCreateOrConnectWithoutWorkspaceInput[]
     createMany?: AdvocacyOrgCreateManyWorkspaceInputEnvelope
     connect?: AdvocacyOrgWhereUniqueInput | AdvocacyOrgWhereUniqueInput[]
+  }
+
+  export type OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput> | OpenGrantCreateWithoutWorkspaceInput[] | OpenGrantUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutWorkspaceInput | OpenGrantCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OpenGrantCreateManyWorkspaceInputEnvelope
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
   }
 
   export type PageUncheckedCreateNestedManyWithoutWorkspaceInput = {
@@ -40017,6 +42203,20 @@ export namespace Prisma {
     update?: AdvocacyOrgUpdateWithWhereUniqueWithoutWorkspaceInput | AdvocacyOrgUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: AdvocacyOrgUpdateManyWithWhereWithoutWorkspaceInput | AdvocacyOrgUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: AdvocacyOrgScalarWhereInput | AdvocacyOrgScalarWhereInput[]
+  }
+
+  export type OpenGrantUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput> | OpenGrantCreateWithoutWorkspaceInput[] | OpenGrantUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutWorkspaceInput | OpenGrantCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OpenGrantUpsertWithWhereUniqueWithoutWorkspaceInput | OpenGrantUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OpenGrantCreateManyWorkspaceInputEnvelope
+    set?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    disconnect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    delete?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    update?: OpenGrantUpdateWithWhereUniqueWithoutWorkspaceInput | OpenGrantUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OpenGrantUpdateManyWithWhereWithoutWorkspaceInput | OpenGrantUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
   }
 
   export type PageUpdateManyWithoutWorkspaceNestedInput = {
@@ -40101,6 +42301,20 @@ export namespace Prisma {
     update?: AdvocacyOrgUpdateWithWhereUniqueWithoutWorkspaceInput | AdvocacyOrgUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: AdvocacyOrgUpdateManyWithWhereWithoutWorkspaceInput | AdvocacyOrgUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: AdvocacyOrgScalarWhereInput | AdvocacyOrgScalarWhereInput[]
+  }
+
+  export type OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput> | OpenGrantCreateWithoutWorkspaceInput[] | OpenGrantUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutWorkspaceInput | OpenGrantCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OpenGrantUpsertWithWhereUniqueWithoutWorkspaceInput | OpenGrantUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OpenGrantCreateManyWorkspaceInputEnvelope
+    set?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    disconnect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    delete?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    update?: OpenGrantUpdateWithWhereUniqueWithoutWorkspaceInput | OpenGrantUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OpenGrantUpdateManyWithWhereWithoutWorkspaceInput | OpenGrantUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
   }
 
   export type PageUncheckedUpdateManyWithoutWorkspaceNestedInput = {
@@ -40236,6 +42450,13 @@ export namespace Prisma {
     connect?: OrgContactWhereUniqueInput | OrgContactWhereUniqueInput[]
   }
 
+  export type OpenGrantCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput> | OpenGrantCreateWithoutOrgInput[] | OpenGrantUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutOrgInput | OpenGrantCreateOrConnectWithoutOrgInput[]
+    createMany?: OpenGrantCreateManyOrgInputEnvelope
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+  }
+
   export type PageCreateNestedManyWithoutOrgInput = {
     create?: XOR<PageCreateWithoutOrgInput, PageUncheckedCreateWithoutOrgInput> | PageCreateWithoutOrgInput[] | PageUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: PageCreateOrConnectWithoutOrgInput | PageCreateOrConnectWithoutOrgInput[]
@@ -40276,6 +42497,13 @@ export namespace Prisma {
     connectOrCreate?: OrgContactCreateOrConnectWithoutOrgInput | OrgContactCreateOrConnectWithoutOrgInput[]
     createMany?: OrgContactCreateManyOrgInputEnvelope
     connect?: OrgContactWhereUniqueInput | OrgContactWhereUniqueInput[]
+  }
+
+  export type OpenGrantUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput> | OpenGrantCreateWithoutOrgInput[] | OpenGrantUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutOrgInput | OpenGrantCreateOrConnectWithoutOrgInput[]
+    createMany?: OpenGrantCreateManyOrgInputEnvelope
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
   }
 
   export type PageUncheckedCreateNestedManyWithoutOrgInput = {
@@ -40392,6 +42620,20 @@ export namespace Prisma {
     deleteMany?: OrgContactScalarWhereInput | OrgContactScalarWhereInput[]
   }
 
+  export type OpenGrantUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput> | OpenGrantCreateWithoutOrgInput[] | OpenGrantUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutOrgInput | OpenGrantCreateOrConnectWithoutOrgInput[]
+    upsert?: OpenGrantUpsertWithWhereUniqueWithoutOrgInput | OpenGrantUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OpenGrantCreateManyOrgInputEnvelope
+    set?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    disconnect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    delete?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    update?: OpenGrantUpdateWithWhereUniqueWithoutOrgInput | OpenGrantUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OpenGrantUpdateManyWithWhereWithoutOrgInput | OpenGrantUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
+  }
+
   export type PageUpdateManyWithoutOrgNestedInput = {
     create?: XOR<PageCreateWithoutOrgInput, PageUncheckedCreateWithoutOrgInput> | PageCreateWithoutOrgInput[] | PageUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: PageCreateOrConnectWithoutOrgInput | PageCreateOrConnectWithoutOrgInput[]
@@ -40476,6 +42718,20 @@ export namespace Prisma {
     deleteMany?: OrgContactScalarWhereInput | OrgContactScalarWhereInput[]
   }
 
+  export type OpenGrantUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput> | OpenGrantCreateWithoutOrgInput[] | OpenGrantUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutOrgInput | OpenGrantCreateOrConnectWithoutOrgInput[]
+    upsert?: OpenGrantUpsertWithWhereUniqueWithoutOrgInput | OpenGrantUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OpenGrantCreateManyOrgInputEnvelope
+    set?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    disconnect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    delete?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    connect?: OpenGrantWhereUniqueInput | OpenGrantWhereUniqueInput[]
+    update?: OpenGrantUpdateWithWhereUniqueWithoutOrgInput | OpenGrantUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OpenGrantUpdateManyWithWhereWithoutOrgInput | OpenGrantUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
+  }
+
   export type PageUncheckedUpdateManyWithoutOrgNestedInput = {
     create?: XOR<PageCreateWithoutOrgInput, PageUncheckedCreateWithoutOrgInput> | PageCreateWithoutOrgInput[] | PageUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: PageCreateOrConnectWithoutOrgInput | PageCreateOrConnectWithoutOrgInput[]
@@ -40510,6 +42766,82 @@ export namespace Prisma {
     upsert?: AdvocacyOrgUpsertWithoutContactsInput
     connect?: AdvocacyOrgWhereUniqueInput
     update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutContactsInput, AdvocacyOrgUpdateWithoutContactsInput>, AdvocacyOrgUncheckedUpdateWithoutContactsInput>
+  }
+
+  export type OpenGrantCreatecancerTypesInput = {
+    set: string[]
+  }
+
+  export type OpenGrantCreategeographicScopeInput = {
+    set: string[]
+  }
+
+  export type OpenGrantCreateeligibilityStagesInput = {
+    set: string[]
+  }
+
+  export type OpenGrantCreateeligibilityOrgTypesInput = {
+    set: string[]
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOpenGrantsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type WorkspaceCreateNestedOneWithoutOpenGrantsInput = {
+    create?: XOR<WorkspaceCreateWithoutOpenGrantsInput, WorkspaceUncheckedCreateWithoutOpenGrantsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOpenGrantsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type EnumGrantStatusFieldUpdateOperationsInput = {
+    set?: $Enums.GrantStatus
+  }
+
+  export type EnumGrantTypeFieldUpdateOperationsInput = {
+    set?: $Enums.GrantType
+  }
+
+  export type OpenGrantUpdatecancerTypesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type OpenGrantUpdategeographicScopeInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type OpenGrantUpdateeligibilityStagesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type OpenGrantUpdateeligibilityOrgTypesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOpenGrantsInput
+    upsert?: AdvocacyOrgUpsertWithoutOpenGrantsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutOpenGrantsInput, AdvocacyOrgUpdateWithoutOpenGrantsInput>, AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput>
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutOpenGrantsInput, WorkspaceUncheckedCreateWithoutOpenGrantsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOpenGrantsInput
+    upsert?: WorkspaceUpsertWithoutOpenGrantsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutOpenGrantsInput, WorkspaceUpdateWithoutOpenGrantsInput>, WorkspaceUncheckedUpdateWithoutOpenGrantsInput>
   }
 
   export type CampaignCreatecancerTypesInput = {
@@ -40616,10 +42948,6 @@ export namespace Prisma {
 
   export type EnumPriorityFieldUpdateOperationsInput = {
     set?: $Enums.Priority
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type CampaignUpdatetagsInput = {
@@ -42510,6 +44838,65 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedEnumGrantStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantStatus | EnumGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantStatusFilter<$PrismaModel> | $Enums.GrantStatus
+  }
+
+  export type NestedEnumGrantTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantType | EnumGrantTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantTypeFilter<$PrismaModel> | $Enums.GrantType
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGrantStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantStatus | EnumGrantStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantStatus[] | ListEnumGrantStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantStatusWithAggregatesFilter<$PrismaModel> | $Enums.GrantStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGrantStatusFilter<$PrismaModel>
+    _max?: NestedEnumGrantStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGrantTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GrantType | EnumGrantTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GrantType[] | ListEnumGrantTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGrantTypeWithAggregatesFilter<$PrismaModel> | $Enums.GrantType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGrantTypeFilter<$PrismaModel>
+    _max?: NestedEnumGrantTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumCampaignStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.CampaignStatus | EnumCampaignStatusFieldRefInput<$PrismaModel>
     in?: $Enums.CampaignStatus[] | ListEnumCampaignStatusFieldRefInput<$PrismaModel>
@@ -42522,17 +44909,6 @@ export namespace Prisma {
     in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
     not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedEnumCampaignStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -42553,20 +44929,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPriorityFilter<$PrismaModel>
     _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumInitiativeTypeFilter<$PrismaModel = never> = {
@@ -43501,6 +45863,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -43512,6 +45877,7 @@ export namespace Prisma {
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -43530,6 +45896,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -43541,6 +45910,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -43551,6 +45921,80 @@ export namespace Prisma {
 
   export type AdvocacyOrgCreateManyWorkspaceInputEnvelope = {
     data: AdvocacyOrgCreateManyWorkspaceInput | AdvocacyOrgCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OpenGrantCreateWithoutWorkspaceInput = {
+    id?: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
+  }
+
+  export type OpenGrantUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    orgId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantCreateOrConnectWithoutWorkspaceInput = {
+    where: OpenGrantWhereUniqueInput
+    create: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OpenGrantCreateManyWorkspaceInputEnvelope = {
+    data: OpenGrantCreateManyWorkspaceInput | OpenGrantCreateManyWorkspaceInput[]
     skipDuplicates?: boolean
   }
 
@@ -43771,12 +46215,67 @@ export namespace Prisma {
     foundedYear?: IntNullableFilter<"AdvocacyOrg"> | number | null
     memberCount?: IntNullableFilter<"AdvocacyOrg"> | number | null
     annualBudget?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    researchSpend?: FloatNullableFilter<"AdvocacyOrg"> | number | null
+    country?: StringNullableFilter<"AdvocacyOrg"> | string | null
+    externalId?: StringNullableFilter<"AdvocacyOrg"> | string | null
     headquarters?: StringNullableFilter<"AdvocacyOrg"> | string | null
     socialLinks?: JsonFilter<"AdvocacyOrg">
     metadata?: JsonFilter<"AdvocacyOrg">
     status?: EnumOrgStatusFilter<"AdvocacyOrg"> | $Enums.OrgStatus
     createdAt?: DateTimeFilter<"AdvocacyOrg"> | Date | string
     updatedAt?: DateTimeFilter<"AdvocacyOrg"> | Date | string
+  }
+
+  export type OpenGrantUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: OpenGrantWhereUniqueInput
+    update: XOR<OpenGrantUpdateWithoutWorkspaceInput, OpenGrantUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<OpenGrantCreateWithoutWorkspaceInput, OpenGrantUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OpenGrantUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: OpenGrantWhereUniqueInput
+    data: XOR<OpenGrantUpdateWithoutWorkspaceInput, OpenGrantUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type OpenGrantUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: OpenGrantScalarWhereInput
+    data: XOR<OpenGrantUpdateManyMutationInput, OpenGrantUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type OpenGrantScalarWhereInput = {
+    AND?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
+    OR?: OpenGrantScalarWhereInput[]
+    NOT?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
+    id?: StringFilter<"OpenGrant"> | string
+    orgId?: StringFilter<"OpenGrant"> | string
+    workspaceId?: StringFilter<"OpenGrant"> | string
+    title?: StringFilter<"OpenGrant"> | string
+    description?: StringNullableFilter<"OpenGrant"> | string | null
+    fundingAmountMin?: FloatNullableFilter<"OpenGrant"> | number | null
+    fundingAmountMax?: FloatNullableFilter<"OpenGrant"> | number | null
+    currency?: StringFilter<"OpenGrant"> | string
+    deadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    deadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    applicationUrl?: StringNullableFilter<"OpenGrant"> | string | null
+    status?: EnumGrantStatusFilter<"OpenGrant"> | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFilter<"OpenGrant"> | $Enums.GrantType
+    cancerTypes?: StringNullableListFilter<"OpenGrant">
+    geographicScope?: StringNullableListFilter<"OpenGrant">
+    eligibilityCriteria?: StringNullableFilter<"OpenGrant"> | string | null
+    eligibilityStages?: StringNullableListFilter<"OpenGrant">
+    eligibilityOrgTypes?: StringNullableListFilter<"OpenGrant">
+    requiresLOI?: BoolFilter<"OpenGrant"> | boolean
+    loiDeadline?: DateTimeNullableFilter<"OpenGrant"> | Date | string | null
+    loiDeadlineRaw?: StringNullableFilter<"OpenGrant"> | string | null
+    awardDuration?: StringNullableFilter<"OpenGrant"> | string | null
+    numberOfAwards?: IntNullableFilter<"OpenGrant"> | number | null
+    contactName?: StringNullableFilter<"OpenGrant"> | string | null
+    contactEmail?: StringNullableFilter<"OpenGrant"> | string | null
+    notes?: StringNullableFilter<"OpenGrant"> | string | null
+    sourceNotes?: StringNullableFilter<"OpenGrant"> | string | null
+    metadata?: JsonFilter<"OpenGrant">
+    createdAt?: DateTimeFilter<"OpenGrant"> | Date | string
+    updatedAt?: DateTimeFilter<"OpenGrant"> | Date | string
   }
 
   export type PageUpsertWithWhereUniqueWithoutWorkspaceInput = {
@@ -43889,6 +46388,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
@@ -43905,6 +46405,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -43976,6 +46477,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
@@ -43992,6 +46494,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -44053,6 +46556,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
@@ -44069,6 +46573,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -44304,6 +46809,80 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OpenGrantCreateWithoutOrgInput = {
+    id?: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+  }
+
+  export type OpenGrantUncheckedCreateWithoutOrgInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantCreateOrConnectWithoutOrgInput = {
+    where: OpenGrantWhereUniqueInput
+    create: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OpenGrantCreateManyOrgInputEnvelope = {
+    data: OpenGrantCreateManyOrgInput | OpenGrantCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PageCreateWithoutOrgInput = {
     id?: string
     title: string
@@ -44373,6 +46952,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
@@ -44389,6 +46969,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -44549,6 +47130,22 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"OrgContact"> | Date | string
   }
 
+  export type OpenGrantUpsertWithWhereUniqueWithoutOrgInput = {
+    where: OpenGrantWhereUniqueInput
+    update: XOR<OpenGrantUpdateWithoutOrgInput, OpenGrantUncheckedUpdateWithoutOrgInput>
+    create: XOR<OpenGrantCreateWithoutOrgInput, OpenGrantUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OpenGrantUpdateWithWhereUniqueWithoutOrgInput = {
+    where: OpenGrantWhereUniqueInput
+    data: XOR<OpenGrantUpdateWithoutOrgInput, OpenGrantUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type OpenGrantUpdateManyWithWhereWithoutOrgInput = {
+    where: OpenGrantScalarWhereInput
+    data: XOR<OpenGrantUpdateManyMutationInput, OpenGrantUncheckedUpdateManyWithoutOrgInput>
+  }
+
   export type PageUpsertWithWhereUniqueWithoutOrgInput = {
     where: PageWhereUniqueInput
     update: XOR<PageUpdateWithoutOrgInput, PageUncheckedUpdateWithoutOrgInput>
@@ -44580,6 +47177,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44591,6 +47191,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -44610,6 +47211,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44620,6 +47224,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -44654,6 +47259,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44665,6 +47273,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -44684,6 +47293,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44694,7 +47306,240 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgCreateWithoutOpenGrantsInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutOpenGrantsInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
+  }
+
+  export type WorkspaceCreateWithoutOpenGrantsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    pages?: PageCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutOpenGrantsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutOpenGrantsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutOpenGrantsInput, WorkspaceUncheckedCreateWithoutOpenGrantsInput>
+  }
+
+  export type AdvocacyOrgUpsertWithoutOpenGrantsInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutOpenGrantsInput, AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput>
+    create: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutOpenGrantsInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutOpenGrantsInput, AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutOpenGrantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type WorkspaceUpsertWithoutOpenGrantsInput = {
+    update: XOR<WorkspaceUpdateWithoutOpenGrantsInput, WorkspaceUncheckedUpdateWithoutOpenGrantsInput>
+    create: XOR<WorkspaceCreateWithoutOpenGrantsInput, WorkspaceUncheckedCreateWithoutOpenGrantsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutOpenGrantsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutOpenGrantsInput, WorkspaceUncheckedUpdateWithoutOpenGrantsInput>
+  }
+
+  export type WorkspaceUpdateWithoutOpenGrantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutOpenGrantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type AdvocacyOrgCreateWithoutCampaignsInput = {
@@ -44712,6 +47557,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44723,6 +47571,7 @@ export namespace Prisma {
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -44742,6 +47591,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44752,6 +47604,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -44984,6 +47837,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -44995,6 +47851,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -45014,6 +47871,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -45024,6 +47884,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -47281,6 +50142,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47292,6 +50156,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -47311,6 +50176,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47321,6 +50189,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -47394,6 +50263,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47405,6 +50277,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -47424,6 +50297,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47434,6 +50310,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -47636,6 +50513,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47647,6 +50527,7 @@ export namespace Prisma {
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -47666,6 +50547,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47676,6 +50560,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -47751,6 +50636,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47762,6 +50650,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -47781,6 +50670,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47791,6 +50683,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -47809,6 +50702,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47820,6 +50716,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
   }
 
@@ -47839,6 +50736,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47849,6 +50749,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
   }
 
@@ -47975,6 +50876,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -47986,6 +50890,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -48005,6 +50910,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -48015,6 +50923,7 @@ export namespace Prisma {
     coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -48133,6 +51042,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
@@ -48149,6 +51059,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -48174,6 +51085,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -48186,6 +51100,7 @@ export namespace Prisma {
     patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPagesInput = {
@@ -48204,6 +51119,9 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -48215,6 +51133,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPagesInput = {
@@ -48475,6 +51394,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
@@ -48491,6 +51411,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -48522,6 +51443,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -48534,6 +51458,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPagesInput = {
@@ -48552,6 +51477,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -48563,6 +51491,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type CampaignUpsertWithoutPagesInput = {
@@ -48996,6 +51925,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
@@ -49012,6 +51942,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -49181,6 +52112,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
@@ -49197,6 +52129,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -49402,6 +52335,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
@@ -49418,6 +52352,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -49450,6 +52385,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
@@ -49466,6 +52402,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -49690,6 +52627,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
@@ -49706,6 +52644,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
     advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
@@ -49777,6 +52716,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
@@ -49793,6 +52733,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
     advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
@@ -50357,10 +53298,45 @@ export namespace Prisma {
     foundedYear?: number | null
     memberCount?: number | null
     annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
     headquarters?: string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
     status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantCreateManyWorkspaceInput = {
+    id?: string
+    orgId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -50460,6 +53436,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -50471,6 +53450,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
   }
 
@@ -50489,6 +53469,9 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
@@ -50500,6 +53483,7 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
   }
 
@@ -50518,10 +53502,109 @@ export namespace Prisma {
     foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
     memberCount?: NullableIntFieldUpdateOperationsInput | number | null
     annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
     headquarters?: NullableStringFieldUpdateOperationsInput | string | null
     socialLinks?: JsonNullValueInput | InputJsonValue
     metadata?: JsonNullValueInput | InputJsonValue
     status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
+  }
+
+  export type OpenGrantUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -50791,6 +53874,38 @@ export namespace Prisma {
     role?: $Enums.ContactRole
     isPrimary?: boolean
     createdAt?: Date | string
+  }
+
+  export type OpenGrantCreateManyOrgInput = {
+    id?: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PageCreateManyOrgInput = {
@@ -51064,6 +54179,102 @@ export namespace Prisma {
     role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+  }
+
+  export type OpenGrantUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OpenGrantUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PageUpdateWithoutOrgInput = {
@@ -52506,6 +55717,10 @@ export namespace Prisma {
      * @deprecated Use OrgContactDefaultArgs instead
      */
     export type OrgContactArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OrgContactDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OpenGrantDefaultArgs instead
+     */
+    export type OpenGrantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OpenGrantDefaultArgs<ExtArgs>
     /**
      * @deprecated Use CampaignDefaultArgs instead
      */

@@ -4,6 +4,7 @@ import { HumanMessage } from "@langchain/core/messages";
 import { prisma } from "@zeta/db";
 import { agentRegistry } from "./agents/registry.js";
 import type { AgentRole } from "./agents/registry.js";
+import { runWorkflow, listWorkflows, resumeApproval } from "./archon-runner.js";
 
 const app = express();
 app.use(cors());
@@ -274,6 +275,51 @@ function getModelForRole(role: string): string {
   };
   return models[role] ?? "openai/gpt-oss-20b:free";
 }
+
+
+// ─── Archon Workflow Runner ───────────────────────────────────────────────────
+
+// List available workflows
+app.get("/api/archon/workflows", (_req, res) => {
+  res.json({ workflows: listWorkflows() });
+});
+
+// Launch a workflow — SSE stream of real execution logs
+app.post("/api/archon/run", (req, res) => {
+  const { workflow, message } = req.body as { workflow: string; message: string };
+
+  if (!workflow || !message) {
+    res.status(400).json({ error: "workflow and message are required" });
+    return;
+  }
+
+  // Set SSE headers
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.setHeader("X-Accel-Buffering", "no"); // Disable nginx buffering
+
+  // Run workflow (async, streams to res)
+  runWorkflow(workflow, message, res).catch((err) => {
+    console.error("[Archon] Fatal error:", err);
+    res.write(`event: log\ndata: ${JSON.stringify({ type: "error", text: String(err), nodeId: "runner" })}\n\n`);
+    res.write(`event: done\ndata: ${JSON.stringify({ type: "done", text: "FAILED: " + String(err) })}\n\n`);
+    res.end();
+  });
+});
+
+// Resume an approval gate
+app.post("/api/archon/run/:runId/approve", (req, res) => {
+  const { runId } = req.params;
+  const { approved, feedback } = req.body as { approved: boolean; feedback?: string };
+
+  const ok = resumeApproval(runId, approved, feedback);
+  if (!ok) {
+    res.status(404).json({ error: "No pending approval for this run ID" });
+    return;
+  }
+  res.json({ status: approved ? "APPROVED" : "REJECTED" });
+});
 
 // ─── Start server ─────────────────────────────────────────────────────────────
 
