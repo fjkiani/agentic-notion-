@@ -12,9 +12,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        fromDatabase:
-          name: zeta-caid-db
-          property: connectionString
+        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
       - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         sync: false
       - key: CLERK_SECRET_KEY
@@ -47,9 +45,7 @@ services:
       - key: PORT
         value: "3001"
       - key: DATABASE_URL
-        fromDatabase:
-          name: zeta-caid-db
-          property: connectionString
+        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
       - key: MCP_AUTH_TOKEN
         sync: false
       - key: MCP_TRANSPORT
@@ -70,9 +66,7 @@ services:
       - key: PORT
         value: "3002"
       - key: DATABASE_URL
-        fromDatabase:
-          name: zeta-caid-db
-          property: connectionString
+        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
       - key: OPENROUTER_API_KEY
         sync: false
       - key: MCP_SERVER_URL
@@ -84,9 +78,18 @@ services:
       - key: APP_URL
         sync: false
 
-databases:
-  - name: zeta-caid-db
-    databaseName: zeta_caid
-    user: zeta_caid_user
+  # ─── One-shot DB seed job ─────────────────────────────────────────────────
+  # Run once after deploy to seed 88 orgs + 26 grants + 84 contacts
+  - type: job
+    name: zeta-caid-seed
+    runtime: node
     region: oregon
     plan: free
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install && pnpm --filter @zeta/db run build
+    startCommand: >
+      npx ts-node --skip-project --transpile-only
+      --compiler-options '{"module":"CommonJS","moduleResolution":"node"}'
+      scripts/seed-caid.ts
+    envVars:
+      - key: DATABASE_URL
+        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
