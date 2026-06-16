@@ -1,35 +1,21 @@
 #!/bin/bash
-set -e
+set -euo pipefail
+
 echo "=== Zeta CAID Web Build ==="
 node --version
-npm --version
 pnpm --version
 
-# Install dependencies
+export NODE_ENV=development
+
 echo "Installing dependencies..."
-pnpm install
+pnpm install --frozen-lockfile
 echo "pnpm install done"
 
-echo "Skipping prisma generate (binary is pre-committed to repo)"
-
-# Build @zeta/db
-echo "Building @zeta/db..."
-cd packages/db && ../../node_modules/.bin/tsc && cd ../..
-
-# Copy generated client to dist/
-echo "Copying generated client..."
-mkdir -p packages/db/dist/generated/client
-cp -r packages/db/src/generated/client/* packages/db/dist/generated/client/
-
-echo "Building @zeta/shared..."
-cd packages/shared && ../../node_modules/.bin/tsc && cd ../..
-
-echo "Building @zeta/types..."
-cd packages/types && ../../node_modules/.bin/tsc && cd ../..
-
-echo "Building @zeta/web (Next.js)..."
-# Use apps/web/node_modules/.bin/next (pnpm workspace package)
-cd apps/web && node_modules/.bin/next build && cd ../..
+echo "Building packages..."
+pnpm --filter @zeta/db run build
+pnpm --filter @zeta/shared run build
+pnpm --filter @zeta/types run build
+pnpm --filter @zeta/web run build
 
 echo "=== Build Complete ==="
 ls apps/web/.next/
