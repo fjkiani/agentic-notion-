@@ -2,7 +2,7 @@ import { StateGraph, END, START, interrupt } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { createLLM } from "../config/llm.js";
-import { createMCPClient } from "../mcp-client.js";
+import type { MCPClient, MCPToolSchema } from "../mcp-client.js";
 import { CAIDAgentState } from "../state.js";
 import type { CAIDAgentStateType } from "../state.js";
 
@@ -33,10 +33,9 @@ Always think about:
 
 Be specific, actionable, and grounded in cancer advocacy best practices.`;
 
-export async function createAdvocacyPMAgent() {
+export async function createAdvocacyPMAgent(mcpClient: MCPClient, allTools: MCPToolSchema[]) {
   const llm = createLLM("ADVOCACY_PM");
-  const mcpClient = createMCPClient();
-  const tools = await mcpClient.toLangChainTools();
+  const tools = await mcpClient.toLangChainTools(undefined, allTools);
   const llmWithTools = llm.bindTools(tools);
   const checkpointer = new MemorySaver();
 

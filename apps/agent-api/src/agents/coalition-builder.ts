@@ -2,7 +2,7 @@ import { StateGraph, END, START } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { SystemMessage } from "@langchain/core/messages";
 import { createLLM } from "../config/llm.js";
-import { createMCPClient } from "../mcp-client.js";
+import type { MCPClient, MCPToolSchema } from "../mcp-client.js";
 import { CAIDAgentState } from "../state.js";
 import type { CAIDAgentStateType } from "../state.js";
 
@@ -43,9 +43,8 @@ Always think about:
 - Timing relative to regulatory/legislative windows
 - Geographic diversity for Congressional engagement`;
 
-export async function createCoalitionBuilderAgent() {
+export async function createCoalitionBuilderAgent(mcpClient: MCPClient, allTools: MCPToolSchema[]) {
   const llm = createLLM("COALITION_BUILDER");
-  const mcpClient = createMCPClient();
   const tools = await mcpClient.toLangChainTools([
     "org_list",
     "org_get",
@@ -58,7 +57,7 @@ export async function createCoalitionBuilderAgent() {
     "task_create",
     "task_bulk_create",
     "workspace_dashboard",
-  ]);
+  ], allTools);
   const llmWithTools = llm.bindTools(tools);
   const checkpointer = new MemorySaver();
 

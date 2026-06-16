@@ -48,6 +48,11 @@ app.post("/api/agents/run", async (req, res) => {
       return;
     }
 
+    if (!agentRegistry.isReady()) {
+      res.status(503).json({ error: "Agents are still initializing. Retry in a few seconds." });
+      return;
+    }
+
     // Create agent run record
     const agentRun = await prisma.agentRun.create({
       data: {
@@ -325,28 +330,47 @@ app.post("/api/archon/run/:runId/approve", (req, res) => {
 
 const port = parseInt(process.env.PORT ?? "3002", 10);
 
-// Initialize agents then start server
-agentRegistry.initialize()
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`[CAID Agents] Server running on port ${port}`);
-      console.log(`[CAID Agents] Agents: ${agentRegistry.getRoles().join(", ")}`);
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
-      // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
-      const PING_INTERVAL_MS = 9 * 60 * 1000;
-      const selfUrl = `http://localhost:${port}/health`;
-      setInterval(async () => {
-        try {
-          const res = await fetch(selfUrl);
-          console.log(`[CAID Agents] keep-alive ping → ${res.status}`);
-        } catch (err) {
-          console.warn(`[CAID Agents] keep-alive ping failed: ${err}`);
-        }
-      }, PING_INTERVAL_MS);
-      console.log(`[CAID Agents] Keep-alive enabled (ping every 9 min)`);
-    });
-  })
-  .catch((error) => {
-    console.error("[CAID Agents] Failed to start:", error);
-    process.exit(1);
-  });
+async function initializeAgentsWithRetry(): Promise<void> {
+  const maxAttempts = 8;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      await agentRegistry.initialize();
+      console.log(`[CAID Agents] Agents: ${agentRegistry.getRoles().join(", ")}`);
+      return;
+    } catch (error) {
+      console.error(`[CAID Agents] Agent init attempt ${attempt}/${maxAttempts} failed:`, error);
+      if (attempt < maxAttempts) {
+        const delay = 5000 * attempt;
+        console.log(`[CAID Agents] Retrying agent init in ${delay / 1000}s...`);
+        await sleep(delay);
+      }
+    }
+  }
+
+  console.error("[CAID Agents] Agents failed to initialize — HTTP server running, will retry on next deploy/restart");
+}
+
+// Start HTTP server immediately so Render health checks pass during MCP cold starts
+app.listen(port, () => {
+  console.log(`[CAID Agents] Server running on port ${port}`);
+
+  void initializeAgentsWithRetry();
+
+  // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
+  const PING_INTERVAL_MS = 9 * 60 * 1000;
+  const selfUrl = `http://localhost:${port}/health`;
+  setInterval(async () => {
+    try {
+      const res = await fetch(selfUrl);
+      console.log(`[CAID Agents] keep-alive ping → ${res.status}`);
+    } catch (err) {
+      console.warn(`[CAID Agents] keep-alive ping failed: ${err}`);
+    }
+  }, PING_INTERVAL_MS);
+  console.log(`[CAID Agents] Keep-alive enabled (ping every 9 min)`);
+});

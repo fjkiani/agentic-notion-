@@ -22,11 +22,17 @@ services:
       - key: MCP_AUTH_TOKEN
         sync: false
       - key: NEXT_PUBLIC_MCP_SERVER_URL
-        sync: false
+        fromService:
+          type: web
+          name: agentic-notion-mcp
+          envVarKey: RENDER_EXTERNAL_URL
       - key: AGENT_API_TOKEN
         sync: false
       - key: NEXT_PUBLIC_AGENT_API_URL
-        sync: false
+        fromService:
+          type: web
+          name: agentic-notion-agents
+          envVarKey: RENDER_EXTERNAL_URL
       - key: APP_URL
         sync: false
 
@@ -70,7 +76,10 @@ services:
       - key: OPENROUTER_API_KEY
         sync: false
       - key: MCP_SERVER_URL
-        sync: false
+        fromService:
+          type: web
+          name: agentic-notion-mcp
+          envVarKey: RENDER_EXTERNAL_URL
       - key: MCP_AUTH_TOKEN
         sync: false
       - key: AGENT_API_TOKEN

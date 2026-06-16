@@ -2,7 +2,7 @@ import { StateGraph, END, START } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import { createLLM } from "../config/llm.js";
-import { createMCPClient } from "../mcp-client.js";
+import type { MCPClient, MCPToolSchema } from "../mcp-client.js";
 import { CAIDAgentState } from "../state.js";
 import type { CAIDAgentStateType } from "../state.js";
 
@@ -39,9 +39,8 @@ Always provide:
 - Gaps in the evidence base that advocacy could address
 - Relevant ongoing trials patients could access`;
 
-export async function createResearchIntelligenceAgent() {
+export async function createResearchIntelligenceAgent(mcpClient: MCPClient, allTools: MCPToolSchema[]) {
   const llm = createLLM("RESEARCH_INTELLIGENCE");
-  const mcpClient = createMCPClient();
   const tools = await mcpClient.toLangChainTools([
     "evidence_search_pubmed",
     "evidence_create",
@@ -53,7 +52,7 @@ export async function createResearchIntelligenceAgent() {
     "biomarker_create",
     "initiative_get",
     "campaign_get",
-  ]);
+  ], allTools);
   const llmWithTools = llm.bindTools(tools);
   const checkpointer = new MemorySaver();
 

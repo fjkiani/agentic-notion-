@@ -3,6 +3,12 @@ import { createAdvocacyPMAgent } from "./advocacy-pm.js";
 import { createResearchIntelligenceAgent } from "./research-intelligence.js";
 import { createCoalitionBuilderAgent } from "./coalition-builder.js";
 import { createStandupReporterAgent } from "./standup-reporter.js";
+import {
+  getSharedMCPClient,
+  waitForMCPReady,
+  type MCPClient,
+  type MCPToolSchema,
+} from "../mcp-client.js";
 
 type AgentRole = "ADVOCACY_PM" | "RESEARCH_INTELLIGENCE" | "COALITION_BUILDER" | "STANDUP_REPORTER";
 
@@ -12,18 +18,36 @@ type CompiledGraph = CompiledStateGraph<any, any, any>;
 class AgentRegistry {
   private agents = new Map<AgentRole, CompiledGraph>();
   private initialized = false;
+  private initializing: Promise<void> | null = null;
 
   async initialize(): Promise<void> {
     if (this.initialized) return;
+    if (this.initializing) return this.initializing;
 
+    this.initializing = this.doInitialize();
+    try {
+      await this.initializing;
+    } finally {
+      this.initializing = null;
+    }
+  }
+
+  private async doInitialize(): Promise<void> {
     console.log("[Agent Registry] Initializing agents...");
 
     try {
+      const mcpClient = getSharedMCPClient();
+      await waitForMCPReady(mcpClient);
+
+      // Single tools/list call shared across all agents (avoids 429 thundering herd)
+      const allTools = await mcpClient.listTools();
+      console.log(`[Agent Registry] Loaded ${allTools.length} MCP tools`);
+
       const [pm, research, coalition, standup] = await Promise.all([
-        createAdvocacyPMAgent(),
-        createResearchIntelligenceAgent(),
-        createCoalitionBuilderAgent(),
-        createStandupReporterAgent(),
+        createAdvocacyPMAgent(mcpClient, allTools),
+        createResearchIntelligenceAgent(mcpClient, allTools),
+        createCoalitionBuilderAgent(mcpClient, allTools),
+        createStandupReporterAgent(mcpClient, allTools),
       ]);
 
       this.agents.set("ADVOCACY_PM", pm);
@@ -41,7 +65,7 @@ class AgentRegistry {
 
   get(role: AgentRole): CompiledGraph {
     const agent = this.agents.get(role);
-    if (!agent) throw new Error(`Agent not found: ${role}`);
+    if (!agent) throw new Error(`Agent not found: ${role}. Registry not ready yet.`);
     return agent;
   }
 
@@ -55,4 +79,4 @@ class AgentRegistry {
 }
 
 export const agentRegistry = new AgentRegistry();
-export type { AgentRole };
+export type { AgentRole, MCPClient, MCPToolSchema };

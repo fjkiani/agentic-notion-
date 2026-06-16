@@ -2,7 +2,7 @@ import { StateGraph, END, START } from "@langchain/langgraph";
 import { MemorySaver } from "@langchain/langgraph";
 import { SystemMessage } from "@langchain/core/messages";
 import { createLLM } from "../config/llm.js";
-import { createMCPClient } from "../mcp-client.js";
+import type { MCPClient, MCPToolSchema } from "../mcp-client.js";
 import { CAIDAgentState } from "../state.js";
 import type { CAIDAgentStateType } from "../state.js";
 
@@ -50,9 +50,8 @@ Report format:
 Keep reports concise (under 500 words) and actionable.
 Highlight CRITICAL and HIGH priority items prominently.`;
 
-export async function createStandupReporterAgent() {
+export async function createStandupReporterAgent(mcpClient: MCPClient, allTools: MCPToolSchema[]) {
   const llm = createLLM("STANDUP_REPORTER");
-  const mcpClient = createMCPClient();
   const tools = await mcpClient.toLangChainTools([
     "workspace_dashboard",
     "task_list",
@@ -61,7 +60,7 @@ export async function createStandupReporterAgent() {
     "initiative_list",
     "evidence_list",
     "trial_list",
-  ]);
+  ], allTools);
   const llmWithTools = llm.bindTools(tools);
   const checkpointer = new MemorySaver();
 
