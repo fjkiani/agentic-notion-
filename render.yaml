@@ -56,6 +56,8 @@ services:
         sync: false
       - key: MCP_TRANSPORT
         value: http
+      - key: SEED_ON_START
+        value: "true"
 
   # ─── Agent API (LangGraph) ────────────────────────────────────────────────
   - type: web
