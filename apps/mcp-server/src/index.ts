@@ -3,6 +3,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
 import cors from "cors";
+import { prisma, seedCAID } from "@zeta/db";
 import { registry } from "./registry.js";
 
 // Import all tool groups
@@ -72,12 +73,25 @@ if (transport === "stdio") {
   });
 
   // Health check
-  app.get("/health", (_req, res) => {
+  app.get("/health", async (_req, res) => {
+    let db: Record<string, number> | null = null;
+    try {
+      const [orgs, grants, contacts] = await Promise.all([
+        prisma.advocacyOrg.count(),
+        prisma.openGrant.count(),
+        prisma.orgContact.count(),
+      ]);
+      db = { orgs, grants, contacts };
+    } catch {
+      db = null;
+    }
+
     res.json({
       status: "ok",
       tools: registry.size,
       version: "1.0.0",
       service: "zeta-caid-mcp",
+      db,
     });
   });
 
@@ -109,6 +123,21 @@ if (transport === "stdio") {
     console.log(`[CAID MCP] ${registry.size} tools available`);
     console.log(`[CAID MCP] Health: http://localhost:${port}/health`);
     console.log(`[CAID MCP] Tools:  http://localhost:${port}/tools`);
+
+    void (async () => {
+      try {
+        const orgCount = await prisma.advocacyOrg.count();
+        if (orgCount === 0 || process.env.SEED_ON_START === "true") {
+          console.log("[CAID MCP] Running database seed...");
+          const result = await seedCAID();
+          console.log("[CAID MCP] Seed complete:", result);
+        } else {
+          console.log(`[CAID MCP] Database has ${orgCount} orgs — skipping seed`);
+        }
+      } catch (error) {
+        console.error("[CAID MCP] Seed failed:", error);
+      }
+    })();
 
     // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
     const PING_INTERVAL_MS = 9 * 60 * 1000; // 9 minutes

@@ -17,3 +17,4 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export * from "./generated/client/index.js";
 export type { PrismaClient } from "./generated/client/index.js";
+export { seedCAID, type SeedResult } from "./seed-caid.js";
