@@ -11,6 +11,40 @@ function prismaCli(): string {
   return path.join(repoRoot(), "node_modules/.bin/prisma");
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function databaseHost(): string {
+  const dbUrl = process.env.DATABASE_URL ?? "";
+  const match = dbUrl.match(/^postgres(?:ql)?:\/\/[^@]+@([^/?]+)/);
+  return match?.[1] ?? "unknown";
+}
+
+/** Render free Postgres can take 30–60s to accept connections after wake. */
+async function waitForDatabase(maxAttempts = 12): Promise<void> {
+  const host = databaseHost();
+  console.log(`[CAID MCP] Waiting for Postgres at ${host}...`);
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      await prisma.$queryRaw`SELECT 1`;
+      console.log(`[CAID MCP] Postgres connected (attempt ${attempt})`);
+      return;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.warn(`[CAID MCP] Postgres not ready (${attempt}/${maxAttempts}): ${message}`);
+      if (attempt === maxAttempts) {
+        throw new Error(
+          `Postgres unreachable at ${host} after ${maxAttempts} attempts. ` +
+            "On Render: confirm zeta-caid-db is Available, linked to this service, and in Oregon."
+        );
+      }
+      await sleep(Math.min(5000 * attempt, 30000));
+    }
+  }
+}
+
 function runDbPush(): void {
   const root = repoRoot();
   const dbDir = path.join(root, "packages/db");
@@ -33,14 +67,15 @@ function runDbPush(): void {
 }
 
 export async function bootstrapDatabase(): Promise<void> {
-  const dbUrl = process.env.DATABASE_URL;
-  if (!dbUrl) {
+  if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is not set");
   }
 
-  const host = dbUrl.replace(/^postgres(ql)?:\/\/[^@]+@([^/]+).*/, "$2");
-  console.log(`[CAID MCP] Database host: ${host}`);
+  if (databaseHost().startsWith("dpg-") && !databaseHost().includes(".render.com")) {
+    console.log("[CAID MCP] Using Render internal database URL");
+  }
 
+  await waitForDatabase();
   runDbPush();
 
   const orgCount = await prisma.advocacyOrg.count();

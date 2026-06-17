@@ -1,3 +1,12 @@
+# Render Blueprint — Zeta CAID
+# DATABASE_URL is injected from zeta-caid-db (internal URL). Do NOT hardcode Postgres URLs.
+
+databases:
+  - name: zeta-caid-db
+    databaseName: zeta_caid_prod
+    plan: free
+    region: oregon
+
 services:
   # ─── Web App (Next.js 15) ─────────────────────────────────────────────────
   - type: web
@@ -12,7 +21,9 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
       - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         sync: false
       - key: CLERK_SECRET_KEY
@@ -51,7 +62,9 @@ services:
       - key: PORT
         value: "3001"
       - key: DATABASE_URL
-        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
       - key: MCP_AUTH_TOKEN
         sync: false
       - key: MCP_TRANSPORT
@@ -74,7 +87,9 @@ services:
       - key: PORT
         value: "3002"
       - key: DATABASE_URL
-        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
       - key: OPENROUTER_API_KEY
         sync: false
       - key: MCP_SERVER_URL
@@ -90,7 +105,6 @@ services:
         sync: false
 
   # ─── One-shot DB seed job ─────────────────────────────────────────────────
-  # Run once after deploy to seed 88 orgs + 26 grants + 84 contacts
   - type: job
     name: zeta-caid-seed
     runtime: node
@@ -100,4 +114,6 @@ services:
     startCommand: NODE_ENV=production pnpm --filter @zeta/db exec tsx ../../scripts/seed-caid.ts
     envVars:
       - key: DATABASE_URL
-        value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod
+        fromDatabase:
+          name: zeta-caid-db
+          property: connectionString
