@@ -86,23 +86,45 @@ export const biomarkerTools: MCPToolDefinition[] = [
       const { symbol } = input as { symbol: string };
       const searchUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gene&term=${encodeURIComponent(symbol)}[Gene+Name]+AND+Homo+sapiens[Organism]&retmode=json&retmax=1`;
       const searchRes = await fetch(searchUrl);
-      const searchData = await searchRes.json() as { esearchresult: { idlist: string[] } };
+      if (!searchRes.ok) throw new Error(`NCBI esearch HTTP ${searchRes.status}`);
+      const searchData = await searchRes.json() as { esearchresult?: { idlist?: string[] } };
       const geneId = searchData.esearchresult?.idlist?.[0];
       if (!geneId) return { found: false, symbol };
 
       const summaryUrl = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gene&id=${geneId}&retmode=json`;
-      const summaryRes = await fetch(summaryUrl);
-      const summaryData = await summaryRes.json() as { result: Record<string, { name: string; description: string; otheraliases: string; summary: string; chromosome: string }> };
-      const gene = summaryData.result[geneId];
+      let summaryRes: Response | null = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        summaryRes = await fetch(summaryUrl);
+        if (summaryRes.status !== 429) break;
+        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+      }
+      if (!summaryRes?.ok) throw new Error(`NCBI esummary HTTP ${summaryRes?.status ?? "unknown"}`);
+      const summaryData = await summaryRes.json() as {
+        result?: Record<string, { name?: string; description?: string; otheraliases?: string; summary?: string; chromosome?: string } | string[]>;
+      };
+      const result = summaryData.result;
+      if (!result) throw new Error("NCBI esummary returned no result payload");
+      const gene = result[geneId];
+      if (!gene || typeof gene !== "object" || Array.isArray(gene)) {
+        return { found: false, symbol, geneId };
+      }
+
+      const record = gene as {
+        name?: string;
+        description?: string;
+        otheraliases?: string;
+        summary?: string;
+        chromosome?: string;
+      };
 
       return {
         found: true,
         geneId,
-        symbol: gene?.name,
-        name: gene?.description,
-        aliases: gene?.otheraliases?.split(", ").filter(Boolean) ?? [],
-        summary: gene?.summary,
-        chromosome: gene?.chromosome,
+        symbol: record.name ?? symbol,
+        name: record.description,
+        aliases: record.otheraliases?.split(", ").filter(Boolean) ?? [],
+        summary: record.summary,
+        chromosome: record.chromosome,
       };
     },
   },

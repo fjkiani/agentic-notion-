@@ -13,7 +13,8 @@
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "db:migrate": "turbo run db:migrate",
-    "db:studio": "pnpm --filter @zeta/db studio"
+    "db:studio": "pnpm --filter @zeta/db studio",
+    "e2e": "pnpm --filter @zeta/agent-api exec tsx ../../scripts/e2e-test.ts"
   },
   "devDependencies": {
     "turbo": "^2.3.3",

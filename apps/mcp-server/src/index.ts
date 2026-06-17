@@ -18,6 +18,7 @@ import { clinicalTrialTools } from "./tools/clinical-trial.js";
 import { biomarkerTools } from "./tools/biomarker.js";
 import { patientStoryTools } from "./tools/patient-story.js";
 import { coalitionTools } from "./tools/coalition.js";
+import { grantTools } from "./tools/grant.js";
 import { searchTools } from "./tools/search.js";
 import { userTools } from "./tools/user.js";
 
@@ -34,6 +35,7 @@ registry.registerAll([
   ...biomarkerTools,
   ...patientStoryTools,
   ...coalitionTools,
+  ...grantTools,
   ...searchTools,
   ...userTools,
 ]);
@@ -76,6 +78,7 @@ if (transport === "stdio") {
   // Health check
   app.get("/health", async (_req, res) => {
     let db: Record<string, number> | null = null;
+    let dbError: string | null = null;
     try {
       const [orgs, grants, contacts] = await Promise.all([
         prisma.advocacyOrg.count(),
@@ -83,8 +86,8 @@ if (transport === "stdio") {
         prisma.orgContact.count(),
       ]);
       db = { orgs, grants, contacts };
-    } catch {
-      db = null;
+    } catch (error) {
+      dbError = error instanceof Error ? error.message : String(error);
     }
 
     res.json({
@@ -93,6 +96,7 @@ if (transport === "stdio") {
       version: "1.0.0",
       service: "zeta-caid-mcp",
       db,
+      ...(dbError ? { dbError } : {}),
     });
   });
 

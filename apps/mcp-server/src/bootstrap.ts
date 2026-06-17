@@ -4,16 +4,26 @@ import { fileURLToPath } from "node:url";
 import { prisma, seedCAID } from "@zeta/db";
 
 function repoRoot(): string {
-  // dist/bootstrap.js -> apps/mcp-server/dist -> repo root
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 }
 
+function prismaCli(): string {
+  return path.join(repoRoot(), "node_modules/.bin/prisma");
+}
+
 function runDbPush(): void {
-  const dbDir = path.join(repoRoot(), "packages/db");
+  const root = repoRoot();
+  const dbDir = path.join(root, "packages/db");
   console.log("[CAID MCP] Applying database schema...");
   const result = spawnSync(
-    "npx",
-    ["prisma", "db", "push", "--skip-generate", "--accept-data-loss"],
+    prismaCli(),
+    [
+      "db",
+      "push",
+      "--schema=prisma/schema.prisma",
+      "--skip-generate",
+      "--accept-data-loss",
+    ],
     { cwd: dbDir, env: process.env, stdio: "inherit" }
   );
   if (result.status !== 0) {
@@ -23,6 +33,14 @@ function runDbPush(): void {
 }
 
 export async function bootstrapDatabase(): Promise<void> {
+  const dbUrl = process.env.DATABASE_URL;
+  if (!dbUrl) {
+    throw new Error("DATABASE_URL is not set");
+  }
+
+  const host = dbUrl.replace(/^postgres(ql)?:\/\/[^@]+@([^/]+).*/, "$2");
+  console.log(`[CAID MCP] Database host: ${host}`);
+
   runDbPush();
 
   const orgCount = await prisma.advocacyOrg.count();
