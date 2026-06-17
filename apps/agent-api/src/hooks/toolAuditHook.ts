@@ -23,6 +23,7 @@
 
 import { AsyncLocalStorage } from "node:async_hooks";
 import type { PrismaClient } from "@zeta/db";
+import { Prisma } from "@zeta/db";
 import type { MCPClient } from "../mcp-client.js";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -68,6 +69,15 @@ export function clearOrderCounter(runId: string): void {
   orderCounters.delete(runId);
 }
 
+// ─── JSON helper ─────────────────────────────────────────────────────────────
+// Prisma's Json fields require Prisma.InputJsonValue, not plain objects.
+// Serialising through JSON.parse(JSON.stringify()) produces a value that
+// satisfies the type and strips any non-serialisable values (undefined, etc.).
+
+function toJson(value: unknown): Prisma.InputJsonValue {
+  return JSON.parse(JSON.stringify(value)) as Prisma.InputJsonValue;
+}
+
 // ─── Core hook ────────────────────────────────────────────────────────────────
 
 /**
@@ -104,7 +114,7 @@ export function wrapMCPClientWithAudit(
             role: "tool",
             content: `[PreToolUse] ${name}`,
             toolName: name,
-            toolInput: args as Record<string, unknown>,
+            toolInput: toJson(args),
             order,
           },
         })
@@ -143,12 +153,12 @@ export function wrapMCPClientWithAudit(
             role: "tool",
             content: outputPreview,
             toolName: name,
-            toolInput: args as Record<string, unknown>,
-            toolOutput: {
+            toolInput: toJson(args),
+            toolOutput: toJson({
               result: outputPreview,
               durationMs,
               error: callError?.message ?? null,
-            },
+            }),
             order,
           },
         })
@@ -164,13 +174,13 @@ export function wrapMCPClientWithAudit(
             action,
             entityType: "tool",
             entityId: name,
-            before: null,
-            after: {
+            before: Prisma.JsonNull,
+            after: toJson({
               toolInput: args,
               durationMs,
               outputPreview,
               error: callError?.message ?? null,
-            },
+            }),
           },
         })
         .catch((err: unknown) =>
