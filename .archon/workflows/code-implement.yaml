@@ -1,0 +1,65 @@
+name: code-implement
+description: |
+  Implement a code change in the CAID monorepo using file I/O and bash tools.
+  Explores the relevant code, plans the change, implements it with full file
+  access, validates with typecheck + build, and creates a PR.
+  Use when: User wants to write, edit, or refactor code in the CAID codebase.
+
+nodes:
+  - id: explore
+    command: explore-zeta
+    description: "Explore the relevant parts of the CAID codebase"
+
+  - id: plan
+    command: plan-implementation
+    depends_on: [explore]
+    context: fresh
+    description: "Create a detailed, file-level implementation plan"
+
+  - id: approve-plan
+    approval:
+      message: "Review the implementation plan above. Approve to proceed with coding."
+      capture_response: true
+      on_reject:
+        prompt: "Revise the plan based on this feedback: $REJECTION_REASON"
+        max_attempts: 3
+    depends_on: [plan]
+
+  - id: implement
+    loop:
+      prompt: |
+        You are implementing a code change in the CAID monorepo.
+
+        Read the plan from $ARTIFACTS_DIR/plan.md
+        Read the progress tracker from $ARTIFACTS_DIR/progress.json (create if missing)
+
+        Implement the NEXT INCOMPLETE task from the plan using these tools:
+        - claude_code_file_read  — read existing source files (supports globs)
+        - claude_code_file_write — create new files
+        - claude_code_file_edit  — make targeted edits to existing files
+        - claude_code_bash       — run commands (typecheck, lint, tests)
+
+        Workflow per task:
+        1. Read the file(s) you need to understand or modify
+        2. Make the change (write or edit)
+        3. Run: claude_code_bash "cd apps/<package> && pnpm run typecheck"
+        4. Fix any TypeScript errors before moving on
+        5. Update $ARTIFACTS_DIR/progress.json with completed tasks
+
+        When ALL tasks in the plan are complete AND typecheck passes:
+        <promise>DONE</promise>
+      until: DONE
+      max_iterations: 25
+      fresh_context: true
+    depends_on: [approve-plan]
+
+  - id: validate
+    bash: "pnpm run typecheck && pnpm run build"
+    depends_on: [implement]
+    description: "Full monorepo typecheck and build"
+
+  - id: create-pr
+    command: create-pr
+    depends_on: [validate]
+    context: fresh
+    description: "Create a GitHub PR with the implemented changes"

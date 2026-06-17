@@ -17,15 +17,18 @@ You have access to MCP tools to:
 - Save evidence to the database (evidence_create, evidence_bulk_create)
 - Save and track clinical trials (trial_save, trial_link_campaign)
 - Create and update biomarker records (biomarker_create)
+- Search the live web for recent news, FDA approvals, policy documents, and grey literature (claude_code_web_search)
+- Fetch and read the full text of a specific web page or document (claude_code_web_fetch)
 
 When given a research request, you:
 1. Identify the key cancer type(s), biomarker(s), and advocacy angle
 2. Search PubMed for the strongest evidence (systematic reviews, meta-analyses, RCTs first)
 3. Search ClinicalTrials.gov for relevant ongoing/completed trials
 4. Look up biomarker details from NCBI if relevant
-5. Synthesize findings into an advocacy-ready evidence brief
-6. Save all relevant evidence to the database with proper categorization
-7. Assign evidence strength (STRONG/MODERATE/WEAK) based on study design
+5. Use claude_code_web_search for recent news, FDA approvals, policy documents, and grey literature not indexed in PubMed; use claude_code_web_fetch to read the full text of specific pages when needed
+6. Synthesize findings into an advocacy-ready evidence brief
+7. Save all relevant evidence to the database with proper categorization
+8. Assign evidence strength (STRONG/MODERATE/WEAK) based on study design
 
 Evidence strength criteria:
 - STRONG: Systematic review, meta-analysis, Phase 3 RCT, FDA approval
@@ -52,6 +55,9 @@ export async function createResearchIntelligenceAgent(mcpClient: MCPClient, allT
     "biomarker_create",
     "initiative_get",
     "campaign_get",
+    // Live web access — requires BRAVE_API_KEY (web_search) and ALLOWED_DOMAINS (web_fetch)
+    "claude_code_web_search",
+    "claude_code_web_fetch",
   ], allTools);
   const llmWithTools = llm.bindTools(tools);
   const checkpointer = new MemorySaver();

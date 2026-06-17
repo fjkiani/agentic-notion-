@@ -5,6 +5,12 @@ import { prisma } from "@zeta/db";
 import { agentRegistry } from "./agents/registry.js";
 import type { AgentRole } from "./agents/registry.js";
 import { runWorkflow, listWorkflows, resumeApproval } from "./archon-runner.js";
+import { getSharedMCPClient } from "./mcp-client.js";
+import {
+  wrapMCPClientWithAudit,
+  runWithAuditContext,
+  clearOrderCounter,
+} from "./hooks/toolAuditHook.js";
 
 const app = express();
 app.use(cors());
@@ -229,7 +235,12 @@ async function runAgentAsync(
       agentRunId: runId,
     };
 
-    const result = await agent.invoke(initialState, config);
+    // Wrap agent.invoke in audit context so every mcpClient.callTool() call
+    // in the async call tree is attributed to this run via AsyncLocalStorage.
+    const result = await runWithAuditContext(
+      { agentRunId: runId, workspaceId, userId: null },
+      () => agent.invoke(initialState, config)
+    );
 
     // Save messages to DB
     const messages = result.messages ?? [];
@@ -268,6 +279,9 @@ async function runAgentAsync(
         durationMs: Date.now() - startTime,
       },
     });
+  } finally {
+    // Clean up order counter to prevent memory leaks on long-running servers
+    clearOrderCounter(runId);
   }
 }
 
@@ -341,6 +355,9 @@ async function initializeAgentsWithRetry(): Promise<void> {
     try {
       await agentRegistry.initialize();
       console.log(`[CAID Agents] Agents: ${agentRegistry.getRoles().join(", ")}`);
+      // Patch the shared MCP client with the audit hook now that the client
+      // has been created and warmed up by the registry.
+      wrapMCPClientWithAudit(getSharedMCPClient(), prisma);
       return;
     } catch (error) {
       console.error(`[CAID Agents] Agent init attempt ${attempt}/${maxAttempts} failed:`, error);

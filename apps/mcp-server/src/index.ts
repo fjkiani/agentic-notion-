@@ -21,6 +21,7 @@ import { coalitionTools } from "./tools/coalition.js";
 import { grantTools } from "./tools/grant.js";
 import { searchTools } from "./tools/search.js";
 import { userTools } from "./tools/user.js";
+import { claudeCodeTools } from "./tools/claude-code.js";
 
 // ─── Register all tools ───────────────────────────────────────────────────────
 
@@ -38,6 +39,7 @@ registry.registerAll([
   ...grantTools,
   ...searchTools,
   ...userTools,
+  ...claudeCodeTools,
 ]);
 
 console.log(`[CAID MCP] Registered ${registry.size} tools`);
