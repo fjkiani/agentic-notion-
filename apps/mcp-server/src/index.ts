@@ -3,7 +3,8 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import express from "express";
 import cors from "cors";
-import { prisma, seedCAID } from "@zeta/db";
+import { prisma } from "@zeta/db";
+import { bootstrapDatabase } from "./bootstrap.js";
 import { registry } from "./registry.js";
 
 // Import all tool groups
@@ -118,26 +119,18 @@ if (transport === "stdio") {
   });
 
   const port = parseInt(process.env.PORT ?? "3001", 10);
+
+  try {
+    await bootstrapDatabase();
+  } catch (error) {
+    console.error("[CAID MCP] Database bootstrap failed:", error);
+  }
+
   app.listen(port, () => {
     console.log(`[CAID MCP] HTTP server running on port ${port}`);
     console.log(`[CAID MCP] ${registry.size} tools available`);
     console.log(`[CAID MCP] Health: http://localhost:${port}/health`);
     console.log(`[CAID MCP] Tools:  http://localhost:${port}/tools`);
-
-    void (async () => {
-      try {
-        const orgCount = await prisma.advocacyOrg.count();
-        if (orgCount === 0 || process.env.SEED_ON_START === "true") {
-          console.log("[CAID MCP] Running database seed...");
-          const result = await seedCAID();
-          console.log("[CAID MCP] Seed complete:", result);
-        } else {
-          console.log(`[CAID MCP] Database has ${orgCount} orgs — skipping seed`);
-        }
-      } catch (error) {
-        console.error("[CAID MCP] Seed failed:", error);
-      }
-    })();
 
     // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
     const PING_INTERVAL_MS = 9 * 60 * 1000; // 9 minutes

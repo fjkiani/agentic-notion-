@@ -17,9 +17,5 @@ pnpm --filter @zeta/shared run build
 pnpm --filter @zeta/types run build
 pnpm --filter @zeta/mcp-server run build
 
-echo "Applying database schema..."
-pnpm --filter @zeta/db exec prisma db push --schema=prisma/schema.prisma --skip-generate --accept-data-loss
-echo "Database schema applied"
-
-echo "=== Build Complete ==="
+echo "=== Build Complete (schema push runs at startup) ==="
 ls apps/mcp-server/dist/
