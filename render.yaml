@@ -99,7 +99,7 @@ services:
     region: oregon
     plan: free
     buildCommand: npm install -g pnpm@9.15.0 && pnpm install --prod=false && pnpm --filter @zeta/db run build
-    startCommand: NODE_ENV=production pnpm --filter @zeta/db exec tsx ../../scripts/seed-caid.ts
+    startCommand: pnpm --filter @zeta/db run db:push && NODE_ENV=production pnpm --filter @zeta/db exec tsx ../../scripts/seed-caid.ts
     envVars:
       - key: DATABASE_URL
         value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a/zeta_caid_prod

@@ -7,8 +7,11 @@ function repoRoot(): string {
   return path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 }
 
-function prismaCli(): string {
-  return path.join(repoRoot(), "node_modules/.bin/prisma");
+function runCommand(cmd: string, args: string[], cwd: string): void {
+  const result = spawnSync(cmd, args, { cwd, env: process.env, stdio: "inherit" });
+  if (result.status !== 0) {
+    throw new Error(`${cmd} ${args.join(" ")} failed with exit code ${result.status ?? "unknown"}`);
+  }
 }
 
 function sleep(ms: number): Promise<void> {
@@ -47,22 +50,13 @@ async function waitForDatabase(maxAttempts = 12): Promise<void> {
 
 function runDbPush(): void {
   const root = repoRoot();
-  const dbDir = path.join(root, "packages/db");
   console.log("[CAID MCP] Applying database schema...");
-  const result = spawnSync(
-    prismaCli(),
-    [
-      "db",
-      "push",
-      "--schema=prisma/schema.prisma",
-      "--skip-generate",
-      "--accept-data-loss",
-    ],
-    { cwd: dbDir, env: process.env, stdio: "inherit" }
+  // Use pnpm filter so Prisma resolves from @zeta/db (devDependency), not a bare binary path.
+  runCommand(
+    "pnpm",
+    ["--filter", "@zeta/db", "exec", "prisma", "db", "push", "--accept-data-loss"],
+    root
   );
-  if (result.status !== 0) {
-    throw new Error(`prisma db push failed with exit code ${result.status ?? "unknown"}`);
-  }
   console.log("[CAID MCP] Database schema applied");
 }
 
