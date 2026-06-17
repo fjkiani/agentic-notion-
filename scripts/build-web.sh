@@ -5,10 +5,10 @@ echo "=== Zeta CAID Web Build ==="
 node --version
 pnpm --version
 
-export NODE_ENV=development
+export NODE_ENV=production
 
 echo "Installing dependencies..."
-pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile --prod=false
 echo "pnpm install done"
 
 echo "Building packages..."

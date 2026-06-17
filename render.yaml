@@ -5,7 +5,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && NODE_ENV=development pnpm install && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/web run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --prod=false && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && NODE_ENV=production pnpm --filter @zeta/web run build
     startCommand: cd apps/web && pnpm start
     healthCheckPath: /
     envVars:
@@ -42,7 +42,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && NODE_ENV=development pnpm install && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/mcp-server run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --prod=false && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/mcp-server run build
     startCommand: cd apps/mcp-server && node dist/index.js
     healthCheckPath: /health
     envVars:
@@ -65,7 +65,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && NODE_ENV=development pnpm install && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/agent-api run build
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --prod=false && pnpm --filter @zeta/db run build && pnpm --filter @zeta/shared run build && pnpm --filter @zeta/types run build && pnpm --filter @zeta/agent-api run build
     startCommand: cd apps/agent-api && node dist/index.js
     healthCheckPath: /health
     envVars:
@@ -96,8 +96,8 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install -g pnpm@9.15.0 && NODE_ENV=development pnpm install && pnpm --filter @zeta/db run build
-    startCommand: NODE_ENV=development pnpm --filter @zeta/db exec tsx ../../scripts/seed-caid.ts
+    buildCommand: npm install -g pnpm@9.15.0 && pnpm install --prod=false && pnpm --filter @zeta/db run build
+    startCommand: NODE_ENV=production pnpm --filter @zeta/db exec tsx ../../scripts/seed-caid.ts
     envVars:
       - key: DATABASE_URL
         value: postgresql://zeta_caid_user:iA9nm6J1kTqriPMnf6FT6Td6FRMXtz3k@dpg-d8ostq67r5hc73cdlfpg-a.oregon-postgres.render.com/zeta_caid_prod

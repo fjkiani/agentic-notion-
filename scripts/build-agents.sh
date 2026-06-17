@@ -5,11 +5,10 @@ echo "=== Zeta CAID Agent API Build ==="
 node --version
 pnpm --version
 
-# Render sets NODE_ENV=production, which skips devDependencies (typescript, etc.)
-export NODE_ENV=development
+export NODE_ENV=production
 
 echo "Installing dependencies..."
-pnpm install --frozen-lockfile
+pnpm install --frozen-lockfile --prod=false
 echo "pnpm install done"
 
 echo "Building packages..."
