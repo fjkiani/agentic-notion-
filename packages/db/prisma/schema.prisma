@@ -131,6 +131,8 @@ model AdvocacyOrg {
   contacts        OrgContact[]
   openGrants      OpenGrant[]
   pages           Page[]
+  pipeline        GrantPipeline?
+  dossiers        Dossier[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -957,4 +959,55 @@ model AuditLog {
   @@index([userId])
   @@index([entityType, entityId])
   @@index([createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAID INTELLIGENCE DASHBOARD — Grant Pipeline + Dossier
+// ─────────────────────────────────────────────────────────────────────────────
+
+model GrantPipeline {
+  id           String         @id @default(cuid())
+  orgId        String         @unique
+  org          AdvocacyOrg    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  status       PipelineStatus @default(IDENTIFIED)
+  notes        String?
+  nextAction   String?
+  nextActionAt DateTime?
+  assignedTo   String?
+  priority     String?        // HIGH | MEDIUM | LOW
+  tags         String[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([status])
+}
+
+model Dossier {
+  id        String      @id @default(cuid())
+  orgId     String
+  org       AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  type      DossierType
+  title     String
+  content   String      // full markdown
+  model     String      @default("openai/gpt-oss-120b:free")
+  context   String?     // user-provided context used for generation
+  createdAt DateTime    @default(now())
+
+  @@index([orgId])
+}
+
+enum PipelineStatus {
+  IDENTIFIED
+  RESEARCHING
+  OUTREACH
+  APPLIED
+  AWARDED
+  REJECTED
+  PAUSED
+}
+
+enum DossierType {
+  PITCH
+  LOI
+  EMAIL
 }

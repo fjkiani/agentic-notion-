@@ -86,6 +86,7 @@ export default async function DashboardPage() {
             <Link href="/dashboard" className="text-red-600 font-medium">Dashboard</Link>
             <Link href={`/${slug}/agents`} className="hover:text-gray-900">Agents</Link>
             <Link href={`/${slug}/archon`} className="hover:text-gray-900">Archon</Link>
+            <Link href={`/${slug}/caid`} className="hover:text-gray-900 font-medium text-red-600">🎯 Grant Intel</Link>
           </nav>
         </div>
       </header>
