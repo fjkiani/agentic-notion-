@@ -15,6 +15,11 @@ echo "Building packages..."
 pnpm --filter @zeta/db run build
 pnpm --filter @zeta/shared run build
 pnpm --filter @zeta/types run build
+
+echo "Pushing Prisma schema to database..."
+cd packages/db && npx prisma db push --skip-generate --accept-data-loss && cd ../..
+echo "Prisma db push done"
+
 pnpm --filter @zeta/web run build
 
 echo "=== Build Complete ==="
