@@ -17,7 +17,7 @@ export async function GET() {
       },
       orderBy: { updatedAt: "desc" },
     });
-    return NextResponse.json({ pipeline });
+    return NextResponse.json({ entries: pipeline, pipeline });
   } catch (err) {
     console.error("[/api/caid/pipeline GET] Error:", err);
     return NextResponse.json({ error: "Failed to fetch pipeline" }, { status: 500 });

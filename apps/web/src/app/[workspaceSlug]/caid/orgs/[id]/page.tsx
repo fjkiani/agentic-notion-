@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 
 interface OrgDetail {
@@ -80,7 +80,6 @@ type Tab = "overview" | "grants" | "contacts" | "dossiers" | "pipeline";
 
 export default function OrgDetailPage() {
   const params = useParams<{ workspaceSlug: string; id: string }>();
-  const router = useRouter();
   const slug = params.workspaceSlug ?? "default";
   const orgId = params.id;
 

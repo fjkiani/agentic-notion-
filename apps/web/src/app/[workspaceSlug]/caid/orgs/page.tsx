@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import Link from "next/link";
-import { useParams, useSearchParams, useRouter } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 interface Org {
   id: string;
@@ -40,10 +40,9 @@ function fmt(n: number | null | undefined): string {
   return `$${n}`;
 }
 
-export default function OrgsPage() {
+function OrgsPageInner() {
   const params = useParams<{ workspaceSlug: string }>();
   const searchParams = useSearchParams();
-  const router = useRouter();
   const slug = params.workspaceSlug ?? "default";
 
   const [orgs, setOrgs] = useState<Org[]>([]);
@@ -265,5 +264,13 @@ export default function OrgsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function OrgsPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin" /></div>}>
+      <OrgsPageInner />
+    </Suspense>
   );
 }

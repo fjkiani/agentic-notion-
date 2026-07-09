@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -85,7 +85,7 @@ function StepIndicator({ steps }: { steps: Step[] }) {
   );
 }
 
-export default function GeneratePage() {
+function GeneratePageInner() {
   const params = useParams<{ workspaceSlug: string }>();
   const searchParams = useSearchParams();
   const slug = params.workspaceSlug ?? "default";
@@ -196,7 +196,7 @@ export default function GeneratePage() {
             } else if (event.type === "error") {
               throw new Error(event.message);
             }
-          } catch (parseErr) {
+          } catch {
             // Skip malformed SSE lines
           }
         }
@@ -411,5 +411,13 @@ export default function GeneratePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function GeneratePage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-64"><div className="w-6 h-6 border-2 border-red-600 border-t-transparent rounded-full animate-spin" /></div>}>
+      <GeneratePageInner />
+    </Suspense>
   );
 }
