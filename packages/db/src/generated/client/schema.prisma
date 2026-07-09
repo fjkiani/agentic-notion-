@@ -123,7 +123,7 @@ model AdvocacyOrg {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  workspace      Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace      Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   campaigns      Campaign[]
   coalitionLinks CoalitionMember[]
   patientStories PatientStory[]
@@ -131,6 +131,9 @@ model AdvocacyOrg {
   contacts       OrgContact[]
   openGrants     OpenGrant[]
   pages          Page[]
+  pipeline       GrantPipeline?
+  dossiers       Dossier[]
+  applications   GrantApplication[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -216,8 +219,9 @@ model OpenGrant {
   createdAt           DateTime    @default(now())
   updatedAt           DateTime    @updatedAt
 
-  org       AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  workspace Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org          AdvocacyOrg        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  workspace    Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  applications GrantApplication[]
 
   @@index([orgId])
   @@index([workspaceId])
@@ -394,84 +398,79 @@ model Task {
 
   @@unique([initiativeId, slug])
   @@index([initiativeId])
-  @@index([assigneeId])
   @@index([status])
-  @@index([agentCreated])
+  @@index([assigneeId])
+  @@index([agentRunId])
 }
 
 enum TaskType {
   ACTION
   RESEARCH
   MEETING
-  DOCUMENT
-  OUTREACH
   REVIEW
   APPROVAL
-  MILESTONE
+  OUTREACH
+  WRITING
+  ANALYSIS
 }
 
 enum TaskStatus {
   TODO
   IN_PROGRESS
-  IN_REVIEW
   BLOCKED
+  REVIEW
   DONE
   CANCELLED
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// EVIDENCE (scientific/policy evidence supporting advocacy)
+// EVIDENCE (research evidence supporting advocacy)
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Evidence {
-  id             String           @id @default(cuid())
-  initiativeId   String?
-  taskId         String?
-  title          String
-  summary        String?
-  content        String? // full text or abstract
-  evidenceType   EvidenceType     @default(PUBLICATION)
-  source         String? // journal, agency, org name
-  sourceUrl      String?
-  doi            String?
-  pmid           String?
-  publishedAt    DateTime?
-  authors        String[]
-  cancerTypes    String[]
-  biomarkers     String[]
-  strength       EvidenceStrength @default(MODERATE)
-  relevanceScore Float? // 0-1, set by AI
-  aiSummary      String? // AI-generated summary
-  tags           String[]
-  metadata       Json             @default("{}")
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  id            String           @id @default(cuid())
+  initiativeId  String?
+  taskId        String?
+  title         String
+  summary       String?
+  content       String?
+  sourceType    EvidenceSource   @default(PUBMED)
+  sourceUrl     String?
+  sourceDoi     String?
+  sourcePmid    String?
+  authors       String[]
+  publishedYear Int?
+  journal       String?
+  strength      EvidenceStrength @default(MODERATE)
+  cancerTypes   String[]
+  biomarkers    String[]
+  tags          String[]
+  agentCreated  Boolean          @default(false)
+  agentRunId    String?
+  metadata      Json             @default("{}")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
   initiative Initiative? @relation(fields: [initiativeId], references: [id])
   task       Task?       @relation(fields: [taskId], references: [id])
 
   @@index([initiativeId])
   @@index([taskId])
-  @@index([evidenceType])
+  @@index([sourceType])
+  @@index([strength])
   @@index([cancerTypes])
-  @@index([biomarkers])
-  @@index([doi])
-  @@index([pmid])
 }
 
-enum EvidenceType {
-  PUBLICATION
-  CLINICAL_TRIAL
-  FDA_GUIDANCE
-  CONGRESSIONAL_RECORD
-  PRESS_RELEASE
+enum EvidenceSource {
+  PUBMED
+  CLINICALTRIALS_GOV
+  FDA
+  CONGRESS
+  NEWS
+  GREY_LITERATURE
   PATIENT_TESTIMONY
   EXPERT_OPINION
-  SYSTEMATIC_REVIEW
-  META_ANALYSIS
-  REAL_WORLD_DATA
-  BIOMARKER_DATA
-  POLICY_BRIEF
+  INTERNAL
 }
 
 enum EvidenceStrength {
@@ -482,18 +481,20 @@ enum EvidenceStrength {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// CLINICAL TRIAL (NCT-linked trial tracking)
+// CLINICAL TRIAL
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ClinicalTrial {
   id              String      @id @default(cuid())
   nctId           String      @unique
   title           String
+  officialTitle   String?
+  sponsor         String?
   phase           TrialPhase?
   status          TrialStatus @default(UNKNOWN)
-  sponsor         String?
   conditions      String[]
   interventions   String[]
+  locations       String[]
   biomarkers      String[]
   primaryEndpoint String?
   enrollment      Int?
@@ -853,6 +854,8 @@ enum AgentRole {
   RESEARCH_INTELLIGENCE
   COALITION_BUILDER
   STANDUP_REPORTER
+  GRANT_HUNTER
+  APPLICATION_DRAFTER
 }
 
 enum AgentRunStatus {
@@ -956,4 +959,94 @@ model AuditLog {
   @@index([userId])
   @@index([entityType, entityId])
   @@index([createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CAID INTELLIGENCE DASHBOARD — Grant Pipeline + Dossier + Applications
+// ─────────────────────────────────────────────────────────────────────────────
+
+model GrantPipeline {
+  id           String         @id @default(cuid())
+  orgId        String         @unique
+  org          AdvocacyOrg    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  status       PipelineStatus @default(IDENTIFIED)
+  notes        String?
+  nextAction   String?
+  nextActionAt DateTime?
+  assignedTo   String?
+  priority     String? // HIGH | MEDIUM | LOW
+  tags         String[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([status])
+}
+
+model Dossier {
+  id        String      @id @default(cuid())
+  orgId     String
+  org       AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  type      DossierType
+  title     String
+  content   String // full markdown
+  model     String      @default("openai/gpt-oss-120b:free")
+  context   String? // user-provided context used for generation
+  createdAt DateTime    @default(now())
+
+  applications GrantApplication[]
+
+  @@index([orgId])
+}
+
+model GrantApplication {
+  id            String            @id @default(cuid())
+  orgId         String
+  org           AdvocacyOrg       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  grantId       String?
+  grant         OpenGrant?        @relation(fields: [grantId], references: [id])
+  dossierId     String?
+  dossier       Dossier?          @relation(fields: [dossierId], references: [id])
+  title         String
+  status        ApplicationStatus @default(DRAFTING)
+  submittedAt   DateTime?
+  decisionAt    DateTime?
+  askAmount     Float?
+  awardedAmount Float?
+  notes         String?
+  nextStep      String?
+  internalScore Int? // 1-10 internal confidence score
+  funderScore   Int? // 1-10 strategic fit score
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@index([orgId])
+  @@index([status])
+  @@index([grantId])
+}
+
+enum PipelineStatus {
+  IDENTIFIED
+  RESEARCHING
+  OUTREACH
+  APPLIED
+  AWARDED
+  REJECTED
+  PAUSED
+}
+
+enum DossierType {
+  PITCH
+  LOI
+  EMAIL
+  APPLICATION
+}
+
+enum ApplicationStatus {
+  DRAFTING
+  INTERNAL_REVIEW
+  SUBMITTED
+  UNDER_REVIEW
+  AWARDED
+  REJECTED
+  WITHDRAWN
 }

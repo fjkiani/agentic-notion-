@@ -143,6 +143,21 @@ export type Comment = $Result.DefaultSelection<Prisma.$CommentPayload>
  * 
  */
 export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
+/**
+ * Model GrantPipeline
+ * 
+ */
+export type GrantPipeline = $Result.DefaultSelection<Prisma.$GrantPipelinePayload>
+/**
+ * Model Dossier
+ * 
+ */
+export type Dossier = $Result.DefaultSelection<Prisma.$DossierPayload>
+/**
+ * Model GrantApplication
+ * 
+ */
+export type GrantApplication = $Result.DefaultSelection<Prisma.$GrantApplicationPayload>
 
 /**
  * Enums
@@ -281,11 +296,11 @@ export const TaskType: {
   ACTION: 'ACTION',
   RESEARCH: 'RESEARCH',
   MEETING: 'MEETING',
-  DOCUMENT: 'DOCUMENT',
-  OUTREACH: 'OUTREACH',
   REVIEW: 'REVIEW',
   APPROVAL: 'APPROVAL',
-  MILESTONE: 'MILESTONE'
+  OUTREACH: 'OUTREACH',
+  WRITING: 'WRITING',
+  ANALYSIS: 'ANALYSIS'
 };
 
 export type TaskType = (typeof TaskType)[keyof typeof TaskType]
@@ -294,8 +309,8 @@ export type TaskType = (typeof TaskType)[keyof typeof TaskType]
 export const TaskStatus: {
   TODO: 'TODO',
   IN_PROGRESS: 'IN_PROGRESS',
-  IN_REVIEW: 'IN_REVIEW',
   BLOCKED: 'BLOCKED',
+  REVIEW: 'REVIEW',
   DONE: 'DONE',
   CANCELLED: 'CANCELLED'
 };
@@ -303,22 +318,19 @@ export const TaskStatus: {
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
 
 
-export const EvidenceType: {
-  PUBLICATION: 'PUBLICATION',
-  CLINICAL_TRIAL: 'CLINICAL_TRIAL',
-  FDA_GUIDANCE: 'FDA_GUIDANCE',
-  CONGRESSIONAL_RECORD: 'CONGRESSIONAL_RECORD',
-  PRESS_RELEASE: 'PRESS_RELEASE',
+export const EvidenceSource: {
+  PUBMED: 'PUBMED',
+  CLINICALTRIALS_GOV: 'CLINICALTRIALS_GOV',
+  FDA: 'FDA',
+  CONGRESS: 'CONGRESS',
+  NEWS: 'NEWS',
+  GREY_LITERATURE: 'GREY_LITERATURE',
   PATIENT_TESTIMONY: 'PATIENT_TESTIMONY',
   EXPERT_OPINION: 'EXPERT_OPINION',
-  SYSTEMATIC_REVIEW: 'SYSTEMATIC_REVIEW',
-  META_ANALYSIS: 'META_ANALYSIS',
-  REAL_WORLD_DATA: 'REAL_WORLD_DATA',
-  BIOMARKER_DATA: 'BIOMARKER_DATA',
-  POLICY_BRIEF: 'POLICY_BRIEF'
+  INTERNAL: 'INTERNAL'
 };
 
-export type EvidenceType = (typeof EvidenceType)[keyof typeof EvidenceType]
+export type EvidenceSource = (typeof EvidenceSource)[keyof typeof EvidenceSource]
 
 
 export const EvidenceStrength: {
@@ -430,7 +442,9 @@ export const AgentRole: {
   ADVOCACY_PM: 'ADVOCACY_PM',
   RESEARCH_INTELLIGENCE: 'RESEARCH_INTELLIGENCE',
   COALITION_BUILDER: 'COALITION_BUILDER',
-  STANDUP_REPORTER: 'STANDUP_REPORTER'
+  STANDUP_REPORTER: 'STANDUP_REPORTER',
+  GRANT_HUNTER: 'GRANT_HUNTER',
+  APPLICATION_DRAFTER: 'APPLICATION_DRAFTER'
 };
 
 export type AgentRole = (typeof AgentRole)[keyof typeof AgentRole]
@@ -459,6 +473,42 @@ export const DataSourceType: {
 };
 
 export type DataSourceType = (typeof DataSourceType)[keyof typeof DataSourceType]
+
+
+export const PipelineStatus: {
+  IDENTIFIED: 'IDENTIFIED',
+  RESEARCHING: 'RESEARCHING',
+  OUTREACH: 'OUTREACH',
+  APPLIED: 'APPLIED',
+  AWARDED: 'AWARDED',
+  REJECTED: 'REJECTED',
+  PAUSED: 'PAUSED'
+};
+
+export type PipelineStatus = (typeof PipelineStatus)[keyof typeof PipelineStatus]
+
+
+export const DossierType: {
+  PITCH: 'PITCH',
+  LOI: 'LOI',
+  EMAIL: 'EMAIL',
+  APPLICATION: 'APPLICATION'
+};
+
+export type DossierType = (typeof DossierType)[keyof typeof DossierType]
+
+
+export const ApplicationStatus: {
+  DRAFTING: 'DRAFTING',
+  INTERNAL_REVIEW: 'INTERNAL_REVIEW',
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  AWARDED: 'AWARDED',
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
+};
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
 
 }
 
@@ -514,9 +564,9 @@ export type TaskStatus = $Enums.TaskStatus
 
 export const TaskStatus: typeof $Enums.TaskStatus
 
-export type EvidenceType = $Enums.EvidenceType
+export type EvidenceSource = $Enums.EvidenceSource
 
-export const EvidenceType: typeof $Enums.EvidenceType
+export const EvidenceSource: typeof $Enums.EvidenceSource
 
 export type EvidenceStrength = $Enums.EvidenceStrength
 
@@ -565,6 +615,18 @@ export const AgentRunStatus: typeof $Enums.AgentRunStatus
 export type DataSourceType = $Enums.DataSourceType
 
 export const DataSourceType: typeof $Enums.DataSourceType
+
+export type PipelineStatus = $Enums.PipelineStatus
+
+export const PipelineStatus: typeof $Enums.PipelineStatus
+
+export type DossierType = $Enums.DossierType
+
+export const DossierType: typeof $Enums.DossierType
+
+export type ApplicationStatus = $Enums.ApplicationStatus
+
+export const ApplicationStatus: typeof $Enums.ApplicationStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -948,6 +1010,36 @@ export class PrismaClient<
     * ```
     */
   get auditLog(): Prisma.AuditLogDelegate<ExtArgs>;
+
+  /**
+   * `prisma.grantPipeline`: Exposes CRUD operations for the **GrantPipeline** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GrantPipelines
+    * const grantPipelines = await prisma.grantPipeline.findMany()
+    * ```
+    */
+  get grantPipeline(): Prisma.GrantPipelineDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dossier`: Exposes CRUD operations for the **Dossier** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dossiers
+    * const dossiers = await prisma.dossier.findMany()
+    * ```
+    */
+  get dossier(): Prisma.DossierDelegate<ExtArgs>;
+
+  /**
+   * `prisma.grantApplication`: Exposes CRUD operations for the **GrantApplication** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GrantApplications
+    * const grantApplications = await prisma.grantApplication.findMany()
+    * ```
+    */
+  get grantApplication(): Prisma.GrantApplicationDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1414,7 +1506,10 @@ export namespace Prisma {
     AgentMessage: 'AgentMessage',
     DataSource: 'DataSource',
     Comment: 'Comment',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    GrantPipeline: 'GrantPipeline',
+    Dossier: 'Dossier',
+    GrantApplication: 'GrantApplication'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1430,7 +1525,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "openGrant" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog"
+      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "openGrant" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog" | "grantPipeline" | "dossier" | "grantApplication"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3254,6 +3349,216 @@ export namespace Prisma {
           }
         }
       }
+      GrantPipeline: {
+        payload: Prisma.$GrantPipelinePayload<ExtArgs>
+        fields: Prisma.GrantPipelineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GrantPipelineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GrantPipelineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          findFirst: {
+            args: Prisma.GrantPipelineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GrantPipelineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          findMany: {
+            args: Prisma.GrantPipelineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>[]
+          }
+          create: {
+            args: Prisma.GrantPipelineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          createMany: {
+            args: Prisma.GrantPipelineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GrantPipelineCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>[]
+          }
+          delete: {
+            args: Prisma.GrantPipelineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          update: {
+            args: Prisma.GrantPipelineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          deleteMany: {
+            args: Prisma.GrantPipelineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GrantPipelineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.GrantPipelineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantPipelinePayload>
+          }
+          aggregate: {
+            args: Prisma.GrantPipelineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGrantPipeline>
+          }
+          groupBy: {
+            args: Prisma.GrantPipelineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GrantPipelineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GrantPipelineCountArgs<ExtArgs>
+            result: $Utils.Optional<GrantPipelineCountAggregateOutputType> | number
+          }
+        }
+      }
+      Dossier: {
+        payload: Prisma.$DossierPayload<ExtArgs>
+        fields: Prisma.DossierFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DossierFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DossierFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          findFirst: {
+            args: Prisma.DossierFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DossierFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          findMany: {
+            args: Prisma.DossierFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>[]
+          }
+          create: {
+            args: Prisma.DossierCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          createMany: {
+            args: Prisma.DossierCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DossierCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>[]
+          }
+          delete: {
+            args: Prisma.DossierDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          update: {
+            args: Prisma.DossierUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          deleteMany: {
+            args: Prisma.DossierDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DossierUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DossierUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DossierPayload>
+          }
+          aggregate: {
+            args: Prisma.DossierAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDossier>
+          }
+          groupBy: {
+            args: Prisma.DossierGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DossierGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DossierCountArgs<ExtArgs>
+            result: $Utils.Optional<DossierCountAggregateOutputType> | number
+          }
+        }
+      }
+      GrantApplication: {
+        payload: Prisma.$GrantApplicationPayload<ExtArgs>
+        fields: Prisma.GrantApplicationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GrantApplicationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GrantApplicationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          findFirst: {
+            args: Prisma.GrantApplicationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GrantApplicationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          findMany: {
+            args: Prisma.GrantApplicationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>[]
+          }
+          create: {
+            args: Prisma.GrantApplicationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          createMany: {
+            args: Prisma.GrantApplicationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GrantApplicationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>[]
+          }
+          delete: {
+            args: Prisma.GrantApplicationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          update: {
+            args: Prisma.GrantApplicationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          deleteMany: {
+            args: Prisma.GrantApplicationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GrantApplicationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.GrantApplicationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GrantApplicationPayload>
+          }
+          aggregate: {
+            args: Prisma.GrantApplicationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGrantApplication>
+          }
+          groupBy: {
+            args: Prisma.GrantApplicationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GrantApplicationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GrantApplicationCountArgs<ExtArgs>
+            result: $Utils.Optional<GrantApplicationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3592,6 +3897,8 @@ export namespace Prisma {
     contacts: number
     openGrants: number
     pages: number
+    dossiers: number
+    applications: number
   }
 
   export type AdvocacyOrgCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3602,6 +3909,8 @@ export namespace Prisma {
     contacts?: boolean | AdvocacyOrgCountOutputTypeCountContactsArgs
     openGrants?: boolean | AdvocacyOrgCountOutputTypeCountOpenGrantsArgs
     pages?: boolean | AdvocacyOrgCountOutputTypeCountPagesArgs
+    dossiers?: boolean | AdvocacyOrgCountOutputTypeCountDossiersArgs
+    applications?: boolean | AdvocacyOrgCountOutputTypeCountApplicationsArgs
   }
 
   // Custom InputTypes
@@ -3662,6 +3971,51 @@ export namespace Prisma {
    */
   export type AdvocacyOrgCountOutputTypeCountPagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PageWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountDossiersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DossierWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GrantApplicationWhereInput
+  }
+
+
+  /**
+   * Count Type OpenGrantCountOutputType
+   */
+
+  export type OpenGrantCountOutputType = {
+    applications: number
+  }
+
+  export type OpenGrantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | OpenGrantCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OpenGrantCountOutputType without action
+   */
+  export type OpenGrantCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrantCountOutputType
+     */
+    select?: OpenGrantCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OpenGrantCountOutputType without action
+   */
+  export type OpenGrantCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GrantApplicationWhereInput
   }
 
 
@@ -4058,6 +4412,37 @@ export namespace Prisma {
    */
   export type AgentRunCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+
+  /**
+   * Count Type DossierCountOutputType
+   */
+
+  export type DossierCountOutputType = {
+    applications: number
+  }
+
+  export type DossierCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | DossierCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DossierCountOutputType without action
+   */
+  export type DossierCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DossierCountOutputType
+     */
+    select?: DossierCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DossierCountOutputType without action
+   */
+  export type DossierCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GrantApplicationWhereInput
   }
 
 
@@ -7614,6 +7999,9 @@ export namespace Prisma {
     contacts?: boolean | AdvocacyOrg$contactsArgs<ExtArgs>
     openGrants?: boolean | AdvocacyOrg$openGrantsArgs<ExtArgs>
     pages?: boolean | AdvocacyOrg$pagesArgs<ExtArgs>
+    pipeline?: boolean | AdvocacyOrg$pipelineArgs<ExtArgs>
+    dossiers?: boolean | AdvocacyOrg$dossiersArgs<ExtArgs>
+    applications?: boolean | AdvocacyOrg$applicationsArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["advocacyOrg"]>
 
@@ -7681,6 +8069,9 @@ export namespace Prisma {
     contacts?: boolean | AdvocacyOrg$contactsArgs<ExtArgs>
     openGrants?: boolean | AdvocacyOrg$openGrantsArgs<ExtArgs>
     pages?: boolean | AdvocacyOrg$pagesArgs<ExtArgs>
+    pipeline?: boolean | AdvocacyOrg$pipelineArgs<ExtArgs>
+    dossiers?: boolean | AdvocacyOrg$dossiersArgs<ExtArgs>
+    applications?: boolean | AdvocacyOrg$applicationsArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AdvocacyOrgIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7698,6 +8089,9 @@ export namespace Prisma {
       contacts: Prisma.$OrgContactPayload<ExtArgs>[]
       openGrants: Prisma.$OpenGrantPayload<ExtArgs>[]
       pages: Prisma.$PagePayload<ExtArgs>[]
+      pipeline: Prisma.$GrantPipelinePayload<ExtArgs> | null
+      dossiers: Prisma.$DossierPayload<ExtArgs>[]
+      applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8096,6 +8490,9 @@ export namespace Prisma {
     contacts<T extends AdvocacyOrg$contactsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrgContactPayload<ExtArgs>, T, "findMany"> | Null>
     openGrants<T extends AdvocacyOrg$openGrantsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$openGrantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findMany"> | Null>
     pages<T extends AdvocacyOrg$pagesArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PagePayload<ExtArgs>, T, "findMany"> | Null>
+    pipeline<T extends AdvocacyOrg$pipelineArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$pipelineArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    dossiers<T extends AdvocacyOrg$dossiersArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$dossiersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findMany"> | Null>
+    applications<T extends AdvocacyOrg$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8604,6 +9001,61 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PageScalarFieldEnum | PageScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.pipeline
+   */
+  export type AdvocacyOrg$pipelineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    where?: GrantPipelineWhereInput
+  }
+
+  /**
+   * AdvocacyOrg.dossiers
+   */
+  export type AdvocacyOrg$dossiersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    where?: DossierWhereInput
+    orderBy?: DossierOrderByWithRelationInput | DossierOrderByWithRelationInput[]
+    cursor?: DossierWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DossierScalarFieldEnum | DossierScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.applications
+   */
+  export type AdvocacyOrg$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    where?: GrantApplicationWhereInput
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    cursor?: GrantApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
   }
 
   /**
@@ -9990,6 +10442,8 @@ export namespace Prisma {
     updatedAt?: boolean
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    applications?: boolean | OpenGrant$applicationsArgs<ExtArgs>
+    _count?: boolean | OpenGrantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["openGrant"]>
 
   export type OpenGrantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10063,6 +10517,8 @@ export namespace Prisma {
   export type OpenGrantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    applications?: boolean | OpenGrant$applicationsArgs<ExtArgs>
+    _count?: boolean | OpenGrantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OpenGrantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
@@ -10074,6 +10530,7 @@ export namespace Prisma {
     objects: {
       org: Prisma.$AdvocacyOrgPayload<ExtArgs>
       workspace: Prisma.$WorkspacePayload<ExtArgs>
+      applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10472,6 +10929,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    applications<T extends OpenGrant$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, OpenGrant$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10846,6 +11304,26 @@ export namespace Prisma {
      * Filter which OpenGrants to delete
      */
     where?: OpenGrantWhereInput
+  }
+
+  /**
+   * OpenGrant.applications
+   */
+  export type OpenGrant$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    where?: GrantApplicationWhereInput
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    cursor?: GrantApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
   }
 
   /**
@@ -14631,11 +15109,11 @@ export namespace Prisma {
   }
 
   export type EvidenceAvgAggregateOutputType = {
-    relevanceScore: number | null
+    publishedYear: number | null
   }
 
   export type EvidenceSumAggregateOutputType = {
-    relevanceScore: number | null
+    publishedYear: number | null
   }
 
   export type EvidenceMinAggregateOutputType = {
@@ -14645,15 +15123,15 @@ export namespace Prisma {
     title: string | null
     summary: string | null
     content: string | null
-    evidenceType: $Enums.EvidenceType | null
-    source: string | null
+    sourceType: $Enums.EvidenceSource | null
     sourceUrl: string | null
-    doi: string | null
-    pmid: string | null
-    publishedAt: Date | null
+    sourceDoi: string | null
+    sourcePmid: string | null
+    publishedYear: number | null
+    journal: string | null
     strength: $Enums.EvidenceStrength | null
-    relevanceScore: number | null
-    aiSummary: string | null
+    agentCreated: boolean | null
+    agentRunId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14665,15 +15143,15 @@ export namespace Prisma {
     title: string | null
     summary: string | null
     content: string | null
-    evidenceType: $Enums.EvidenceType | null
-    source: string | null
+    sourceType: $Enums.EvidenceSource | null
     sourceUrl: string | null
-    doi: string | null
-    pmid: string | null
-    publishedAt: Date | null
+    sourceDoi: string | null
+    sourcePmid: string | null
+    publishedYear: number | null
+    journal: string | null
     strength: $Enums.EvidenceStrength | null
-    relevanceScore: number | null
-    aiSummary: string | null
+    agentCreated: boolean | null
+    agentRunId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -14685,19 +15163,19 @@ export namespace Prisma {
     title: number
     summary: number
     content: number
-    evidenceType: number
-    source: number
+    sourceType: number
     sourceUrl: number
-    doi: number
-    pmid: number
-    publishedAt: number
+    sourceDoi: number
+    sourcePmid: number
     authors: number
+    publishedYear: number
+    journal: number
+    strength: number
     cancerTypes: number
     biomarkers: number
-    strength: number
-    relevanceScore: number
-    aiSummary: number
     tags: number
+    agentCreated: number
+    agentRunId: number
     metadata: number
     createdAt: number
     updatedAt: number
@@ -14706,11 +15184,11 @@ export namespace Prisma {
 
 
   export type EvidenceAvgAggregateInputType = {
-    relevanceScore?: true
+    publishedYear?: true
   }
 
   export type EvidenceSumAggregateInputType = {
-    relevanceScore?: true
+    publishedYear?: true
   }
 
   export type EvidenceMinAggregateInputType = {
@@ -14720,15 +15198,15 @@ export namespace Prisma {
     title?: true
     summary?: true
     content?: true
-    evidenceType?: true
-    source?: true
+    sourceType?: true
     sourceUrl?: true
-    doi?: true
-    pmid?: true
-    publishedAt?: true
+    sourceDoi?: true
+    sourcePmid?: true
+    publishedYear?: true
+    journal?: true
     strength?: true
-    relevanceScore?: true
-    aiSummary?: true
+    agentCreated?: true
+    agentRunId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14740,15 +15218,15 @@ export namespace Prisma {
     title?: true
     summary?: true
     content?: true
-    evidenceType?: true
-    source?: true
+    sourceType?: true
     sourceUrl?: true
-    doi?: true
-    pmid?: true
-    publishedAt?: true
+    sourceDoi?: true
+    sourcePmid?: true
+    publishedYear?: true
+    journal?: true
     strength?: true
-    relevanceScore?: true
-    aiSummary?: true
+    agentCreated?: true
+    agentRunId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -14760,19 +15238,19 @@ export namespace Prisma {
     title?: true
     summary?: true
     content?: true
-    evidenceType?: true
-    source?: true
+    sourceType?: true
     sourceUrl?: true
-    doi?: true
-    pmid?: true
-    publishedAt?: true
+    sourceDoi?: true
+    sourcePmid?: true
     authors?: true
+    publishedYear?: true
+    journal?: true
+    strength?: true
     cancerTypes?: true
     biomarkers?: true
-    strength?: true
-    relevanceScore?: true
-    aiSummary?: true
     tags?: true
+    agentCreated?: true
+    agentRunId?: true
     metadata?: true
     createdAt?: true
     updatedAt?: true
@@ -14872,19 +15350,19 @@ export namespace Prisma {
     title: string
     summary: string | null
     content: string | null
-    evidenceType: $Enums.EvidenceType
-    source: string | null
+    sourceType: $Enums.EvidenceSource
     sourceUrl: string | null
-    doi: string | null
-    pmid: string | null
-    publishedAt: Date | null
+    sourceDoi: string | null
+    sourcePmid: string | null
     authors: string[]
+    publishedYear: number | null
+    journal: string | null
+    strength: $Enums.EvidenceStrength
     cancerTypes: string[]
     biomarkers: string[]
-    strength: $Enums.EvidenceStrength
-    relevanceScore: number | null
-    aiSummary: string | null
     tags: string[]
+    agentCreated: boolean
+    agentRunId: string | null
     metadata: JsonValue
     createdAt: Date
     updatedAt: Date
@@ -14916,19 +15394,19 @@ export namespace Prisma {
     title?: boolean
     summary?: boolean
     content?: boolean
-    evidenceType?: boolean
-    source?: boolean
+    sourceType?: boolean
     sourceUrl?: boolean
-    doi?: boolean
-    pmid?: boolean
-    publishedAt?: boolean
+    sourceDoi?: boolean
+    sourcePmid?: boolean
     authors?: boolean
+    publishedYear?: boolean
+    journal?: boolean
+    strength?: boolean
     cancerTypes?: boolean
     biomarkers?: boolean
-    strength?: boolean
-    relevanceScore?: boolean
-    aiSummary?: boolean
     tags?: boolean
+    agentCreated?: boolean
+    agentRunId?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -14943,19 +15421,19 @@ export namespace Prisma {
     title?: boolean
     summary?: boolean
     content?: boolean
-    evidenceType?: boolean
-    source?: boolean
+    sourceType?: boolean
     sourceUrl?: boolean
-    doi?: boolean
-    pmid?: boolean
-    publishedAt?: boolean
+    sourceDoi?: boolean
+    sourcePmid?: boolean
     authors?: boolean
+    publishedYear?: boolean
+    journal?: boolean
+    strength?: boolean
     cancerTypes?: boolean
     biomarkers?: boolean
-    strength?: boolean
-    relevanceScore?: boolean
-    aiSummary?: boolean
     tags?: boolean
+    agentCreated?: boolean
+    agentRunId?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -14970,19 +15448,19 @@ export namespace Prisma {
     title?: boolean
     summary?: boolean
     content?: boolean
-    evidenceType?: boolean
-    source?: boolean
+    sourceType?: boolean
     sourceUrl?: boolean
-    doi?: boolean
-    pmid?: boolean
-    publishedAt?: boolean
+    sourceDoi?: boolean
+    sourcePmid?: boolean
     authors?: boolean
+    publishedYear?: boolean
+    journal?: boolean
+    strength?: boolean
     cancerTypes?: boolean
     biomarkers?: boolean
-    strength?: boolean
-    relevanceScore?: boolean
-    aiSummary?: boolean
     tags?: boolean
+    agentCreated?: boolean
+    agentRunId?: boolean
     metadata?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -15010,19 +15488,19 @@ export namespace Prisma {
       title: string
       summary: string | null
       content: string | null
-      evidenceType: $Enums.EvidenceType
-      source: string | null
+      sourceType: $Enums.EvidenceSource
       sourceUrl: string | null
-      doi: string | null
-      pmid: string | null
-      publishedAt: Date | null
+      sourceDoi: string | null
+      sourcePmid: string | null
       authors: string[]
+      publishedYear: number | null
+      journal: string | null
+      strength: $Enums.EvidenceStrength
       cancerTypes: string[]
       biomarkers: string[]
-      strength: $Enums.EvidenceStrength
-      relevanceScore: number | null
-      aiSummary: string | null
       tags: string[]
+      agentCreated: boolean
+      agentRunId: string | null
       metadata: Prisma.JsonValue
       createdAt: Date
       updatedAt: Date
@@ -15427,19 +15905,19 @@ export namespace Prisma {
     readonly title: FieldRef<"Evidence", 'String'>
     readonly summary: FieldRef<"Evidence", 'String'>
     readonly content: FieldRef<"Evidence", 'String'>
-    readonly evidenceType: FieldRef<"Evidence", 'EvidenceType'>
-    readonly source: FieldRef<"Evidence", 'String'>
+    readonly sourceType: FieldRef<"Evidence", 'EvidenceSource'>
     readonly sourceUrl: FieldRef<"Evidence", 'String'>
-    readonly doi: FieldRef<"Evidence", 'String'>
-    readonly pmid: FieldRef<"Evidence", 'String'>
-    readonly publishedAt: FieldRef<"Evidence", 'DateTime'>
+    readonly sourceDoi: FieldRef<"Evidence", 'String'>
+    readonly sourcePmid: FieldRef<"Evidence", 'String'>
     readonly authors: FieldRef<"Evidence", 'String[]'>
+    readonly publishedYear: FieldRef<"Evidence", 'Int'>
+    readonly journal: FieldRef<"Evidence", 'String'>
+    readonly strength: FieldRef<"Evidence", 'EvidenceStrength'>
     readonly cancerTypes: FieldRef<"Evidence", 'String[]'>
     readonly biomarkers: FieldRef<"Evidence", 'String[]'>
-    readonly strength: FieldRef<"Evidence", 'EvidenceStrength'>
-    readonly relevanceScore: FieldRef<"Evidence", 'Float'>
-    readonly aiSummary: FieldRef<"Evidence", 'String'>
     readonly tags: FieldRef<"Evidence", 'String[]'>
+    readonly agentCreated: FieldRef<"Evidence", 'Boolean'>
+    readonly agentRunId: FieldRef<"Evidence", 'String'>
     readonly metadata: FieldRef<"Evidence", 'Json'>
     readonly createdAt: FieldRef<"Evidence", 'DateTime'>
     readonly updatedAt: FieldRef<"Evidence", 'DateTime'>
@@ -15829,9 +16307,10 @@ export namespace Prisma {
     id: string | null
     nctId: string | null
     title: string | null
+    officialTitle: string | null
+    sponsor: string | null
     phase: $Enums.TrialPhase | null
     status: $Enums.TrialStatus | null
-    sponsor: string | null
     primaryEndpoint: string | null
     enrollment: number | null
     startDate: Date | null
@@ -15848,9 +16327,10 @@ export namespace Prisma {
     id: string | null
     nctId: string | null
     title: string | null
+    officialTitle: string | null
+    sponsor: string | null
     phase: $Enums.TrialPhase | null
     status: $Enums.TrialStatus | null
-    sponsor: string | null
     primaryEndpoint: string | null
     enrollment: number | null
     startDate: Date | null
@@ -15867,11 +16347,13 @@ export namespace Prisma {
     id: number
     nctId: number
     title: number
+    officialTitle: number
+    sponsor: number
     phase: number
     status: number
-    sponsor: number
     conditions: number
     interventions: number
+    locations: number
     biomarkers: number
     primaryEndpoint: number
     enrollment: number
@@ -15900,9 +16382,10 @@ export namespace Prisma {
     id?: true
     nctId?: true
     title?: true
+    officialTitle?: true
+    sponsor?: true
     phase?: true
     status?: true
-    sponsor?: true
     primaryEndpoint?: true
     enrollment?: true
     startDate?: true
@@ -15919,9 +16402,10 @@ export namespace Prisma {
     id?: true
     nctId?: true
     title?: true
+    officialTitle?: true
+    sponsor?: true
     phase?: true
     status?: true
-    sponsor?: true
     primaryEndpoint?: true
     enrollment?: true
     startDate?: true
@@ -15938,11 +16422,13 @@ export namespace Prisma {
     id?: true
     nctId?: true
     title?: true
+    officialTitle?: true
+    sponsor?: true
     phase?: true
     status?: true
-    sponsor?: true
     conditions?: true
     interventions?: true
+    locations?: true
     biomarkers?: true
     primaryEndpoint?: true
     enrollment?: true
@@ -16048,11 +16534,13 @@ export namespace Prisma {
     id: string
     nctId: string
     title: string
+    officialTitle: string | null
+    sponsor: string | null
     phase: $Enums.TrialPhase | null
     status: $Enums.TrialStatus
-    sponsor: string | null
     conditions: string[]
     interventions: string[]
+    locations: string[]
     biomarkers: string[]
     primaryEndpoint: string | null
     enrollment: number | null
@@ -16090,11 +16578,13 @@ export namespace Prisma {
     id?: boolean
     nctId?: boolean
     title?: boolean
+    officialTitle?: boolean
+    sponsor?: boolean
     phase?: boolean
     status?: boolean
-    sponsor?: boolean
     conditions?: boolean
     interventions?: boolean
+    locations?: boolean
     biomarkers?: boolean
     primaryEndpoint?: boolean
     enrollment?: boolean
@@ -16116,11 +16606,13 @@ export namespace Prisma {
     id?: boolean
     nctId?: boolean
     title?: boolean
+    officialTitle?: boolean
+    sponsor?: boolean
     phase?: boolean
     status?: boolean
-    sponsor?: boolean
     conditions?: boolean
     interventions?: boolean
+    locations?: boolean
     biomarkers?: boolean
     primaryEndpoint?: boolean
     enrollment?: boolean
@@ -16139,11 +16631,13 @@ export namespace Prisma {
     id?: boolean
     nctId?: boolean
     title?: boolean
+    officialTitle?: boolean
+    sponsor?: boolean
     phase?: boolean
     status?: boolean
-    sponsor?: boolean
     conditions?: boolean
     interventions?: boolean
+    locations?: boolean
     biomarkers?: boolean
     primaryEndpoint?: boolean
     enrollment?: boolean
@@ -16175,11 +16669,13 @@ export namespace Prisma {
       id: string
       nctId: string
       title: string
+      officialTitle: string | null
+      sponsor: string | null
       phase: $Enums.TrialPhase | null
       status: $Enums.TrialStatus
-      sponsor: string | null
       conditions: string[]
       interventions: string[]
+      locations: string[]
       biomarkers: string[]
       primaryEndpoint: string | null
       enrollment: number | null
@@ -16590,11 +17086,13 @@ export namespace Prisma {
     readonly id: FieldRef<"ClinicalTrial", 'String'>
     readonly nctId: FieldRef<"ClinicalTrial", 'String'>
     readonly title: FieldRef<"ClinicalTrial", 'String'>
+    readonly officialTitle: FieldRef<"ClinicalTrial", 'String'>
+    readonly sponsor: FieldRef<"ClinicalTrial", 'String'>
     readonly phase: FieldRef<"ClinicalTrial", 'TrialPhase'>
     readonly status: FieldRef<"ClinicalTrial", 'TrialStatus'>
-    readonly sponsor: FieldRef<"ClinicalTrial", 'String'>
     readonly conditions: FieldRef<"ClinicalTrial", 'String[]'>
     readonly interventions: FieldRef<"ClinicalTrial", 'String[]'>
+    readonly locations: FieldRef<"ClinicalTrial", 'String[]'>
     readonly biomarkers: FieldRef<"ClinicalTrial", 'String[]'>
     readonly primaryEndpoint: FieldRef<"ClinicalTrial", 'String'>
     readonly enrollment: FieldRef<"ClinicalTrial", 'Int'>
@@ -32526,6 +33024,3155 @@ export namespace Prisma {
 
 
   /**
+   * Model GrantPipeline
+   */
+
+  export type AggregateGrantPipeline = {
+    _count: GrantPipelineCountAggregateOutputType | null
+    _min: GrantPipelineMinAggregateOutputType | null
+    _max: GrantPipelineMaxAggregateOutputType | null
+  }
+
+  export type GrantPipelineMinAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    status: $Enums.PipelineStatus | null
+    notes: string | null
+    nextAction: string | null
+    nextActionAt: Date | null
+    assignedTo: string | null
+    priority: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GrantPipelineMaxAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    status: $Enums.PipelineStatus | null
+    notes: string | null
+    nextAction: string | null
+    nextActionAt: Date | null
+    assignedTo: string | null
+    priority: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GrantPipelineCountAggregateOutputType = {
+    id: number
+    orgId: number
+    status: number
+    notes: number
+    nextAction: number
+    nextActionAt: number
+    assignedTo: number
+    priority: number
+    tags: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GrantPipelineMinAggregateInputType = {
+    id?: true
+    orgId?: true
+    status?: true
+    notes?: true
+    nextAction?: true
+    nextActionAt?: true
+    assignedTo?: true
+    priority?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GrantPipelineMaxAggregateInputType = {
+    id?: true
+    orgId?: true
+    status?: true
+    notes?: true
+    nextAction?: true
+    nextActionAt?: true
+    assignedTo?: true
+    priority?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GrantPipelineCountAggregateInputType = {
+    id?: true
+    orgId?: true
+    status?: true
+    notes?: true
+    nextAction?: true
+    nextActionAt?: true
+    assignedTo?: true
+    priority?: true
+    tags?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GrantPipelineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GrantPipeline to aggregate.
+     */
+    where?: GrantPipelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantPipelines to fetch.
+     */
+    orderBy?: GrantPipelineOrderByWithRelationInput | GrantPipelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GrantPipelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantPipelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantPipelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GrantPipelines
+    **/
+    _count?: true | GrantPipelineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GrantPipelineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GrantPipelineMaxAggregateInputType
+  }
+
+  export type GetGrantPipelineAggregateType<T extends GrantPipelineAggregateArgs> = {
+        [P in keyof T & keyof AggregateGrantPipeline]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGrantPipeline[P]>
+      : GetScalarType<T[P], AggregateGrantPipeline[P]>
+  }
+
+
+
+
+  export type GrantPipelineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GrantPipelineWhereInput
+    orderBy?: GrantPipelineOrderByWithAggregationInput | GrantPipelineOrderByWithAggregationInput[]
+    by: GrantPipelineScalarFieldEnum[] | GrantPipelineScalarFieldEnum
+    having?: GrantPipelineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GrantPipelineCountAggregateInputType | true
+    _min?: GrantPipelineMinAggregateInputType
+    _max?: GrantPipelineMaxAggregateInputType
+  }
+
+  export type GrantPipelineGroupByOutputType = {
+    id: string
+    orgId: string
+    status: $Enums.PipelineStatus
+    notes: string | null
+    nextAction: string | null
+    nextActionAt: Date | null
+    assignedTo: string | null
+    priority: string | null
+    tags: string[]
+    createdAt: Date
+    updatedAt: Date
+    _count: GrantPipelineCountAggregateOutputType | null
+    _min: GrantPipelineMinAggregateOutputType | null
+    _max: GrantPipelineMaxAggregateOutputType | null
+  }
+
+  type GetGrantPipelineGroupByPayload<T extends GrantPipelineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GrantPipelineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GrantPipelineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GrantPipelineGroupByOutputType[P]>
+            : GetScalarType<T[P], GrantPipelineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GrantPipelineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    status?: boolean
+    notes?: boolean
+    nextAction?: boolean
+    nextActionAt?: boolean
+    assignedTo?: boolean
+    priority?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["grantPipeline"]>
+
+  export type GrantPipelineSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    status?: boolean
+    notes?: boolean
+    nextAction?: boolean
+    nextActionAt?: boolean
+    assignedTo?: boolean
+    priority?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["grantPipeline"]>
+
+  export type GrantPipelineSelectScalar = {
+    id?: boolean
+    orgId?: boolean
+    status?: boolean
+    notes?: boolean
+    nextAction?: boolean
+    nextActionAt?: boolean
+    assignedTo?: boolean
+    priority?: boolean
+    tags?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GrantPipelineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }
+  export type GrantPipelineIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }
+
+  export type $GrantPipelinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GrantPipeline"
+    objects: {
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orgId: string
+      status: $Enums.PipelineStatus
+      notes: string | null
+      nextAction: string | null
+      nextActionAt: Date | null
+      assignedTo: string | null
+      priority: string | null
+      tags: string[]
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["grantPipeline"]>
+    composites: {}
+  }
+
+  type GrantPipelineGetPayload<S extends boolean | null | undefined | GrantPipelineDefaultArgs> = $Result.GetResult<Prisma.$GrantPipelinePayload, S>
+
+  type GrantPipelineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<GrantPipelineFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: GrantPipelineCountAggregateInputType | true
+    }
+
+  export interface GrantPipelineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GrantPipeline'], meta: { name: 'GrantPipeline' } }
+    /**
+     * Find zero or one GrantPipeline that matches the filter.
+     * @param {GrantPipelineFindUniqueArgs} args - Arguments to find a GrantPipeline
+     * @example
+     * // Get one GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GrantPipelineFindUniqueArgs>(args: SelectSubset<T, GrantPipelineFindUniqueArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one GrantPipeline that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {GrantPipelineFindUniqueOrThrowArgs} args - Arguments to find a GrantPipeline
+     * @example
+     * // Get one GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GrantPipelineFindUniqueOrThrowArgs>(args: SelectSubset<T, GrantPipelineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first GrantPipeline that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineFindFirstArgs} args - Arguments to find a GrantPipeline
+     * @example
+     * // Get one GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GrantPipelineFindFirstArgs>(args?: SelectSubset<T, GrantPipelineFindFirstArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first GrantPipeline that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineFindFirstOrThrowArgs} args - Arguments to find a GrantPipeline
+     * @example
+     * // Get one GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GrantPipelineFindFirstOrThrowArgs>(args?: SelectSubset<T, GrantPipelineFindFirstOrThrowArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more GrantPipelines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GrantPipelines
+     * const grantPipelines = await prisma.grantPipeline.findMany()
+     * 
+     * // Get first 10 GrantPipelines
+     * const grantPipelines = await prisma.grantPipeline.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const grantPipelineWithIdOnly = await prisma.grantPipeline.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GrantPipelineFindManyArgs>(args?: SelectSubset<T, GrantPipelineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a GrantPipeline.
+     * @param {GrantPipelineCreateArgs} args - Arguments to create a GrantPipeline.
+     * @example
+     * // Create one GrantPipeline
+     * const GrantPipeline = await prisma.grantPipeline.create({
+     *   data: {
+     *     // ... data to create a GrantPipeline
+     *   }
+     * })
+     * 
+     */
+    create<T extends GrantPipelineCreateArgs>(args: SelectSubset<T, GrantPipelineCreateArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many GrantPipelines.
+     * @param {GrantPipelineCreateManyArgs} args - Arguments to create many GrantPipelines.
+     * @example
+     * // Create many GrantPipelines
+     * const grantPipeline = await prisma.grantPipeline.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GrantPipelineCreateManyArgs>(args?: SelectSubset<T, GrantPipelineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GrantPipelines and returns the data saved in the database.
+     * @param {GrantPipelineCreateManyAndReturnArgs} args - Arguments to create many GrantPipelines.
+     * @example
+     * // Create many GrantPipelines
+     * const grantPipeline = await prisma.grantPipeline.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GrantPipelines and only return the `id`
+     * const grantPipelineWithIdOnly = await prisma.grantPipeline.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GrantPipelineCreateManyAndReturnArgs>(args?: SelectSubset<T, GrantPipelineCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a GrantPipeline.
+     * @param {GrantPipelineDeleteArgs} args - Arguments to delete one GrantPipeline.
+     * @example
+     * // Delete one GrantPipeline
+     * const GrantPipeline = await prisma.grantPipeline.delete({
+     *   where: {
+     *     // ... filter to delete one GrantPipeline
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GrantPipelineDeleteArgs>(args: SelectSubset<T, GrantPipelineDeleteArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one GrantPipeline.
+     * @param {GrantPipelineUpdateArgs} args - Arguments to update one GrantPipeline.
+     * @example
+     * // Update one GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GrantPipelineUpdateArgs>(args: SelectSubset<T, GrantPipelineUpdateArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more GrantPipelines.
+     * @param {GrantPipelineDeleteManyArgs} args - Arguments to filter GrantPipelines to delete.
+     * @example
+     * // Delete a few GrantPipelines
+     * const { count } = await prisma.grantPipeline.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GrantPipelineDeleteManyArgs>(args?: SelectSubset<T, GrantPipelineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GrantPipelines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GrantPipelines
+     * const grantPipeline = await prisma.grantPipeline.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GrantPipelineUpdateManyArgs>(args: SelectSubset<T, GrantPipelineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one GrantPipeline.
+     * @param {GrantPipelineUpsertArgs} args - Arguments to update or create a GrantPipeline.
+     * @example
+     * // Update or create a GrantPipeline
+     * const grantPipeline = await prisma.grantPipeline.upsert({
+     *   create: {
+     *     // ... data to create a GrantPipeline
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GrantPipeline we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GrantPipelineUpsertArgs>(args: SelectSubset<T, GrantPipelineUpsertArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of GrantPipelines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineCountArgs} args - Arguments to filter GrantPipelines to count.
+     * @example
+     * // Count the number of GrantPipelines
+     * const count = await prisma.grantPipeline.count({
+     *   where: {
+     *     // ... the filter for the GrantPipelines we want to count
+     *   }
+     * })
+    **/
+    count<T extends GrantPipelineCountArgs>(
+      args?: Subset<T, GrantPipelineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GrantPipelineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GrantPipeline.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GrantPipelineAggregateArgs>(args: Subset<T, GrantPipelineAggregateArgs>): Prisma.PrismaPromise<GetGrantPipelineAggregateType<T>>
+
+    /**
+     * Group by GrantPipeline.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantPipelineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GrantPipelineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GrantPipelineGroupByArgs['orderBy'] }
+        : { orderBy?: GrantPipelineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GrantPipelineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGrantPipelineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GrantPipeline model
+   */
+  readonly fields: GrantPipelineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GrantPipeline.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GrantPipelineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GrantPipeline model
+   */ 
+  interface GrantPipelineFieldRefs {
+    readonly id: FieldRef<"GrantPipeline", 'String'>
+    readonly orgId: FieldRef<"GrantPipeline", 'String'>
+    readonly status: FieldRef<"GrantPipeline", 'PipelineStatus'>
+    readonly notes: FieldRef<"GrantPipeline", 'String'>
+    readonly nextAction: FieldRef<"GrantPipeline", 'String'>
+    readonly nextActionAt: FieldRef<"GrantPipeline", 'DateTime'>
+    readonly assignedTo: FieldRef<"GrantPipeline", 'String'>
+    readonly priority: FieldRef<"GrantPipeline", 'String'>
+    readonly tags: FieldRef<"GrantPipeline", 'String[]'>
+    readonly createdAt: FieldRef<"GrantPipeline", 'DateTime'>
+    readonly updatedAt: FieldRef<"GrantPipeline", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GrantPipeline findUnique
+   */
+  export type GrantPipelineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantPipeline to fetch.
+     */
+    where: GrantPipelineWhereUniqueInput
+  }
+
+  /**
+   * GrantPipeline findUniqueOrThrow
+   */
+  export type GrantPipelineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantPipeline to fetch.
+     */
+    where: GrantPipelineWhereUniqueInput
+  }
+
+  /**
+   * GrantPipeline findFirst
+   */
+  export type GrantPipelineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantPipeline to fetch.
+     */
+    where?: GrantPipelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantPipelines to fetch.
+     */
+    orderBy?: GrantPipelineOrderByWithRelationInput | GrantPipelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GrantPipelines.
+     */
+    cursor?: GrantPipelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantPipelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantPipelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GrantPipelines.
+     */
+    distinct?: GrantPipelineScalarFieldEnum | GrantPipelineScalarFieldEnum[]
+  }
+
+  /**
+   * GrantPipeline findFirstOrThrow
+   */
+  export type GrantPipelineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantPipeline to fetch.
+     */
+    where?: GrantPipelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantPipelines to fetch.
+     */
+    orderBy?: GrantPipelineOrderByWithRelationInput | GrantPipelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GrantPipelines.
+     */
+    cursor?: GrantPipelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantPipelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantPipelines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GrantPipelines.
+     */
+    distinct?: GrantPipelineScalarFieldEnum | GrantPipelineScalarFieldEnum[]
+  }
+
+  /**
+   * GrantPipeline findMany
+   */
+  export type GrantPipelineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantPipelines to fetch.
+     */
+    where?: GrantPipelineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantPipelines to fetch.
+     */
+    orderBy?: GrantPipelineOrderByWithRelationInput | GrantPipelineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GrantPipelines.
+     */
+    cursor?: GrantPipelineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantPipelines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantPipelines.
+     */
+    skip?: number
+    distinct?: GrantPipelineScalarFieldEnum | GrantPipelineScalarFieldEnum[]
+  }
+
+  /**
+   * GrantPipeline create
+   */
+  export type GrantPipelineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GrantPipeline.
+     */
+    data: XOR<GrantPipelineCreateInput, GrantPipelineUncheckedCreateInput>
+  }
+
+  /**
+   * GrantPipeline createMany
+   */
+  export type GrantPipelineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GrantPipelines.
+     */
+    data: GrantPipelineCreateManyInput | GrantPipelineCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GrantPipeline createManyAndReturn
+   */
+  export type GrantPipelineCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many GrantPipelines.
+     */
+    data: GrantPipelineCreateManyInput | GrantPipelineCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GrantPipeline update
+   */
+  export type GrantPipelineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GrantPipeline.
+     */
+    data: XOR<GrantPipelineUpdateInput, GrantPipelineUncheckedUpdateInput>
+    /**
+     * Choose, which GrantPipeline to update.
+     */
+    where: GrantPipelineWhereUniqueInput
+  }
+
+  /**
+   * GrantPipeline updateMany
+   */
+  export type GrantPipelineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GrantPipelines.
+     */
+    data: XOR<GrantPipelineUpdateManyMutationInput, GrantPipelineUncheckedUpdateManyInput>
+    /**
+     * Filter which GrantPipelines to update
+     */
+    where?: GrantPipelineWhereInput
+  }
+
+  /**
+   * GrantPipeline upsert
+   */
+  export type GrantPipelineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GrantPipeline to update in case it exists.
+     */
+    where: GrantPipelineWhereUniqueInput
+    /**
+     * In case the GrantPipeline found by the `where` argument doesn't exist, create a new GrantPipeline with this data.
+     */
+    create: XOR<GrantPipelineCreateInput, GrantPipelineUncheckedCreateInput>
+    /**
+     * In case the GrantPipeline was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GrantPipelineUpdateInput, GrantPipelineUncheckedUpdateInput>
+  }
+
+  /**
+   * GrantPipeline delete
+   */
+  export type GrantPipelineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+    /**
+     * Filter which GrantPipeline to delete.
+     */
+    where: GrantPipelineWhereUniqueInput
+  }
+
+  /**
+   * GrantPipeline deleteMany
+   */
+  export type GrantPipelineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GrantPipelines to delete
+     */
+    where?: GrantPipelineWhereInput
+  }
+
+  /**
+   * GrantPipeline without action
+   */
+  export type GrantPipelineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantPipeline
+     */
+    select?: GrantPipelineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantPipelineInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Dossier
+   */
+
+  export type AggregateDossier = {
+    _count: DossierCountAggregateOutputType | null
+    _min: DossierMinAggregateOutputType | null
+    _max: DossierMaxAggregateOutputType | null
+  }
+
+  export type DossierMinAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    type: $Enums.DossierType | null
+    title: string | null
+    content: string | null
+    model: string | null
+    context: string | null
+    createdAt: Date | null
+  }
+
+  export type DossierMaxAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    type: $Enums.DossierType | null
+    title: string | null
+    content: string | null
+    model: string | null
+    context: string | null
+    createdAt: Date | null
+  }
+
+  export type DossierCountAggregateOutputType = {
+    id: number
+    orgId: number
+    type: number
+    title: number
+    content: number
+    model: number
+    context: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DossierMinAggregateInputType = {
+    id?: true
+    orgId?: true
+    type?: true
+    title?: true
+    content?: true
+    model?: true
+    context?: true
+    createdAt?: true
+  }
+
+  export type DossierMaxAggregateInputType = {
+    id?: true
+    orgId?: true
+    type?: true
+    title?: true
+    content?: true
+    model?: true
+    context?: true
+    createdAt?: true
+  }
+
+  export type DossierCountAggregateInputType = {
+    id?: true
+    orgId?: true
+    type?: true
+    title?: true
+    content?: true
+    model?: true
+    context?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DossierAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dossier to aggregate.
+     */
+    where?: DossierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dossiers to fetch.
+     */
+    orderBy?: DossierOrderByWithRelationInput | DossierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DossierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dossiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dossiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dossiers
+    **/
+    _count?: true | DossierCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DossierMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DossierMaxAggregateInputType
+  }
+
+  export type GetDossierAggregateType<T extends DossierAggregateArgs> = {
+        [P in keyof T & keyof AggregateDossier]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDossier[P]>
+      : GetScalarType<T[P], AggregateDossier[P]>
+  }
+
+
+
+
+  export type DossierGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DossierWhereInput
+    orderBy?: DossierOrderByWithAggregationInput | DossierOrderByWithAggregationInput[]
+    by: DossierScalarFieldEnum[] | DossierScalarFieldEnum
+    having?: DossierScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DossierCountAggregateInputType | true
+    _min?: DossierMinAggregateInputType
+    _max?: DossierMaxAggregateInputType
+  }
+
+  export type DossierGroupByOutputType = {
+    id: string
+    orgId: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model: string
+    context: string | null
+    createdAt: Date
+    _count: DossierCountAggregateOutputType | null
+    _min: DossierMinAggregateOutputType | null
+    _max: DossierMaxAggregateOutputType | null
+  }
+
+  type GetDossierGroupByPayload<T extends DossierGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DossierGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DossierGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DossierGroupByOutputType[P]>
+            : GetScalarType<T[P], DossierGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DossierSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    type?: boolean
+    title?: boolean
+    content?: boolean
+    model?: boolean
+    context?: boolean
+    createdAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    applications?: boolean | Dossier$applicationsArgs<ExtArgs>
+    _count?: boolean | DossierCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dossier"]>
+
+  export type DossierSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    type?: boolean
+    title?: boolean
+    content?: boolean
+    model?: boolean
+    context?: boolean
+    createdAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dossier"]>
+
+  export type DossierSelectScalar = {
+    id?: boolean
+    orgId?: boolean
+    type?: boolean
+    title?: boolean
+    content?: boolean
+    model?: boolean
+    context?: boolean
+    createdAt?: boolean
+  }
+
+  export type DossierInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    applications?: boolean | Dossier$applicationsArgs<ExtArgs>
+    _count?: boolean | DossierCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DossierIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+  }
+
+  export type $DossierPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dossier"
+    objects: {
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs>
+      applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orgId: string
+      type: $Enums.DossierType
+      title: string
+      content: string
+      model: string
+      context: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["dossier"]>
+    composites: {}
+  }
+
+  type DossierGetPayload<S extends boolean | null | undefined | DossierDefaultArgs> = $Result.GetResult<Prisma.$DossierPayload, S>
+
+  type DossierCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DossierFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DossierCountAggregateInputType | true
+    }
+
+  export interface DossierDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dossier'], meta: { name: 'Dossier' } }
+    /**
+     * Find zero or one Dossier that matches the filter.
+     * @param {DossierFindUniqueArgs} args - Arguments to find a Dossier
+     * @example
+     * // Get one Dossier
+     * const dossier = await prisma.dossier.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DossierFindUniqueArgs>(args: SelectSubset<T, DossierFindUniqueArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Dossier that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DossierFindUniqueOrThrowArgs} args - Arguments to find a Dossier
+     * @example
+     * // Get one Dossier
+     * const dossier = await prisma.dossier.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DossierFindUniqueOrThrowArgs>(args: SelectSubset<T, DossierFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Dossier that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierFindFirstArgs} args - Arguments to find a Dossier
+     * @example
+     * // Get one Dossier
+     * const dossier = await prisma.dossier.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DossierFindFirstArgs>(args?: SelectSubset<T, DossierFindFirstArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Dossier that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierFindFirstOrThrowArgs} args - Arguments to find a Dossier
+     * @example
+     * // Get one Dossier
+     * const dossier = await prisma.dossier.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DossierFindFirstOrThrowArgs>(args?: SelectSubset<T, DossierFindFirstOrThrowArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Dossiers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dossiers
+     * const dossiers = await prisma.dossier.findMany()
+     * 
+     * // Get first 10 Dossiers
+     * const dossiers = await prisma.dossier.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dossierWithIdOnly = await prisma.dossier.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DossierFindManyArgs>(args?: SelectSubset<T, DossierFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Dossier.
+     * @param {DossierCreateArgs} args - Arguments to create a Dossier.
+     * @example
+     * // Create one Dossier
+     * const Dossier = await prisma.dossier.create({
+     *   data: {
+     *     // ... data to create a Dossier
+     *   }
+     * })
+     * 
+     */
+    create<T extends DossierCreateArgs>(args: SelectSubset<T, DossierCreateArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Dossiers.
+     * @param {DossierCreateManyArgs} args - Arguments to create many Dossiers.
+     * @example
+     * // Create many Dossiers
+     * const dossier = await prisma.dossier.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DossierCreateManyArgs>(args?: SelectSubset<T, DossierCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dossiers and returns the data saved in the database.
+     * @param {DossierCreateManyAndReturnArgs} args - Arguments to create many Dossiers.
+     * @example
+     * // Create many Dossiers
+     * const dossier = await prisma.dossier.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dossiers and only return the `id`
+     * const dossierWithIdOnly = await prisma.dossier.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DossierCreateManyAndReturnArgs>(args?: SelectSubset<T, DossierCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Dossier.
+     * @param {DossierDeleteArgs} args - Arguments to delete one Dossier.
+     * @example
+     * // Delete one Dossier
+     * const Dossier = await prisma.dossier.delete({
+     *   where: {
+     *     // ... filter to delete one Dossier
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DossierDeleteArgs>(args: SelectSubset<T, DossierDeleteArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Dossier.
+     * @param {DossierUpdateArgs} args - Arguments to update one Dossier.
+     * @example
+     * // Update one Dossier
+     * const dossier = await prisma.dossier.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DossierUpdateArgs>(args: SelectSubset<T, DossierUpdateArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Dossiers.
+     * @param {DossierDeleteManyArgs} args - Arguments to filter Dossiers to delete.
+     * @example
+     * // Delete a few Dossiers
+     * const { count } = await prisma.dossier.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DossierDeleteManyArgs>(args?: SelectSubset<T, DossierDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dossiers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dossiers
+     * const dossier = await prisma.dossier.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DossierUpdateManyArgs>(args: SelectSubset<T, DossierUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Dossier.
+     * @param {DossierUpsertArgs} args - Arguments to update or create a Dossier.
+     * @example
+     * // Update or create a Dossier
+     * const dossier = await prisma.dossier.upsert({
+     *   create: {
+     *     // ... data to create a Dossier
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dossier we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DossierUpsertArgs>(args: SelectSubset<T, DossierUpsertArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Dossiers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierCountArgs} args - Arguments to filter Dossiers to count.
+     * @example
+     * // Count the number of Dossiers
+     * const count = await prisma.dossier.count({
+     *   where: {
+     *     // ... the filter for the Dossiers we want to count
+     *   }
+     * })
+    **/
+    count<T extends DossierCountArgs>(
+      args?: Subset<T, DossierCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DossierCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dossier.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DossierAggregateArgs>(args: Subset<T, DossierAggregateArgs>): Prisma.PrismaPromise<GetDossierAggregateType<T>>
+
+    /**
+     * Group by Dossier.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DossierGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DossierGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DossierGroupByArgs['orderBy'] }
+        : { orderBy?: DossierGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DossierGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDossierGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dossier model
+   */
+  readonly fields: DossierFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dossier.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DossierClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    applications<T extends Dossier$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Dossier$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dossier model
+   */ 
+  interface DossierFieldRefs {
+    readonly id: FieldRef<"Dossier", 'String'>
+    readonly orgId: FieldRef<"Dossier", 'String'>
+    readonly type: FieldRef<"Dossier", 'DossierType'>
+    readonly title: FieldRef<"Dossier", 'String'>
+    readonly content: FieldRef<"Dossier", 'String'>
+    readonly model: FieldRef<"Dossier", 'String'>
+    readonly context: FieldRef<"Dossier", 'String'>
+    readonly createdAt: FieldRef<"Dossier", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dossier findUnique
+   */
+  export type DossierFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter, which Dossier to fetch.
+     */
+    where: DossierWhereUniqueInput
+  }
+
+  /**
+   * Dossier findUniqueOrThrow
+   */
+  export type DossierFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter, which Dossier to fetch.
+     */
+    where: DossierWhereUniqueInput
+  }
+
+  /**
+   * Dossier findFirst
+   */
+  export type DossierFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter, which Dossier to fetch.
+     */
+    where?: DossierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dossiers to fetch.
+     */
+    orderBy?: DossierOrderByWithRelationInput | DossierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dossiers.
+     */
+    cursor?: DossierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dossiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dossiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dossiers.
+     */
+    distinct?: DossierScalarFieldEnum | DossierScalarFieldEnum[]
+  }
+
+  /**
+   * Dossier findFirstOrThrow
+   */
+  export type DossierFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter, which Dossier to fetch.
+     */
+    where?: DossierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dossiers to fetch.
+     */
+    orderBy?: DossierOrderByWithRelationInput | DossierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dossiers.
+     */
+    cursor?: DossierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dossiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dossiers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dossiers.
+     */
+    distinct?: DossierScalarFieldEnum | DossierScalarFieldEnum[]
+  }
+
+  /**
+   * Dossier findMany
+   */
+  export type DossierFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter, which Dossiers to fetch.
+     */
+    where?: DossierWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dossiers to fetch.
+     */
+    orderBy?: DossierOrderByWithRelationInput | DossierOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dossiers.
+     */
+    cursor?: DossierWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dossiers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dossiers.
+     */
+    skip?: number
+    distinct?: DossierScalarFieldEnum | DossierScalarFieldEnum[]
+  }
+
+  /**
+   * Dossier create
+   */
+  export type DossierCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dossier.
+     */
+    data: XOR<DossierCreateInput, DossierUncheckedCreateInput>
+  }
+
+  /**
+   * Dossier createMany
+   */
+  export type DossierCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dossiers.
+     */
+    data: DossierCreateManyInput | DossierCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dossier createManyAndReturn
+   */
+  export type DossierCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Dossiers.
+     */
+    data: DossierCreateManyInput | DossierCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dossier update
+   */
+  export type DossierUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dossier.
+     */
+    data: XOR<DossierUpdateInput, DossierUncheckedUpdateInput>
+    /**
+     * Choose, which Dossier to update.
+     */
+    where: DossierWhereUniqueInput
+  }
+
+  /**
+   * Dossier updateMany
+   */
+  export type DossierUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dossiers.
+     */
+    data: XOR<DossierUpdateManyMutationInput, DossierUncheckedUpdateManyInput>
+    /**
+     * Filter which Dossiers to update
+     */
+    where?: DossierWhereInput
+  }
+
+  /**
+   * Dossier upsert
+   */
+  export type DossierUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dossier to update in case it exists.
+     */
+    where: DossierWhereUniqueInput
+    /**
+     * In case the Dossier found by the `where` argument doesn't exist, create a new Dossier with this data.
+     */
+    create: XOR<DossierCreateInput, DossierUncheckedCreateInput>
+    /**
+     * In case the Dossier was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DossierUpdateInput, DossierUncheckedUpdateInput>
+  }
+
+  /**
+   * Dossier delete
+   */
+  export type DossierDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    /**
+     * Filter which Dossier to delete.
+     */
+    where: DossierWhereUniqueInput
+  }
+
+  /**
+   * Dossier deleteMany
+   */
+  export type DossierDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dossiers to delete
+     */
+    where?: DossierWhereInput
+  }
+
+  /**
+   * Dossier.applications
+   */
+  export type Dossier$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    where?: GrantApplicationWhereInput
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    cursor?: GrantApplicationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * Dossier without action
+   */
+  export type DossierDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GrantApplication
+   */
+
+  export type AggregateGrantApplication = {
+    _count: GrantApplicationCountAggregateOutputType | null
+    _avg: GrantApplicationAvgAggregateOutputType | null
+    _sum: GrantApplicationSumAggregateOutputType | null
+    _min: GrantApplicationMinAggregateOutputType | null
+    _max: GrantApplicationMaxAggregateOutputType | null
+  }
+
+  export type GrantApplicationAvgAggregateOutputType = {
+    askAmount: number | null
+    awardedAmount: number | null
+    internalScore: number | null
+    funderScore: number | null
+  }
+
+  export type GrantApplicationSumAggregateOutputType = {
+    askAmount: number | null
+    awardedAmount: number | null
+    internalScore: number | null
+    funderScore: number | null
+  }
+
+  export type GrantApplicationMinAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    grantId: string | null
+    dossierId: string | null
+    title: string | null
+    status: $Enums.ApplicationStatus | null
+    submittedAt: Date | null
+    decisionAt: Date | null
+    askAmount: number | null
+    awardedAmount: number | null
+    notes: string | null
+    nextStep: string | null
+    internalScore: number | null
+    funderScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GrantApplicationMaxAggregateOutputType = {
+    id: string | null
+    orgId: string | null
+    grantId: string | null
+    dossierId: string | null
+    title: string | null
+    status: $Enums.ApplicationStatus | null
+    submittedAt: Date | null
+    decisionAt: Date | null
+    askAmount: number | null
+    awardedAmount: number | null
+    notes: string | null
+    nextStep: string | null
+    internalScore: number | null
+    funderScore: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GrantApplicationCountAggregateOutputType = {
+    id: number
+    orgId: number
+    grantId: number
+    dossierId: number
+    title: number
+    status: number
+    submittedAt: number
+    decisionAt: number
+    askAmount: number
+    awardedAmount: number
+    notes: number
+    nextStep: number
+    internalScore: number
+    funderScore: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GrantApplicationAvgAggregateInputType = {
+    askAmount?: true
+    awardedAmount?: true
+    internalScore?: true
+    funderScore?: true
+  }
+
+  export type GrantApplicationSumAggregateInputType = {
+    askAmount?: true
+    awardedAmount?: true
+    internalScore?: true
+    funderScore?: true
+  }
+
+  export type GrantApplicationMinAggregateInputType = {
+    id?: true
+    orgId?: true
+    grantId?: true
+    dossierId?: true
+    title?: true
+    status?: true
+    submittedAt?: true
+    decisionAt?: true
+    askAmount?: true
+    awardedAmount?: true
+    notes?: true
+    nextStep?: true
+    internalScore?: true
+    funderScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GrantApplicationMaxAggregateInputType = {
+    id?: true
+    orgId?: true
+    grantId?: true
+    dossierId?: true
+    title?: true
+    status?: true
+    submittedAt?: true
+    decisionAt?: true
+    askAmount?: true
+    awardedAmount?: true
+    notes?: true
+    nextStep?: true
+    internalScore?: true
+    funderScore?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GrantApplicationCountAggregateInputType = {
+    id?: true
+    orgId?: true
+    grantId?: true
+    dossierId?: true
+    title?: true
+    status?: true
+    submittedAt?: true
+    decisionAt?: true
+    askAmount?: true
+    awardedAmount?: true
+    notes?: true
+    nextStep?: true
+    internalScore?: true
+    funderScore?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GrantApplicationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GrantApplication to aggregate.
+     */
+    where?: GrantApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantApplications to fetch.
+     */
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GrantApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GrantApplications
+    **/
+    _count?: true | GrantApplicationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GrantApplicationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GrantApplicationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GrantApplicationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GrantApplicationMaxAggregateInputType
+  }
+
+  export type GetGrantApplicationAggregateType<T extends GrantApplicationAggregateArgs> = {
+        [P in keyof T & keyof AggregateGrantApplication]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGrantApplication[P]>
+      : GetScalarType<T[P], AggregateGrantApplication[P]>
+  }
+
+
+
+
+  export type GrantApplicationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GrantApplicationWhereInput
+    orderBy?: GrantApplicationOrderByWithAggregationInput | GrantApplicationOrderByWithAggregationInput[]
+    by: GrantApplicationScalarFieldEnum[] | GrantApplicationScalarFieldEnum
+    having?: GrantApplicationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GrantApplicationCountAggregateInputType | true
+    _avg?: GrantApplicationAvgAggregateInputType
+    _sum?: GrantApplicationSumAggregateInputType
+    _min?: GrantApplicationMinAggregateInputType
+    _max?: GrantApplicationMaxAggregateInputType
+  }
+
+  export type GrantApplicationGroupByOutputType = {
+    id: string
+    orgId: string
+    grantId: string | null
+    dossierId: string | null
+    title: string
+    status: $Enums.ApplicationStatus
+    submittedAt: Date | null
+    decisionAt: Date | null
+    askAmount: number | null
+    awardedAmount: number | null
+    notes: string | null
+    nextStep: string | null
+    internalScore: number | null
+    funderScore: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: GrantApplicationCountAggregateOutputType | null
+    _avg: GrantApplicationAvgAggregateOutputType | null
+    _sum: GrantApplicationSumAggregateOutputType | null
+    _min: GrantApplicationMinAggregateOutputType | null
+    _max: GrantApplicationMaxAggregateOutputType | null
+  }
+
+  type GetGrantApplicationGroupByPayload<T extends GrantApplicationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GrantApplicationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GrantApplicationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GrantApplicationGroupByOutputType[P]>
+            : GetScalarType<T[P], GrantApplicationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GrantApplicationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    dossierId?: boolean
+    title?: boolean
+    status?: boolean
+    submittedAt?: boolean
+    decisionAt?: boolean
+    askAmount?: boolean
+    awardedAmount?: boolean
+    notes?: boolean
+    nextStep?: boolean
+    internalScore?: boolean
+    funderScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    grant?: boolean | GrantApplication$grantArgs<ExtArgs>
+    dossier?: boolean | GrantApplication$dossierArgs<ExtArgs>
+  }, ExtArgs["result"]["grantApplication"]>
+
+  export type GrantApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    dossierId?: boolean
+    title?: boolean
+    status?: boolean
+    submittedAt?: boolean
+    decisionAt?: boolean
+    askAmount?: boolean
+    awardedAmount?: boolean
+    notes?: boolean
+    nextStep?: boolean
+    internalScore?: boolean
+    funderScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    grant?: boolean | GrantApplication$grantArgs<ExtArgs>
+    dossier?: boolean | GrantApplication$dossierArgs<ExtArgs>
+  }, ExtArgs["result"]["grantApplication"]>
+
+  export type GrantApplicationSelectScalar = {
+    id?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    dossierId?: boolean
+    title?: boolean
+    status?: boolean
+    submittedAt?: boolean
+    decisionAt?: boolean
+    askAmount?: boolean
+    awardedAmount?: boolean
+    notes?: boolean
+    nextStep?: boolean
+    internalScore?: boolean
+    funderScore?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GrantApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    grant?: boolean | GrantApplication$grantArgs<ExtArgs>
+    dossier?: boolean | GrantApplication$dossierArgs<ExtArgs>
+  }
+  export type GrantApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    grant?: boolean | GrantApplication$grantArgs<ExtArgs>
+    dossier?: boolean | GrantApplication$dossierArgs<ExtArgs>
+  }
+
+  export type $GrantApplicationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GrantApplication"
+    objects: {
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs>
+      grant: Prisma.$OpenGrantPayload<ExtArgs> | null
+      dossier: Prisma.$DossierPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      orgId: string
+      grantId: string | null
+      dossierId: string | null
+      title: string
+      status: $Enums.ApplicationStatus
+      submittedAt: Date | null
+      decisionAt: Date | null
+      askAmount: number | null
+      awardedAmount: number | null
+      notes: string | null
+      nextStep: string | null
+      internalScore: number | null
+      funderScore: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["grantApplication"]>
+    composites: {}
+  }
+
+  type GrantApplicationGetPayload<S extends boolean | null | undefined | GrantApplicationDefaultArgs> = $Result.GetResult<Prisma.$GrantApplicationPayload, S>
+
+  type GrantApplicationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<GrantApplicationFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: GrantApplicationCountAggregateInputType | true
+    }
+
+  export interface GrantApplicationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GrantApplication'], meta: { name: 'GrantApplication' } }
+    /**
+     * Find zero or one GrantApplication that matches the filter.
+     * @param {GrantApplicationFindUniqueArgs} args - Arguments to find a GrantApplication
+     * @example
+     * // Get one GrantApplication
+     * const grantApplication = await prisma.grantApplication.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GrantApplicationFindUniqueArgs>(args: SelectSubset<T, GrantApplicationFindUniqueArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one GrantApplication that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {GrantApplicationFindUniqueOrThrowArgs} args - Arguments to find a GrantApplication
+     * @example
+     * // Get one GrantApplication
+     * const grantApplication = await prisma.grantApplication.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GrantApplicationFindUniqueOrThrowArgs>(args: SelectSubset<T, GrantApplicationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first GrantApplication that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationFindFirstArgs} args - Arguments to find a GrantApplication
+     * @example
+     * // Get one GrantApplication
+     * const grantApplication = await prisma.grantApplication.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GrantApplicationFindFirstArgs>(args?: SelectSubset<T, GrantApplicationFindFirstArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first GrantApplication that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationFindFirstOrThrowArgs} args - Arguments to find a GrantApplication
+     * @example
+     * // Get one GrantApplication
+     * const grantApplication = await prisma.grantApplication.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GrantApplicationFindFirstOrThrowArgs>(args?: SelectSubset<T, GrantApplicationFindFirstOrThrowArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more GrantApplications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GrantApplications
+     * const grantApplications = await prisma.grantApplication.findMany()
+     * 
+     * // Get first 10 GrantApplications
+     * const grantApplications = await prisma.grantApplication.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const grantApplicationWithIdOnly = await prisma.grantApplication.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GrantApplicationFindManyArgs>(args?: SelectSubset<T, GrantApplicationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a GrantApplication.
+     * @param {GrantApplicationCreateArgs} args - Arguments to create a GrantApplication.
+     * @example
+     * // Create one GrantApplication
+     * const GrantApplication = await prisma.grantApplication.create({
+     *   data: {
+     *     // ... data to create a GrantApplication
+     *   }
+     * })
+     * 
+     */
+    create<T extends GrantApplicationCreateArgs>(args: SelectSubset<T, GrantApplicationCreateArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many GrantApplications.
+     * @param {GrantApplicationCreateManyArgs} args - Arguments to create many GrantApplications.
+     * @example
+     * // Create many GrantApplications
+     * const grantApplication = await prisma.grantApplication.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GrantApplicationCreateManyArgs>(args?: SelectSubset<T, GrantApplicationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GrantApplications and returns the data saved in the database.
+     * @param {GrantApplicationCreateManyAndReturnArgs} args - Arguments to create many GrantApplications.
+     * @example
+     * // Create many GrantApplications
+     * const grantApplication = await prisma.grantApplication.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GrantApplications and only return the `id`
+     * const grantApplicationWithIdOnly = await prisma.grantApplication.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GrantApplicationCreateManyAndReturnArgs>(args?: SelectSubset<T, GrantApplicationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a GrantApplication.
+     * @param {GrantApplicationDeleteArgs} args - Arguments to delete one GrantApplication.
+     * @example
+     * // Delete one GrantApplication
+     * const GrantApplication = await prisma.grantApplication.delete({
+     *   where: {
+     *     // ... filter to delete one GrantApplication
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GrantApplicationDeleteArgs>(args: SelectSubset<T, GrantApplicationDeleteArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one GrantApplication.
+     * @param {GrantApplicationUpdateArgs} args - Arguments to update one GrantApplication.
+     * @example
+     * // Update one GrantApplication
+     * const grantApplication = await prisma.grantApplication.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GrantApplicationUpdateArgs>(args: SelectSubset<T, GrantApplicationUpdateArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more GrantApplications.
+     * @param {GrantApplicationDeleteManyArgs} args - Arguments to filter GrantApplications to delete.
+     * @example
+     * // Delete a few GrantApplications
+     * const { count } = await prisma.grantApplication.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GrantApplicationDeleteManyArgs>(args?: SelectSubset<T, GrantApplicationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GrantApplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GrantApplications
+     * const grantApplication = await prisma.grantApplication.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GrantApplicationUpdateManyArgs>(args: SelectSubset<T, GrantApplicationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one GrantApplication.
+     * @param {GrantApplicationUpsertArgs} args - Arguments to update or create a GrantApplication.
+     * @example
+     * // Update or create a GrantApplication
+     * const grantApplication = await prisma.grantApplication.upsert({
+     *   create: {
+     *     // ... data to create a GrantApplication
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GrantApplication we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GrantApplicationUpsertArgs>(args: SelectSubset<T, GrantApplicationUpsertArgs<ExtArgs>>): Prisma__GrantApplicationClient<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of GrantApplications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationCountArgs} args - Arguments to filter GrantApplications to count.
+     * @example
+     * // Count the number of GrantApplications
+     * const count = await prisma.grantApplication.count({
+     *   where: {
+     *     // ... the filter for the GrantApplications we want to count
+     *   }
+     * })
+    **/
+    count<T extends GrantApplicationCountArgs>(
+      args?: Subset<T, GrantApplicationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GrantApplicationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GrantApplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GrantApplicationAggregateArgs>(args: Subset<T, GrantApplicationAggregateArgs>): Prisma.PrismaPromise<GetGrantApplicationAggregateType<T>>
+
+    /**
+     * Group by GrantApplication.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GrantApplicationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GrantApplicationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GrantApplicationGroupByArgs['orderBy'] }
+        : { orderBy?: GrantApplicationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GrantApplicationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGrantApplicationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GrantApplication model
+   */
+  readonly fields: GrantApplicationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GrantApplication.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GrantApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    grant<T extends GrantApplication$grantArgs<ExtArgs> = {}>(args?: Subset<T, GrantApplication$grantArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    dossier<T extends GrantApplication$dossierArgs<ExtArgs> = {}>(args?: Subset<T, GrantApplication$dossierArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GrantApplication model
+   */ 
+  interface GrantApplicationFieldRefs {
+    readonly id: FieldRef<"GrantApplication", 'String'>
+    readonly orgId: FieldRef<"GrantApplication", 'String'>
+    readonly grantId: FieldRef<"GrantApplication", 'String'>
+    readonly dossierId: FieldRef<"GrantApplication", 'String'>
+    readonly title: FieldRef<"GrantApplication", 'String'>
+    readonly status: FieldRef<"GrantApplication", 'ApplicationStatus'>
+    readonly submittedAt: FieldRef<"GrantApplication", 'DateTime'>
+    readonly decisionAt: FieldRef<"GrantApplication", 'DateTime'>
+    readonly askAmount: FieldRef<"GrantApplication", 'Float'>
+    readonly awardedAmount: FieldRef<"GrantApplication", 'Float'>
+    readonly notes: FieldRef<"GrantApplication", 'String'>
+    readonly nextStep: FieldRef<"GrantApplication", 'String'>
+    readonly internalScore: FieldRef<"GrantApplication", 'Int'>
+    readonly funderScore: FieldRef<"GrantApplication", 'Int'>
+    readonly createdAt: FieldRef<"GrantApplication", 'DateTime'>
+    readonly updatedAt: FieldRef<"GrantApplication", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GrantApplication findUnique
+   */
+  export type GrantApplicationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantApplication to fetch.
+     */
+    where: GrantApplicationWhereUniqueInput
+  }
+
+  /**
+   * GrantApplication findUniqueOrThrow
+   */
+  export type GrantApplicationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantApplication to fetch.
+     */
+    where: GrantApplicationWhereUniqueInput
+  }
+
+  /**
+   * GrantApplication findFirst
+   */
+  export type GrantApplicationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantApplication to fetch.
+     */
+    where?: GrantApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantApplications to fetch.
+     */
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GrantApplications.
+     */
+    cursor?: GrantApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GrantApplications.
+     */
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * GrantApplication findFirstOrThrow
+   */
+  export type GrantApplicationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantApplication to fetch.
+     */
+    where?: GrantApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantApplications to fetch.
+     */
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GrantApplications.
+     */
+    cursor?: GrantApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantApplications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GrantApplications.
+     */
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * GrantApplication findMany
+   */
+  export type GrantApplicationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter, which GrantApplications to fetch.
+     */
+    where?: GrantApplicationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GrantApplications to fetch.
+     */
+    orderBy?: GrantApplicationOrderByWithRelationInput | GrantApplicationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GrantApplications.
+     */
+    cursor?: GrantApplicationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GrantApplications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GrantApplications.
+     */
+    skip?: number
+    distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * GrantApplication create
+   */
+  export type GrantApplicationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GrantApplication.
+     */
+    data: XOR<GrantApplicationCreateInput, GrantApplicationUncheckedCreateInput>
+  }
+
+  /**
+   * GrantApplication createMany
+   */
+  export type GrantApplicationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GrantApplications.
+     */
+    data: GrantApplicationCreateManyInput | GrantApplicationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GrantApplication createManyAndReturn
+   */
+  export type GrantApplicationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many GrantApplications.
+     */
+    data: GrantApplicationCreateManyInput | GrantApplicationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GrantApplication update
+   */
+  export type GrantApplicationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GrantApplication.
+     */
+    data: XOR<GrantApplicationUpdateInput, GrantApplicationUncheckedUpdateInput>
+    /**
+     * Choose, which GrantApplication to update.
+     */
+    where: GrantApplicationWhereUniqueInput
+  }
+
+  /**
+   * GrantApplication updateMany
+   */
+  export type GrantApplicationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GrantApplications.
+     */
+    data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyInput>
+    /**
+     * Filter which GrantApplications to update
+     */
+    where?: GrantApplicationWhereInput
+  }
+
+  /**
+   * GrantApplication upsert
+   */
+  export type GrantApplicationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GrantApplication to update in case it exists.
+     */
+    where: GrantApplicationWhereUniqueInput
+    /**
+     * In case the GrantApplication found by the `where` argument doesn't exist, create a new GrantApplication with this data.
+     */
+    create: XOR<GrantApplicationCreateInput, GrantApplicationUncheckedCreateInput>
+    /**
+     * In case the GrantApplication was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GrantApplicationUpdateInput, GrantApplicationUncheckedUpdateInput>
+  }
+
+  /**
+   * GrantApplication delete
+   */
+  export type GrantApplicationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+    /**
+     * Filter which GrantApplication to delete.
+     */
+    where: GrantApplicationWhereUniqueInput
+  }
+
+  /**
+   * GrantApplication deleteMany
+   */
+  export type GrantApplicationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GrantApplications to delete
+     */
+    where?: GrantApplicationWhereInput
+  }
+
+  /**
+   * GrantApplication.grant
+   */
+  export type GrantApplication$grantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    where?: OpenGrantWhereInput
+  }
+
+  /**
+   * GrantApplication.dossier
+   */
+  export type GrantApplication$dossierArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    where?: DossierWhereInput
+  }
+
+  /**
+   * GrantApplication without action
+   */
+  export type GrantApplicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GrantApplication
+     */
+    select?: GrantApplicationSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GrantApplicationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -32742,19 +36389,19 @@ export namespace Prisma {
     title: 'title',
     summary: 'summary',
     content: 'content',
-    evidenceType: 'evidenceType',
-    source: 'source',
+    sourceType: 'sourceType',
     sourceUrl: 'sourceUrl',
-    doi: 'doi',
-    pmid: 'pmid',
-    publishedAt: 'publishedAt',
+    sourceDoi: 'sourceDoi',
+    sourcePmid: 'sourcePmid',
     authors: 'authors',
+    publishedYear: 'publishedYear',
+    journal: 'journal',
+    strength: 'strength',
     cancerTypes: 'cancerTypes',
     biomarkers: 'biomarkers',
-    strength: 'strength',
-    relevanceScore: 'relevanceScore',
-    aiSummary: 'aiSummary',
     tags: 'tags',
+    agentCreated: 'agentCreated',
+    agentRunId: 'agentRunId',
     metadata: 'metadata',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -32767,11 +36414,13 @@ export namespace Prisma {
     id: 'id',
     nctId: 'nctId',
     title: 'title',
+    officialTitle: 'officialTitle',
+    sponsor: 'sponsor',
     phase: 'phase',
     status: 'status',
-    sponsor: 'sponsor',
     conditions: 'conditions',
     interventions: 'interventions',
+    locations: 'locations',
     biomarkers: 'biomarkers',
     primaryEndpoint: 'primaryEndpoint',
     enrollment: 'enrollment',
@@ -33040,6 +36689,59 @@ export namespace Prisma {
   };
 
   export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+  export const GrantPipelineScalarFieldEnum: {
+    id: 'id',
+    orgId: 'orgId',
+    status: 'status',
+    notes: 'notes',
+    nextAction: 'nextAction',
+    nextActionAt: 'nextActionAt',
+    assignedTo: 'assignedTo',
+    priority: 'priority',
+    tags: 'tags',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GrantPipelineScalarFieldEnum = (typeof GrantPipelineScalarFieldEnum)[keyof typeof GrantPipelineScalarFieldEnum]
+
+
+  export const DossierScalarFieldEnum: {
+    id: 'id',
+    orgId: 'orgId',
+    type: 'type',
+    title: 'title',
+    content: 'content',
+    model: 'model',
+    context: 'context',
+    createdAt: 'createdAt'
+  };
+
+  export type DossierScalarFieldEnum = (typeof DossierScalarFieldEnum)[keyof typeof DossierScalarFieldEnum]
+
+
+  export const GrantApplicationScalarFieldEnum: {
+    id: 'id',
+    orgId: 'orgId',
+    grantId: 'grantId',
+    dossierId: 'dossierId',
+    title: 'title',
+    status: 'status',
+    submittedAt: 'submittedAt',
+    decisionAt: 'decisionAt',
+    askAmount: 'askAmount',
+    awardedAmount: 'awardedAmount',
+    notes: 'notes',
+    nextStep: 'nextStep',
+    internalScore: 'internalScore',
+    funderScore: 'funderScore',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GrantApplicationScalarFieldEnum = (typeof GrantApplicationScalarFieldEnum)[keyof typeof GrantApplicationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -33348,16 +37050,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'EvidenceType'
+   * Reference to a field of type 'EvidenceSource'
    */
-  export type EnumEvidenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceType'>
+  export type EnumEvidenceSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceSource'>
     
 
 
   /**
-   * Reference to a field of type 'EvidenceType[]'
+   * Reference to a field of type 'EvidenceSource[]'
    */
-  export type ListEnumEvidenceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceType[]'>
+  export type ListEnumEvidenceSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EvidenceSource[]'>
     
 
 
@@ -33526,6 +37228,48 @@ export namespace Prisma {
    * Reference to a field of type 'DataSourceType[]'
    */
   export type ListEnumDataSourceTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DataSourceType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PipelineStatus'
+   */
+  export type EnumPipelineStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PipelineStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'PipelineStatus[]'
+   */
+  export type ListEnumPipelineStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PipelineStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DossierType'
+   */
+  export type EnumDossierTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DossierType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DossierType[]'
+   */
+  export type ListEnumDossierTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DossierType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApplicationStatus'
+   */
+  export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'ApplicationStatus[]'
+   */
+  export type ListEnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus[]'>
     
   /**
    * Deep Input Types
@@ -33803,6 +37547,9 @@ export namespace Prisma {
     contacts?: OrgContactListRelationFilter
     openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
+    pipeline?: XOR<GrantPipelineNullableRelationFilter, GrantPipelineWhereInput> | null
+    dossiers?: DossierListRelationFilter
+    applications?: GrantApplicationListRelationFilter
   }
 
   export type AdvocacyOrgOrderByWithRelationInput = {
@@ -33838,6 +37585,9 @@ export namespace Prisma {
     contacts?: OrgContactOrderByRelationAggregateInput
     openGrants?: OpenGrantOrderByRelationAggregateInput
     pages?: PageOrderByRelationAggregateInput
+    pipeline?: GrantPipelineOrderByWithRelationInput
+    dossiers?: DossierOrderByRelationAggregateInput
+    applications?: GrantApplicationOrderByRelationAggregateInput
   }
 
   export type AdvocacyOrgWhereUniqueInput = Prisma.AtLeast<{
@@ -33877,6 +37627,9 @@ export namespace Prisma {
     contacts?: OrgContactListRelationFilter
     openGrants?: OpenGrantListRelationFilter
     pages?: PageListRelationFilter
+    pipeline?: XOR<GrantPipelineNullableRelationFilter, GrantPipelineWhereInput> | null
+    dossiers?: DossierListRelationFilter
+    applications?: GrantApplicationListRelationFilter
   }, "id" | "workspaceId_slug">
 
   export type AdvocacyOrgOrderByWithAggregationInput = {
@@ -34052,6 +37805,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OpenGrant"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    applications?: GrantApplicationListRelationFilter
   }
 
   export type OpenGrantOrderByWithRelationInput = {
@@ -34087,6 +37841,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     org?: AdvocacyOrgOrderByWithRelationInput
     workspace?: WorkspaceOrderByWithRelationInput
+    applications?: GrantApplicationOrderByRelationAggregateInput
   }
 
   export type OpenGrantWhereUniqueInput = Prisma.AtLeast<{
@@ -34125,6 +37880,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"OpenGrant"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    applications?: GrantApplicationListRelationFilter
   }, "id">
 
   export type OpenGrantOrderByWithAggregationInput = {
@@ -34645,19 +38401,19 @@ export namespace Prisma {
     title?: StringFilter<"Evidence"> | string
     summary?: StringNullableFilter<"Evidence"> | string | null
     content?: StringNullableFilter<"Evidence"> | string | null
-    evidenceType?: EnumEvidenceTypeFilter<"Evidence"> | $Enums.EvidenceType
-    source?: StringNullableFilter<"Evidence"> | string | null
+    sourceType?: EnumEvidenceSourceFilter<"Evidence"> | $Enums.EvidenceSource
     sourceUrl?: StringNullableFilter<"Evidence"> | string | null
-    doi?: StringNullableFilter<"Evidence"> | string | null
-    pmid?: StringNullableFilter<"Evidence"> | string | null
-    publishedAt?: DateTimeNullableFilter<"Evidence"> | Date | string | null
+    sourceDoi?: StringNullableFilter<"Evidence"> | string | null
+    sourcePmid?: StringNullableFilter<"Evidence"> | string | null
     authors?: StringNullableListFilter<"Evidence">
+    publishedYear?: IntNullableFilter<"Evidence"> | number | null
+    journal?: StringNullableFilter<"Evidence"> | string | null
+    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
     cancerTypes?: StringNullableListFilter<"Evidence">
     biomarkers?: StringNullableListFilter<"Evidence">
-    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
-    relevanceScore?: FloatNullableFilter<"Evidence"> | number | null
-    aiSummary?: StringNullableFilter<"Evidence"> | string | null
     tags?: StringNullableListFilter<"Evidence">
+    agentCreated?: BoolFilter<"Evidence"> | boolean
+    agentRunId?: StringNullableFilter<"Evidence"> | string | null
     metadata?: JsonFilter<"Evidence">
     createdAt?: DateTimeFilter<"Evidence"> | Date | string
     updatedAt?: DateTimeFilter<"Evidence"> | Date | string
@@ -34672,19 +38428,19 @@ export namespace Prisma {
     title?: SortOrder
     summary?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
-    evidenceType?: SortOrder
-    source?: SortOrderInput | SortOrder
+    sourceType?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
-    doi?: SortOrderInput | SortOrder
-    pmid?: SortOrderInput | SortOrder
-    publishedAt?: SortOrderInput | SortOrder
+    sourceDoi?: SortOrderInput | SortOrder
+    sourcePmid?: SortOrderInput | SortOrder
     authors?: SortOrder
+    publishedYear?: SortOrderInput | SortOrder
+    journal?: SortOrderInput | SortOrder
+    strength?: SortOrder
     cancerTypes?: SortOrder
     biomarkers?: SortOrder
-    strength?: SortOrder
-    relevanceScore?: SortOrderInput | SortOrder
-    aiSummary?: SortOrderInput | SortOrder
     tags?: SortOrder
+    agentCreated?: SortOrder
+    agentRunId?: SortOrderInput | SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34702,19 +38458,19 @@ export namespace Prisma {
     title?: StringFilter<"Evidence"> | string
     summary?: StringNullableFilter<"Evidence"> | string | null
     content?: StringNullableFilter<"Evidence"> | string | null
-    evidenceType?: EnumEvidenceTypeFilter<"Evidence"> | $Enums.EvidenceType
-    source?: StringNullableFilter<"Evidence"> | string | null
+    sourceType?: EnumEvidenceSourceFilter<"Evidence"> | $Enums.EvidenceSource
     sourceUrl?: StringNullableFilter<"Evidence"> | string | null
-    doi?: StringNullableFilter<"Evidence"> | string | null
-    pmid?: StringNullableFilter<"Evidence"> | string | null
-    publishedAt?: DateTimeNullableFilter<"Evidence"> | Date | string | null
+    sourceDoi?: StringNullableFilter<"Evidence"> | string | null
+    sourcePmid?: StringNullableFilter<"Evidence"> | string | null
     authors?: StringNullableListFilter<"Evidence">
+    publishedYear?: IntNullableFilter<"Evidence"> | number | null
+    journal?: StringNullableFilter<"Evidence"> | string | null
+    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
     cancerTypes?: StringNullableListFilter<"Evidence">
     biomarkers?: StringNullableListFilter<"Evidence">
-    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
-    relevanceScore?: FloatNullableFilter<"Evidence"> | number | null
-    aiSummary?: StringNullableFilter<"Evidence"> | string | null
     tags?: StringNullableListFilter<"Evidence">
+    agentCreated?: BoolFilter<"Evidence"> | boolean
+    agentRunId?: StringNullableFilter<"Evidence"> | string | null
     metadata?: JsonFilter<"Evidence">
     createdAt?: DateTimeFilter<"Evidence"> | Date | string
     updatedAt?: DateTimeFilter<"Evidence"> | Date | string
@@ -34729,19 +38485,19 @@ export namespace Prisma {
     title?: SortOrder
     summary?: SortOrderInput | SortOrder
     content?: SortOrderInput | SortOrder
-    evidenceType?: SortOrder
-    source?: SortOrderInput | SortOrder
+    sourceType?: SortOrder
     sourceUrl?: SortOrderInput | SortOrder
-    doi?: SortOrderInput | SortOrder
-    pmid?: SortOrderInput | SortOrder
-    publishedAt?: SortOrderInput | SortOrder
+    sourceDoi?: SortOrderInput | SortOrder
+    sourcePmid?: SortOrderInput | SortOrder
     authors?: SortOrder
+    publishedYear?: SortOrderInput | SortOrder
+    journal?: SortOrderInput | SortOrder
+    strength?: SortOrder
     cancerTypes?: SortOrder
     biomarkers?: SortOrder
-    strength?: SortOrder
-    relevanceScore?: SortOrderInput | SortOrder
-    aiSummary?: SortOrderInput | SortOrder
     tags?: SortOrder
+    agentCreated?: SortOrder
+    agentRunId?: SortOrderInput | SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34762,19 +38518,19 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Evidence"> | string
     summary?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
     content?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
-    evidenceType?: EnumEvidenceTypeWithAggregatesFilter<"Evidence"> | $Enums.EvidenceType
-    source?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
+    sourceType?: EnumEvidenceSourceWithAggregatesFilter<"Evidence"> | $Enums.EvidenceSource
     sourceUrl?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
-    doi?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
-    pmid?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
-    publishedAt?: DateTimeNullableWithAggregatesFilter<"Evidence"> | Date | string | null
+    sourceDoi?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
+    sourcePmid?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
     authors?: StringNullableListFilter<"Evidence">
+    publishedYear?: IntNullableWithAggregatesFilter<"Evidence"> | number | null
+    journal?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
+    strength?: EnumEvidenceStrengthWithAggregatesFilter<"Evidence"> | $Enums.EvidenceStrength
     cancerTypes?: StringNullableListFilter<"Evidence">
     biomarkers?: StringNullableListFilter<"Evidence">
-    strength?: EnumEvidenceStrengthWithAggregatesFilter<"Evidence"> | $Enums.EvidenceStrength
-    relevanceScore?: FloatNullableWithAggregatesFilter<"Evidence"> | number | null
-    aiSummary?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
     tags?: StringNullableListFilter<"Evidence">
+    agentCreated?: BoolWithAggregatesFilter<"Evidence"> | boolean
+    agentRunId?: StringNullableWithAggregatesFilter<"Evidence"> | string | null
     metadata?: JsonWithAggregatesFilter<"Evidence">
     createdAt?: DateTimeWithAggregatesFilter<"Evidence"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Evidence"> | Date | string
@@ -34787,11 +38543,13 @@ export namespace Prisma {
     id?: StringFilter<"ClinicalTrial"> | string
     nctId?: StringFilter<"ClinicalTrial"> | string
     title?: StringFilter<"ClinicalTrial"> | string
+    officialTitle?: StringNullableFilter<"ClinicalTrial"> | string | null
+    sponsor?: StringNullableFilter<"ClinicalTrial"> | string | null
     phase?: EnumTrialPhaseNullableFilter<"ClinicalTrial"> | $Enums.TrialPhase | null
     status?: EnumTrialStatusFilter<"ClinicalTrial"> | $Enums.TrialStatus
-    sponsor?: StringNullableFilter<"ClinicalTrial"> | string | null
     conditions?: StringNullableListFilter<"ClinicalTrial">
     interventions?: StringNullableListFilter<"ClinicalTrial">
+    locations?: StringNullableListFilter<"ClinicalTrial">
     biomarkers?: StringNullableListFilter<"ClinicalTrial">
     primaryEndpoint?: StringNullableFilter<"ClinicalTrial"> | string | null
     enrollment?: IntNullableFilter<"ClinicalTrial"> | number | null
@@ -34812,11 +38570,13 @@ export namespace Prisma {
     id?: SortOrder
     nctId?: SortOrder
     title?: SortOrder
+    officialTitle?: SortOrderInput | SortOrder
+    sponsor?: SortOrderInput | SortOrder
     phase?: SortOrderInput | SortOrder
     status?: SortOrder
-    sponsor?: SortOrderInput | SortOrder
     conditions?: SortOrder
     interventions?: SortOrder
+    locations?: SortOrder
     biomarkers?: SortOrder
     primaryEndpoint?: SortOrderInput | SortOrder
     enrollment?: SortOrderInput | SortOrder
@@ -34840,11 +38600,13 @@ export namespace Prisma {
     OR?: ClinicalTrialWhereInput[]
     NOT?: ClinicalTrialWhereInput | ClinicalTrialWhereInput[]
     title?: StringFilter<"ClinicalTrial"> | string
+    officialTitle?: StringNullableFilter<"ClinicalTrial"> | string | null
+    sponsor?: StringNullableFilter<"ClinicalTrial"> | string | null
     phase?: EnumTrialPhaseNullableFilter<"ClinicalTrial"> | $Enums.TrialPhase | null
     status?: EnumTrialStatusFilter<"ClinicalTrial"> | $Enums.TrialStatus
-    sponsor?: StringNullableFilter<"ClinicalTrial"> | string | null
     conditions?: StringNullableListFilter<"ClinicalTrial">
     interventions?: StringNullableListFilter<"ClinicalTrial">
+    locations?: StringNullableListFilter<"ClinicalTrial">
     biomarkers?: StringNullableListFilter<"ClinicalTrial">
     primaryEndpoint?: StringNullableFilter<"ClinicalTrial"> | string | null
     enrollment?: IntNullableFilter<"ClinicalTrial"> | number | null
@@ -34865,11 +38627,13 @@ export namespace Prisma {
     id?: SortOrder
     nctId?: SortOrder
     title?: SortOrder
+    officialTitle?: SortOrderInput | SortOrder
+    sponsor?: SortOrderInput | SortOrder
     phase?: SortOrderInput | SortOrder
     status?: SortOrder
-    sponsor?: SortOrderInput | SortOrder
     conditions?: SortOrder
     interventions?: SortOrder
+    locations?: SortOrder
     biomarkers?: SortOrder
     primaryEndpoint?: SortOrderInput | SortOrder
     enrollment?: SortOrderInput | SortOrder
@@ -34896,11 +38660,13 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"ClinicalTrial"> | string
     nctId?: StringWithAggregatesFilter<"ClinicalTrial"> | string
     title?: StringWithAggregatesFilter<"ClinicalTrial"> | string
+    officialTitle?: StringNullableWithAggregatesFilter<"ClinicalTrial"> | string | null
+    sponsor?: StringNullableWithAggregatesFilter<"ClinicalTrial"> | string | null
     phase?: EnumTrialPhaseNullableWithAggregatesFilter<"ClinicalTrial"> | $Enums.TrialPhase | null
     status?: EnumTrialStatusWithAggregatesFilter<"ClinicalTrial"> | $Enums.TrialStatus
-    sponsor?: StringNullableWithAggregatesFilter<"ClinicalTrial"> | string | null
     conditions?: StringNullableListFilter<"ClinicalTrial">
     interventions?: StringNullableListFilter<"ClinicalTrial">
+    locations?: StringNullableListFilter<"ClinicalTrial">
     biomarkers?: StringNullableListFilter<"ClinicalTrial">
     primaryEndpoint?: StringNullableWithAggregatesFilter<"ClinicalTrial"> | string | null
     enrollment?: IntNullableWithAggregatesFilter<"ClinicalTrial"> | number | null
@@ -36260,6 +40026,282 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"AuditLog"> | Date | string
   }
 
+  export type GrantPipelineWhereInput = {
+    AND?: GrantPipelineWhereInput | GrantPipelineWhereInput[]
+    OR?: GrantPipelineWhereInput[]
+    NOT?: GrantPipelineWhereInput | GrantPipelineWhereInput[]
+    id?: StringFilter<"GrantPipeline"> | string
+    orgId?: StringFilter<"GrantPipeline"> | string
+    status?: EnumPipelineStatusFilter<"GrantPipeline"> | $Enums.PipelineStatus
+    notes?: StringNullableFilter<"GrantPipeline"> | string | null
+    nextAction?: StringNullableFilter<"GrantPipeline"> | string | null
+    nextActionAt?: DateTimeNullableFilter<"GrantPipeline"> | Date | string | null
+    assignedTo?: StringNullableFilter<"GrantPipeline"> | string | null
+    priority?: StringNullableFilter<"GrantPipeline"> | string | null
+    tags?: StringNullableListFilter<"GrantPipeline">
+    createdAt?: DateTimeFilter<"GrantPipeline"> | Date | string
+    updatedAt?: DateTimeFilter<"GrantPipeline"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+  }
+
+  export type GrantPipelineOrderByWithRelationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    status?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    nextAction?: SortOrderInput | SortOrder
+    nextActionAt?: SortOrderInput | SortOrder
+    assignedTo?: SortOrderInput | SortOrder
+    priority?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    org?: AdvocacyOrgOrderByWithRelationInput
+  }
+
+  export type GrantPipelineWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    orgId?: string
+    AND?: GrantPipelineWhereInput | GrantPipelineWhereInput[]
+    OR?: GrantPipelineWhereInput[]
+    NOT?: GrantPipelineWhereInput | GrantPipelineWhereInput[]
+    status?: EnumPipelineStatusFilter<"GrantPipeline"> | $Enums.PipelineStatus
+    notes?: StringNullableFilter<"GrantPipeline"> | string | null
+    nextAction?: StringNullableFilter<"GrantPipeline"> | string | null
+    nextActionAt?: DateTimeNullableFilter<"GrantPipeline"> | Date | string | null
+    assignedTo?: StringNullableFilter<"GrantPipeline"> | string | null
+    priority?: StringNullableFilter<"GrantPipeline"> | string | null
+    tags?: StringNullableListFilter<"GrantPipeline">
+    createdAt?: DateTimeFilter<"GrantPipeline"> | Date | string
+    updatedAt?: DateTimeFilter<"GrantPipeline"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+  }, "id" | "orgId">
+
+  export type GrantPipelineOrderByWithAggregationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    status?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    nextAction?: SortOrderInput | SortOrder
+    nextActionAt?: SortOrderInput | SortOrder
+    assignedTo?: SortOrderInput | SortOrder
+    priority?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GrantPipelineCountOrderByAggregateInput
+    _max?: GrantPipelineMaxOrderByAggregateInput
+    _min?: GrantPipelineMinOrderByAggregateInput
+  }
+
+  export type GrantPipelineScalarWhereWithAggregatesInput = {
+    AND?: GrantPipelineScalarWhereWithAggregatesInput | GrantPipelineScalarWhereWithAggregatesInput[]
+    OR?: GrantPipelineScalarWhereWithAggregatesInput[]
+    NOT?: GrantPipelineScalarWhereWithAggregatesInput | GrantPipelineScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GrantPipeline"> | string
+    orgId?: StringWithAggregatesFilter<"GrantPipeline"> | string
+    status?: EnumPipelineStatusWithAggregatesFilter<"GrantPipeline"> | $Enums.PipelineStatus
+    notes?: StringNullableWithAggregatesFilter<"GrantPipeline"> | string | null
+    nextAction?: StringNullableWithAggregatesFilter<"GrantPipeline"> | string | null
+    nextActionAt?: DateTimeNullableWithAggregatesFilter<"GrantPipeline"> | Date | string | null
+    assignedTo?: StringNullableWithAggregatesFilter<"GrantPipeline"> | string | null
+    priority?: StringNullableWithAggregatesFilter<"GrantPipeline"> | string | null
+    tags?: StringNullableListFilter<"GrantPipeline">
+    createdAt?: DateTimeWithAggregatesFilter<"GrantPipeline"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GrantPipeline"> | Date | string
+  }
+
+  export type DossierWhereInput = {
+    AND?: DossierWhereInput | DossierWhereInput[]
+    OR?: DossierWhereInput[]
+    NOT?: DossierWhereInput | DossierWhereInput[]
+    id?: StringFilter<"Dossier"> | string
+    orgId?: StringFilter<"Dossier"> | string
+    type?: EnumDossierTypeFilter<"Dossier"> | $Enums.DossierType
+    title?: StringFilter<"Dossier"> | string
+    content?: StringFilter<"Dossier"> | string
+    model?: StringFilter<"Dossier"> | string
+    context?: StringNullableFilter<"Dossier"> | string | null
+    createdAt?: DateTimeFilter<"Dossier"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    applications?: GrantApplicationListRelationFilter
+  }
+
+  export type DossierOrderByWithRelationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    model?: SortOrder
+    context?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    org?: AdvocacyOrgOrderByWithRelationInput
+    applications?: GrantApplicationOrderByRelationAggregateInput
+  }
+
+  export type DossierWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DossierWhereInput | DossierWhereInput[]
+    OR?: DossierWhereInput[]
+    NOT?: DossierWhereInput | DossierWhereInput[]
+    orgId?: StringFilter<"Dossier"> | string
+    type?: EnumDossierTypeFilter<"Dossier"> | $Enums.DossierType
+    title?: StringFilter<"Dossier"> | string
+    content?: StringFilter<"Dossier"> | string
+    model?: StringFilter<"Dossier"> | string
+    context?: StringNullableFilter<"Dossier"> | string | null
+    createdAt?: DateTimeFilter<"Dossier"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    applications?: GrantApplicationListRelationFilter
+  }, "id">
+
+  export type DossierOrderByWithAggregationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    model?: SortOrder
+    context?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: DossierCountOrderByAggregateInput
+    _max?: DossierMaxOrderByAggregateInput
+    _min?: DossierMinOrderByAggregateInput
+  }
+
+  export type DossierScalarWhereWithAggregatesInput = {
+    AND?: DossierScalarWhereWithAggregatesInput | DossierScalarWhereWithAggregatesInput[]
+    OR?: DossierScalarWhereWithAggregatesInput[]
+    NOT?: DossierScalarWhereWithAggregatesInput | DossierScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Dossier"> | string
+    orgId?: StringWithAggregatesFilter<"Dossier"> | string
+    type?: EnumDossierTypeWithAggregatesFilter<"Dossier"> | $Enums.DossierType
+    title?: StringWithAggregatesFilter<"Dossier"> | string
+    content?: StringWithAggregatesFilter<"Dossier"> | string
+    model?: StringWithAggregatesFilter<"Dossier"> | string
+    context?: StringNullableWithAggregatesFilter<"Dossier"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Dossier"> | Date | string
+  }
+
+  export type GrantApplicationWhereInput = {
+    AND?: GrantApplicationWhereInput | GrantApplicationWhereInput[]
+    OR?: GrantApplicationWhereInput[]
+    NOT?: GrantApplicationWhereInput | GrantApplicationWhereInput[]
+    id?: StringFilter<"GrantApplication"> | string
+    orgId?: StringFilter<"GrantApplication"> | string
+    grantId?: StringNullableFilter<"GrantApplication"> | string | null
+    dossierId?: StringNullableFilter<"GrantApplication"> | string | null
+    title?: StringFilter<"GrantApplication"> | string
+    status?: EnumApplicationStatusFilter<"GrantApplication"> | $Enums.ApplicationStatus
+    submittedAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    decisionAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    askAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    awardedAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    notes?: StringNullableFilter<"GrantApplication"> | string | null
+    nextStep?: StringNullableFilter<"GrantApplication"> | string | null
+    internalScore?: IntNullableFilter<"GrantApplication"> | number | null
+    funderScore?: IntNullableFilter<"GrantApplication"> | number | null
+    createdAt?: DateTimeFilter<"GrantApplication"> | Date | string
+    updatedAt?: DateTimeFilter<"GrantApplication"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    grant?: XOR<OpenGrantNullableRelationFilter, OpenGrantWhereInput> | null
+    dossier?: XOR<DossierNullableRelationFilter, DossierWhereInput> | null
+  }
+
+  export type GrantApplicationOrderByWithRelationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrderInput | SortOrder
+    dossierId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    submittedAt?: SortOrderInput | SortOrder
+    decisionAt?: SortOrderInput | SortOrder
+    askAmount?: SortOrderInput | SortOrder
+    awardedAmount?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    nextStep?: SortOrderInput | SortOrder
+    internalScore?: SortOrderInput | SortOrder
+    funderScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    org?: AdvocacyOrgOrderByWithRelationInput
+    grant?: OpenGrantOrderByWithRelationInput
+    dossier?: DossierOrderByWithRelationInput
+  }
+
+  export type GrantApplicationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GrantApplicationWhereInput | GrantApplicationWhereInput[]
+    OR?: GrantApplicationWhereInput[]
+    NOT?: GrantApplicationWhereInput | GrantApplicationWhereInput[]
+    orgId?: StringFilter<"GrantApplication"> | string
+    grantId?: StringNullableFilter<"GrantApplication"> | string | null
+    dossierId?: StringNullableFilter<"GrantApplication"> | string | null
+    title?: StringFilter<"GrantApplication"> | string
+    status?: EnumApplicationStatusFilter<"GrantApplication"> | $Enums.ApplicationStatus
+    submittedAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    decisionAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    askAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    awardedAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    notes?: StringNullableFilter<"GrantApplication"> | string | null
+    nextStep?: StringNullableFilter<"GrantApplication"> | string | null
+    internalScore?: IntNullableFilter<"GrantApplication"> | number | null
+    funderScore?: IntNullableFilter<"GrantApplication"> | number | null
+    createdAt?: DateTimeFilter<"GrantApplication"> | Date | string
+    updatedAt?: DateTimeFilter<"GrantApplication"> | Date | string
+    org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    grant?: XOR<OpenGrantNullableRelationFilter, OpenGrantWhereInput> | null
+    dossier?: XOR<DossierNullableRelationFilter, DossierWhereInput> | null
+  }, "id">
+
+  export type GrantApplicationOrderByWithAggregationInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrderInput | SortOrder
+    dossierId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    submittedAt?: SortOrderInput | SortOrder
+    decisionAt?: SortOrderInput | SortOrder
+    askAmount?: SortOrderInput | SortOrder
+    awardedAmount?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    nextStep?: SortOrderInput | SortOrder
+    internalScore?: SortOrderInput | SortOrder
+    funderScore?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GrantApplicationCountOrderByAggregateInput
+    _avg?: GrantApplicationAvgOrderByAggregateInput
+    _max?: GrantApplicationMaxOrderByAggregateInput
+    _min?: GrantApplicationMinOrderByAggregateInput
+    _sum?: GrantApplicationSumOrderByAggregateInput
+  }
+
+  export type GrantApplicationScalarWhereWithAggregatesInput = {
+    AND?: GrantApplicationScalarWhereWithAggregatesInput | GrantApplicationScalarWhereWithAggregatesInput[]
+    OR?: GrantApplicationScalarWhereWithAggregatesInput[]
+    NOT?: GrantApplicationScalarWhereWithAggregatesInput | GrantApplicationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GrantApplication"> | string
+    orgId?: StringWithAggregatesFilter<"GrantApplication"> | string
+    grantId?: StringNullableWithAggregatesFilter<"GrantApplication"> | string | null
+    dossierId?: StringNullableWithAggregatesFilter<"GrantApplication"> | string | null
+    title?: StringWithAggregatesFilter<"GrantApplication"> | string
+    status?: EnumApplicationStatusWithAggregatesFilter<"GrantApplication"> | $Enums.ApplicationStatus
+    submittedAt?: DateTimeNullableWithAggregatesFilter<"GrantApplication"> | Date | string | null
+    decisionAt?: DateTimeNullableWithAggregatesFilter<"GrantApplication"> | Date | string | null
+    askAmount?: FloatNullableWithAggregatesFilter<"GrantApplication"> | number | null
+    awardedAmount?: FloatNullableWithAggregatesFilter<"GrantApplication"> | number | null
+    notes?: StringNullableWithAggregatesFilter<"GrantApplication"> | string | null
+    nextStep?: StringNullableWithAggregatesFilter<"GrantApplication"> | string | null
+    internalScore?: IntNullableWithAggregatesFilter<"GrantApplication"> | number | null
+    funderScore?: IntNullableWithAggregatesFilter<"GrantApplication"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"GrantApplication"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GrantApplication"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     clerkId: string
@@ -36556,6 +40598,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateInput = {
@@ -36590,6 +40635,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUpdateInput = {
@@ -36624,6 +40672,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateInput = {
@@ -36658,6 +40709,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgCreateManyInput = {
@@ -36854,6 +40908,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
     workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+    applications?: GrantApplicationCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateInput = {
@@ -36887,6 +40942,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUpdateInput = {
@@ -36920,6 +40976,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
     workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+    applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateInput = {
@@ -36953,6 +41010,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantCreateManyInput = {
@@ -37563,19 +41621,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -37590,19 +41648,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -37613,19 +41671,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37640,19 +41698,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37665,19 +41723,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -37688,19 +41746,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37713,19 +41771,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37735,11 +41793,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -37760,11 +41820,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -37785,11 +41847,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37810,11 +41874,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37835,11 +41901,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -37858,11 +41926,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -37881,11 +41951,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39364,6 +43436,313 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GrantPipelineCreateInput = {
+    id?: string
+    status?: $Enums.PipelineStatus
+    notes?: string | null
+    nextAction?: string | null
+    nextActionAt?: Date | string | null
+    assignedTo?: string | null
+    priority?: string | null
+    tags?: GrantPipelineCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutPipelineInput
+  }
+
+  export type GrantPipelineUncheckedCreateInput = {
+    id?: string
+    orgId: string
+    status?: $Enums.PipelineStatus
+    notes?: string | null
+    nextAction?: string | null
+    nextActionAt?: Date | string | null
+    assignedTo?: string | null
+    priority?: string | null
+    tags?: GrantPipelineCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantPipelineUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutPipelineNestedInput
+  }
+
+  export type GrantPipelineUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantPipelineCreateManyInput = {
+    id?: string
+    orgId: string
+    status?: $Enums.PipelineStatus
+    notes?: string | null
+    nextAction?: string | null
+    nextActionAt?: Date | string | null
+    assignedTo?: string | null
+    priority?: string | null
+    tags?: GrantPipelineCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantPipelineUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantPipelineUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DossierCreateInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutDossiersInput
+    applications?: GrantApplicationCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierUncheckedCreateInput = {
+    id?: string
+    orgId: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput
+    applications?: GrantApplicationUpdateManyWithoutDossierNestedInput
+  }
+
+  export type DossierUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput
+  }
+
+  export type DossierCreateManyInput = {
+    id?: string
+    orgId: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DossierUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DossierUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationCreateInput = {
+    id?: string
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutApplicationsInput
+    grant?: OpenGrantCreateNestedOneWithoutApplicationsInput
+    dossier?: DossierCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type GrantApplicationUncheckedCreateInput = {
+    id?: string
+    orgId: string
+    grantId?: string | null
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutApplicationsNestedInput
+    grant?: OpenGrantUpdateOneWithoutApplicationsNestedInput
+    dossier?: DossierUpdateOneWithoutApplicationsNestedInput
+  }
+
+  export type GrantApplicationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationCreateManyInput = {
+    id?: string
+    orgId: string
+    grantId?: string | null
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -39812,6 +44191,23 @@ export namespace Prisma {
     none?: OrgContactWhereInput
   }
 
+  export type GrantPipelineNullableRelationFilter = {
+    is?: GrantPipelineWhereInput | null
+    isNot?: GrantPipelineWhereInput | null
+  }
+
+  export type DossierListRelationFilter = {
+    every?: DossierWhereInput
+    some?: DossierWhereInput
+    none?: DossierWhereInput
+  }
+
+  export type GrantApplicationListRelationFilter = {
+    every?: GrantApplicationWhereInput
+    some?: GrantApplicationWhereInput
+    none?: GrantApplicationWhereInput
+  }
+
   export type CampaignOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -39825,6 +44221,14 @@ export namespace Prisma {
   }
 
   export type OrgContactOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DossierOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GrantApplicationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -40604,11 +45008,11 @@ export namespace Prisma {
     _max?: NestedEnumTaskStatusFilter<$PrismaModel>
   }
 
-  export type EnumEvidenceTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EvidenceType | EnumEvidenceTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEvidenceTypeFilter<$PrismaModel> | $Enums.EvidenceType
+  export type EnumEvidenceSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.EvidenceSource | EnumEvidenceSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumEvidenceSourceFilter<$PrismaModel> | $Enums.EvidenceSource
   }
 
   export type EnumEvidenceStrengthFilter<$PrismaModel = never> = {
@@ -40630,26 +45034,26 @@ export namespace Prisma {
     title?: SortOrder
     summary?: SortOrder
     content?: SortOrder
-    evidenceType?: SortOrder
-    source?: SortOrder
+    sourceType?: SortOrder
     sourceUrl?: SortOrder
-    doi?: SortOrder
-    pmid?: SortOrder
-    publishedAt?: SortOrder
+    sourceDoi?: SortOrder
+    sourcePmid?: SortOrder
     authors?: SortOrder
+    publishedYear?: SortOrder
+    journal?: SortOrder
+    strength?: SortOrder
     cancerTypes?: SortOrder
     biomarkers?: SortOrder
-    strength?: SortOrder
-    relevanceScore?: SortOrder
-    aiSummary?: SortOrder
     tags?: SortOrder
+    agentCreated?: SortOrder
+    agentRunId?: SortOrder
     metadata?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type EvidenceAvgOrderByAggregateInput = {
-    relevanceScore?: SortOrder
+    publishedYear?: SortOrder
   }
 
   export type EvidenceMaxOrderByAggregateInput = {
@@ -40659,15 +45063,15 @@ export namespace Prisma {
     title?: SortOrder
     summary?: SortOrder
     content?: SortOrder
-    evidenceType?: SortOrder
-    source?: SortOrder
+    sourceType?: SortOrder
     sourceUrl?: SortOrder
-    doi?: SortOrder
-    pmid?: SortOrder
-    publishedAt?: SortOrder
+    sourceDoi?: SortOrder
+    sourcePmid?: SortOrder
+    publishedYear?: SortOrder
+    journal?: SortOrder
     strength?: SortOrder
-    relevanceScore?: SortOrder
-    aiSummary?: SortOrder
+    agentCreated?: SortOrder
+    agentRunId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -40679,31 +45083,31 @@ export namespace Prisma {
     title?: SortOrder
     summary?: SortOrder
     content?: SortOrder
-    evidenceType?: SortOrder
-    source?: SortOrder
+    sourceType?: SortOrder
     sourceUrl?: SortOrder
-    doi?: SortOrder
-    pmid?: SortOrder
-    publishedAt?: SortOrder
+    sourceDoi?: SortOrder
+    sourcePmid?: SortOrder
+    publishedYear?: SortOrder
+    journal?: SortOrder
     strength?: SortOrder
-    relevanceScore?: SortOrder
-    aiSummary?: SortOrder
+    agentCreated?: SortOrder
+    agentRunId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type EvidenceSumOrderByAggregateInput = {
-    relevanceScore?: SortOrder
+    publishedYear?: SortOrder
   }
 
-  export type EnumEvidenceTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EvidenceType | EnumEvidenceTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEvidenceTypeWithAggregatesFilter<$PrismaModel> | $Enums.EvidenceType
+  export type EnumEvidenceSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EvidenceSource | EnumEvidenceSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumEvidenceSourceWithAggregatesFilter<$PrismaModel> | $Enums.EvidenceSource
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEvidenceTypeFilter<$PrismaModel>
-    _max?: NestedEnumEvidenceTypeFilter<$PrismaModel>
+    _min?: NestedEnumEvidenceSourceFilter<$PrismaModel>
+    _max?: NestedEnumEvidenceSourceFilter<$PrismaModel>
   }
 
   export type EnumEvidenceStrengthWithAggregatesFilter<$PrismaModel = never> = {
@@ -40744,11 +45148,13 @@ export namespace Prisma {
     id?: SortOrder
     nctId?: SortOrder
     title?: SortOrder
+    officialTitle?: SortOrder
+    sponsor?: SortOrder
     phase?: SortOrder
     status?: SortOrder
-    sponsor?: SortOrder
     conditions?: SortOrder
     interventions?: SortOrder
+    locations?: SortOrder
     biomarkers?: SortOrder
     primaryEndpoint?: SortOrder
     enrollment?: SortOrder
@@ -40771,9 +45177,10 @@ export namespace Prisma {
     id?: SortOrder
     nctId?: SortOrder
     title?: SortOrder
+    officialTitle?: SortOrder
+    sponsor?: SortOrder
     phase?: SortOrder
     status?: SortOrder
-    sponsor?: SortOrder
     primaryEndpoint?: SortOrder
     enrollment?: SortOrder
     startDate?: SortOrder
@@ -40790,9 +45197,10 @@ export namespace Prisma {
     id?: SortOrder
     nctId?: SortOrder
     title?: SortOrder
+    officialTitle?: SortOrder
+    sponsor?: SortOrder
     phase?: SortOrder
     status?: SortOrder
-    sponsor?: SortOrder
     primaryEndpoint?: SortOrder
     enrollment?: SortOrder
     startDate?: SortOrder
@@ -41769,6 +46177,211 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type EnumPipelineStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PipelineStatus | EnumPipelineStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPipelineStatusFilter<$PrismaModel> | $Enums.PipelineStatus
+  }
+
+  export type GrantPipelineCountOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    nextAction?: SortOrder
+    nextActionAt?: SortOrder
+    assignedTo?: SortOrder
+    priority?: SortOrder
+    tags?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GrantPipelineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    nextAction?: SortOrder
+    nextActionAt?: SortOrder
+    assignedTo?: SortOrder
+    priority?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GrantPipelineMinOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    status?: SortOrder
+    notes?: SortOrder
+    nextAction?: SortOrder
+    nextActionAt?: SortOrder
+    assignedTo?: SortOrder
+    priority?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumPipelineStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PipelineStatus | EnumPipelineStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPipelineStatusWithAggregatesFilter<$PrismaModel> | $Enums.PipelineStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPipelineStatusFilter<$PrismaModel>
+    _max?: NestedEnumPipelineStatusFilter<$PrismaModel>
+  }
+
+  export type EnumDossierTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DossierType | EnumDossierTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDossierTypeFilter<$PrismaModel> | $Enums.DossierType
+  }
+
+  export type DossierCountOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    model?: SortOrder
+    context?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DossierMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    model?: SortOrder
+    context?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DossierMinOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    model?: SortOrder
+    context?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type EnumDossierTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DossierType | EnumDossierTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDossierTypeWithAggregatesFilter<$PrismaModel> | $Enums.DossierType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDossierTypeFilter<$PrismaModel>
+    _max?: NestedEnumDossierTypeFilter<$PrismaModel>
+  }
+
+  export type EnumApplicationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
+  }
+
+  export type OpenGrantNullableRelationFilter = {
+    is?: OpenGrantWhereInput | null
+    isNot?: OpenGrantWhereInput | null
+  }
+
+  export type DossierNullableRelationFilter = {
+    is?: DossierWhereInput | null
+    isNot?: DossierWhereInput | null
+  }
+
+  export type GrantApplicationCountOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    dossierId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    submittedAt?: SortOrder
+    decisionAt?: SortOrder
+    askAmount?: SortOrder
+    awardedAmount?: SortOrder
+    notes?: SortOrder
+    nextStep?: SortOrder
+    internalScore?: SortOrder
+    funderScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GrantApplicationAvgOrderByAggregateInput = {
+    askAmount?: SortOrder
+    awardedAmount?: SortOrder
+    internalScore?: SortOrder
+    funderScore?: SortOrder
+  }
+
+  export type GrantApplicationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    dossierId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    submittedAt?: SortOrder
+    decisionAt?: SortOrder
+    askAmount?: SortOrder
+    awardedAmount?: SortOrder
+    notes?: SortOrder
+    nextStep?: SortOrder
+    internalScore?: SortOrder
+    funderScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GrantApplicationMinOrderByAggregateInput = {
+    id?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    dossierId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    submittedAt?: SortOrder
+    decisionAt?: SortOrder
+    askAmount?: SortOrder
+    awardedAmount?: SortOrder
+    notes?: SortOrder
+    nextStep?: SortOrder
+    internalScore?: SortOrder
+    funderScore?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GrantApplicationSumOrderByAggregateInput = {
+    askAmount?: SortOrder
+    awardedAmount?: SortOrder
+    internalScore?: SortOrder
+    funderScore?: SortOrder
+  }
+
+  export type EnumApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
+    _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
+  }
+
   export type WorkspaceMemberCreateNestedManyWithoutUserInput = {
     create?: XOR<WorkspaceMemberCreateWithoutUserInput, WorkspaceMemberUncheckedCreateWithoutUserInput> | WorkspaceMemberCreateWithoutUserInput[] | WorkspaceMemberUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutUserInput | WorkspaceMemberCreateOrConnectWithoutUserInput[]
@@ -42464,6 +47077,26 @@ export namespace Prisma {
     connect?: PageWhereUniqueInput | PageWhereUniqueInput[]
   }
 
+  export type GrantPipelineCreateNestedOneWithoutOrgInput = {
+    create?: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+    connectOrCreate?: GrantPipelineCreateOrConnectWithoutOrgInput
+    connect?: GrantPipelineWhereUniqueInput
+  }
+
+  export type DossierCreateNestedManyWithoutOrgInput = {
+    create?: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput> | DossierCreateWithoutOrgInput[] | DossierUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: DossierCreateOrConnectWithoutOrgInput | DossierCreateOrConnectWithoutOrgInput[]
+    createMany?: DossierCreateManyOrgInputEnvelope
+    connect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+  }
+
+  export type GrantApplicationCreateNestedManyWithoutOrgInput = {
+    create?: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput> | GrantApplicationCreateWithoutOrgInput[] | GrantApplicationUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutOrgInput | GrantApplicationCreateOrConnectWithoutOrgInput[]
+    createMany?: GrantApplicationCreateManyOrgInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
   export type CampaignUncheckedCreateNestedManyWithoutOrgInput = {
     create?: XOR<CampaignCreateWithoutOrgInput, CampaignUncheckedCreateWithoutOrgInput> | CampaignCreateWithoutOrgInput[] | CampaignUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: CampaignCreateOrConnectWithoutOrgInput | CampaignCreateOrConnectWithoutOrgInput[]
@@ -42511,6 +47144,26 @@ export namespace Prisma {
     connectOrCreate?: PageCreateOrConnectWithoutOrgInput | PageCreateOrConnectWithoutOrgInput[]
     createMany?: PageCreateManyOrgInputEnvelope
     connect?: PageWhereUniqueInput | PageWhereUniqueInput[]
+  }
+
+  export type GrantPipelineUncheckedCreateNestedOneWithoutOrgInput = {
+    create?: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+    connectOrCreate?: GrantPipelineCreateOrConnectWithoutOrgInput
+    connect?: GrantPipelineWhereUniqueInput
+  }
+
+  export type DossierUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput> | DossierCreateWithoutOrgInput[] | DossierUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: DossierCreateOrConnectWithoutOrgInput | DossierCreateOrConnectWithoutOrgInput[]
+    createMany?: DossierCreateManyOrgInputEnvelope
+    connect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+  }
+
+  export type GrantApplicationUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput> | GrantApplicationCreateWithoutOrgInput[] | GrantApplicationUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutOrgInput | GrantApplicationCreateOrConnectWithoutOrgInput[]
+    createMany?: GrantApplicationCreateManyOrgInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
   }
 
   export type AdvocacyOrgUpdatecancerTypesInput = {
@@ -42648,6 +47301,44 @@ export namespace Prisma {
     deleteMany?: PageScalarWhereInput | PageScalarWhereInput[]
   }
 
+  export type GrantPipelineUpdateOneWithoutOrgNestedInput = {
+    create?: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+    connectOrCreate?: GrantPipelineCreateOrConnectWithoutOrgInput
+    upsert?: GrantPipelineUpsertWithoutOrgInput
+    disconnect?: GrantPipelineWhereInput | boolean
+    delete?: GrantPipelineWhereInput | boolean
+    connect?: GrantPipelineWhereUniqueInput
+    update?: XOR<XOR<GrantPipelineUpdateToOneWithWhereWithoutOrgInput, GrantPipelineUpdateWithoutOrgInput>, GrantPipelineUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type DossierUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput> | DossierCreateWithoutOrgInput[] | DossierUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: DossierCreateOrConnectWithoutOrgInput | DossierCreateOrConnectWithoutOrgInput[]
+    upsert?: DossierUpsertWithWhereUniqueWithoutOrgInput | DossierUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: DossierCreateManyOrgInputEnvelope
+    set?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    disconnect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    delete?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    connect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    update?: DossierUpdateWithWhereUniqueWithoutOrgInput | DossierUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: DossierUpdateManyWithWhereWithoutOrgInput | DossierUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: DossierScalarWhereInput | DossierScalarWhereInput[]
+  }
+
+  export type GrantApplicationUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput> | GrantApplicationCreateWithoutOrgInput[] | GrantApplicationUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutOrgInput | GrantApplicationCreateOrConnectWithoutOrgInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutOrgInput | GrantApplicationUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: GrantApplicationCreateManyOrgInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutOrgInput | GrantApplicationUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutOrgInput | GrantApplicationUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
   export type CampaignUncheckedUpdateManyWithoutOrgNestedInput = {
     create?: XOR<CampaignCreateWithoutOrgInput, CampaignUncheckedCreateWithoutOrgInput> | CampaignCreateWithoutOrgInput[] | CampaignUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: CampaignCreateOrConnectWithoutOrgInput | CampaignCreateOrConnectWithoutOrgInput[]
@@ -42746,6 +47437,44 @@ export namespace Prisma {
     deleteMany?: PageScalarWhereInput | PageScalarWhereInput[]
   }
 
+  export type GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput = {
+    create?: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+    connectOrCreate?: GrantPipelineCreateOrConnectWithoutOrgInput
+    upsert?: GrantPipelineUpsertWithoutOrgInput
+    disconnect?: GrantPipelineWhereInput | boolean
+    delete?: GrantPipelineWhereInput | boolean
+    connect?: GrantPipelineWhereUniqueInput
+    update?: XOR<XOR<GrantPipelineUpdateToOneWithWhereWithoutOrgInput, GrantPipelineUpdateWithoutOrgInput>, GrantPipelineUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type DossierUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput> | DossierCreateWithoutOrgInput[] | DossierUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: DossierCreateOrConnectWithoutOrgInput | DossierCreateOrConnectWithoutOrgInput[]
+    upsert?: DossierUpsertWithWhereUniqueWithoutOrgInput | DossierUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: DossierCreateManyOrgInputEnvelope
+    set?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    disconnect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    delete?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    connect?: DossierWhereUniqueInput | DossierWhereUniqueInput[]
+    update?: DossierUpdateWithWhereUniqueWithoutOrgInput | DossierUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: DossierUpdateManyWithWhereWithoutOrgInput | DossierUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: DossierScalarWhereInput | DossierScalarWhereInput[]
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput> | GrantApplicationCreateWithoutOrgInput[] | GrantApplicationUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutOrgInput | GrantApplicationCreateOrConnectWithoutOrgInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutOrgInput | GrantApplicationUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: GrantApplicationCreateManyOrgInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutOrgInput | GrantApplicationUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutOrgInput | GrantApplicationUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
   export type AdvocacyOrgCreateNestedOneWithoutContactsInput = {
     create?: XOR<AdvocacyOrgCreateWithoutContactsInput, AdvocacyOrgUncheckedCreateWithoutContactsInput>
     connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutContactsInput
@@ -42796,6 +47525,20 @@ export namespace Prisma {
     connect?: WorkspaceWhereUniqueInput
   }
 
+  export type GrantApplicationCreateNestedManyWithoutGrantInput = {
+    create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
+    createMany?: GrantApplicationCreateManyGrantInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type GrantApplicationUncheckedCreateNestedManyWithoutGrantInput = {
+    create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
+    createMany?: GrantApplicationCreateManyGrantInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
   }
@@ -42842,6 +47585,34 @@ export namespace Prisma {
     upsert?: WorkspaceUpsertWithoutOpenGrantsInput
     connect?: WorkspaceWhereUniqueInput
     update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutOpenGrantsInput, WorkspaceUpdateWithoutOpenGrantsInput>, WorkspaceUncheckedUpdateWithoutOpenGrantsInput>
+  }
+
+  export type GrantApplicationUpdateManyWithoutGrantNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutGrantInput | GrantApplicationUpsertWithWhereUniqueWithoutGrantInput[]
+    createMany?: GrantApplicationCreateManyGrantInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutGrantInput | GrantApplicationUpdateWithWhereUniqueWithoutGrantInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutGrantInput | GrantApplicationUpdateManyWithWhereWithoutGrantInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutGrantInput | GrantApplicationUpsertWithWhereUniqueWithoutGrantInput[]
+    createMany?: GrantApplicationCreateManyGrantInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutGrantInput | GrantApplicationUpdateWithWhereUniqueWithoutGrantInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutGrantInput | GrantApplicationUpdateManyWithWhereWithoutGrantInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
   }
 
   export type CampaignCreatecancerTypesInput = {
@@ -43500,13 +48271,17 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput
   }
 
-  export type EnumEvidenceTypeFieldUpdateOperationsInput = {
-    set?: $Enums.EvidenceType
+  export type EnumEvidenceSourceFieldUpdateOperationsInput = {
+    set?: $Enums.EvidenceSource
   }
 
   export type EvidenceUpdateauthorsInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type EnumEvidenceStrengthFieldUpdateOperationsInput = {
+    set?: $Enums.EvidenceStrength
   }
 
   export type EvidenceUpdatecancerTypesInput = {
@@ -43517,10 +48292,6 @@ export namespace Prisma {
   export type EvidenceUpdatebiomarkersInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type EnumEvidenceStrengthFieldUpdateOperationsInput = {
-    set?: $Enums.EvidenceStrength
   }
 
   export type EvidenceUpdatetagsInput = {
@@ -43553,6 +48324,10 @@ export namespace Prisma {
   }
 
   export type ClinicalTrialCreateinterventionsInput = {
+    set: string[]
+  }
+
+  export type ClinicalTrialCreatelocationsInput = {
     set: string[]
   }
 
@@ -43602,6 +48377,11 @@ export namespace Prisma {
   }
 
   export type ClinicalTrialUpdateinterventionsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ClinicalTrialUpdatelocationsInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -44566,6 +49346,143 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuditLogsInput, UserUpdateWithoutAuditLogsInput>, UserUncheckedUpdateWithoutAuditLogsInput>
   }
 
+  export type GrantPipelineCreatetagsInput = {
+    set: string[]
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutPipelineInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutPipelineInput, AdvocacyOrgUncheckedCreateWithoutPipelineInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutPipelineInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type EnumPipelineStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PipelineStatus
+  }
+
+  export type GrantPipelineUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type AdvocacyOrgUpdateOneRequiredWithoutPipelineNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutPipelineInput, AdvocacyOrgUncheckedCreateWithoutPipelineInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutPipelineInput
+    upsert?: AdvocacyOrgUpsertWithoutPipelineInput
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutPipelineInput, AdvocacyOrgUpdateWithoutPipelineInput>, AdvocacyOrgUncheckedUpdateWithoutPipelineInput>
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutDossiersInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutDossiersInput, AdvocacyOrgUncheckedCreateWithoutDossiersInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutDossiersInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type GrantApplicationCreateNestedManyWithoutDossierInput = {
+    create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
+    createMany?: GrantApplicationCreateManyDossierInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type GrantApplicationUncheckedCreateNestedManyWithoutDossierInput = {
+    create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
+    createMany?: GrantApplicationCreateManyDossierInputEnvelope
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type EnumDossierTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DossierType
+  }
+
+  export type AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutDossiersInput, AdvocacyOrgUncheckedCreateWithoutDossiersInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutDossiersInput
+    upsert?: AdvocacyOrgUpsertWithoutDossiersInput
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutDossiersInput, AdvocacyOrgUpdateWithoutDossiersInput>, AdvocacyOrgUncheckedUpdateWithoutDossiersInput>
+  }
+
+  export type GrantApplicationUpdateManyWithoutDossierNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutDossierInput | GrantApplicationUpsertWithWhereUniqueWithoutDossierInput[]
+    createMany?: GrantApplicationCreateManyDossierInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutDossierInput | GrantApplicationUpdateWithWhereUniqueWithoutDossierInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutDossierInput | GrantApplicationUpdateManyWithWhereWithoutDossierInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput = {
+    create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
+    upsert?: GrantApplicationUpsertWithWhereUniqueWithoutDossierInput | GrantApplicationUpsertWithWhereUniqueWithoutDossierInput[]
+    createMany?: GrantApplicationCreateManyDossierInputEnvelope
+    set?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    disconnect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    delete?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+    update?: GrantApplicationUpdateWithWhereUniqueWithoutDossierInput | GrantApplicationUpdateWithWhereUniqueWithoutDossierInput[]
+    updateMany?: GrantApplicationUpdateManyWithWhereWithoutDossierInput | GrantApplicationUpdateManyWithWhereWithoutDossierInput[]
+    deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutApplicationsInput, AdvocacyOrgUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutApplicationsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type OpenGrantCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<OpenGrantCreateWithoutApplicationsInput, OpenGrantUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutApplicationsInput
+    connect?: OpenGrantWhereUniqueInput
+  }
+
+  export type DossierCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<DossierCreateWithoutApplicationsInput, DossierUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: DossierCreateOrConnectWithoutApplicationsInput
+    connect?: DossierWhereUniqueInput
+  }
+
+  export type EnumApplicationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.ApplicationStatus
+  }
+
+  export type AdvocacyOrgUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutApplicationsInput, AdvocacyOrgUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutApplicationsInput
+    upsert?: AdvocacyOrgUpsertWithoutApplicationsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutApplicationsInput, AdvocacyOrgUpdateWithoutApplicationsInput>, AdvocacyOrgUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type OpenGrantUpdateOneWithoutApplicationsNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutApplicationsInput, OpenGrantUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutApplicationsInput
+    upsert?: OpenGrantUpsertWithoutApplicationsInput
+    disconnect?: OpenGrantWhereInput | boolean
+    delete?: OpenGrantWhereInput | boolean
+    connect?: OpenGrantWhereUniqueInput
+    update?: XOR<XOR<OpenGrantUpdateToOneWithWhereWithoutApplicationsInput, OpenGrantUpdateWithoutApplicationsInput>, OpenGrantUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type DossierUpdateOneWithoutApplicationsNestedInput = {
+    create?: XOR<DossierCreateWithoutApplicationsInput, DossierUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: DossierCreateOrConnectWithoutApplicationsInput
+    upsert?: DossierUpsertWithoutApplicationsInput
+    disconnect?: DossierWhereInput | boolean
+    delete?: DossierWhereInput | boolean
+    connect?: DossierWhereUniqueInput
+    update?: XOR<XOR<DossierUpdateToOneWithWhereWithoutApplicationsInput, DossierUpdateWithoutApplicationsInput>, DossierUncheckedUpdateWithoutApplicationsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -44999,11 +49916,11 @@ export namespace Prisma {
     _max?: NestedEnumTaskStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumEvidenceTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.EvidenceType | EnumEvidenceTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEvidenceTypeFilter<$PrismaModel> | $Enums.EvidenceType
+  export type NestedEnumEvidenceSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.EvidenceSource | EnumEvidenceSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumEvidenceSourceFilter<$PrismaModel> | $Enums.EvidenceSource
   }
 
   export type NestedEnumEvidenceStrengthFilter<$PrismaModel = never> = {
@@ -45013,14 +49930,14 @@ export namespace Prisma {
     not?: NestedEnumEvidenceStrengthFilter<$PrismaModel> | $Enums.EvidenceStrength
   }
 
-  export type NestedEnumEvidenceTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EvidenceType | EnumEvidenceTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EvidenceType[] | ListEnumEvidenceTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumEvidenceTypeWithAggregatesFilter<$PrismaModel> | $Enums.EvidenceType
+  export type NestedEnumEvidenceSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EvidenceSource | EnumEvidenceSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EvidenceSource[] | ListEnumEvidenceSourceFieldRefInput<$PrismaModel>
+    not?: NestedEnumEvidenceSourceWithAggregatesFilter<$PrismaModel> | $Enums.EvidenceSource
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEvidenceTypeFilter<$PrismaModel>
-    _max?: NestedEnumEvidenceTypeFilter<$PrismaModel>
+    _min?: NestedEnumEvidenceSourceFilter<$PrismaModel>
+    _max?: NestedEnumEvidenceSourceFilter<$PrismaModel>
   }
 
   export type NestedEnumEvidenceStrengthWithAggregatesFilter<$PrismaModel = never> = {
@@ -45267,6 +50184,57 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumDataSourceTypeFilter<$PrismaModel>
     _max?: NestedEnumDataSourceTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPipelineStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PipelineStatus | EnumPipelineStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPipelineStatusFilter<$PrismaModel> | $Enums.PipelineStatus
+  }
+
+  export type NestedEnumPipelineStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PipelineStatus | EnumPipelineStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PipelineStatus[] | ListEnumPipelineStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPipelineStatusWithAggregatesFilter<$PrismaModel> | $Enums.PipelineStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPipelineStatusFilter<$PrismaModel>
+    _max?: NestedEnumPipelineStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDossierTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DossierType | EnumDossierTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDossierTypeFilter<$PrismaModel> | $Enums.DossierType
+  }
+
+  export type NestedEnumDossierTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DossierType | EnumDossierTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DossierType[] | ListEnumDossierTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDossierTypeWithAggregatesFilter<$PrismaModel> | $Enums.DossierType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDossierTypeFilter<$PrismaModel>
+    _max?: NestedEnumDossierTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumApplicationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApplicationStatusFilter<$PrismaModel> | $Enums.ApplicationStatus
+  }
+
+  export type NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ApplicationStatus | EnumApplicationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ApplicationStatus[] | ListEnumApplicationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumApplicationStatusWithAggregatesFilter<$PrismaModel> | $Enums.ApplicationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
+    _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
   }
 
   export type WorkspaceMemberCreateWithoutUserInput = {
@@ -45879,6 +50847,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutWorkspaceInput = {
@@ -45912,6 +50883,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutWorkspaceInput = {
@@ -45954,6 +50928,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
+    applications?: GrantApplicationCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateWithoutWorkspaceInput = {
@@ -45986,6 +50961,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantCreateOrConnectWithoutWorkspaceInput = {
@@ -46839,6 +51815,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+    applications?: GrantApplicationCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateWithoutOrgInput = {
@@ -46871,6 +51848,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantCreateOrConnectWithoutOrgInput = {
@@ -46928,6 +51906,115 @@ export namespace Prisma {
 
   export type PageCreateManyOrgInputEnvelope = {
     data: PageCreateManyOrgInput | PageCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GrantPipelineCreateWithoutOrgInput = {
+    id?: string
+    status?: $Enums.PipelineStatus
+    notes?: string | null
+    nextAction?: string | null
+    nextActionAt?: Date | string | null
+    assignedTo?: string | null
+    priority?: string | null
+    tags?: GrantPipelineCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantPipelineUncheckedCreateWithoutOrgInput = {
+    id?: string
+    status?: $Enums.PipelineStatus
+    notes?: string | null
+    nextAction?: string | null
+    nextActionAt?: Date | string | null
+    assignedTo?: string | null
+    priority?: string | null
+    tags?: GrantPipelineCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantPipelineCreateOrConnectWithoutOrgInput = {
+    where: GrantPipelineWhereUniqueInput
+    create: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+  }
+
+  export type DossierCreateWithoutOrgInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    applications?: GrantApplicationCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierUncheckedCreateWithoutOrgInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierCreateOrConnectWithoutOrgInput = {
+    where: DossierWhereUniqueInput
+    create: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput>
+  }
+
+  export type DossierCreateManyOrgInputEnvelope = {
+    data: DossierCreateManyOrgInput | DossierCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GrantApplicationCreateWithoutOrgInput = {
+    id?: string
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    grant?: OpenGrantCreateNestedOneWithoutApplicationsInput
+    dossier?: DossierCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type GrantApplicationUncheckedCreateWithoutOrgInput = {
+    id?: string
+    grantId?: string | null
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationCreateOrConnectWithoutOrgInput = {
+    where: GrantApplicationWhereUniqueInput
+    create: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput>
+  }
+
+  export type GrantApplicationCreateManyOrgInputEnvelope = {
+    data: GrantApplicationCreateManyOrgInput | GrantApplicationCreateManyOrgInput[]
     skipDuplicates?: boolean
   }
 
@@ -47162,6 +52249,111 @@ export namespace Prisma {
     data: XOR<PageUpdateManyMutationInput, PageUncheckedUpdateManyWithoutOrgInput>
   }
 
+  export type GrantPipelineUpsertWithoutOrgInput = {
+    update: XOR<GrantPipelineUpdateWithoutOrgInput, GrantPipelineUncheckedUpdateWithoutOrgInput>
+    create: XOR<GrantPipelineCreateWithoutOrgInput, GrantPipelineUncheckedCreateWithoutOrgInput>
+    where?: GrantPipelineWhereInput
+  }
+
+  export type GrantPipelineUpdateToOneWithWhereWithoutOrgInput = {
+    where?: GrantPipelineWhereInput
+    data: XOR<GrantPipelineUpdateWithoutOrgInput, GrantPipelineUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type GrantPipelineUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantPipelineUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumPipelineStatusFieldUpdateOperationsInput | $Enums.PipelineStatus
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextAction?: NullableStringFieldUpdateOperationsInput | string | null
+    nextActionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    assignedTo?: NullableStringFieldUpdateOperationsInput | string | null
+    priority?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: GrantPipelineUpdatetagsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DossierUpsertWithWhereUniqueWithoutOrgInput = {
+    where: DossierWhereUniqueInput
+    update: XOR<DossierUpdateWithoutOrgInput, DossierUncheckedUpdateWithoutOrgInput>
+    create: XOR<DossierCreateWithoutOrgInput, DossierUncheckedCreateWithoutOrgInput>
+  }
+
+  export type DossierUpdateWithWhereUniqueWithoutOrgInput = {
+    where: DossierWhereUniqueInput
+    data: XOR<DossierUpdateWithoutOrgInput, DossierUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type DossierUpdateManyWithWhereWithoutOrgInput = {
+    where: DossierScalarWhereInput
+    data: XOR<DossierUpdateManyMutationInput, DossierUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type DossierScalarWhereInput = {
+    AND?: DossierScalarWhereInput | DossierScalarWhereInput[]
+    OR?: DossierScalarWhereInput[]
+    NOT?: DossierScalarWhereInput | DossierScalarWhereInput[]
+    id?: StringFilter<"Dossier"> | string
+    orgId?: StringFilter<"Dossier"> | string
+    type?: EnumDossierTypeFilter<"Dossier"> | $Enums.DossierType
+    title?: StringFilter<"Dossier"> | string
+    content?: StringFilter<"Dossier"> | string
+    model?: StringFilter<"Dossier"> | string
+    context?: StringNullableFilter<"Dossier"> | string | null
+    createdAt?: DateTimeFilter<"Dossier"> | Date | string
+  }
+
+  export type GrantApplicationUpsertWithWhereUniqueWithoutOrgInput = {
+    where: GrantApplicationWhereUniqueInput
+    update: XOR<GrantApplicationUpdateWithoutOrgInput, GrantApplicationUncheckedUpdateWithoutOrgInput>
+    create: XOR<GrantApplicationCreateWithoutOrgInput, GrantApplicationUncheckedCreateWithoutOrgInput>
+  }
+
+  export type GrantApplicationUpdateWithWhereUniqueWithoutOrgInput = {
+    where: GrantApplicationWhereUniqueInput
+    data: XOR<GrantApplicationUpdateWithoutOrgInput, GrantApplicationUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type GrantApplicationUpdateManyWithWhereWithoutOrgInput = {
+    where: GrantApplicationScalarWhereInput
+    data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type GrantApplicationScalarWhereInput = {
+    AND?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+    OR?: GrantApplicationScalarWhereInput[]
+    NOT?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+    id?: StringFilter<"GrantApplication"> | string
+    orgId?: StringFilter<"GrantApplication"> | string
+    grantId?: StringNullableFilter<"GrantApplication"> | string | null
+    dossierId?: StringNullableFilter<"GrantApplication"> | string | null
+    title?: StringFilter<"GrantApplication"> | string
+    status?: EnumApplicationStatusFilter<"GrantApplication"> | $Enums.ApplicationStatus
+    submittedAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    decisionAt?: DateTimeNullableFilter<"GrantApplication"> | Date | string | null
+    askAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    awardedAmount?: FloatNullableFilter<"GrantApplication"> | number | null
+    notes?: StringNullableFilter<"GrantApplication"> | string | null
+    nextStep?: StringNullableFilter<"GrantApplication"> | string | null
+    internalScore?: IntNullableFilter<"GrantApplication"> | number | null
+    funderScore?: IntNullableFilter<"GrantApplication"> | number | null
+    createdAt?: DateTimeFilter<"GrantApplication"> | Date | string
+    updatedAt?: DateTimeFilter<"GrantApplication"> | Date | string
+  }
+
   export type AdvocacyOrgCreateWithoutContactsInput = {
     id?: string
     slug: string
@@ -47193,6 +52385,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutContactsInput = {
@@ -47226,6 +52421,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutContactsInput = {
@@ -47275,6 +52473,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutContactsInput = {
@@ -47308,6 +52509,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgCreateWithoutOpenGrantsInput = {
@@ -47341,6 +52545,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput = {
@@ -47374,6 +52581,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutOpenGrantsInput = {
@@ -47420,6 +52630,52 @@ export namespace Prisma {
     create: XOR<WorkspaceCreateWithoutOpenGrantsInput, WorkspaceUncheckedCreateWithoutOpenGrantsInput>
   }
 
+  export type GrantApplicationCreateWithoutGrantInput = {
+    id?: string
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutApplicationsInput
+    dossier?: DossierCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type GrantApplicationUncheckedCreateWithoutGrantInput = {
+    id?: string
+    orgId: string
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationCreateOrConnectWithoutGrantInput = {
+    where: GrantApplicationWhereUniqueInput
+    create: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput>
+  }
+
+  export type GrantApplicationCreateManyGrantInputEnvelope = {
+    data: GrantApplicationCreateManyGrantInput | GrantApplicationCreateManyGrantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AdvocacyOrgUpsertWithoutOpenGrantsInput = {
     update: XOR<AdvocacyOrgUpdateWithoutOpenGrantsInput, AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput>
     create: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
@@ -47462,6 +52718,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput = {
@@ -47495,6 +52754,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type WorkspaceUpsertWithoutOpenGrantsInput = {
@@ -47542,6 +52804,22 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
+  export type GrantApplicationUpsertWithWhereUniqueWithoutGrantInput = {
+    where: GrantApplicationWhereUniqueInput
+    update: XOR<GrantApplicationUpdateWithoutGrantInput, GrantApplicationUncheckedUpdateWithoutGrantInput>
+    create: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput>
+  }
+
+  export type GrantApplicationUpdateWithWhereUniqueWithoutGrantInput = {
+    where: GrantApplicationWhereUniqueInput
+    data: XOR<GrantApplicationUpdateWithoutGrantInput, GrantApplicationUncheckedUpdateWithoutGrantInput>
+  }
+
+  export type GrantApplicationUpdateManyWithWhereWithoutGrantInput = {
+    where: GrantApplicationScalarWhereInput
+    data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyWithoutGrantInput>
+  }
+
   export type AdvocacyOrgCreateWithoutCampaignsInput = {
     id?: string
     slug: string
@@ -47573,6 +52851,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutCampaignsInput = {
@@ -47606,6 +52887,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutCampaignsInput = {
@@ -47853,6 +53137,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutCampaignsInput = {
@@ -47886,6 +53173,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type InitiativeUpsertWithWhereUniqueWithoutCampaignInput = {
@@ -48139,19 +53429,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48164,19 +53454,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48345,19 +53635,19 @@ export namespace Prisma {
     title?: StringFilter<"Evidence"> | string
     summary?: StringNullableFilter<"Evidence"> | string | null
     content?: StringNullableFilter<"Evidence"> | string | null
-    evidenceType?: EnumEvidenceTypeFilter<"Evidence"> | $Enums.EvidenceType
-    source?: StringNullableFilter<"Evidence"> | string | null
+    sourceType?: EnumEvidenceSourceFilter<"Evidence"> | $Enums.EvidenceSource
     sourceUrl?: StringNullableFilter<"Evidence"> | string | null
-    doi?: StringNullableFilter<"Evidence"> | string | null
-    pmid?: StringNullableFilter<"Evidence"> | string | null
-    publishedAt?: DateTimeNullableFilter<"Evidence"> | Date | string | null
+    sourceDoi?: StringNullableFilter<"Evidence"> | string | null
+    sourcePmid?: StringNullableFilter<"Evidence"> | string | null
     authors?: StringNullableListFilter<"Evidence">
+    publishedYear?: IntNullableFilter<"Evidence"> | number | null
+    journal?: StringNullableFilter<"Evidence"> | string | null
+    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
     cancerTypes?: StringNullableListFilter<"Evidence">
     biomarkers?: StringNullableListFilter<"Evidence">
-    strength?: EnumEvidenceStrengthFilter<"Evidence"> | $Enums.EvidenceStrength
-    relevanceScore?: FloatNullableFilter<"Evidence"> | number | null
-    aiSummary?: StringNullableFilter<"Evidence"> | string | null
     tags?: StringNullableListFilter<"Evidence">
+    agentCreated?: BoolFilter<"Evidence"> | boolean
+    agentRunId?: StringNullableFilter<"Evidence"> | string | null
     metadata?: JsonFilter<"Evidence">
     createdAt?: DateTimeFilter<"Evidence"> | Date | string
     updatedAt?: DateTimeFilter<"Evidence"> | Date | string
@@ -48707,19 +53997,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48732,19 +54022,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49446,11 +54736,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -49470,11 +54762,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -49573,11 +54867,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49597,11 +54893,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49919,11 +55217,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -49943,11 +55243,13 @@ export namespace Prisma {
     id?: string
     nctId: string
     title: string
+    officialTitle?: string | null
+    sponsor?: string | null
     phase?: $Enums.TrialPhase | null
     status?: $Enums.TrialStatus
-    sponsor?: string | null
     conditions?: ClinicalTrialCreateconditionsInput | string[]
     interventions?: ClinicalTrialCreateinterventionsInput | string[]
+    locations?: ClinicalTrialCreatelocationsInput | string[]
     biomarkers?: ClinicalTrialCreatebiomarkersInput | string[]
     primaryEndpoint?: string | null
     enrollment?: number | null
@@ -50030,11 +55332,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50054,11 +55358,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     nctId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    officialTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     phase?: NullableEnumTrialPhaseFieldUpdateOperationsInput | $Enums.TrialPhase | null
     status?: EnumTrialStatusFieldUpdateOperationsInput | $Enums.TrialStatus
-    sponsor?: NullableStringFieldUpdateOperationsInput | string | null
     conditions?: ClinicalTrialUpdateconditionsInput | string[]
     interventions?: ClinicalTrialUpdateinterventionsInput | string[]
+    locations?: ClinicalTrialUpdatelocationsInput | string[]
     biomarkers?: ClinicalTrialUpdatebiomarkersInput | string[]
     primaryEndpoint?: NullableStringFieldUpdateOperationsInput | string | null
     enrollment?: NullableIntFieldUpdateOperationsInput | number | null
@@ -50158,6 +55464,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPatientStoriesInput = {
@@ -50191,6 +55500,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPatientStoriesInput = {
@@ -50279,6 +55591,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPatientStoriesInput = {
@@ -50312,6 +55627,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type UserUpsertWithoutPatientStoriesInput = {
@@ -50529,6 +55847,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutCoalitionLinksInput = {
@@ -50562,6 +55883,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutCoalitionLinksInput = {
@@ -50652,6 +55976,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutCoalitionLinksInput = {
@@ -50685,6 +56012,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgCreateWithoutPolicyTargetsInput = {
@@ -50718,6 +56048,9 @@ export namespace Prisma {
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
     pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPolicyTargetsInput = {
@@ -50751,6 +56084,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPolicyTargetsInput = {
@@ -50892,6 +56228,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPolicyTargetsInput = {
@@ -50925,6 +56264,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type CampaignUpsertWithoutPolicyTargetsInput = {
@@ -51101,6 +56443,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
     contacts?: OrgContactCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPagesInput = {
@@ -51134,6 +56479,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
     contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
     openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPagesInput = {
@@ -51459,6 +56807,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPagesInput = {
@@ -51492,6 +56843,9 @@ export namespace Prisma {
     policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type CampaignUpsertWithoutPagesInput = {
@@ -52784,6 +58138,756 @@ export namespace Prisma {
     patientStories?: PatientStoryUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
+  export type AdvocacyOrgCreateWithoutPipelineInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutPipelineInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutPipelineInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutPipelineInput, AdvocacyOrgUncheckedCreateWithoutPipelineInput>
+  }
+
+  export type AdvocacyOrgUpsertWithoutPipelineInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutPipelineInput, AdvocacyOrgUncheckedUpdateWithoutPipelineInput>
+    create: XOR<AdvocacyOrgCreateWithoutPipelineInput, AdvocacyOrgUncheckedCreateWithoutPipelineInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutPipelineInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutPipelineInput, AdvocacyOrgUncheckedUpdateWithoutPipelineInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutPipelineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutPipelineInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgCreateWithoutDossiersInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutDossiersInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutDossiersInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutDossiersInput, AdvocacyOrgUncheckedCreateWithoutDossiersInput>
+  }
+
+  export type GrantApplicationCreateWithoutDossierInput = {
+    id?: string
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutApplicationsInput
+    grant?: OpenGrantCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type GrantApplicationUncheckedCreateWithoutDossierInput = {
+    id?: string
+    orgId: string
+    grantId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationCreateOrConnectWithoutDossierInput = {
+    where: GrantApplicationWhereUniqueInput
+    create: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput>
+  }
+
+  export type GrantApplicationCreateManyDossierInputEnvelope = {
+    data: GrantApplicationCreateManyDossierInput | GrantApplicationCreateManyDossierInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdvocacyOrgUpsertWithoutDossiersInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutDossiersInput, AdvocacyOrgUncheckedUpdateWithoutDossiersInput>
+    create: XOR<AdvocacyOrgCreateWithoutDossiersInput, AdvocacyOrgUncheckedCreateWithoutDossiersInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutDossiersInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutDossiersInput, AdvocacyOrgUncheckedUpdateWithoutDossiersInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutDossiersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutDossiersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type GrantApplicationUpsertWithWhereUniqueWithoutDossierInput = {
+    where: GrantApplicationWhereUniqueInput
+    update: XOR<GrantApplicationUpdateWithoutDossierInput, GrantApplicationUncheckedUpdateWithoutDossierInput>
+    create: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput>
+  }
+
+  export type GrantApplicationUpdateWithWhereUniqueWithoutDossierInput = {
+    where: GrantApplicationWhereUniqueInput
+    data: XOR<GrantApplicationUpdateWithoutDossierInput, GrantApplicationUncheckedUpdateWithoutDossierInput>
+  }
+
+  export type GrantApplicationUpdateManyWithWhereWithoutDossierInput = {
+    where: GrantApplicationScalarWhereInput
+    data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyWithoutDossierInput>
+  }
+
+  export type AdvocacyOrgCreateWithoutApplicationsInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutApplicationsInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutApplicationsInput, AdvocacyOrgUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type OpenGrantCreateWithoutApplicationsInput = {
+    id?: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
+    workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+  }
+
+  export type OpenGrantUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    orgId: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OpenGrantCreateOrConnectWithoutApplicationsInput = {
+    where: OpenGrantWhereUniqueInput
+    create: XOR<OpenGrantCreateWithoutApplicationsInput, OpenGrantUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type DossierCreateWithoutApplicationsInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutDossiersInput
+  }
+
+  export type DossierUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    orgId: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+  }
+
+  export type DossierCreateOrConnectWithoutApplicationsInput = {
+    where: DossierWhereUniqueInput
+    create: XOR<DossierCreateWithoutApplicationsInput, DossierUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type AdvocacyOrgUpsertWithoutApplicationsInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutApplicationsInput, AdvocacyOrgUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<AdvocacyOrgCreateWithoutApplicationsInput, AdvocacyOrgUncheckedCreateWithoutApplicationsInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutApplicationsInput, AdvocacyOrgUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OpenGrantUpsertWithoutApplicationsInput = {
+    update: XOR<OpenGrantUpdateWithoutApplicationsInput, OpenGrantUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<OpenGrantCreateWithoutApplicationsInput, OpenGrantUncheckedCreateWithoutApplicationsInput>
+    where?: OpenGrantWhereInput
+  }
+
+  export type OpenGrantUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: OpenGrantWhereInput
+    data: XOR<OpenGrantUpdateWithoutApplicationsInput, OpenGrantUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type OpenGrantUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+  }
+
+  export type OpenGrantUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DossierUpsertWithoutApplicationsInput = {
+    update: XOR<DossierUpdateWithoutApplicationsInput, DossierUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<DossierCreateWithoutApplicationsInput, DossierUncheckedCreateWithoutApplicationsInput>
+    where?: DossierWhereInput
+  }
+
+  export type DossierUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: DossierWhereInput
+    data: XOR<DossierUpdateWithoutApplicationsInput, DossierUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type DossierUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput
+  }
+
+  export type DossierUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WorkspaceMemberCreateManyUserInput = {
     id?: string
     workspaceId: string
@@ -53452,6 +59556,9 @@ export namespace Prisma {
     contacts?: OrgContactUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
     pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutWorkspaceInput = {
@@ -53485,6 +59592,9 @@ export namespace Prisma {
     contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
     openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -53543,6 +59653,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
+    applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateWithoutWorkspaceInput = {
@@ -53575,6 +59686,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -53925,6 +60037,34 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type DossierCreateManyOrgInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GrantApplicationCreateManyOrgInput = {
+    id?: string
+    grantId?: string | null
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type CampaignUpdateWithoutOrgInput = {
     id?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
@@ -54211,6 +60351,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+    applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateWithoutOrgInput = {
@@ -54243,6 +60384,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateManyWithoutOrgInput = {
@@ -54328,6 +60470,164 @@ export namespace Prisma {
     isPublic?: BoolFieldUpdateOperationsInput | boolean
     publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DossierUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUpdateManyWithoutDossierNestedInput
+  }
+
+  export type DossierUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput
+  }
+
+  export type DossierUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    grant?: OpenGrantUpdateOneWithoutApplicationsNestedInput
+    dossier?: DossierUpdateOneWithoutApplicationsNestedInput
+  }
+
+  export type GrantApplicationUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationCreateManyGrantInput = {
+    id?: string
+    orgId: string
+    dossierId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationUpdateWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutApplicationsNestedInput
+    dossier?: DossierUpdateOneWithoutApplicationsNestedInput
+  }
+
+  export type GrantApplicationUncheckedUpdateWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54648,19 +60948,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54766,19 +61066,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54791,19 +61091,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54815,19 +61115,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54927,19 +61227,19 @@ export namespace Prisma {
     title: string
     summary?: string | null
     content?: string | null
-    evidenceType?: $Enums.EvidenceType
-    source?: string | null
+    sourceType?: $Enums.EvidenceSource
     sourceUrl?: string | null
-    doi?: string | null
-    pmid?: string | null
-    publishedAt?: Date | string | null
+    sourceDoi?: string | null
+    sourcePmid?: string | null
     authors?: EvidenceCreateauthorsInput | string[]
+    publishedYear?: number | null
+    journal?: string | null
+    strength?: $Enums.EvidenceStrength
     cancerTypes?: EvidenceCreatecancerTypesInput | string[]
     biomarkers?: EvidenceCreatebiomarkersInput | string[]
-    strength?: $Enums.EvidenceStrength
-    relevanceScore?: number | null
-    aiSummary?: string | null
     tags?: EvidenceCreatetagsInput | string[]
+    agentCreated?: boolean
+    agentRunId?: string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55055,19 +61355,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55080,19 +61380,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55104,19 +61404,19 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     summary?: NullableStringFieldUpdateOperationsInput | string | null
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    evidenceType?: EnumEvidenceTypeFieldUpdateOperationsInput | $Enums.EvidenceType
-    source?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceType?: EnumEvidenceSourceFieldUpdateOperationsInput | $Enums.EvidenceSource
     sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    doi?: NullableStringFieldUpdateOperationsInput | string | null
-    pmid?: NullableStringFieldUpdateOperationsInput | string | null
-    publishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sourceDoi?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePmid?: NullableStringFieldUpdateOperationsInput | string | null
     authors?: EvidenceUpdateauthorsInput | string[]
+    publishedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    journal?: NullableStringFieldUpdateOperationsInput | string | null
+    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
     cancerTypes?: EvidenceUpdatecancerTypesInput | string[]
     biomarkers?: EvidenceUpdatebiomarkersInput | string[]
-    strength?: EnumEvidenceStrengthFieldUpdateOperationsInput | $Enums.EvidenceStrength
-    relevanceScore?: NullableFloatFieldUpdateOperationsInput | number | null
-    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: EvidenceUpdatetagsInput | string[]
+    agentCreated?: BoolFieldUpdateOperationsInput | boolean
+    agentRunId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55644,6 +61944,78 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type GrantApplicationCreateManyDossierInput = {
+    id?: string
+    orgId: string
+    grantId?: string | null
+    title: string
+    status?: $Enums.ApplicationStatus
+    submittedAt?: Date | string | null
+    decisionAt?: Date | string | null
+    askAmount?: number | null
+    awardedAmount?: number | null
+    notes?: string | null
+    nextStep?: string | null
+    internalScore?: number | null
+    funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GrantApplicationUpdateWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutApplicationsNestedInput
+    grant?: OpenGrantUpdateOneWithoutApplicationsNestedInput
+  }
+
+  export type GrantApplicationUncheckedUpdateWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GrantApplicationUncheckedUpdateManyWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    submittedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    decisionAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    askAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    awardedAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    nextStep?: NullableStringFieldUpdateOperationsInput | string | null
+    internalScore?: NullableIntFieldUpdateOperationsInput | number | null
+    funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -55661,6 +62033,10 @@ export namespace Prisma {
      * @deprecated Use AdvocacyOrgCountOutputTypeDefaultArgs instead
      */
     export type AdvocacyOrgCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OpenGrantCountOutputTypeDefaultArgs instead
+     */
+    export type OpenGrantCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OpenGrantCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use CampaignCountOutputTypeDefaultArgs instead
      */
@@ -55697,6 +62073,10 @@ export namespace Prisma {
      * @deprecated Use AgentRunCountOutputTypeDefaultArgs instead
      */
     export type AgentRunCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AgentRunCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DossierCountOutputTypeDefaultArgs instead
+     */
+    export type DossierCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DossierCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -55801,6 +62181,18 @@ export namespace Prisma {
      * @deprecated Use AuditLogDefaultArgs instead
      */
     export type AuditLogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AuditLogDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use GrantPipelineDefaultArgs instead
+     */
+    export type GrantPipelineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GrantPipelineDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DossierDefaultArgs instead
+     */
+    export type DossierArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DossierDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use GrantApplicationDefaultArgs instead
+     */
+    export type GrantApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GrantApplicationDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

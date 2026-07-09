@@ -298,19 +298,19 @@ exports.Prisma.EvidenceScalarFieldEnum = {
   title: 'title',
   summary: 'summary',
   content: 'content',
-  evidenceType: 'evidenceType',
-  source: 'source',
+  sourceType: 'sourceType',
   sourceUrl: 'sourceUrl',
-  doi: 'doi',
-  pmid: 'pmid',
-  publishedAt: 'publishedAt',
+  sourceDoi: 'sourceDoi',
+  sourcePmid: 'sourcePmid',
   authors: 'authors',
+  publishedYear: 'publishedYear',
+  journal: 'journal',
+  strength: 'strength',
   cancerTypes: 'cancerTypes',
   biomarkers: 'biomarkers',
-  strength: 'strength',
-  relevanceScore: 'relevanceScore',
-  aiSummary: 'aiSummary',
   tags: 'tags',
+  agentCreated: 'agentCreated',
+  agentRunId: 'agentRunId',
   metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -320,11 +320,13 @@ exports.Prisma.ClinicalTrialScalarFieldEnum = {
   id: 'id',
   nctId: 'nctId',
   title: 'title',
+  officialTitle: 'officialTitle',
+  sponsor: 'sponsor',
   phase: 'phase',
   status: 'status',
-  sponsor: 'sponsor',
   conditions: 'conditions',
   interventions: 'interventions',
+  locations: 'locations',
   biomarkers: 'biomarkers',
   primaryEndpoint: 'primaryEndpoint',
   enrollment: 'enrollment',
@@ -547,6 +549,50 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.GrantPipelineScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  status: 'status',
+  notes: 'notes',
+  nextAction: 'nextAction',
+  nextActionAt: 'nextActionAt',
+  assignedTo: 'assignedTo',
+  priority: 'priority',
+  tags: 'tags',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DossierScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  type: 'type',
+  title: 'title',
+  content: 'content',
+  model: 'model',
+  context: 'context',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.GrantApplicationScalarFieldEnum = {
+  id: 'id',
+  orgId: 'orgId',
+  grantId: 'grantId',
+  dossierId: 'dossierId',
+  title: 'title',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  decisionAt: 'decisionAt',
+  askAmount: 'askAmount',
+  awardedAmount: 'awardedAmount',
+  notes: 'notes',
+  nextStep: 'nextStep',
+  internalScore: 'internalScore',
+  funderScore: 'funderScore',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -676,35 +722,32 @@ exports.TaskType = exports.$Enums.TaskType = {
   ACTION: 'ACTION',
   RESEARCH: 'RESEARCH',
   MEETING: 'MEETING',
-  DOCUMENT: 'DOCUMENT',
-  OUTREACH: 'OUTREACH',
   REVIEW: 'REVIEW',
   APPROVAL: 'APPROVAL',
-  MILESTONE: 'MILESTONE'
+  OUTREACH: 'OUTREACH',
+  WRITING: 'WRITING',
+  ANALYSIS: 'ANALYSIS'
 };
 
 exports.TaskStatus = exports.$Enums.TaskStatus = {
   TODO: 'TODO',
   IN_PROGRESS: 'IN_PROGRESS',
-  IN_REVIEW: 'IN_REVIEW',
   BLOCKED: 'BLOCKED',
+  REVIEW: 'REVIEW',
   DONE: 'DONE',
   CANCELLED: 'CANCELLED'
 };
 
-exports.EvidenceType = exports.$Enums.EvidenceType = {
-  PUBLICATION: 'PUBLICATION',
-  CLINICAL_TRIAL: 'CLINICAL_TRIAL',
-  FDA_GUIDANCE: 'FDA_GUIDANCE',
-  CONGRESSIONAL_RECORD: 'CONGRESSIONAL_RECORD',
-  PRESS_RELEASE: 'PRESS_RELEASE',
+exports.EvidenceSource = exports.$Enums.EvidenceSource = {
+  PUBMED: 'PUBMED',
+  CLINICALTRIALS_GOV: 'CLINICALTRIALS_GOV',
+  FDA: 'FDA',
+  CONGRESS: 'CONGRESS',
+  NEWS: 'NEWS',
+  GREY_LITERATURE: 'GREY_LITERATURE',
   PATIENT_TESTIMONY: 'PATIENT_TESTIMONY',
   EXPERT_OPINION: 'EXPERT_OPINION',
-  SYSTEMATIC_REVIEW: 'SYSTEMATIC_REVIEW',
-  META_ANALYSIS: 'META_ANALYSIS',
-  REAL_WORLD_DATA: 'REAL_WORLD_DATA',
-  BIOMARKER_DATA: 'BIOMARKER_DATA',
-  POLICY_BRIEF: 'POLICY_BRIEF'
+  INTERNAL: 'INTERNAL'
 };
 
 exports.EvidenceStrength = exports.$Enums.EvidenceStrength = {
@@ -789,7 +832,9 @@ exports.AgentRole = exports.$Enums.AgentRole = {
   ADVOCACY_PM: 'ADVOCACY_PM',
   RESEARCH_INTELLIGENCE: 'RESEARCH_INTELLIGENCE',
   COALITION_BUILDER: 'COALITION_BUILDER',
-  STANDUP_REPORTER: 'STANDUP_REPORTER'
+  STANDUP_REPORTER: 'STANDUP_REPORTER',
+  GRANT_HUNTER: 'GRANT_HUNTER',
+  APPLICATION_DRAFTER: 'APPLICATION_DRAFTER'
 };
 
 exports.AgentRunStatus = exports.$Enums.AgentRunStatus = {
@@ -809,6 +854,33 @@ exports.DataSourceType = exports.$Enums.DataSourceType = {
   OPEN_PAYMENTS: 'OPEN_PAYMENTS',
   CUSTOM_API: 'CUSTOM_API',
   CSV_UPLOAD: 'CSV_UPLOAD'
+};
+
+exports.PipelineStatus = exports.$Enums.PipelineStatus = {
+  IDENTIFIED: 'IDENTIFIED',
+  RESEARCHING: 'RESEARCHING',
+  OUTREACH: 'OUTREACH',
+  APPLIED: 'APPLIED',
+  AWARDED: 'AWARDED',
+  REJECTED: 'REJECTED',
+  PAUSED: 'PAUSED'
+};
+
+exports.DossierType = exports.$Enums.DossierType = {
+  PITCH: 'PITCH',
+  LOI: 'LOI',
+  EMAIL: 'EMAIL',
+  APPLICATION: 'APPLICATION'
+};
+
+exports.ApplicationStatus = exports.$Enums.ApplicationStatus = {
+  DRAFTING: 'DRAFTING',
+  INTERNAL_REVIEW: 'INTERNAL_REVIEW',
+  SUBMITTED: 'SUBMITTED',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  AWARDED: 'AWARDED',
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
 };
 
 exports.Prisma.ModelName = {
@@ -837,7 +909,10 @@ exports.Prisma.ModelName = {
   AgentMessage: 'AgentMessage',
   DataSource: 'DataSource',
   Comment: 'Comment',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  GrantPipeline: 'GrantPipeline',
+  Dossier: 'Dossier',
+  GrantApplication: 'GrantApplication'
 };
 
 /**
