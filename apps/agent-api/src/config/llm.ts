@@ -4,12 +4,14 @@ import { ChatOpenAI } from "@langchain/openai";
 //
 // Using OpenAI OSS models via OpenRouter (currently the most reliable free tier)
 //
-// ADVOCACY_PM        → GPT-OSS 120B (best for structured planning, tool calls)
-// RESEARCH_INTEL     → GPT-OSS 120B (best for long-context reasoning, evidence synthesis)
-// COALITION_BUILDER  → GPT-OSS 120B (best for stakeholder analysis)
-// STANDUP_REPORTER   → GPT-OSS 20B  (lighter model, good for summarization)
-// FALLBACK           → GPT-OSS 20B
-// EMERGENCY          → GPT-OSS 20B
+// ADVOCACY_PM          → GPT-OSS 120B (best for structured planning, tool calls)
+// RESEARCH_INTEL       → GPT-OSS 120B (best for long-context reasoning, evidence synthesis)
+// COALITION_BUILDER    → GPT-OSS 120B (best for stakeholder analysis)
+// STANDUP_REPORTER     → GPT-OSS 20B  (lighter model, good for summarization)
+// GRANT_HUNTER         → GPT-OSS 120B (grant discovery, scoring, web search)
+// APPLICATION_DRAFTER  → GPT-OSS 120B (full application drafting, long-form writing)
+// FALLBACK             → GPT-OSS 20B
+// EMERGENCY            → GPT-OSS 20B
 
 export const llmConfig = {
   ADVOCACY_PM: {
@@ -31,6 +33,16 @@ export const llmConfig = {
     model: "openai/gpt-oss-20b:free",
     temperature: 0.2,
     maxTokens: 2048,
+  },
+  GRANT_HUNTER: {
+    model: "openai/gpt-oss-120b:free",
+    temperature: 0.1,
+    maxTokens: 8192,
+  },
+  APPLICATION_DRAFTER: {
+    model: "openai/gpt-oss-120b:free",
+    temperature: 0.4,
+    maxTokens: 16384,
   },
   FALLBACK: {
     model: "openai/gpt-oss-20b:free",

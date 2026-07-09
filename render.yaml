@@ -38,6 +38,10 @@ services:
           envVarKey: RENDER_EXTERNAL_URL
       - key: APP_URL
         sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        value: 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
 
   # ─── MCP Server ───────────────────────────────────────────────────────────
   - type: web

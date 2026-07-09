@@ -3,6 +3,8 @@ import { createAdvocacyPMAgent } from "./advocacy-pm.js";
 import { createResearchIntelligenceAgent } from "./research-intelligence.js";
 import { createCoalitionBuilderAgent } from "./coalition-builder.js";
 import { createStandupReporterAgent } from "./standup-reporter.js";
+import { createGrantHunterAgent } from "./grant-hunter.js";
+import { createApplicationDrafterAgent } from "./application-drafter.js";
 import {
   getSharedMCPClient,
   waitForMCPReady,
@@ -10,7 +12,13 @@ import {
   type MCPToolSchema,
 } from "../mcp-client.js";
 
-type AgentRole = "ADVOCACY_PM" | "RESEARCH_INTELLIGENCE" | "COALITION_BUILDER" | "STANDUP_REPORTER";
+type AgentRole =
+  | "ADVOCACY_PM"
+  | "RESEARCH_INTELLIGENCE"
+  | "COALITION_BUILDER"
+  | "STANDUP_REPORTER"
+  | "GRANT_HUNTER"
+  | "APPLICATION_DRAFTER";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CompiledGraph = CompiledStateGraph<any, any, any>;
@@ -43,17 +51,21 @@ class AgentRegistry {
       const allTools = await mcpClient.listTools();
       console.log(`[Agent Registry] Loaded ${allTools.length} MCP tools`);
 
-      const [pm, research, coalition, standup] = await Promise.all([
+      const [pm, research, coalition, standup, grantHunter, appDrafter] = await Promise.all([
         createAdvocacyPMAgent(mcpClient, allTools),
         createResearchIntelligenceAgent(mcpClient, allTools),
         createCoalitionBuilderAgent(mcpClient, allTools),
         createStandupReporterAgent(mcpClient, allTools),
+        createGrantHunterAgent(mcpClient, allTools),
+        createApplicationDrafterAgent(mcpClient, allTools),
       ]);
 
       this.agents.set("ADVOCACY_PM", pm);
       this.agents.set("RESEARCH_INTELLIGENCE", research);
       this.agents.set("COALITION_BUILDER", coalition);
       this.agents.set("STANDUP_REPORTER", standup);
+      this.agents.set("GRANT_HUNTER", grantHunter);
+      this.agents.set("APPLICATION_DRAFTER", appDrafter);
 
       this.initialized = true;
       console.log(`[Agent Registry] ${this.agents.size} agents ready`);

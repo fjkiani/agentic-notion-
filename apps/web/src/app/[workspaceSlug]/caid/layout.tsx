@@ -7,7 +7,9 @@ import { ReactNode } from "react";
 const NAV_ITEMS = [
   { href: "/caid", label: "Dashboard", icon: "📊", exact: true },
   { href: "/caid/orgs", label: "All Orgs", icon: "🏢", exact: false },
+  { href: "/caid/opportunities", label: "Opportunities", icon: "🔍", exact: false },
   { href: "/caid/pipeline", label: "Pipeline", icon: "🎯", exact: false },
+  { href: "/caid/applications", label: "Applications", icon: "📋", exact: false },
   { href: "/caid/generate", label: "Generate", icon: "✨", exact: false },
 ];
 

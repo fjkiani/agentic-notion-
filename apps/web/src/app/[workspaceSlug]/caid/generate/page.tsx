@@ -13,7 +13,7 @@ interface OrgOption {
   researchSpend: number | null;
 }
 
-type DossierType = "PITCH" | "LOI" | "EMAIL";
+type DossierType = "PITCH" | "LOI" | "EMAIL" | "APPLICATION";
 type StepStatus = "pending" | "running" | "done" | "error";
 
 interface Step {
@@ -24,16 +24,36 @@ interface Step {
 }
 
 const DOSSIER_TYPES: { value: DossierType; label: string; desc: string; icon: string }[] = [
-  { value: "PITCH", label: "Pitch Dossier", desc: "Full intelligence brief + strategic pitch document", icon: "📊" },
-  { value: "LOI", label: "Letter of Intent", desc: "Formal LOI ready to send to grants contact", icon: "📝" },
-  { value: "EMAIL", label: "Outreach Email", desc: "Personalised cold outreach to CEO/grants contact", icon: "✉️" },
+  { value: "PITCH", label: "Pitch Dossier", desc: "Full intelligence brief + strategic pitch document (3 steps)", icon: "📊" },
+  { value: "LOI", label: "Letter of Intent", desc: "Formal LOI ready to send to grants contact (3 steps)", icon: "📝" },
+  { value: "EMAIL", label: "Outreach Email", desc: "Personalised cold outreach to CEO/grants contact (3 steps)", icon: "✉️" },
+  { value: "APPLICATION", label: "Full Application", desc: "Complete grant application: specific aims, narrative, budget, cover letter (5 steps)", icon: "📋" },
 ];
 
-const STEP_LABELS: Record<string, string> = {
+const STEP_LABELS_STANDARD: Record<string, string> = {
   eligibility: "Eligibility & Strategic Fit Analysis",
-  intelligence: "Intelligence Brief Generation",
+  intelligence: "Intelligence Brief",
   document: "Document Drafting",
 };
+
+const STEP_LABELS_APPLICATION: Record<string, string> = {
+  eligibility: "Eligibility & Strategic Fit Analysis",
+  intelligence: "Funder Intelligence Brief",
+  specific_aims: "Specific Aims / Executive Summary",
+  narrative: "Research Narrative (Background, Innovation, Approach)",
+  budget_cover: "Budget Outline & Cover Letter",
+};
+
+function getStepsForType(type: DossierType): Step[] {
+  if (type === "APPLICATION") {
+    return Object.entries(STEP_LABELS_APPLICATION).map(([id, label]) => ({
+      id, label, status: "pending" as StepStatus,
+    }));
+  }
+  return Object.entries(STEP_LABELS_STANDARD).map(([id, label]) => ({
+    id, label, status: "pending" as StepStatus,
+  }));
+}
 
 function fmt(n: number | null | undefined): string {
   if (!n) return "—";
@@ -92,17 +112,17 @@ function GeneratePageInner() {
 
   const [orgs, setOrgs] = useState<OrgOption[]>([]);
   const [selectedOrgId, setSelectedOrgId] = useState(searchParams.get("orgId") ?? "");
-  const [dossierType, setDossierType] = useState<DossierType>("PITCH");
+  const [dossierType, setDossierType] = useState<DossierType>(
+    (searchParams.get("type") as DossierType) ?? "PITCH"
+  );
   const [context, setContext] = useState("");
   const [generating, setGenerating] = useState(false);
-  const [steps, setSteps] = useState<Step[]>([
-    { id: "eligibility", label: STEP_LABELS.eligibility, status: "pending" },
-    { id: "intelligence", label: STEP_LABELS.intelligence, status: "pending" },
-    { id: "document", label: STEP_LABELS.document, status: "pending" },
-  ]);
+  const [steps, setSteps] = useState<Step[]>(getStepsForType("PITCH"));
   const [output, setOutput] = useState("");
   const [dossierId, setDossierId] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [savingApplication, setSavingApplication] = useState(false);
+  const [applicationSaved, setApplicationSaved] = useState(false);
   const outputRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -111,6 +131,11 @@ function GeneratePageInner() {
       .then((r) => r.json())
       .then((d) => setOrgs(d.orgs ?? []));
   }, []);
+
+  // Update steps when type changes
+  useEffect(() => {
+    setSteps(getStepsForType(dossierType));
+  }, [dossierType]);
 
   // Auto-scroll output
   useEffect(() => {
@@ -122,11 +147,7 @@ function GeneratePageInner() {
   const selectedOrg = orgs.find((o) => (o.externalId ?? o.id) === selectedOrgId || o.id === selectedOrgId);
 
   function resetSteps() {
-    setSteps([
-      { id: "eligibility", label: STEP_LABELS.eligibility, status: "pending" },
-      { id: "intelligence", label: STEP_LABELS.intelligence, status: "pending" },
-      { id: "document", label: STEP_LABELS.document, status: "pending" },
-    ]);
+    setSteps(getStepsForType(dossierType));
   }
 
   function updateStep(id: string, status: StepStatus, detail?: string) {
@@ -141,6 +162,7 @@ function GeneratePageInner() {
     setOutput("");
     setDossierId(null);
     setError("");
+    setApplicationSaved(false);
     resetSteps();
 
     abortRef.current = new AbortController();
@@ -149,10 +171,12 @@ function GeneratePageInner() {
       const res = await fetch("/api/caid/dossier", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // FIX: always send stream: true so the API uses SSE streaming
         body: JSON.stringify({
           orgId: selectedOrgId,
           type: dossierType,
           context: context || undefined,
+          stream: true,
         }),
         signal: abortRef.current.signal,
       });
@@ -185,19 +209,50 @@ function GeneratePageInner() {
             const event = JSON.parse(raw);
 
             if (event.type === "step") {
-              updateStep(event.step, "running", event.detail);
+              // event.step is the step id, event.detail is the message
+              const parsed = typeof event.step === "string" ? event : JSON.parse(event.text ?? "{}");
+              const stepId = parsed.step ?? event.step;
+              const detail = parsed.detail ?? event.detail ?? "";
+              updateStep(stepId, "running", detail);
             } else if (event.type === "step_done") {
-              updateStep(event.step, "done", event.summary);
+              const parsed = typeof event.step === "string" ? event : JSON.parse(event.text ?? "{}");
+              const stepId = parsed.step ?? event.step;
+              const summary = parsed.summary ?? event.summary ?? "";
+              updateStep(stepId, "done", summary);
             } else if (event.type === "chunk") {
-              setOutput((prev) => prev + event.content);
+              setOutput((prev) => prev + (event.content ?? ""));
             } else if (event.type === "done") {
-              setDossierId(event.dossierId ?? null);
+              // event.text contains JSON with id, title, content
+              let doneData: { id?: string; title?: string; content?: string } = {};
+              try {
+                doneData = typeof event.text === "string" ? JSON.parse(event.text) : event;
+              } catch {}
+              if (doneData.id) setDossierId(doneData.id);
+              if (doneData.content && !output) setOutput(doneData.content);
               setSteps((prev) => prev.map((s) => ({ ...s, status: s.status === "pending" ? "done" : s.status })));
             } else if (event.type === "error") {
-              throw new Error(event.message);
+              const msg = typeof event.text === "string" ? JSON.parse(event.text)?.message ?? event.text : event.message ?? "Generation failed";
+              throw new Error(msg);
+            } else if (event.text) {
+              // Fallback: try to parse event.text as JSON (SSE sends data as JSON string)
+              try {
+                const inner = JSON.parse(event.text);
+                if (inner.type === "step") updateStep(inner.step, "running", inner.detail);
+                else if (inner.type === "step_done") updateStep(inner.step, "done", inner.summary);
+                else if (inner.type === "chunk") setOutput((prev) => prev + (inner.content ?? ""));
+                else if (inner.type === "done") {
+                  if (inner.id) setDossierId(inner.id);
+                  if (inner.content && !output) setOutput(inner.content);
+                  setSteps((prev) => prev.map((s) => ({ ...s, status: s.status === "pending" ? "done" : s.status })));
+                }
+              } catch {}
             }
-          } catch {
-            // Skip malformed SSE lines
+          } catch (parseErr) {
+            if (parseErr instanceof Error && parseErr.message !== "Generation failed") {
+              // Skip malformed SSE lines
+            } else if (parseErr instanceof Error) {
+              throw parseErr;
+            }
           }
         }
       }
@@ -216,13 +271,39 @@ function GeneratePageInner() {
     setGenerating(false);
   }
 
+  async function saveAsApplication() {
+    if (!dossierId || !selectedOrgId || savingApplication) return;
+    setSavingApplication(true);
+    try {
+      const res = await fetch("/api/caid/applications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orgId: selectedOrg?.id ?? selectedOrgId,
+          dossierId,
+          title: `${DOSSIER_TYPES.find((d) => d.value === dossierType)?.label ?? dossierType} — ${selectedOrg?.name ?? ""}`,
+          notes: `Generated via CAID Generate page on ${new Date().toLocaleDateString("en-GB")}`,
+          nextStep: "Internal review and revision before submission",
+        }),
+      });
+      if (res.ok) {
+        setApplicationSaved(true);
+      }
+    } finally {
+      setSavingApplication(false);
+    }
+  }
+
+  const stepCount = dossierType === "APPLICATION" ? 5 : 3;
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-xl font-bold text-gray-900">Generate Dossier</h1>
         <p className="text-sm text-gray-500 mt-1">
-          3-step AI chain: eligibility analysis → intelligence brief → document draft
+          AI-powered {stepCount}-step chain: eligibility analysis → intelligence brief → document draft
+          {dossierType === "APPLICATION" && " → specific aims → narrative → budget & cover letter"}
         </p>
       </div>
 
@@ -312,7 +393,9 @@ function GeneratePageInner() {
               onChange={(e) => setContext(e.target.value)}
               disabled={generating}
               rows={3}
-              placeholder="e.g. Focus on GBM research, mention our Nottingham collaboration, target the Centres of Excellence programme..."
+              placeholder={dossierType === "APPLICATION"
+                ? "e.g. Target the Centres of Excellence programme, ask for £480K/year over 5 years, PI is Prof. Ruman Rahman at Nottingham..."
+                : "e.g. Focus on GBM research, mention our Nottingham collaboration, target the Centres of Excellence programme..."}
               className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 resize-none disabled:opacity-50"
             />
           </div>
@@ -330,7 +413,7 @@ function GeneratePageInner() {
                   Generating...
                 </span>
               ) : (
-                "✨ Generate Dossier"
+                `✨ Generate ${dossierType === "APPLICATION" ? "Application" : "Dossier"}`
               )}
             </button>
             {generating && (
@@ -346,7 +429,9 @@ function GeneratePageInner() {
           {/* Steps */}
           {(generating || output) && (
             <div className="bg-white border border-gray-200 rounded-xl p-4">
-              <div className="text-sm font-semibold text-gray-900 mb-3">Generation Progress</div>
+              <div className="text-sm font-semibold text-gray-900 mb-3">
+                Generation Progress ({stepCount} steps)
+              </div>
               <StepIndicator steps={steps} />
             </div>
           )}
@@ -357,11 +442,28 @@ function GeneratePageInner() {
           <div className="bg-white border border-gray-200 rounded-xl h-full flex flex-col" style={{ minHeight: "600px" }}>
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
               <div className="text-sm font-semibold text-gray-900">
-                {output ? `${dossierType} — ${selectedOrg?.name ?? ""}` : "Output"}
+                {output ? `${DOSSIER_TYPES.find((d) => d.value === dossierType)?.label ?? dossierType} — ${selectedOrg?.name ?? ""}` : "Output"}
               </div>
               {dossierId && (
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-green-600 font-medium">✓ Saved to database</span>
+                  <span className="text-xs text-green-600 font-medium">✓ Saved</span>
+                  {dossierType === "APPLICATION" && !applicationSaved && (
+                    <button
+                      onClick={saveAsApplication}
+                      disabled={savingApplication}
+                      className="text-xs bg-purple-600 text-white px-3 py-1.5 rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-60"
+                    >
+                      {savingApplication ? "Saving..." : "📋 Track Application"}
+                    </button>
+                  )}
+                  {applicationSaved && (
+                    <Link
+                      href={`/${slug}/caid/applications`}
+                      className="text-xs bg-green-600 text-white px-3 py-1.5 rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      ✓ View in Tracker →
+                    </Link>
+                  )}
                   <a
                     href={`/api/caid/dossier/${dossierId}/export`}
                     className="text-xs bg-gray-900 text-white px-3 py-1.5 rounded-lg hover:bg-gray-700 transition-colors"
@@ -384,10 +486,14 @@ function GeneratePageInner() {
 
               {!output && !generating && !error && (
                 <div className="flex flex-col items-center justify-center h-full text-center py-16">
-                  <div className="text-5xl mb-4">✨</div>
+                  <div className="text-5xl mb-4">
+                    {dossierType === "APPLICATION" ? "📋" : "✨"}
+                  </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Ready to generate</h3>
                   <p className="text-sm text-gray-500 max-w-sm">
-                    Select an organisation and document type, then click Generate. The AI will run a 3-step analysis and stream the result here.
+                    {dossierType === "APPLICATION"
+                      ? "Select an organisation and click Generate. The AI will run a 5-step chain producing a complete grant application with specific aims, research narrative, budget outline, and cover letter."
+                      : "Select an organisation and document type, then click Generate. The AI will run a 3-step analysis and stream the result here."}
                   </p>
                 </div>
               )}
@@ -395,7 +501,9 @@ function GeneratePageInner() {
               {generating && !output && (
                 <div className="flex flex-col items-center justify-center h-full py-16">
                   <div className="w-10 h-10 border-2 border-red-600 border-t-transparent rounded-full animate-spin mb-4" />
-                  <p className="text-sm text-gray-500">Analysing organisation data...</p>
+                  <p className="text-sm text-gray-500">
+                    {dossierType === "APPLICATION" ? "Running 5-step application chain..." : "Analysing organisation data..."}
+                  </p>
                 </div>
               )}
 
