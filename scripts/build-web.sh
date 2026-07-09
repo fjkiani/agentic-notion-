@@ -9,6 +9,13 @@ echo "DATE: $(date -u)"
 
 export NODE_ENV=production
 
+# Help Prisma find the committed query engine binary (avoids download on Render)
+BINARY_PATH="$(pwd)/packages/db/src/generated/client/libquery_engine-debian-openssl-3.0.x.so.node"
+if [ -f "$BINARY_PATH" ]; then
+  export PRISMA_QUERY_ENGINE_LIBRARY="$BINARY_PATH"
+  echo "Using committed Prisma binary: $BINARY_PATH"
+fi
+
 echo ""
 echo "=== Step 1: Installing dependencies ==="
 pnpm install --frozen-lockfile --prod=false
@@ -31,8 +38,6 @@ echo "✓ @zeta/types build done"
 
 echo ""
 echo "=== Step 5: Prisma db push ==="
-# Only run db:push if DATABASE_URL is accessible (external URL)
-# Internal Render URLs (dpg-*) are not accessible from the build environment
 DB_URL="${DATABASE_URL:-}"
 if [[ "$DB_URL" == *".oregon-postgres.render.com"* ]] || [[ "$DB_URL" == *"localhost"* ]]; then
   echo "Running db:push (external/local URL detected)..."
@@ -40,7 +45,6 @@ if [[ "$DB_URL" == *".oregon-postgres.render.com"* ]] || [[ "$DB_URL" == *"local
   echo "✓ Prisma db push done"
 else
   echo "Skipping db:push (internal Render URL — not accessible from build env)"
-  echo "Tables will be created/migrated at service startup"
 fi
 
 echo ""
