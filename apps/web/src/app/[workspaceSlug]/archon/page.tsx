@@ -7,6 +7,17 @@ const AGENT_API = process.env.NEXT_PUBLIC_AGENT_API_URL ?? "http://localhost:300
 
 const WORKFLOWS = [
   {
+    id: "pursue-grant",
+    name: "Pursue Grant",
+    description: "End-to-end grant pursuit: finds best opportunity, scores eligibility, gets approval, drafts full 5-section application, creates tracking record.",
+    icon: "🏆",
+    examples: [
+      "Pursue the best open GBM grant for Brain Tumour Research UK",
+      "Find and draft an application to the Sontag Foundation for our GBM programme",
+      "Draft a full application to ABTA Discovery Grant for Brain Tumour Research UK",
+    ],
+  },
+  {
     id: "add-feature",
     name: "Add Feature",
     description: "Add any new feature to CAID. Archon plans, implements, validates, and creates a PR.",

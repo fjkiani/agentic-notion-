@@ -9,7 +9,7 @@ const AGENT_ROLES = [
     name: "Advocacy PM",
     description: "Plans campaigns, creates tasks, manages sprints",
     icon: "🤖",
-    model: "Gemma 4 26B A4B",
+    model: "GPT-OSS 120B",
     color: "blue",
     examples: [
       "Set up a new BRCA1 biomarker testing advocacy campaign",
@@ -22,7 +22,7 @@ const AGENT_ROLES = [
     name: "Research Intelligence",
     description: "Searches PubMed, synthesizes evidence, tracks trials",
     icon: "🔬",
-    model: "Qwen3 Coder 480B A35B",
+    model: "GPT-OSS 120B",
     color: "green",
     examples: [
       "Find evidence supporting EGFR testing in lung cancer",
@@ -35,7 +35,7 @@ const AGENT_ROLES = [
     name: "Coalition Builder",
     description: "Maps stakeholders, builds coalitions, tracks policy",
     icon: "🤝",
-    model: "Arcee Trinity Large Thinking",
+    model: "GPT-OSS 120B",
     color: "purple",
     examples: [
       "Map coalition partners for our FDA biomarker guidance campaign",
@@ -48,12 +48,40 @@ const AGENT_ROLES = [
     name: "Standup Reporter",
     description: "Generates daily/weekly advocacy reports",
     icon: "📊",
-    model: "Qwen3 Next 80B A3B",
+    model: "GPT-OSS 20B",
     color: "orange",
     examples: [
       "Generate today's advocacy standup report",
       "Summarize this week's campaign progress",
       "What are our upcoming policy deadlines?",
+    ],
+  },
+  {
+    id: "GRANT_HUNTER",
+    name: "Grant Hunter",
+    description: "Finds open grant opportunities, scores by strategic fit, surfaces new funders via web search",
+    icon: "🎯",
+    model: "GPT-OSS 120B",
+    color: "red",
+    examples: [
+      "Find all open GBM grants with deadlines in the next 6 months",
+      "Search for new brain tumour research funding opportunities in the UK and USA",
+      "Score and rank all open grants by strategic fit for our GBM programme",
+      "Find grants from Sontag Foundation, NBTS, ABTA, and BTFC — are any currently open?",
+    ],
+  },
+  {
+    id: "APPLICATION_DRAFTER",
+    name: "Application Drafter",
+    description: "Drafts complete grant applications: specific aims, research narrative, budget outline, cover letter",
+    icon: "✍️",
+    model: "GPT-OSS 120B",
+    color: "indigo",
+    examples: [
+      "Draft a full application to Brain Tumour Research UK Centres of Excellence programme",
+      "Write specific aims for a Sontag Foundation GBM Discovery Grant",
+      "Draft a cover letter to ABTA for the Discovery Grant — address it to Kelly Sitkin",
+      "Create a complete application package for NBTS — include budget outline for £480K/year",
     ],
   },
 ];
@@ -209,7 +237,7 @@ export default function AgentsPage({
                   onClick={() => setMessage(ex)}
                   className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
                 >
-                  {ex.substring(0, 50)}...
+                  {ex.substring(0, 50)}{ex.length > 50 ? "..." : ""}
                 </button>
               ))}
             </div>
@@ -265,7 +293,7 @@ export default function AgentsPage({
           {(isRunning || streamMessages.length > 0) && (
             <div className="bg-gray-900 rounded-xl p-4 font-mono text-xs text-green-400 max-h-64 overflow-y-auto">
               <div className="flex items-center gap-2 mb-3 text-gray-400">
-                {isRunning && <span className="w-2 h-2 bg-green-400 rounded-full streaming-dot" />}
+                {isRunning && <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />}
                 <span>Agent stream</span>
               </div>
               {streamMessages.map((msg, i) => (
