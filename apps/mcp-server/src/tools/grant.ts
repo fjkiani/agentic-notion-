@@ -1,6 +1,26 @@
 import { z } from "zod";
 import { prisma } from "@zeta/db";
+import { toSlug } from "@zeta/shared";
 import type { MCPToolDefinition } from "../registry.js";
+
+// Generate a grant slug unique within (workspaceId, orgId), disambiguating collisions.
+async function uniqueGrantSlug(workspaceId: string, orgId: string, title: string): Promise<string> {
+  const base = toSlug(title) || "grant";
+  let candidate = base;
+  let n = 1;
+  // Loop until we find a slug not already used for this org in this workspace.
+  // Bounded by a sane max to avoid pathological loops.
+  while (n < 100) {
+    const existing = await prisma.openGrant.findFirst({
+      where: { workspaceId, orgId, slug: candidate },
+      select: { id: true },
+    });
+    if (!existing) return candidate;
+    n += 1;
+    candidate = `${base}-${n}`;
+  }
+  return `${base}-${Date.now()}`;
+}
 
 const TAVILY_API_KEY = process.env.TAVILY_API_KEY ?? "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";
 
@@ -102,7 +122,7 @@ export const grantTools: MCPToolDefinition[] = [
 
   {
     name: "grant_get",
-    description: "Get a single grant by ID with organization details",
+    description: "Get a single grant by its database ID or its slug, with organization details",
     inputSchema: z.object({
       id: z.string(),
       workspaceId: z.string().optional(),
@@ -110,12 +130,38 @@ export const grantTools: MCPToolDefinition[] = [
     handler: async (input) => {
       const { id, workspaceId } = input as { id: string; workspaceId?: string };
       const grant = await prisma.openGrant.findFirst({
-        where: { id, ...(workspaceId ? { workspaceId } : {}) },
+        // Resolve by id OR slug so grants are addressable either way.
+        where: { OR: [{ id }, { slug: id }], ...(workspaceId ? { workspaceId } : {}) },
         include: {
           org: { select: { id: true, name: true, slug: true, website: true } },
         },
       });
       if (!grant) return { found: false, id };
+      return { found: true, grant };
+    },
+  },
+
+  {
+    name: "grant_get_by_slug",
+    description: "Get a single grant by org slug + grant slug (human-readable deep link). Falls back to grant slug alone.",
+    inputSchema: z.object({
+      orgSlug: z.string(),
+      grantSlug: z.string(),
+      workspaceId: z.string().optional(),
+    }),
+    handler: async (input) => {
+      const { orgSlug, grantSlug, workspaceId } = input as { orgSlug: string; grantSlug: string; workspaceId?: string };
+      const grant = await prisma.openGrant.findFirst({
+        where: {
+          slug: grantSlug,
+          org: { OR: [{ slug: orgSlug }, { externalId: orgSlug }] },
+          ...(workspaceId ? { workspaceId } : {}),
+        },
+        include: {
+          org: { select: { id: true, name: true, slug: true, externalId: true, website: true } },
+        },
+      });
+      if (!grant) return { found: false, orgSlug, grantSlug };
       return { found: true, grant };
     },
   },
@@ -161,8 +207,11 @@ export const grantTools: MCPToolDefinition[] = [
         notes?: string; sourceNotes?: string;
       };
 
+      const slug = await uniqueGrantSlug(data.workspaceId, data.orgId, data.title);
+
       const grant = await prisma.openGrant.create({
         data: {
+          slug,
           workspaceId: data.workspaceId,
           orgId: data.orgId,
           title: data.title,

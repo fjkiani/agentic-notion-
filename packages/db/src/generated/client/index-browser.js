@@ -193,6 +193,7 @@ exports.Prisma.OrgContactScalarFieldEnum = {
 
 exports.Prisma.OpenGrantScalarFieldEnum = {
   id: 'id',
+  slug: 'slug',
   orgId: 'orgId',
   workspaceId: 'workspaceId',
   title: 'title',
@@ -593,6 +594,78 @@ exports.Prisma.GrantApplicationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.KnowledgeDocScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  orgId: 'orgId',
+  grantId: 'grantId',
+  title: 'title',
+  fileName: 'fileName',
+  mimeType: 'mimeType',
+  sizeBytes: 'sizeBytes',
+  fileData: 'fileData',
+  extractedText: 'extractedText',
+  status: 'status',
+  sourceType: 'sourceType',
+  tags: 'tags',
+  error: 'error',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.KnowledgeChunkScalarFieldEnum = {
+  id: 'id',
+  docId: 'docId',
+  workspaceId: 'workspaceId',
+  orgId: 'orgId',
+  chunkIndex: 'chunkIndex',
+  content: 'content',
+  tokenCount: 'tokenCount',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.OutreachSequenceScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  orgId: 'orgId',
+  name: 'name',
+  goal: 'goal',
+  status: 'status',
+  steps: 'steps',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OutreachContactScalarFieldEnum = {
+  id: 'id',
+  workspaceId: 'workspaceId',
+  sequenceId: 'sequenceId',
+  orgContactId: 'orgContactId',
+  name: 'name',
+  title: 'title',
+  email: 'email',
+  channel: 'channel',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  advocacyOrgId: 'advocacyOrgId'
+};
+
+exports.Prisma.OutreachMessageScalarFieldEnum = {
+  id: 'id',
+  sequenceId: 'sequenceId',
+  contactId: 'contactId',
+  step: 'step',
+  subject: 'subject',
+  body: 'body',
+  status: 'status',
+  scheduledFor: 'scheduledFor',
+  sentAt: 'sentAt',
+  dossierId: 'dossierId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -883,6 +956,43 @@ exports.ApplicationStatus = exports.$Enums.ApplicationStatus = {
   WITHDRAWN: 'WITHDRAWN'
 };
 
+exports.KnowledgeDocStatus = exports.$Enums.KnowledgeDocStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
+
+exports.OutreachSequenceStatus = exports.$Enums.OutreachSequenceStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED'
+};
+
+exports.OutreachChannel = exports.$Enums.OutreachChannel = {
+  EMAIL: 'EMAIL',
+  LINKEDIN: 'LINKEDIN',
+  PHONE: 'PHONE'
+};
+
+exports.OutreachContactStatus = exports.$Enums.OutreachContactStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  DRAFTED: 'DRAFTED',
+  SENT: 'SENT',
+  OPENED: 'OPENED',
+  REPLIED: 'REPLIED',
+  BOUNCED: 'BOUNCED',
+  DECLINED: 'DECLINED'
+};
+
+exports.OutreachMessageStatus = exports.$Enums.OutreachMessageStatus = {
+  DRAFTED: 'DRAFTED',
+  SCHEDULED: 'SCHEDULED',
+  SENT: 'SENT',
+  REPLIED: 'REPLIED',
+  BOUNCED: 'BOUNCED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Workspace: 'Workspace',
@@ -912,7 +1022,12 @@ exports.Prisma.ModelName = {
   AuditLog: 'AuditLog',
   GrantPipeline: 'GrantPipeline',
   Dossier: 'Dossier',
-  GrantApplication: 'GrantApplication'
+  GrantApplication: 'GrantApplication',
+  KnowledgeDoc: 'KnowledgeDoc',
+  KnowledgeChunk: 'KnowledgeChunk',
+  OutreachSequence: 'OutreachSequence',
+  OutreachContact: 'OutreachContact',
+  OutreachMessage: 'OutreachMessage'
 };
 
 /**

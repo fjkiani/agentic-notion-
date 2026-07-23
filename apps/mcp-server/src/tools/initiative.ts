@@ -52,7 +52,7 @@ export const initiativeTools: MCPToolDefinition[] = [
               _count: { select: { comments: true, subTasks: true } },
             },
           },
-          evidence: { orderBy: { relevanceScore: "desc" }, take: 20 },
+          evidence: { orderBy: { strength: "desc" }, take: 20 },
           _count: { select: { tasks: true, evidence: true } },
         },
       });

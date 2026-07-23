@@ -267,10 +267,13 @@ export async function seedCAID(options?: {
 
     for (const c of contacts) {
       await db.orgContact.upsert({
-        where: { id: `${org.id}-${slugify(c.name)}-${c.role}`.slice(0, 25) + "-seed" },
+        // Collision-safe id: short org-id suffix + full name slug + role.
+        // (Do NOT slice the whole thing to 25 chars — every cuid org id is exactly 25
+        //  chars, so that would collapse all of an org's contacts onto one id.)
+        where: { id: `c-${org.id.slice(-8)}-${slugify(c.name)}-${c.role}`.toLowerCase().slice(0, 80) },
         update: {},
         create: {
-          id: `${org.id}-${slugify(c.name)}-${c.role}`.slice(0, 25) + "-seed",
+          id: `c-${org.id.slice(-8)}-${slugify(c.name)}-${c.role}`.toLowerCase().slice(0, 80),
           orgId: org.id,
           name: c.name,
           title: c.title,
@@ -284,15 +287,28 @@ export async function seedCAID(options?: {
   }
 
   let grantCount = 0;
+  // Track slugs used per org so we can disambiguate collisions within the same org.
+  const grantSlugsByOrg: Record<string, Set<string>> = {};
   for (const g of GRANTS) {
     const orgDbId = orgIdMap[g.orgId];
     if (!orgDbId) continue;
 
+    // Generate a human-readable slug unique per (workspace, org).
+    const used = (grantSlugsByOrg[orgDbId] ??= new Set<string>());
+    let grantSlug = slugify(g.title);
+    if (used.has(grantSlug)) {
+      let n = 2;
+      while (used.has(`${grantSlug}-${n}`)) n++;
+      grantSlug = `${grantSlug}-${n}`;
+    }
+    used.add(grantSlug);
+
     await db.openGrant.upsert({
       where: { id: `grant-${slugify(g.title)}-${g.orgId}`.slice(0, 30) + "-seed" },
-      update: {},
+      update: { slug: grantSlug },
       create: {
         id: `grant-${slugify(g.title)}-${g.orgId}`.slice(0, 30) + "-seed",
+        slug: grantSlug,
         orgId: orgDbId,
         workspaceId: workspace.id,
         title: g.title,

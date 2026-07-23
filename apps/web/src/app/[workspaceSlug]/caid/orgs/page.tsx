@@ -6,6 +6,7 @@ import { useParams, useSearchParams } from "next/navigation";
 
 interface Org {
   id: string;
+  slug: string;
   name: string;
   shortName: string | null;
   country: string | null;
@@ -191,7 +192,7 @@ function OrgsPageInner() {
                       <td className="px-4 py-3 text-gray-400 text-xs">{i + 1}</td>
                       <td className="px-4 py-3">
                         <Link
-                          href={`/${slug}/caid/orgs/${org.externalId ?? org.id}`}
+                          href={`/${slug}/caid/orgs/${org.slug ?? org.externalId ?? org.id}`}
                           className="font-medium text-gray-900 hover:text-red-600 block"
                         >
                           {org.name}
@@ -242,7 +243,7 @@ function OrgsPageInner() {
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
                           <Link
-                            href={`/${slug}/caid/orgs/${org.externalId ?? org.id}`}
+                            href={`/${slug}/caid/orgs/${org.slug ?? org.externalId ?? org.id}`}
                             className="text-xs text-gray-500 hover:text-gray-900 border border-gray-200 px-2 py-1 rounded hover:bg-gray-50"
                           >
                             View

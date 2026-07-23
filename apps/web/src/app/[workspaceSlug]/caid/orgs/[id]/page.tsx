@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface OrgDetail {
   id: string;
+  slug: string;
   name: string;
   shortName: string | null;
   country: string | null;
@@ -29,6 +30,7 @@ interface OrgDetail {
   }>;
   openGrants: Array<{
     id: string;
+    slug: string;
     title: string;
     status: string;
     fundingAmountMin: number | null;
@@ -80,6 +82,7 @@ type Tab = "overview" | "grants" | "contacts" | "dossiers" | "pipeline";
 
 export default function OrgDetailPage() {
   const params = useParams<{ workspaceSlug: string; id: string }>();
+  const router = useRouter();
   const slug = params.workspaceSlug ?? "default";
   const orgId = params.id;
 
@@ -107,9 +110,13 @@ export default function OrgDetailPage() {
           setPipelineNextAction(d.pipeline.nextAction ?? "");
         }
         setLoading(false);
+        // Canonicalize URL to the human-readable slug (if we arrived via id/externalId).
+        if (d.slug && orgId !== d.slug) {
+          router.replace(`/${slug}/caid/orgs/${d.slug}`);
+        }
       })
       .catch((e) => { setError(e.message); setLoading(false); });
-  }, [orgId]);
+  }, [orgId, slug, router]);
 
   async function savePipeline() {
     if (!org) return;
@@ -341,7 +348,12 @@ export default function OrgDetailPage() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <h4 className="font-semibold text-gray-900">{grant.title}</h4>
+                          <Link
+                            href={`/${slug}/caid/grants/${org.slug ?? org.externalId ?? org.id}/${grant.slug}`}
+                            className="font-semibold text-gray-900 hover:text-red-600 hover:underline"
+                          >
+                            {grant.title}
+                          </Link>
                           <span className={`text-xs px-2 py-0.5 rounded-full ${
                             grant.status === "OPEN" ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
                           }`}>

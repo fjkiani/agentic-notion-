@@ -67,7 +67,7 @@ export const taskTools: MCPToolDefinition[] = [
             include: { author: { select: { id: true, name: true, avatarUrl: true } } },
             orderBy: { createdAt: "asc" },
           },
-          evidence: { orderBy: { relevanceScore: "desc" } },
+          evidence: { orderBy: { strength: "desc" } },
           initiative: {
             select: { id: true, name: true, slug: true, campaign: { select: { id: true, name: true, slug: true } } },
           },
@@ -234,7 +234,7 @@ export const taskTools: MCPToolDefinition[] = [
       const columns = {
         TODO: tasks.filter((t) => t.status === "TODO"),
         IN_PROGRESS: tasks.filter((t) => t.status === "IN_PROGRESS"),
-        IN_REVIEW: tasks.filter((t) => t.status === "IN_REVIEW"),
+        IN_REVIEW: tasks.filter((t) => t.status === "REVIEW"),
         BLOCKED: tasks.filter((t) => t.status === "BLOCKED"),
         DONE: tasks.filter((t) => t.status === "DONE"),
       };

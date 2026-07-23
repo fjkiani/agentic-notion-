@@ -5,12 +5,12 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "prisma generate && tsc && mkdir -p dist/generated && cp -r src/generated/client dist/generated/client",
+    "build": "prisma generate && tsc && rm -rf dist/generated/client && mkdir -p dist/generated/client && cp -r src/generated/client/. dist/generated/client/",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "db:seed": "tsx src/seed.ts"
+    "db:seed": "tsx src/seed-run.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",

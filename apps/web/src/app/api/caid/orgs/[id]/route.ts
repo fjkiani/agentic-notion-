@@ -20,7 +20,7 @@ export async function GET(
         campaigns: {
           take: 5,
           orderBy: { createdAt: "desc" },
-          include: { _count: { select: { initiatives: true, tasks: true } } },
+          include: { _count: { select: { initiatives: true } } },
         },
         _count: { select: { dossiers: true, openGrants: true, contacts: true } },
       },

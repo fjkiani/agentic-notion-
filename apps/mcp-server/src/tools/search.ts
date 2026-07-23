@@ -86,11 +86,10 @@ export const searchTools: MCPToolDefinition[] = [
             OR: [
               { title: { contains: q, mode: "insensitive" } },
               { summary: { contains: q, mode: "insensitive" } },
-              { aiSummary: { contains: q, mode: "insensitive" } },
             ],
           },
           take: limit,
-          select: { id: true, title: true, summary: true, evidenceType: true },
+          select: { id: true, title: true, summary: true, sourceType: true },
         });
         results.push(...evidence.map((e) => ({
           id: e.id, type: "evidence", title: e.title,

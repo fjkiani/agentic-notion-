@@ -13,6 +13,7 @@ interface Scores {
 
 interface Opportunity {
   id: string;
+  slug: string;
   title: string;
   status: string;
   fundingAmountMin: number | null;
@@ -246,9 +247,16 @@ function OpportunitiesPageInner() {
                         </span>
                       )}
                     </div>
-                    <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-0.5">{opp.title}</h3>
+                    <h3 className="font-semibold text-gray-900 text-sm leading-snug mb-0.5">
+                      <Link
+                        href={`/${slug}/caid/grants/${opp.org.slug ?? opp.org.id}/${opp.slug}`}
+                        className="hover:text-red-600 hover:underline"
+                      >
+                        {opp.title}
+                      </Link>
+                    </h3>
                     <div className="text-sm text-gray-500">
-                      <Link href={`/${slug}/caid/orgs/${opp.org.id}`} className="hover:text-red-600 font-medium">
+                      <Link href={`/${slug}/caid/orgs/${opp.org.slug ?? opp.org.id}`} className="hover:text-red-600 font-medium">
                         {opp.org.name}
                       </Link>
                       {opp.org.country && <span> · {opp.org.country}</span>}
@@ -304,7 +312,7 @@ function OpportunitiesPageInner() {
                       📋 Draft Application
                     </Link>
                     <Link
-                      href={`/${slug}/caid/orgs/${opp.org.id}`}
+                      href={`/${slug}/caid/orgs/${opp.org.slug ?? opp.org.id}`}
                       className="px-3 py-1.5 text-xs font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors whitespace-nowrap"
                     >
                       View Org

@@ -47,8 +47,13 @@ export const advocacyOrgTools: MCPToolDefinition[] = [
     }),
     handler: async (input) => {
       const { id, workspaceId, slug } = input as { id?: string; workspaceId?: string; slug?: string };
+      // Resolve by id, slug, or externalId (e.g. "UK013") in one lookup.
+      const key = id ?? slug;
       const org = await prisma.advocacyOrg.findFirst({
-        where: id ? { id } : { workspaceId: workspaceId!, slug: slug! },
+        where: {
+          ...(workspaceId ? { workspaceId } : {}),
+          ...(key ? { OR: [{ id: key }, { slug: key }, { externalId: key }] } : {}),
+        },
         include: {
           campaigns: {
             orderBy: { createdAt: "desc" },

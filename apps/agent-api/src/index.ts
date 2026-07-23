@@ -11,6 +11,9 @@ import {
   runWithAuditContext,
   clearOrderCounter,
 } from "./hooks/toolAuditHook.js";
+import { kbRouter } from "./kb/routes.js";
+import { warmEmbeddings } from "./kb/embeddings.js";
+import { outreachRouter } from "./outreach/routes.js";
 
 const app = express();
 app.use(cors());
@@ -37,6 +40,10 @@ app.get("/health", (_req, res) => {
     service: "zeta-caid-agents",
   });
 });
+
+// ─── Knowledge base + outreach routers ────────────────────────────────────────
+app.use("/api/kb", kbRouter);
+app.use("/api/outreach", outreachRouter);
 
 // ─── Start an agent run ───────────────────────────────────────────────────────
 
@@ -377,6 +384,9 @@ app.listen(port, () => {
   console.log(`[CAID Agents] Server running on port ${port}`);
 
   void initializeAgentsWithRetry();
+
+  // Warm the local embedding model so the first KB request isn't slow.
+  void warmEmbeddings().then(() => console.log("[CAID Agents] Embedding model warmed"));
 
   // ── Keep-alive: self-ping every 9 min to prevent Render free-tier sleep ──
   const PING_INTERVAL_MS = 9 * 60 * 1000;

@@ -3,14 +3,16 @@
 // Parallel: ClinicalTrial, Biomarker, PatientStory, Coalition, PolicyTarget
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/client"
-  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+  provider        = "prisma-client-js"
+  output          = "../src/generated/client"
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -18,14 +20,14 @@ datasource db {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model User {
-  id            String   @id @default(cuid())
-  clerkId       String   @unique
-  email         String   @unique
-  name          String?
-  avatarUrl     String?
-  role          UserRole @default(MEMBER)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  avatarUrl String?
+  role      UserRole @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   workspaceMemberships WorkspaceMember[]
   assignedTasks        Task[]            @relation("TaskAssignee")
@@ -60,26 +62,30 @@ model Workspace {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  members       WorkspaceMember[]
-  advocacyOrgs  AdvocacyOrg[]
-  openGrants    OpenGrant[]
-  pages         Page[]
-  agentRuns     AgentRun[]
-  dataSources   DataSource[]
-  auditLogs     AuditLog[]
+  members           WorkspaceMember[]
+  advocacyOrgs      AdvocacyOrg[]
+  openGrants        OpenGrant[]
+  pages             Page[]
+  agentRuns         AgentRun[]
+  dataSources       DataSource[]
+  auditLogs         AuditLog[]
+  knowledgeDocs     KnowledgeDoc[]
+  knowledgeChunks   KnowledgeChunk[]
+  outreachSequences OutreachSequence[]
+  outreachContacts  OutreachContact[]
 
   @@index([slug])
 }
 
 model WorkspaceMember {
-  id          String          @id @default(cuid())
+  id          String        @id @default(cuid())
   workspaceId String
   userId      String
-  role        WorkspaceRole   @default(MEMBER)
-  joinedAt    DateTime        @default(now())
+  role        WorkspaceRole @default(MEMBER)
+  joinedAt    DateTime      @default(now())
 
-  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([workspaceId, userId])
   @@index([workspaceId])
@@ -98,42 +104,46 @@ enum WorkspaceRole {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model AdvocacyOrg {
-  id              String          @id @default(cuid())
-  slug            String
-  workspaceId     String
-  name            String
-  shortName       String?
-  description     String?
-  mission         String?
-  website         String?
-  logoUrl         String?
-  cancerTypes     String[]        // e.g. ["breast", "lung", "colorectal"]
-  orgType         OrgType         @default(NONPROFIT)
-  taxId           String?
-  foundedYear     Int?
-  memberCount     Int?
-  annualBudget    Float?
-  researchSpend   Float?
-  country         String?
-  externalId      String?          // maps to Org_ID in CSV
-  headquarters    String?
-  socialLinks     Json            @default("{}")
-  metadata        Json            @default("{}")
-  status          OrgStatus       @default(ACTIVE)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id            String    @id @default(cuid())
+  slug          String
+  workspaceId   String
+  name          String
+  shortName     String?
+  description   String?
+  mission       String?
+  website       String?
+  logoUrl       String?
+  cancerTypes   String[] // e.g. ["breast", "lung", "colorectal"]
+  orgType       OrgType   @default(NONPROFIT)
+  taxId         String?
+  foundedYear   Int?
+  memberCount   Int?
+  annualBudget  Float?
+  researchSpend Float?
+  country       String?
+  externalId    String? // maps to Org_ID in CSV
+  headquarters  String?
+  socialLinks   Json      @default("{}")
+  metadata      Json      @default("{}")
+  status        OrgStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  workspace       Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  campaigns       Campaign[]
-  coalitionLinks  CoalitionMember[]
-  patientStories  PatientStory[]
-  policyTargets   PolicyTarget[]
-  contacts        OrgContact[]
-  openGrants      OpenGrant[]
-  pages           Page[]
-  pipeline        GrantPipeline?
-  dossiers        Dossier[]
-  applications    GrantApplication[]
+  workspace         Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  campaigns         Campaign[]
+  coalitionLinks    CoalitionMember[]
+  patientStories    PatientStory[]
+  policyTargets     PolicyTarget[]
+  contacts          OrgContact[]
+  openGrants        OpenGrant[]
+  pages             Page[]
+  pipeline          GrantPipeline?
+  dossiers          Dossier[]
+  applications      GrantApplication[]
+  knowledgeDocs     KnowledgeDoc[]
+  knowledgeChunks   KnowledgeChunk[]
+  outreachSequences OutreachSequence[]
+  outreachContacts  OutreachContact[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -159,17 +169,18 @@ enum OrgStatus {
 }
 
 model OrgContact {
-  id            String      @id @default(cuid())
-  orgId         String
-  name          String
-  title         String?
-  email         String?
-  phone         String?
-  role          ContactRole @default(GENERAL)
-  isPrimary     Boolean     @default(false)
-  createdAt     DateTime    @default(now())
+  id        String      @id @default(cuid())
+  orgId     String
+  name      String
+  title     String?
+  email     String?
+  phone     String?
+  role      ContactRole @default(GENERAL)
+  isPrimary Boolean     @default(false)
+  createdAt DateTime    @default(now())
 
-  org           AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  org              AdvocacyOrg       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  outreachContacts OutreachContact[]
 
   @@index([orgId])
 }
@@ -182,46 +193,50 @@ enum ContactRole {
   FUNDRAISING
   GENERAL
 }
+
 // ─────────────────────────────────────────────────────────────────────────────
 // OPEN GRANT (funding opportunities tracked per org)
 // ─────────────────────────────────────────────────────────────────────────────
 
 model OpenGrant {
-  id                    String          @id @default(cuid())
-  orgId                 String
-  workspaceId           String
-  title                 String
-  description           String?
-  fundingAmountMin      Float?
-  fundingAmountMax      Float?
-  currency              String          @default("USD")
-  deadline              DateTime?
-  deadlineRaw           String?         // original string e.g. "LOI due Apr 14 2026"
-  applicationUrl        String?
-  status                GrantStatus     @default(OPEN)
-  grantType             GrantType       @default(RESEARCH)
-  cancerTypes           String[]        // ["GBM", "brain", "pediatric"]
-  geographicScope       String[]        // ["UK", "USA", "Global"]
-  eligibilityCriteria   String?         // free-text eligibility requirements
-  eligibilityStages     String[]        // ["early_career", "established_PI", "startup"]
-  eligibilityOrgTypes   String[]        // ["academic", "nonprofit", "biotech", "startup"]
-  requiresLOI           Boolean         @default(false)
-  loiDeadline           DateTime?
-  loiDeadlineRaw        String?
-  awardDuration         String?         // e.g. "3 years", "1 year"
-  numberOfAwards        Int?
-  contactName           String?
-  contactEmail          String?
-  notes                 String?
-  sourceNotes           String?         // raw notes from CAID CSV
-  metadata              Json            @default("{}")
-  createdAt             DateTime        @default(now())
-  updatedAt             DateTime        @updatedAt
+  id                  String      @id @default(cuid())
+  slug                String // human-readable, unique per org within a workspace
+  orgId               String
+  workspaceId         String
+  title               String
+  description         String?
+  fundingAmountMin    Float?
+  fundingAmountMax    Float?
+  currency            String      @default("USD")
+  deadline            DateTime?
+  deadlineRaw         String? // original string e.g. "LOI due Apr 14 2026"
+  applicationUrl      String?
+  status              GrantStatus @default(OPEN)
+  grantType           GrantType   @default(RESEARCH)
+  cancerTypes         String[] // ["GBM", "brain", "pediatric"]
+  geographicScope     String[] // ["UK", "USA", "Global"]
+  eligibilityCriteria String? // free-text eligibility requirements
+  eligibilityStages   String[] // ["early_career", "established_PI", "startup"]
+  eligibilityOrgTypes String[] // ["academic", "nonprofit", "biotech", "startup"]
+  requiresLOI         Boolean     @default(false)
+  loiDeadline         DateTime?
+  loiDeadlineRaw      String?
+  awardDuration       String? // e.g. "3 years", "1 year"
+  numberOfAwards      Int?
+  contactName         String?
+  contactEmail        String?
+  notes               String?
+  sourceNotes         String? // raw notes from CAID CSV
+  metadata            Json        @default("{}")
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
 
-  org                   AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  workspace             Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  applications          GrantApplication[]
+  org           AdvocacyOrg        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  workspace     Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  applications  GrantApplication[]
+  knowledgeDocs KnowledgeDoc[]
 
+  @@unique([workspaceId, orgId, slug])
   @@index([orgId])
   @@index([workspaceId])
   @@index([status])
@@ -248,39 +263,37 @@ enum GrantType {
   GENERAL
 }
 
-
-
 // ─────────────────────────────────────────────────────────────────────────────
 // CAMPAIGN (major advocacy campaign within an org)
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Campaign {
-  id              String          @id @default(cuid())
-  slug            String
-  orgId           String
-  name            String
-  description     String?
-  objective       String?
-  cancerTypes     String[]
-  targetAudience  String[]        // ["FDA", "Congress", "Public", "Oncologists"]
-  status          CampaignStatus  @default(PLANNING)
-  priority        Priority        @default(MEDIUM)
-  startDate       DateTime?
-  endDate         DateTime?
-  budget          Float?
-  budgetSpent     Float?          @default(0)
-  kpis            Json            @default("[]")  // [{metric, target, current}]
-  tags            String[]
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id             String         @id @default(cuid())
+  slug           String
+  orgId          String
+  name           String
+  description    String?
+  objective      String?
+  cancerTypes    String[]
+  targetAudience String[] // ["FDA", "Congress", "Public", "Oncologists"]
+  status         CampaignStatus @default(PLANNING)
+  priority       Priority       @default(MEDIUM)
+  startDate      DateTime?
+  endDate        DateTime?
+  budget         Float?
+  budgetSpent    Float?         @default(0)
+  kpis           Json           @default("[]") // [{metric, target, current}]
+  tags           String[]
+  metadata       Json           @default("{}")
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
-  org             AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  initiatives     Initiative[]
-  policyTargets   PolicyTarget[]
-  clinicalTrials  CampaignTrial[]
-  biomarkers      CampaignBiomarker[]
-  pages           Page[]
+  org            AdvocacyOrg         @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  initiatives    Initiative[]
+  policyTargets  PolicyTarget[]
+  clinicalTrials CampaignTrial[]
+  biomarkers     CampaignBiomarker[]
+  pages          Page[]
 
   @@unique([orgId, slug])
   @@index([orgId])
@@ -308,28 +321,28 @@ enum Priority {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Initiative {
-  id              String              @id @default(cuid())
+  id              String           @id @default(cuid())
   slug            String
   campaignId      String
   name            String
   description     String?
-  type            InitiativeType      @default(GENERAL)
-  status          InitiativeStatus    @default(BACKLOG)
-  priority        Priority            @default(MEDIUM)
+  type            InitiativeType   @default(GENERAL)
+  status          InitiativeStatus @default(BACKLOG)
+  priority        Priority         @default(MEDIUM)
   startDate       DateTime?
   dueDate         DateTime?
   completedAt     DateTime?
   estimatedHours  Float?
   actualHours     Float?
   successCriteria String?
-  metadata        Json                @default("{}")
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
+  metadata        Json             @default("{}")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
-  campaign        Campaign            @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  tasks           Task[]
-  evidence        Evidence[]
-  pages           Page[]
+  campaign Campaign   @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  tasks    Task[]
+  evidence Evidence[]
+  pages    Page[]
 
   @@unique([campaignId, slug])
   @@index([campaignId])
@@ -365,37 +378,37 @@ enum InitiativeStatus {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Task {
-  id              String      @id @default(cuid())
-  slug            String
-  initiativeId    String
-  parentTaskId    String?
-  title           String
-  description     String?
-  type            TaskType    @default(ACTION)
-  status          TaskStatus  @default(TODO)
-  priority        Priority    @default(MEDIUM)
-  assigneeId      String?
-  creatorId       String?
-  dueDate         DateTime?
-  completedAt     DateTime?
-  estimatedHours  Float?
-  actualHours     Float?
-  storyPoints     Int?
-  labels          String[]
-  agentCreated    Boolean     @default(false)
-  agentRunId      String?
-  metadata        Json        @default("{}")
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id             String     @id @default(cuid())
+  slug           String
+  initiativeId   String
+  parentTaskId   String?
+  title          String
+  description    String?
+  type           TaskType   @default(ACTION)
+  status         TaskStatus @default(TODO)
+  priority       Priority   @default(MEDIUM)
+  assigneeId     String?
+  creatorId      String?
+  dueDate        DateTime?
+  completedAt    DateTime?
+  estimatedHours Float?
+  actualHours    Float?
+  storyPoints    Int?
+  labels         String[]
+  agentCreated   Boolean    @default(false)
+  agentRunId     String?
+  metadata       Json       @default("{}")
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
-  initiative      Initiative  @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
-  parentTask      Task?       @relation("SubTasks", fields: [parentTaskId], references: [id])
-  subTasks        Task[]      @relation("SubTasks")
-  assignee        User?       @relation("TaskAssignee", fields: [assigneeId], references: [id])
-  creator         User?       @relation("TaskCreator", fields: [creatorId], references: [id])
-  agentRun        AgentRun?   @relation(fields: [agentRunId], references: [id])
-  comments        Comment[]
-  evidence        Evidence[]
+  initiative Initiative @relation(fields: [initiativeId], references: [id], onDelete: Cascade)
+  parentTask Task?      @relation("SubTasks", fields: [parentTaskId], references: [id])
+  subTasks   Task[]     @relation("SubTasks")
+  assignee   User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  creator    User?      @relation("TaskCreator", fields: [creatorId], references: [id])
+  agentRun   AgentRun?  @relation(fields: [agentRunId], references: [id])
+  comments   Comment[]
+  evidence   Evidence[]
 
   @@unique([initiativeId, slug])
   @@index([initiativeId])
@@ -429,31 +442,31 @@ enum TaskStatus {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Evidence {
-  id              String          @id @default(cuid())
-  initiativeId    String?
-  taskId          String?
-  title           String
-  summary         String?
-  content         String?
-  sourceType      EvidenceSource  @default(PUBMED)
-  sourceUrl       String?
-  sourceDoi       String?
-  sourcePmid      String?
-  authors         String[]
-  publishedYear   Int?
-  journal         String?
-  strength        EvidenceStrength @default(MODERATE)
-  cancerTypes     String[]
-  biomarkers      String[]
-  tags            String[]
-  agentCreated    Boolean         @default(false)
-  agentRunId      String?
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id            String           @id @default(cuid())
+  initiativeId  String?
+  taskId        String?
+  title         String
+  summary       String?
+  content       String?
+  sourceType    EvidenceSource   @default(PUBMED)
+  sourceUrl     String?
+  sourceDoi     String?
+  sourcePmid    String?
+  authors       String[]
+  publishedYear Int?
+  journal       String?
+  strength      EvidenceStrength @default(MODERATE)
+  cancerTypes   String[]
+  biomarkers    String[]
+  tags          String[]
+  agentCreated  Boolean          @default(false)
+  agentRunId    String?
+  metadata      Json             @default("{}")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
 
-  initiative      Initiative?     @relation(fields: [initiativeId], references: [id])
-  task            Task?           @relation(fields: [taskId], references: [id])
+  initiative Initiative? @relation(fields: [initiativeId], references: [id])
+  task       Task?       @relation(fields: [taskId], references: [id])
 
   @@index([initiativeId])
   @@index([taskId])
@@ -486,13 +499,13 @@ enum EvidenceStrength {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model ClinicalTrial {
-  id              String          @id @default(cuid())
-  nctId           String          @unique
+  id              String      @id @default(cuid())
+  nctId           String      @unique
   title           String
   officialTitle   String?
   sponsor         String?
   phase           TrialPhase?
-  status          TrialStatus     @default(UNKNOWN)
+  status          TrialStatus @default(UNKNOWN)
   conditions      String[]
   interventions   String[]
   locations       String[]
@@ -505,12 +518,12 @@ model ClinicalTrial {
   summary         String?
   aiSummary       String?
   advocacyNotes   String?
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  metadata        Json        @default("{}")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 
-  campaigns       CampaignTrial[]
-  biomarkerLinks  TrialBiomarker[]
+  campaigns      CampaignTrial[]
+  biomarkerLinks TrialBiomarker[]
 
   @@index([status])
   @@index([conditions])
@@ -539,14 +552,14 @@ enum TrialStatus {
 }
 
 model CampaignTrial {
-  id          String        @id @default(cuid())
-  campaignId  String
-  trialId     String
-  notes       String?
-  addedAt     DateTime      @default(now())
+  id         String   @id @default(cuid())
+  campaignId String
+  trialId    String
+  notes      String?
+  addedAt    DateTime @default(now())
 
-  campaign    Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  trial       ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  campaign Campaign      @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  trial    ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
 
   @@unique([campaignId, trialId])
 }
@@ -556,26 +569,26 @@ model CampaignTrial {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Biomarker {
-  id              String          @id @default(cuid())
-  symbol          String          @unique  // e.g. BRCA1, EGFR, PD-L1
-  name            String
-  aliases         String[]
-  geneId          String?         // NCBI Gene ID
-  cancerTypes     String[]
-  biomarkerType   BiomarkerType   @default(GENETIC)
+  id                   String        @id @default(cuid())
+  symbol               String        @unique // e.g. BRCA1, EGFR, PD-L1
+  name                 String
+  aliases              String[]
+  geneId               String? // NCBI Gene ID
+  cancerTypes          String[]
+  biomarkerType        BiomarkerType @default(GENETIC)
   clinicalSignificance String?
-  fdaApproved     Boolean         @default(false)
-  fdaApprovedDrugs String[]
-  companionDx     String[]
-  prevalence      Json            @default("{}")  // {cancerType: percentage}
-  advocacyPriority Priority       @default(MEDIUM)
-  aiSummary       String?
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  fdaApproved          Boolean       @default(false)
+  fdaApprovedDrugs     String[]
+  companionDx          String[]
+  prevalence           Json          @default("{}") // {cancerType: percentage}
+  advocacyPriority     Priority      @default(MEDIUM)
+  aiSummary            String?
+  metadata             Json          @default("{}")
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 
-  campaigns       CampaignBiomarker[]
-  trials          TrialBiomarker[]
+  campaigns CampaignBiomarker[]
+  trials    TrialBiomarker[]
 
   @@index([symbol])
   @@index([cancerTypes])
@@ -592,26 +605,26 @@ enum BiomarkerType {
 }
 
 model CampaignBiomarker {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   campaignId  String
   biomarkerId String
   notes       String?
-  addedAt     DateTime  @default(now())
+  addedAt     DateTime @default(now())
 
-  campaign    Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  biomarker   Biomarker @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
+  campaign  Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  biomarker Biomarker @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
 
   @@unique([campaignId, biomarkerId])
 }
 
 model TrialBiomarker {
-  id          String        @id @default(cuid())
+  id          String  @id @default(cuid())
   trialId     String
   biomarkerId String
-  role        String?       // "inclusion criterion", "primary endpoint", etc.
+  role        String? // "inclusion criterion", "primary endpoint", etc.
 
-  trial       ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
-  biomarker   Biomarker     @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
+  trial     ClinicalTrial @relation(fields: [trialId], references: [id], onDelete: Cascade)
+  biomarker Biomarker     @relation(fields: [biomarkerId], references: [id], onDelete: Cascade)
 
   @@unique([trialId, biomarkerId])
 }
@@ -621,31 +634,31 @@ model TrialBiomarker {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model PatientStory {
-  id              String          @id @default(cuid())
-  orgId           String
-  authorId        String?
-  title           String
-  slug            String
-  content         String
-  summary         String?
-  cancerType      String
-  diagnosisYear   Int?
-  stage           String?
-  biomarkers      String[]
-  treatmentPath   String?
-  outcome         StoryOutcome    @default(ONGOING)
-  isAnonymized    Boolean         @default(false)
-  consentGiven    Boolean         @default(false)
-  publishedAt     DateTime?
-  status          StoryStatus     @default(DRAFT)
-  aiSummary       String?
-  advocacyThemes  String[]        // ["access", "biomarker testing", "clinical trial"]
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id             String       @id @default(cuid())
+  orgId          String
+  authorId       String?
+  title          String
+  slug           String
+  content        String
+  summary        String?
+  cancerType     String
+  diagnosisYear  Int?
+  stage          String?
+  biomarkers     String[]
+  treatmentPath  String?
+  outcome        StoryOutcome @default(ONGOING)
+  isAnonymized   Boolean      @default(false)
+  consentGiven   Boolean      @default(false)
+  publishedAt    DateTime?
+  status         StoryStatus  @default(DRAFT)
+  aiSummary      String?
+  advocacyThemes String[] // ["access", "biomarker testing", "clinical trial"]
+  metadata       Json         @default("{}")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
 
-  org             AdvocacyOrg     @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  author          User?           @relation("StoryAuthor", fields: [authorId], references: [id])
+  org    AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  author User?       @relation("StoryAuthor", fields: [authorId], references: [id])
 
   @@unique([orgId, slug])
   @@index([orgId])
@@ -673,20 +686,20 @@ enum StoryStatus {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Coalition {
-  id              String          @id @default(cuid())
-  slug            String          @unique
-  name            String
-  description     String?
-  focusAreas      String[]
-  status          CoalitionStatus @default(FORMING)
-  foundedAt       DateTime?
-  website         String?
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  name        String
+  description String?
+  focusAreas  String[]
+  status      CoalitionStatus @default(FORMING)
+  foundedAt   DateTime?
+  website     String?
+  metadata    Json            @default("{}")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
-  members         CoalitionMember[]
-  policyTargets   PolicyTarget[]
+  members       CoalitionMember[]
+  policyTargets PolicyTarget[]
 
   @@index([status])
 }
@@ -699,14 +712,14 @@ enum CoalitionStatus {
 }
 
 model CoalitionMember {
-  id            String      @id @default(cuid())
-  coalitionId   String
-  orgId         String
-  role          String?     // "lead", "member", "observer"
-  joinedAt      DateTime    @default(now())
+  id          String   @id @default(cuid())
+  coalitionId String
+  orgId       String
+  role        String? // "lead", "member", "observer"
+  joinedAt    DateTime @default(now())
 
-  coalition     Coalition   @relation(fields: [coalitionId], references: [id], onDelete: Cascade)
-  org           AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  coalition Coalition   @relation(fields: [coalitionId], references: [id], onDelete: Cascade)
+  org       AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@unique([coalitionId, orgId])
 }
@@ -716,27 +729,27 @@ model CoalitionMember {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model PolicyTarget {
-  id              String          @id @default(cuid())
-  orgId           String?
-  campaignId      String?
-  coalitionId     String?
-  title           String
-  description     String?
-  targetType      PolicyTargetType @default(LEGISLATION)
-  jurisdiction    String?         // "US Federal", "California", "EU"
-  agency          String?         // "FDA", "CMS", "Congress"
-  billNumber      String?
-  status          PolicyStatus    @default(MONITORING)
-  priority        Priority        @default(MEDIUM)
-  deadline        DateTime?
-  aiSummary       String?
-  metadata        Json            @default("{}")
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id           String           @id @default(cuid())
+  orgId        String?
+  campaignId   String?
+  coalitionId  String?
+  title        String
+  description  String?
+  targetType   PolicyTargetType @default(LEGISLATION)
+  jurisdiction String? // "US Federal", "California", "EU"
+  agency       String? // "FDA", "CMS", "Congress"
+  billNumber   String?
+  status       PolicyStatus     @default(MONITORING)
+  priority     Priority         @default(MEDIUM)
+  deadline     DateTime?
+  aiSummary    String?
+  metadata     Json             @default("{}")
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 
-  org             AdvocacyOrg?    @relation(fields: [orgId], references: [id])
-  campaign        Campaign?       @relation(fields: [campaignId], references: [id])
-  coalition       Coalition?      @relation(fields: [coalitionId], references: [id])
+  org       AdvocacyOrg? @relation(fields: [orgId], references: [id])
+  campaign  Campaign?    @relation(fields: [campaignId], references: [id])
+  coalition Coalition?   @relation(fields: [coalitionId], references: [id])
 
   @@index([orgId])
   @@index([campaignId])
@@ -768,29 +781,29 @@ enum PolicyStatus {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Page {
-  id            String      @id @default(cuid())
-  workspaceId   String
-  orgId         String?
-  campaignId    String?
-  initiativeId  String?
-  parentPageId  String?
-  title         String
-  slug          String
-  icon          String?
-  coverUrl      String?
-  isPublic      Boolean     @default(false)
-  publishedAt   DateTime?
-  metadata      Json        @default("{}")
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  id           String    @id @default(cuid())
+  workspaceId  String
+  orgId        String?
+  campaignId   String?
+  initiativeId String?
+  parentPageId String?
+  title        String
+  slug         String
+  icon         String?
+  coverUrl     String?
+  isPublic     Boolean   @default(false)
+  publishedAt  DateTime?
+  metadata     Json      @default("{}")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
-  workspace     Workspace   @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  org           AdvocacyOrg? @relation(fields: [orgId], references: [id])
-  campaign      Campaign?   @relation(fields: [campaignId], references: [id])
-  initiative    Initiative? @relation(fields: [initiativeId], references: [id])
-  parentPage    Page?       @relation("SubPages", fields: [parentPageId], references: [id])
-  subPages      Page[]      @relation("SubPages")
-  blocks        Block[]
+  workspace  Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org        AdvocacyOrg? @relation(fields: [orgId], references: [id])
+  campaign   Campaign?    @relation(fields: [campaignId], references: [id])
+  initiative Initiative?  @relation(fields: [initiativeId], references: [id])
+  parentPage Page?        @relation("SubPages", fields: [parentPageId], references: [id])
+  subPages   Page[]       @relation("SubPages")
+  blocks     Block[]
 
   @@unique([workspaceId, slug])
   @@index([workspaceId])
@@ -799,19 +812,19 @@ model Page {
 }
 
 model Block {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   pageId        String
   parentBlockId String?
-  type          String    // "paragraph", "heading_1", "bulleted_list", "callout", "evidence_card", "trial_embed", etc.
-  content       Json      @default("{}")
+  type          String // "paragraph", "heading_1", "bulleted_list", "callout", "evidence_card", "trial_embed", etc.
+  content       Json     @default("{}")
   order         Int
-  metadata      Json      @default("{}")
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  metadata      Json     @default("{}")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  page          Page      @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  parentBlock   Block?    @relation("NestedBlocks", fields: [parentBlockId], references: [id])
-  childBlocks   Block[]   @relation("NestedBlocks")
+  page        Page    @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  parentBlock Block?  @relation("NestedBlocks", fields: [parentBlockId], references: [id])
+  childBlocks Block[] @relation("NestedBlocks")
 
   @@index([pageId])
   @@index([type])
@@ -822,27 +835,27 @@ model Block {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model AgentRun {
-  id              String          @id @default(cuid())
-  workspaceId     String
-  userId          String?
-  role            AgentRole
-  status          AgentRunStatus  @default(PENDING)
-  input           Json
-  output          Json?
-  graphState      Json?           // full LangGraph state for replay
-  mcpToolCalls    Json            @default("[]")
-  errorMessage    String?
-  startedAt       DateTime        @default(now())
-  completedAt     DateTime?
-  durationMs      Int?
-  tokenCount      Int?
-  model           String?
-  metadata        Json            @default("{}")
+  id           String         @id @default(cuid())
+  workspaceId  String
+  userId       String?
+  role         AgentRole
+  status       AgentRunStatus @default(PENDING)
+  input        Json
+  output       Json?
+  graphState   Json? // full LangGraph state for replay
+  mcpToolCalls Json           @default("[]")
+  errorMessage String?
+  startedAt    DateTime       @default(now())
+  completedAt  DateTime?
+  durationMs   Int?
+  tokenCount   Int?
+  model        String?
+  metadata     Json           @default("{}")
 
-  workspace       Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user            User?           @relation(fields: [userId], references: [id])
-  messages        AgentMessage[]
-  tasks           Task[]
+  workspace Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User?          @relation(fields: [userId], references: [id])
+  messages  AgentMessage[]
+  tasks     Task[]
 
   @@index([workspaceId])
   @@index([userId])
@@ -869,18 +882,18 @@ enum AgentRunStatus {
 }
 
 model AgentMessage {
-  id          String      @id @default(cuid())
-  runId       String
-  role        String      // "human", "ai", "tool"
-  content     String
-  toolName    String?
-  toolInput   Json?
-  toolOutput  Json?
-  thinking    String?     // reasoning traces from thinking models
-  order       Int
-  createdAt   DateTime    @default(now())
+  id         String   @id @default(cuid())
+  runId      String
+  role       String // "human", "ai", "tool"
+  content    String
+  toolName   String?
+  toolInput  Json?
+  toolOutput Json?
+  thinking   String? // reasoning traces from thinking models
+  order      Int
+  createdAt  DateTime @default(now())
 
-  run         AgentRun    @relation(fields: [runId], references: [id], onDelete: Cascade)
+  run AgentRun @relation(fields: [runId], references: [id], onDelete: Cascade)
 
   @@index([runId])
 }
@@ -890,17 +903,17 @@ model AgentMessage {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model DataSource {
-  id            String          @id @default(cuid())
-  workspaceId   String
-  name          String
-  type          DataSourceType
-  config        Json            @default("{}")
-  lastSyncAt    DateTime?
-  syncStatus    String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id          String         @id @default(cuid())
+  workspaceId String
+  name        String
+  type        DataSourceType
+  config      Json           @default("{}")
+  lastSyncAt  DateTime?
+  syncStatus  String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 
-  workspace     Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@index([workspaceId])
   @@index([type])
@@ -921,16 +934,16 @@ enum DataSourceType {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model Comment {
-  id            String    @id @default(cuid())
-  taskId        String
-  authorId      String
-  content       String
-  isResolved    Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id         String   @id @default(cuid())
+  taskId     String
+  authorId   String
+  content    String
+  isResolved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
-  task          Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  author        User      @relation(fields: [authorId], references: [id])
+  task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id])
 
   @@index([taskId])
   @@index([authorId])
@@ -941,20 +954,20 @@ model Comment {
 // ─────────────────────────────────────────────────────────────────────────────
 
 model AuditLog {
-  id            String    @id @default(cuid())
-  workspaceId   String
-  userId        String?
-  action        String    // "task.created", "campaign.updated", etc.
-  entityType    String
-  entityId      String
-  before        Json?
-  after         Json?
-  ipAddress     String?
-  userAgent     String?
-  createdAt     DateTime  @default(now())
+  id          String   @id @default(cuid())
+  workspaceId String
+  userId      String?
+  action      String // "task.created", "campaign.updated", etc.
+  entityType  String
+  entityId    String
+  before      Json?
+  after       Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
 
-  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user          User?     @relation(fields: [userId], references: [id])
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User?     @relation(fields: [userId], references: [id])
 
   @@index([workspaceId])
   @@index([userId])
@@ -975,7 +988,7 @@ model GrantPipeline {
   nextAction   String?
   nextActionAt DateTime?
   assignedTo   String?
-  priority     String?        // HIGH | MEDIUM | LOW
+  priority     String? // HIGH | MEDIUM | LOW
   tags         String[]
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -989,12 +1002,13 @@ model Dossier {
   org       AdvocacyOrg @relation(fields: [orgId], references: [id], onDelete: Cascade)
   type      DossierType
   title     String
-  content   String      // full markdown
+  content   String // full markdown
   model     String      @default("openai/gpt-oss-120b:free")
-  context   String?     // user-provided context used for generation
+  context   String? // user-provided context used for generation
   createdAt DateTime    @default(now())
 
-  applications GrantApplication[]
+  applications     GrantApplication[]
+  outreachMessages OutreachMessage[]
 
   @@index([orgId])
 }
@@ -1015,8 +1029,8 @@ model GrantApplication {
   awardedAmount Float?
   notes         String?
   nextStep      String?
-  internalScore Int?              // 1-10 internal confidence score
-  funderScore   Int?              // 1-10 strategic fit score
+  internalScore Int? // 1-10 internal confidence score
+  funderScore   Int? // 1-10 strategic fit score
   createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
 
@@ -1050,4 +1064,167 @@ enum ApplicationStatus {
   AWARDED
   REJECTED
   WITHDRAWN
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// KNOWLEDGE BASE (file drop → text extraction → chunk → pgvector embeddings → RAG)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model KnowledgeDoc {
+  id            String             @id @default(cuid())
+  workspaceId   String
+  orgId         String? // optional: scope doc to a specific org
+  grantId       String? // optional: scope doc to a specific grant
+  title         String
+  fileName      String
+  mimeType      String
+  sizeBytes     Int
+  fileData      Bytes // original file bytes (Postgres bytea)
+  extractedText String? // full extracted plain text
+  status        KnowledgeDocStatus @default(PENDING)
+  sourceType    String             @default("upload") // upload | url | paste
+  tags          String[]
+  error         String? // failure reason when status=FAILED
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  workspace Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org       AdvocacyOrg?     @relation(fields: [orgId], references: [id], onDelete: SetNull)
+  grant     OpenGrant?       @relation(fields: [grantId], references: [id], onDelete: SetNull)
+  chunks    KnowledgeChunk[]
+
+  @@index([workspaceId])
+  @@index([orgId])
+  @@index([grantId])
+  @@index([status])
+}
+
+model KnowledgeChunk {
+  id          String                      @id @default(cuid())
+  docId       String
+  workspaceId String
+  orgId       String? // denormalized from doc for fast filtered search
+  chunkIndex  Int
+  content     String
+  embedding   Unsupported("vector(384)")? // pgvector; IVFFlat index added via raw SQL migration
+  tokenCount  Int                         @default(0)
+  createdAt   DateTime                    @default(now())
+
+  doc       KnowledgeDoc @relation(fields: [docId], references: [id], onDelete: Cascade)
+  workspace Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org       AdvocacyOrg? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+
+  @@index([docId])
+  @@index([workspaceId])
+  @@index([orgId])
+}
+
+enum KnowledgeDocStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// OUTREACH WORKFLOW (draft → track → follow-up sequences; NO live email sending)
+// ─────────────────────────────────────────────────────────────────────────────
+
+model OutreachSequence {
+  id          String                 @id @default(cuid())
+  workspaceId String
+  orgId       String? // target org this sequence is for
+  name        String
+  goal        String? // e.g. "Introduce partnership on GBM research"
+  status      OutreachSequenceStatus @default(ACTIVE)
+  steps       Json                   @default("[]") // ordered step config: [{step, dayOffset, channel, purpose}]
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  workspace Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  org       AdvocacyOrg?      @relation(fields: [orgId], references: [id], onDelete: SetNull)
+  contacts  OutreachContact[]
+  messages  OutreachMessage[]
+
+  @@index([workspaceId])
+  @@index([orgId])
+  @@index([status])
+}
+
+model OutreachContact {
+  id           String                @id @default(cuid())
+  workspaceId  String
+  sequenceId   String
+  orgContactId String? // link to existing OrgContact when available
+  name         String
+  title        String?
+  email        String?
+  channel      OutreachChannel       @default(EMAIL)
+  status       OutreachContactStatus @default(NOT_STARTED)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  workspace     Workspace         @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  sequence      OutreachSequence  @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  orgContact    OrgContact?       @relation(fields: [orgContactId], references: [id], onDelete: SetNull)
+  messages      OutreachMessage[]
+  AdvocacyOrg   AdvocacyOrg?      @relation(fields: [advocacyOrgId], references: [id])
+  advocacyOrgId String?
+
+  @@index([workspaceId])
+  @@index([sequenceId])
+  @@index([status])
+}
+
+model OutreachMessage {
+  id           String                @id @default(cuid())
+  sequenceId   String
+  contactId    String
+  step         Int                   @default(0)
+  subject      String?
+  body         String
+  status       OutreachMessageStatus @default(DRAFTED)
+  scheduledFor DateTime?
+  sentAt       DateTime?
+  dossierId    String? // optional: message generated from a dossier
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  sequence OutreachSequence @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  contact  OutreachContact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  dossier  Dossier?         @relation(fields: [dossierId], references: [id], onDelete: SetNull)
+
+  @@index([sequenceId])
+  @@index([contactId])
+  @@index([status])
+}
+
+enum OutreachSequenceStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+}
+
+enum OutreachChannel {
+  EMAIL
+  LINKEDIN
+  PHONE
+}
+
+enum OutreachContactStatus {
+  NOT_STARTED
+  DRAFTED
+  SENT
+  OPENED
+  REPLIED
+  BOUNCED
+  DECLINED
+}
+
+enum OutreachMessageStatus {
+  DRAFTED
+  SCHEDULED
+  SENT
+  REPLIED
+  BOUNCED
 }

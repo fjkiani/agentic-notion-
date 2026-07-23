@@ -158,6 +158,31 @@ export type Dossier = $Result.DefaultSelection<Prisma.$DossierPayload>
  * 
  */
 export type GrantApplication = $Result.DefaultSelection<Prisma.$GrantApplicationPayload>
+/**
+ * Model KnowledgeDoc
+ * 
+ */
+export type KnowledgeDoc = $Result.DefaultSelection<Prisma.$KnowledgeDocPayload>
+/**
+ * Model KnowledgeChunk
+ * 
+ */
+export type KnowledgeChunk = $Result.DefaultSelection<Prisma.$KnowledgeChunkPayload>
+/**
+ * Model OutreachSequence
+ * 
+ */
+export type OutreachSequence = $Result.DefaultSelection<Prisma.$OutreachSequencePayload>
+/**
+ * Model OutreachContact
+ * 
+ */
+export type OutreachContact = $Result.DefaultSelection<Prisma.$OutreachContactPayload>
+/**
+ * Model OutreachMessage
+ * 
+ */
+export type OutreachMessage = $Result.DefaultSelection<Prisma.$OutreachMessagePayload>
 
 /**
  * Enums
@@ -510,6 +535,58 @@ export const ApplicationStatus: {
 
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
 
+
+export const KnowledgeDocStatus: {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED'
+};
+
+export type KnowledgeDocStatus = (typeof KnowledgeDocStatus)[keyof typeof KnowledgeDocStatus]
+
+
+export const OutreachSequenceStatus: {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED'
+};
+
+export type OutreachSequenceStatus = (typeof OutreachSequenceStatus)[keyof typeof OutreachSequenceStatus]
+
+
+export const OutreachChannel: {
+  EMAIL: 'EMAIL',
+  LINKEDIN: 'LINKEDIN',
+  PHONE: 'PHONE'
+};
+
+export type OutreachChannel = (typeof OutreachChannel)[keyof typeof OutreachChannel]
+
+
+export const OutreachContactStatus: {
+  NOT_STARTED: 'NOT_STARTED',
+  DRAFTED: 'DRAFTED',
+  SENT: 'SENT',
+  OPENED: 'OPENED',
+  REPLIED: 'REPLIED',
+  BOUNCED: 'BOUNCED',
+  DECLINED: 'DECLINED'
+};
+
+export type OutreachContactStatus = (typeof OutreachContactStatus)[keyof typeof OutreachContactStatus]
+
+
+export const OutreachMessageStatus: {
+  DRAFTED: 'DRAFTED',
+  SCHEDULED: 'SCHEDULED',
+  SENT: 'SENT',
+  REPLIED: 'REPLIED',
+  BOUNCED: 'BOUNCED'
+};
+
+export type OutreachMessageStatus = (typeof OutreachMessageStatus)[keyof typeof OutreachMessageStatus]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -627,6 +704,26 @@ export const DossierType: typeof $Enums.DossierType
 export type ApplicationStatus = $Enums.ApplicationStatus
 
 export const ApplicationStatus: typeof $Enums.ApplicationStatus
+
+export type KnowledgeDocStatus = $Enums.KnowledgeDocStatus
+
+export const KnowledgeDocStatus: typeof $Enums.KnowledgeDocStatus
+
+export type OutreachSequenceStatus = $Enums.OutreachSequenceStatus
+
+export const OutreachSequenceStatus: typeof $Enums.OutreachSequenceStatus
+
+export type OutreachChannel = $Enums.OutreachChannel
+
+export const OutreachChannel: typeof $Enums.OutreachChannel
+
+export type OutreachContactStatus = $Enums.OutreachContactStatus
+
+export const OutreachContactStatus: typeof $Enums.OutreachContactStatus
+
+export type OutreachMessageStatus = $Enums.OutreachMessageStatus
+
+export const OutreachMessageStatus: typeof $Enums.OutreachMessageStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1040,6 +1137,56 @@ export class PrismaClient<
     * ```
     */
   get grantApplication(): Prisma.GrantApplicationDelegate<ExtArgs>;
+
+  /**
+   * `prisma.knowledgeDoc`: Exposes CRUD operations for the **KnowledgeDoc** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KnowledgeDocs
+    * const knowledgeDocs = await prisma.knowledgeDoc.findMany()
+    * ```
+    */
+  get knowledgeDoc(): Prisma.KnowledgeDocDelegate<ExtArgs>;
+
+  /**
+   * `prisma.knowledgeChunk`: Exposes CRUD operations for the **KnowledgeChunk** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KnowledgeChunks
+    * const knowledgeChunks = await prisma.knowledgeChunk.findMany()
+    * ```
+    */
+  get knowledgeChunk(): Prisma.KnowledgeChunkDelegate<ExtArgs>;
+
+  /**
+   * `prisma.outreachSequence`: Exposes CRUD operations for the **OutreachSequence** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OutreachSequences
+    * const outreachSequences = await prisma.outreachSequence.findMany()
+    * ```
+    */
+  get outreachSequence(): Prisma.OutreachSequenceDelegate<ExtArgs>;
+
+  /**
+   * `prisma.outreachContact`: Exposes CRUD operations for the **OutreachContact** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OutreachContacts
+    * const outreachContacts = await prisma.outreachContact.findMany()
+    * ```
+    */
+  get outreachContact(): Prisma.OutreachContactDelegate<ExtArgs>;
+
+  /**
+   * `prisma.outreachMessage`: Exposes CRUD operations for the **OutreachMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OutreachMessages
+    * const outreachMessages = await prisma.outreachMessage.findMany()
+    * ```
+    */
+  get outreachMessage(): Prisma.OutreachMessageDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1509,7 +1656,12 @@ export namespace Prisma {
     AuditLog: 'AuditLog',
     GrantPipeline: 'GrantPipeline',
     Dossier: 'Dossier',
-    GrantApplication: 'GrantApplication'
+    GrantApplication: 'GrantApplication',
+    KnowledgeDoc: 'KnowledgeDoc',
+    KnowledgeChunk: 'KnowledgeChunk',
+    OutreachSequence: 'OutreachSequence',
+    OutreachContact: 'OutreachContact',
+    OutreachMessage: 'OutreachMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1525,7 +1677,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "openGrant" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog" | "grantPipeline" | "dossier" | "grantApplication"
+      modelProps: "user" | "workspace" | "workspaceMember" | "advocacyOrg" | "orgContact" | "openGrant" | "campaign" | "initiative" | "task" | "evidence" | "clinicalTrial" | "campaignTrial" | "biomarker" | "campaignBiomarker" | "trialBiomarker" | "patientStory" | "coalition" | "coalitionMember" | "policyTarget" | "page" | "block" | "agentRun" | "agentMessage" | "dataSource" | "comment" | "auditLog" | "grantPipeline" | "dossier" | "grantApplication" | "knowledgeDoc" | "knowledgeChunk" | "outreachSequence" | "outreachContact" | "outreachMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3559,6 +3711,356 @@ export namespace Prisma {
           }
         }
       }
+      KnowledgeDoc: {
+        payload: Prisma.$KnowledgeDocPayload<ExtArgs>
+        fields: Prisma.KnowledgeDocFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KnowledgeDocFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KnowledgeDocFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          findFirst: {
+            args: Prisma.KnowledgeDocFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KnowledgeDocFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          findMany: {
+            args: Prisma.KnowledgeDocFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>[]
+          }
+          create: {
+            args: Prisma.KnowledgeDocCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          createMany: {
+            args: Prisma.KnowledgeDocCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KnowledgeDocCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>[]
+          }
+          delete: {
+            args: Prisma.KnowledgeDocDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          update: {
+            args: Prisma.KnowledgeDocUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          deleteMany: {
+            args: Prisma.KnowledgeDocDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KnowledgeDocUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.KnowledgeDocUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeDocPayload>
+          }
+          aggregate: {
+            args: Prisma.KnowledgeDocAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKnowledgeDoc>
+          }
+          groupBy: {
+            args: Prisma.KnowledgeDocGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KnowledgeDocGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KnowledgeDocCountArgs<ExtArgs>
+            result: $Utils.Optional<KnowledgeDocCountAggregateOutputType> | number
+          }
+        }
+      }
+      KnowledgeChunk: {
+        payload: Prisma.$KnowledgeChunkPayload<ExtArgs>
+        fields: Prisma.KnowledgeChunkFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KnowledgeChunkFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KnowledgeChunkFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          findFirst: {
+            args: Prisma.KnowledgeChunkFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KnowledgeChunkFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          findMany: {
+            args: Prisma.KnowledgeChunkFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>[]
+          }
+          create: {
+            args: Prisma.KnowledgeChunkCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          createMany: {
+            args: Prisma.KnowledgeChunkCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KnowledgeChunkCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>[]
+          }
+          delete: {
+            args: Prisma.KnowledgeChunkDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          update: {
+            args: Prisma.KnowledgeChunkUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          deleteMany: {
+            args: Prisma.KnowledgeChunkDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KnowledgeChunkUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.KnowledgeChunkUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KnowledgeChunkPayload>
+          }
+          aggregate: {
+            args: Prisma.KnowledgeChunkAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKnowledgeChunk>
+          }
+          groupBy: {
+            args: Prisma.KnowledgeChunkGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KnowledgeChunkGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KnowledgeChunkCountArgs<ExtArgs>
+            result: $Utils.Optional<KnowledgeChunkCountAggregateOutputType> | number
+          }
+        }
+      }
+      OutreachSequence: {
+        payload: Prisma.$OutreachSequencePayload<ExtArgs>
+        fields: Prisma.OutreachSequenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OutreachSequenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OutreachSequenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          findFirst: {
+            args: Prisma.OutreachSequenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OutreachSequenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          findMany: {
+            args: Prisma.OutreachSequenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>[]
+          }
+          create: {
+            args: Prisma.OutreachSequenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          createMany: {
+            args: Prisma.OutreachSequenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OutreachSequenceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>[]
+          }
+          delete: {
+            args: Prisma.OutreachSequenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          update: {
+            args: Prisma.OutreachSequenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          deleteMany: {
+            args: Prisma.OutreachSequenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OutreachSequenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OutreachSequenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachSequencePayload>
+          }
+          aggregate: {
+            args: Prisma.OutreachSequenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOutreachSequence>
+          }
+          groupBy: {
+            args: Prisma.OutreachSequenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OutreachSequenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OutreachSequenceCountArgs<ExtArgs>
+            result: $Utils.Optional<OutreachSequenceCountAggregateOutputType> | number
+          }
+        }
+      }
+      OutreachContact: {
+        payload: Prisma.$OutreachContactPayload<ExtArgs>
+        fields: Prisma.OutreachContactFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OutreachContactFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OutreachContactFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          findFirst: {
+            args: Prisma.OutreachContactFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OutreachContactFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          findMany: {
+            args: Prisma.OutreachContactFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>[]
+          }
+          create: {
+            args: Prisma.OutreachContactCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          createMany: {
+            args: Prisma.OutreachContactCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OutreachContactCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>[]
+          }
+          delete: {
+            args: Prisma.OutreachContactDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          update: {
+            args: Prisma.OutreachContactUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          deleteMany: {
+            args: Prisma.OutreachContactDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OutreachContactUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OutreachContactUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachContactPayload>
+          }
+          aggregate: {
+            args: Prisma.OutreachContactAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOutreachContact>
+          }
+          groupBy: {
+            args: Prisma.OutreachContactGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OutreachContactGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OutreachContactCountArgs<ExtArgs>
+            result: $Utils.Optional<OutreachContactCountAggregateOutputType> | number
+          }
+        }
+      }
+      OutreachMessage: {
+        payload: Prisma.$OutreachMessagePayload<ExtArgs>
+        fields: Prisma.OutreachMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OutreachMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OutreachMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.OutreachMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OutreachMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          findMany: {
+            args: Prisma.OutreachMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>[]
+          }
+          create: {
+            args: Prisma.OutreachMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          createMany: {
+            args: Prisma.OutreachMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OutreachMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.OutreachMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          update: {
+            args: Prisma.OutreachMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.OutreachMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OutreachMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.OutreachMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OutreachMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.OutreachMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOutreachMessage>
+          }
+          groupBy: {
+            args: Prisma.OutreachMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OutreachMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OutreachMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<OutreachMessageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3812,6 +4314,10 @@ export namespace Prisma {
     agentRuns: number
     dataSources: number
     auditLogs: number
+    knowledgeDocs: number
+    knowledgeChunks: number
+    outreachSequences: number
+    outreachContacts: number
   }
 
   export type WorkspaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3822,6 +4328,10 @@ export namespace Prisma {
     agentRuns?: boolean | WorkspaceCountOutputTypeCountAgentRunsArgs
     dataSources?: boolean | WorkspaceCountOutputTypeCountDataSourcesArgs
     auditLogs?: boolean | WorkspaceCountOutputTypeCountAuditLogsArgs
+    knowledgeDocs?: boolean | WorkspaceCountOutputTypeCountKnowledgeDocsArgs
+    knowledgeChunks?: boolean | WorkspaceCountOutputTypeCountKnowledgeChunksArgs
+    outreachSequences?: boolean | WorkspaceCountOutputTypeCountOutreachSequencesArgs
+    outreachContacts?: boolean | WorkspaceCountOutputTypeCountOutreachContactsArgs
   }
 
   // Custom InputTypes
@@ -3884,6 +4394,34 @@ export namespace Prisma {
     where?: AuditLogWhereInput
   }
 
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountKnowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeDocWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountKnowledgeChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeChunkWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountOutreachSequencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachSequenceWhereInput
+  }
+
+  /**
+   * WorkspaceCountOutputType without action
+   */
+  export type WorkspaceCountOutputTypeCountOutreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachContactWhereInput
+  }
+
 
   /**
    * Count Type AdvocacyOrgCountOutputType
@@ -3899,6 +4437,10 @@ export namespace Prisma {
     pages: number
     dossiers: number
     applications: number
+    knowledgeDocs: number
+    knowledgeChunks: number
+    outreachSequences: number
+    outreachContacts: number
   }
 
   export type AdvocacyOrgCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3911,6 +4453,10 @@ export namespace Prisma {
     pages?: boolean | AdvocacyOrgCountOutputTypeCountPagesArgs
     dossiers?: boolean | AdvocacyOrgCountOutputTypeCountDossiersArgs
     applications?: boolean | AdvocacyOrgCountOutputTypeCountApplicationsArgs
+    knowledgeDocs?: boolean | AdvocacyOrgCountOutputTypeCountKnowledgeDocsArgs
+    knowledgeChunks?: boolean | AdvocacyOrgCountOutputTypeCountKnowledgeChunksArgs
+    outreachSequences?: boolean | AdvocacyOrgCountOutputTypeCountOutreachSequencesArgs
+    outreachContacts?: boolean | AdvocacyOrgCountOutputTypeCountOutreachContactsArgs
   }
 
   // Custom InputTypes
@@ -3987,6 +4533,65 @@ export namespace Prisma {
     where?: GrantApplicationWhereInput
   }
 
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountKnowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeDocWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountKnowledgeChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeChunkWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountOutreachSequencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachSequenceWhereInput
+  }
+
+  /**
+   * AdvocacyOrgCountOutputType without action
+   */
+  export type AdvocacyOrgCountOutputTypeCountOutreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachContactWhereInput
+  }
+
+
+  /**
+   * Count Type OrgContactCountOutputType
+   */
+
+  export type OrgContactCountOutputType = {
+    outreachContacts: number
+  }
+
+  export type OrgContactCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    outreachContacts?: boolean | OrgContactCountOutputTypeCountOutreachContactsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OrgContactCountOutputType without action
+   */
+  export type OrgContactCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgContactCountOutputType
+     */
+    select?: OrgContactCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OrgContactCountOutputType without action
+   */
+  export type OrgContactCountOutputTypeCountOutreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachContactWhereInput
+  }
+
 
   /**
    * Count Type OpenGrantCountOutputType
@@ -3994,10 +4599,12 @@ export namespace Prisma {
 
   export type OpenGrantCountOutputType = {
     applications: number
+    knowledgeDocs: number
   }
 
   export type OpenGrantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | OpenGrantCountOutputTypeCountApplicationsArgs
+    knowledgeDocs?: boolean | OpenGrantCountOutputTypeCountKnowledgeDocsArgs
   }
 
   // Custom InputTypes
@@ -4016,6 +4623,13 @@ export namespace Prisma {
    */
   export type OpenGrantCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GrantApplicationWhereInput
+  }
+
+  /**
+   * OpenGrantCountOutputType without action
+   */
+  export type OpenGrantCountOutputTypeCountKnowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeDocWhereInput
   }
 
 
@@ -4421,10 +5035,12 @@ export namespace Prisma {
 
   export type DossierCountOutputType = {
     applications: number
+    outreachMessages: number
   }
 
   export type DossierCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | DossierCountOutputTypeCountApplicationsArgs
+    outreachMessages?: boolean | DossierCountOutputTypeCountOutreachMessagesArgs
   }
 
   // Custom InputTypes
@@ -4443,6 +5059,115 @@ export namespace Prisma {
    */
   export type DossierCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: GrantApplicationWhereInput
+  }
+
+  /**
+   * DossierCountOutputType without action
+   */
+  export type DossierCountOutputTypeCountOutreachMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachMessageWhereInput
+  }
+
+
+  /**
+   * Count Type KnowledgeDocCountOutputType
+   */
+
+  export type KnowledgeDocCountOutputType = {
+    chunks: number
+  }
+
+  export type KnowledgeDocCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chunks?: boolean | KnowledgeDocCountOutputTypeCountChunksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * KnowledgeDocCountOutputType without action
+   */
+  export type KnowledgeDocCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDocCountOutputType
+     */
+    select?: KnowledgeDocCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KnowledgeDocCountOutputType without action
+   */
+  export type KnowledgeDocCountOutputTypeCountChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeChunkWhereInput
+  }
+
+
+  /**
+   * Count Type OutreachSequenceCountOutputType
+   */
+
+  export type OutreachSequenceCountOutputType = {
+    contacts: number
+    messages: number
+  }
+
+  export type OutreachSequenceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    contacts?: boolean | OutreachSequenceCountOutputTypeCountContactsArgs
+    messages?: boolean | OutreachSequenceCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OutreachSequenceCountOutputType without action
+   */
+  export type OutreachSequenceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequenceCountOutputType
+     */
+    select?: OutreachSequenceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OutreachSequenceCountOutputType without action
+   */
+  export type OutreachSequenceCountOutputTypeCountContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachContactWhereInput
+  }
+
+  /**
+   * OutreachSequenceCountOutputType without action
+   */
+  export type OutreachSequenceCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachMessageWhereInput
+  }
+
+
+  /**
+   * Count Type OutreachContactCountOutputType
+   */
+
+  export type OutreachContactCountOutputType = {
+    messages: number
+  }
+
+  export type OutreachContactCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | OutreachContactCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * OutreachContactCountOutputType without action
+   */
+  export type OutreachContactCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContactCountOutputType
+     */
+    select?: OutreachContactCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * OutreachContactCountOutputType without action
+   */
+  export type OutreachContactCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachMessageWhereInput
   }
 
 
@@ -5769,6 +6494,10 @@ export namespace Prisma {
     agentRuns?: boolean | Workspace$agentRunsArgs<ExtArgs>
     dataSources?: boolean | Workspace$dataSourcesArgs<ExtArgs>
     auditLogs?: boolean | Workspace$auditLogsArgs<ExtArgs>
+    knowledgeDocs?: boolean | Workspace$knowledgeDocsArgs<ExtArgs>
+    knowledgeChunks?: boolean | Workspace$knowledgeChunksArgs<ExtArgs>
+    outreachSequences?: boolean | Workspace$outreachSequencesArgs<ExtArgs>
+    outreachContacts?: boolean | Workspace$outreachContactsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["workspace"]>
 
@@ -5802,6 +6531,10 @@ export namespace Prisma {
     agentRuns?: boolean | Workspace$agentRunsArgs<ExtArgs>
     dataSources?: boolean | Workspace$dataSourcesArgs<ExtArgs>
     auditLogs?: boolean | Workspace$auditLogsArgs<ExtArgs>
+    knowledgeDocs?: boolean | Workspace$knowledgeDocsArgs<ExtArgs>
+    knowledgeChunks?: boolean | Workspace$knowledgeChunksArgs<ExtArgs>
+    outreachSequences?: boolean | Workspace$outreachSequencesArgs<ExtArgs>
+    outreachContacts?: boolean | Workspace$outreachContactsArgs<ExtArgs>
     _count?: boolean | WorkspaceCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WorkspaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5816,6 +6549,10 @@ export namespace Prisma {
       agentRuns: Prisma.$AgentRunPayload<ExtArgs>[]
       dataSources: Prisma.$DataSourcePayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      knowledgeDocs: Prisma.$KnowledgeDocPayload<ExtArgs>[]
+      knowledgeChunks: Prisma.$KnowledgeChunkPayload<ExtArgs>[]
+      outreachSequences: Prisma.$OutreachSequencePayload<ExtArgs>[]
+      outreachContacts: Prisma.$OutreachContactPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6197,6 +6934,10 @@ export namespace Prisma {
     agentRuns<T extends Workspace$agentRunsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$agentRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AgentRunPayload<ExtArgs>, T, "findMany"> | Null>
     dataSources<T extends Workspace$dataSourcesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$dataSourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DataSourcePayload<ExtArgs>, T, "findMany"> | Null>
     auditLogs<T extends Workspace$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany"> | Null>
+    knowledgeDocs<T extends Workspace$knowledgeDocsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$knowledgeDocsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findMany"> | Null>
+    knowledgeChunks<T extends Workspace$knowledgeChunksArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$knowledgeChunksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findMany"> | Null>
+    outreachSequences<T extends Workspace$outreachSequencesArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$outreachSequencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findMany"> | Null>
+    outreachContacts<T extends Workspace$outreachContactsArgs<ExtArgs> = {}>(args?: Subset<T, Workspace$outreachContactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6685,6 +7426,86 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.knowledgeDocs
+   */
+  export type Workspace$knowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    where?: KnowledgeDocWhereInput
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    cursor?: KnowledgeDocWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.knowledgeChunks
+   */
+  export type Workspace$knowledgeChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    where?: KnowledgeChunkWhereInput
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    cursor?: KnowledgeChunkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.outreachSequences
+   */
+  export type Workspace$outreachSequencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    where?: OutreachSequenceWhereInput
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    cursor?: OutreachSequenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachSequenceScalarFieldEnum | OutreachSequenceScalarFieldEnum[]
+  }
+
+  /**
+   * Workspace.outreachContacts
+   */
+  export type Workspace$outreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    where?: OutreachContactWhereInput
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    cursor?: OutreachContactWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
   }
 
   /**
@@ -8002,6 +8823,10 @@ export namespace Prisma {
     pipeline?: boolean | AdvocacyOrg$pipelineArgs<ExtArgs>
     dossiers?: boolean | AdvocacyOrg$dossiersArgs<ExtArgs>
     applications?: boolean | AdvocacyOrg$applicationsArgs<ExtArgs>
+    knowledgeDocs?: boolean | AdvocacyOrg$knowledgeDocsArgs<ExtArgs>
+    knowledgeChunks?: boolean | AdvocacyOrg$knowledgeChunksArgs<ExtArgs>
+    outreachSequences?: boolean | AdvocacyOrg$outreachSequencesArgs<ExtArgs>
+    outreachContacts?: boolean | AdvocacyOrg$outreachContactsArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["advocacyOrg"]>
 
@@ -8072,6 +8897,10 @@ export namespace Prisma {
     pipeline?: boolean | AdvocacyOrg$pipelineArgs<ExtArgs>
     dossiers?: boolean | AdvocacyOrg$dossiersArgs<ExtArgs>
     applications?: boolean | AdvocacyOrg$applicationsArgs<ExtArgs>
+    knowledgeDocs?: boolean | AdvocacyOrg$knowledgeDocsArgs<ExtArgs>
+    knowledgeChunks?: boolean | AdvocacyOrg$knowledgeChunksArgs<ExtArgs>
+    outreachSequences?: boolean | AdvocacyOrg$outreachSequencesArgs<ExtArgs>
+    outreachContacts?: boolean | AdvocacyOrg$outreachContactsArgs<ExtArgs>
     _count?: boolean | AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AdvocacyOrgIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8092,6 +8921,10 @@ export namespace Prisma {
       pipeline: Prisma.$GrantPipelinePayload<ExtArgs> | null
       dossiers: Prisma.$DossierPayload<ExtArgs>[]
       applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
+      knowledgeDocs: Prisma.$KnowledgeDocPayload<ExtArgs>[]
+      knowledgeChunks: Prisma.$KnowledgeChunkPayload<ExtArgs>[]
+      outreachSequences: Prisma.$OutreachSequencePayload<ExtArgs>[]
+      outreachContacts: Prisma.$OutreachContactPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8493,6 +9326,10 @@ export namespace Prisma {
     pipeline<T extends AdvocacyOrg$pipelineArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$pipelineArgs<ExtArgs>>): Prisma__GrantPipelineClient<$Result.GetResult<Prisma.$GrantPipelinePayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     dossiers<T extends AdvocacyOrg$dossiersArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$dossiersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findMany"> | Null>
     applications<T extends AdvocacyOrg$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
+    knowledgeDocs<T extends AdvocacyOrg$knowledgeDocsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$knowledgeDocsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findMany"> | Null>
+    knowledgeChunks<T extends AdvocacyOrg$knowledgeChunksArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$knowledgeChunksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findMany"> | Null>
+    outreachSequences<T extends AdvocacyOrg$outreachSequencesArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$outreachSequencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findMany"> | Null>
+    outreachContacts<T extends AdvocacyOrg$outreachContactsArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrg$outreachContactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9059,6 +9896,86 @@ export namespace Prisma {
   }
 
   /**
+   * AdvocacyOrg.knowledgeDocs
+   */
+  export type AdvocacyOrg$knowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    where?: KnowledgeDocWhereInput
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    cursor?: KnowledgeDocWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.knowledgeChunks
+   */
+  export type AdvocacyOrg$knowledgeChunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    where?: KnowledgeChunkWhereInput
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    cursor?: KnowledgeChunkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.outreachSequences
+   */
+  export type AdvocacyOrg$outreachSequencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    where?: OutreachSequenceWhereInput
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    cursor?: OutreachSequenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachSequenceScalarFieldEnum | OutreachSequenceScalarFieldEnum[]
+  }
+
+  /**
+   * AdvocacyOrg.outreachContacts
+   */
+  export type AdvocacyOrg$outreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    where?: OutreachContactWhereInput
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    cursor?: OutreachContactWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
    * AdvocacyOrg without action
    */
   export type AdvocacyOrgDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9270,6 +10187,8 @@ export namespace Prisma {
     isPrimary?: boolean
     createdAt?: boolean
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    outreachContacts?: boolean | OrgContact$outreachContactsArgs<ExtArgs>
+    _count?: boolean | OrgContactCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["orgContact"]>
 
   export type OrgContactSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9299,6 +10218,8 @@ export namespace Prisma {
 
   export type OrgContactInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
+    outreachContacts?: boolean | OrgContact$outreachContactsArgs<ExtArgs>
+    _count?: boolean | OrgContactCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OrgContactIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
@@ -9308,6 +10229,7 @@ export namespace Prisma {
     name: "OrgContact"
     objects: {
       org: Prisma.$AdvocacyOrgPayload<ExtArgs>
+      outreachContacts: Prisma.$OutreachContactPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -9684,6 +10606,7 @@ export namespace Prisma {
   export interface Prisma__OrgContactClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    outreachContacts<T extends OrgContact$outreachContactsArgs<ExtArgs> = {}>(args?: Subset<T, OrgContact$outreachContactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10040,6 +10963,26 @@ export namespace Prisma {
   }
 
   /**
+   * OrgContact.outreachContacts
+   */
+  export type OrgContact$outreachContactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    where?: OutreachContactWhereInput
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    cursor?: OutreachContactWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
    * OrgContact without action
    */
   export type OrgContactDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10080,6 +11023,7 @@ export namespace Prisma {
 
   export type OpenGrantMinAggregateOutputType = {
     id: string | null
+    slug: string | null
     orgId: string | null
     workspaceId: string | null
     title: string | null
@@ -10108,6 +11052,7 @@ export namespace Prisma {
 
   export type OpenGrantMaxAggregateOutputType = {
     id: string | null
+    slug: string | null
     orgId: string | null
     workspaceId: string | null
     title: string | null
@@ -10136,6 +11081,7 @@ export namespace Prisma {
 
   export type OpenGrantCountAggregateOutputType = {
     id: number
+    slug: number
     orgId: number
     workspaceId: number
     title: number
@@ -10183,6 +11129,7 @@ export namespace Prisma {
 
   export type OpenGrantMinAggregateInputType = {
     id?: true
+    slug?: true
     orgId?: true
     workspaceId?: true
     title?: true
@@ -10211,6 +11158,7 @@ export namespace Prisma {
 
   export type OpenGrantMaxAggregateInputType = {
     id?: true
+    slug?: true
     orgId?: true
     workspaceId?: true
     title?: true
@@ -10239,6 +11187,7 @@ export namespace Prisma {
 
   export type OpenGrantCountAggregateInputType = {
     id?: true
+    slug?: true
     orgId?: true
     workspaceId?: true
     title?: true
@@ -10359,6 +11308,7 @@ export namespace Prisma {
 
   export type OpenGrantGroupByOutputType = {
     id: string
+    slug: string
     orgId: string
     workspaceId: string
     title: string
@@ -10411,6 +11361,7 @@ export namespace Prisma {
 
   export type OpenGrantSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    slug?: boolean
     orgId?: boolean
     workspaceId?: boolean
     title?: boolean
@@ -10443,11 +11394,13 @@ export namespace Prisma {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     applications?: boolean | OpenGrant$applicationsArgs<ExtArgs>
+    knowledgeDocs?: boolean | OpenGrant$knowledgeDocsArgs<ExtArgs>
     _count?: boolean | OpenGrantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["openGrant"]>
 
   export type OpenGrantSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    slug?: boolean
     orgId?: boolean
     workspaceId?: boolean
     title?: boolean
@@ -10483,6 +11436,7 @@ export namespace Prisma {
 
   export type OpenGrantSelectScalar = {
     id?: boolean
+    slug?: boolean
     orgId?: boolean
     workspaceId?: boolean
     title?: boolean
@@ -10518,6 +11472,7 @@ export namespace Prisma {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
     applications?: boolean | OpenGrant$applicationsArgs<ExtArgs>
+    knowledgeDocs?: boolean | OpenGrant$knowledgeDocsArgs<ExtArgs>
     _count?: boolean | OpenGrantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OpenGrantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10531,9 +11486,11 @@ export namespace Prisma {
       org: Prisma.$AdvocacyOrgPayload<ExtArgs>
       workspace: Prisma.$WorkspacePayload<ExtArgs>
       applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
+      knowledgeDocs: Prisma.$KnowledgeDocPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
+      slug: string
       orgId: string
       workspaceId: string
       title: string
@@ -10930,6 +11887,7 @@ export namespace Prisma {
     org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     applications<T extends OpenGrant$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, OpenGrant$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
+    knowledgeDocs<T extends OpenGrant$knowledgeDocsArgs<ExtArgs> = {}>(args?: Subset<T, OpenGrant$knowledgeDocsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10960,6 +11918,7 @@ export namespace Prisma {
    */ 
   interface OpenGrantFieldRefs {
     readonly id: FieldRef<"OpenGrant", 'String'>
+    readonly slug: FieldRef<"OpenGrant", 'String'>
     readonly orgId: FieldRef<"OpenGrant", 'String'>
     readonly workspaceId: FieldRef<"OpenGrant", 'String'>
     readonly title: FieldRef<"OpenGrant", 'String'>
@@ -11324,6 +12283,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * OpenGrant.knowledgeDocs
+   */
+  export type OpenGrant$knowledgeDocsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    where?: KnowledgeDocWhereInput
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    cursor?: KnowledgeDocWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
   }
 
   /**
@@ -34214,6 +35193,7 @@ export namespace Prisma {
     createdAt?: boolean
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     applications?: boolean | Dossier$applicationsArgs<ExtArgs>
+    outreachMessages?: boolean | Dossier$outreachMessagesArgs<ExtArgs>
     _count?: boolean | DossierCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dossier"]>
 
@@ -34243,6 +35223,7 @@ export namespace Prisma {
   export type DossierInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     org?: boolean | AdvocacyOrgDefaultArgs<ExtArgs>
     applications?: boolean | Dossier$applicationsArgs<ExtArgs>
+    outreachMessages?: boolean | Dossier$outreachMessagesArgs<ExtArgs>
     _count?: boolean | DossierCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DossierIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -34254,6 +35235,7 @@ export namespace Prisma {
     objects: {
       org: Prisma.$AdvocacyOrgPayload<ExtArgs>
       applications: Prisma.$GrantApplicationPayload<ExtArgs>[]
+      outreachMessages: Prisma.$OutreachMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -34630,6 +35612,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     org<T extends AdvocacyOrgDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AdvocacyOrgDefaultArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     applications<T extends Dossier$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Dossier$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GrantApplicationPayload<ExtArgs>, T, "findMany"> | Null>
+    outreachMessages<T extends Dossier$outreachMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Dossier$outreachMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -35002,6 +35985,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GrantApplicationScalarFieldEnum | GrantApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * Dossier.outreachMessages
+   */
+  export type Dossier$outreachMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    where?: OutreachMessageWhereInput
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    cursor?: OutreachMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
   }
 
   /**
@@ -36173,6 +37176,5420 @@ export namespace Prisma {
 
 
   /**
+   * Model KnowledgeDoc
+   */
+
+  export type AggregateKnowledgeDoc = {
+    _count: KnowledgeDocCountAggregateOutputType | null
+    _avg: KnowledgeDocAvgAggregateOutputType | null
+    _sum: KnowledgeDocSumAggregateOutputType | null
+    _min: KnowledgeDocMinAggregateOutputType | null
+    _max: KnowledgeDocMaxAggregateOutputType | null
+  }
+
+  export type KnowledgeDocAvgAggregateOutputType = {
+    sizeBytes: number | null
+  }
+
+  export type KnowledgeDocSumAggregateOutputType = {
+    sizeBytes: number | null
+  }
+
+  export type KnowledgeDocMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    orgId: string | null
+    grantId: string | null
+    title: string | null
+    fileName: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    fileData: Buffer | null
+    extractedText: string | null
+    status: $Enums.KnowledgeDocStatus | null
+    sourceType: string | null
+    error: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KnowledgeDocMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    orgId: string | null
+    grantId: string | null
+    title: string | null
+    fileName: string | null
+    mimeType: string | null
+    sizeBytes: number | null
+    fileData: Buffer | null
+    extractedText: string | null
+    status: $Enums.KnowledgeDocStatus | null
+    sourceType: string | null
+    error: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KnowledgeDocCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    orgId: number
+    grantId: number
+    title: number
+    fileName: number
+    mimeType: number
+    sizeBytes: number
+    fileData: number
+    extractedText: number
+    status: number
+    sourceType: number
+    tags: number
+    error: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type KnowledgeDocAvgAggregateInputType = {
+    sizeBytes?: true
+  }
+
+  export type KnowledgeDocSumAggregateInputType = {
+    sizeBytes?: true
+  }
+
+  export type KnowledgeDocMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    grantId?: true
+    title?: true
+    fileName?: true
+    mimeType?: true
+    sizeBytes?: true
+    fileData?: true
+    extractedText?: true
+    status?: true
+    sourceType?: true
+    error?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KnowledgeDocMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    grantId?: true
+    title?: true
+    fileName?: true
+    mimeType?: true
+    sizeBytes?: true
+    fileData?: true
+    extractedText?: true
+    status?: true
+    sourceType?: true
+    error?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KnowledgeDocCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    grantId?: true
+    title?: true
+    fileName?: true
+    mimeType?: true
+    sizeBytes?: true
+    fileData?: true
+    extractedText?: true
+    status?: true
+    sourceType?: true
+    tags?: true
+    error?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type KnowledgeDocAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KnowledgeDoc to aggregate.
+     */
+    where?: KnowledgeDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeDocs to fetch.
+     */
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KnowledgeDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KnowledgeDocs
+    **/
+    _count?: true | KnowledgeDocCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KnowledgeDocAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KnowledgeDocSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KnowledgeDocMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KnowledgeDocMaxAggregateInputType
+  }
+
+  export type GetKnowledgeDocAggregateType<T extends KnowledgeDocAggregateArgs> = {
+        [P in keyof T & keyof AggregateKnowledgeDoc]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKnowledgeDoc[P]>
+      : GetScalarType<T[P], AggregateKnowledgeDoc[P]>
+  }
+
+
+
+
+  export type KnowledgeDocGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeDocWhereInput
+    orderBy?: KnowledgeDocOrderByWithAggregationInput | KnowledgeDocOrderByWithAggregationInput[]
+    by: KnowledgeDocScalarFieldEnum[] | KnowledgeDocScalarFieldEnum
+    having?: KnowledgeDocScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KnowledgeDocCountAggregateInputType | true
+    _avg?: KnowledgeDocAvgAggregateInputType
+    _sum?: KnowledgeDocSumAggregateInputType
+    _min?: KnowledgeDocMinAggregateInputType
+    _max?: KnowledgeDocMaxAggregateInputType
+  }
+
+  export type KnowledgeDocGroupByOutputType = {
+    id: string
+    workspaceId: string
+    orgId: string | null
+    grantId: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText: string | null
+    status: $Enums.KnowledgeDocStatus
+    sourceType: string
+    tags: string[]
+    error: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: KnowledgeDocCountAggregateOutputType | null
+    _avg: KnowledgeDocAvgAggregateOutputType | null
+    _sum: KnowledgeDocSumAggregateOutputType | null
+    _min: KnowledgeDocMinAggregateOutputType | null
+    _max: KnowledgeDocMaxAggregateOutputType | null
+  }
+
+  type GetKnowledgeDocGroupByPayload<T extends KnowledgeDocGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KnowledgeDocGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KnowledgeDocGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KnowledgeDocGroupByOutputType[P]>
+            : GetScalarType<T[P], KnowledgeDocGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KnowledgeDocSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    title?: boolean
+    fileName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    fileData?: boolean
+    extractedText?: boolean
+    status?: boolean
+    sourceType?: boolean
+    tags?: boolean
+    error?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeDoc$orgArgs<ExtArgs>
+    grant?: boolean | KnowledgeDoc$grantArgs<ExtArgs>
+    chunks?: boolean | KnowledgeDoc$chunksArgs<ExtArgs>
+    _count?: boolean | KnowledgeDocCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["knowledgeDoc"]>
+
+  export type KnowledgeDocSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    title?: boolean
+    fileName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    fileData?: boolean
+    extractedText?: boolean
+    status?: boolean
+    sourceType?: boolean
+    tags?: boolean
+    error?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeDoc$orgArgs<ExtArgs>
+    grant?: boolean | KnowledgeDoc$grantArgs<ExtArgs>
+  }, ExtArgs["result"]["knowledgeDoc"]>
+
+  export type KnowledgeDocSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    grantId?: boolean
+    title?: boolean
+    fileName?: boolean
+    mimeType?: boolean
+    sizeBytes?: boolean
+    fileData?: boolean
+    extractedText?: boolean
+    status?: boolean
+    sourceType?: boolean
+    tags?: boolean
+    error?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type KnowledgeDocInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeDoc$orgArgs<ExtArgs>
+    grant?: boolean | KnowledgeDoc$grantArgs<ExtArgs>
+    chunks?: boolean | KnowledgeDoc$chunksArgs<ExtArgs>
+    _count?: boolean | KnowledgeDocCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type KnowledgeDocIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeDoc$orgArgs<ExtArgs>
+    grant?: boolean | KnowledgeDoc$grantArgs<ExtArgs>
+  }
+
+  export type $KnowledgeDocPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KnowledgeDoc"
+    objects: {
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs> | null
+      grant: Prisma.$OpenGrantPayload<ExtArgs> | null
+      chunks: Prisma.$KnowledgeChunkPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      orgId: string | null
+      grantId: string | null
+      title: string
+      fileName: string
+      mimeType: string
+      sizeBytes: number
+      fileData: Buffer
+      extractedText: string | null
+      status: $Enums.KnowledgeDocStatus
+      sourceType: string
+      tags: string[]
+      error: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["knowledgeDoc"]>
+    composites: {}
+  }
+
+  type KnowledgeDocGetPayload<S extends boolean | null | undefined | KnowledgeDocDefaultArgs> = $Result.GetResult<Prisma.$KnowledgeDocPayload, S>
+
+  type KnowledgeDocCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<KnowledgeDocFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: KnowledgeDocCountAggregateInputType | true
+    }
+
+  export interface KnowledgeDocDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KnowledgeDoc'], meta: { name: 'KnowledgeDoc' } }
+    /**
+     * Find zero or one KnowledgeDoc that matches the filter.
+     * @param {KnowledgeDocFindUniqueArgs} args - Arguments to find a KnowledgeDoc
+     * @example
+     * // Get one KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KnowledgeDocFindUniqueArgs>(args: SelectSubset<T, KnowledgeDocFindUniqueArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one KnowledgeDoc that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {KnowledgeDocFindUniqueOrThrowArgs} args - Arguments to find a KnowledgeDoc
+     * @example
+     * // Get one KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KnowledgeDocFindUniqueOrThrowArgs>(args: SelectSubset<T, KnowledgeDocFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first KnowledgeDoc that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocFindFirstArgs} args - Arguments to find a KnowledgeDoc
+     * @example
+     * // Get one KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KnowledgeDocFindFirstArgs>(args?: SelectSubset<T, KnowledgeDocFindFirstArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first KnowledgeDoc that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocFindFirstOrThrowArgs} args - Arguments to find a KnowledgeDoc
+     * @example
+     * // Get one KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KnowledgeDocFindFirstOrThrowArgs>(args?: SelectSubset<T, KnowledgeDocFindFirstOrThrowArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more KnowledgeDocs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KnowledgeDocs
+     * const knowledgeDocs = await prisma.knowledgeDoc.findMany()
+     * 
+     * // Get first 10 KnowledgeDocs
+     * const knowledgeDocs = await prisma.knowledgeDoc.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const knowledgeDocWithIdOnly = await prisma.knowledgeDoc.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KnowledgeDocFindManyArgs>(args?: SelectSubset<T, KnowledgeDocFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a KnowledgeDoc.
+     * @param {KnowledgeDocCreateArgs} args - Arguments to create a KnowledgeDoc.
+     * @example
+     * // Create one KnowledgeDoc
+     * const KnowledgeDoc = await prisma.knowledgeDoc.create({
+     *   data: {
+     *     // ... data to create a KnowledgeDoc
+     *   }
+     * })
+     * 
+     */
+    create<T extends KnowledgeDocCreateArgs>(args: SelectSubset<T, KnowledgeDocCreateArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many KnowledgeDocs.
+     * @param {KnowledgeDocCreateManyArgs} args - Arguments to create many KnowledgeDocs.
+     * @example
+     * // Create many KnowledgeDocs
+     * const knowledgeDoc = await prisma.knowledgeDoc.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KnowledgeDocCreateManyArgs>(args?: SelectSubset<T, KnowledgeDocCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KnowledgeDocs and returns the data saved in the database.
+     * @param {KnowledgeDocCreateManyAndReturnArgs} args - Arguments to create many KnowledgeDocs.
+     * @example
+     * // Create many KnowledgeDocs
+     * const knowledgeDoc = await prisma.knowledgeDoc.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KnowledgeDocs and only return the `id`
+     * const knowledgeDocWithIdOnly = await prisma.knowledgeDoc.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KnowledgeDocCreateManyAndReturnArgs>(args?: SelectSubset<T, KnowledgeDocCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a KnowledgeDoc.
+     * @param {KnowledgeDocDeleteArgs} args - Arguments to delete one KnowledgeDoc.
+     * @example
+     * // Delete one KnowledgeDoc
+     * const KnowledgeDoc = await prisma.knowledgeDoc.delete({
+     *   where: {
+     *     // ... filter to delete one KnowledgeDoc
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KnowledgeDocDeleteArgs>(args: SelectSubset<T, KnowledgeDocDeleteArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one KnowledgeDoc.
+     * @param {KnowledgeDocUpdateArgs} args - Arguments to update one KnowledgeDoc.
+     * @example
+     * // Update one KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KnowledgeDocUpdateArgs>(args: SelectSubset<T, KnowledgeDocUpdateArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more KnowledgeDocs.
+     * @param {KnowledgeDocDeleteManyArgs} args - Arguments to filter KnowledgeDocs to delete.
+     * @example
+     * // Delete a few KnowledgeDocs
+     * const { count } = await prisma.knowledgeDoc.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KnowledgeDocDeleteManyArgs>(args?: SelectSubset<T, KnowledgeDocDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KnowledgeDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KnowledgeDocs
+     * const knowledgeDoc = await prisma.knowledgeDoc.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KnowledgeDocUpdateManyArgs>(args: SelectSubset<T, KnowledgeDocUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one KnowledgeDoc.
+     * @param {KnowledgeDocUpsertArgs} args - Arguments to update or create a KnowledgeDoc.
+     * @example
+     * // Update or create a KnowledgeDoc
+     * const knowledgeDoc = await prisma.knowledgeDoc.upsert({
+     *   create: {
+     *     // ... data to create a KnowledgeDoc
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KnowledgeDoc we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KnowledgeDocUpsertArgs>(args: SelectSubset<T, KnowledgeDocUpsertArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of KnowledgeDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocCountArgs} args - Arguments to filter KnowledgeDocs to count.
+     * @example
+     * // Count the number of KnowledgeDocs
+     * const count = await prisma.knowledgeDoc.count({
+     *   where: {
+     *     // ... the filter for the KnowledgeDocs we want to count
+     *   }
+     * })
+    **/
+    count<T extends KnowledgeDocCountArgs>(
+      args?: Subset<T, KnowledgeDocCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KnowledgeDocCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KnowledgeDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KnowledgeDocAggregateArgs>(args: Subset<T, KnowledgeDocAggregateArgs>): Prisma.PrismaPromise<GetKnowledgeDocAggregateType<T>>
+
+    /**
+     * Group by KnowledgeDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeDocGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KnowledgeDocGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KnowledgeDocGroupByArgs['orderBy'] }
+        : { orderBy?: KnowledgeDocGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KnowledgeDocGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKnowledgeDocGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KnowledgeDoc model
+   */
+  readonly fields: KnowledgeDocFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KnowledgeDoc.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KnowledgeDocClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    org<T extends KnowledgeDoc$orgArgs<ExtArgs> = {}>(args?: Subset<T, KnowledgeDoc$orgArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    grant<T extends KnowledgeDoc$grantArgs<ExtArgs> = {}>(args?: Subset<T, KnowledgeDoc$grantArgs<ExtArgs>>): Prisma__OpenGrantClient<$Result.GetResult<Prisma.$OpenGrantPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    chunks<T extends KnowledgeDoc$chunksArgs<ExtArgs> = {}>(args?: Subset<T, KnowledgeDoc$chunksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KnowledgeDoc model
+   */ 
+  interface KnowledgeDocFieldRefs {
+    readonly id: FieldRef<"KnowledgeDoc", 'String'>
+    readonly workspaceId: FieldRef<"KnowledgeDoc", 'String'>
+    readonly orgId: FieldRef<"KnowledgeDoc", 'String'>
+    readonly grantId: FieldRef<"KnowledgeDoc", 'String'>
+    readonly title: FieldRef<"KnowledgeDoc", 'String'>
+    readonly fileName: FieldRef<"KnowledgeDoc", 'String'>
+    readonly mimeType: FieldRef<"KnowledgeDoc", 'String'>
+    readonly sizeBytes: FieldRef<"KnowledgeDoc", 'Int'>
+    readonly fileData: FieldRef<"KnowledgeDoc", 'Bytes'>
+    readonly extractedText: FieldRef<"KnowledgeDoc", 'String'>
+    readonly status: FieldRef<"KnowledgeDoc", 'KnowledgeDocStatus'>
+    readonly sourceType: FieldRef<"KnowledgeDoc", 'String'>
+    readonly tags: FieldRef<"KnowledgeDoc", 'String[]'>
+    readonly error: FieldRef<"KnowledgeDoc", 'String'>
+    readonly createdAt: FieldRef<"KnowledgeDoc", 'DateTime'>
+    readonly updatedAt: FieldRef<"KnowledgeDoc", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KnowledgeDoc findUnique
+   */
+  export type KnowledgeDocFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeDoc to fetch.
+     */
+    where: KnowledgeDocWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeDoc findUniqueOrThrow
+   */
+  export type KnowledgeDocFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeDoc to fetch.
+     */
+    where: KnowledgeDocWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeDoc findFirst
+   */
+  export type KnowledgeDocFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeDoc to fetch.
+     */
+    where?: KnowledgeDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeDocs to fetch.
+     */
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KnowledgeDocs.
+     */
+    cursor?: KnowledgeDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KnowledgeDocs.
+     */
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeDoc findFirstOrThrow
+   */
+  export type KnowledgeDocFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeDoc to fetch.
+     */
+    where?: KnowledgeDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeDocs to fetch.
+     */
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KnowledgeDocs.
+     */
+    cursor?: KnowledgeDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KnowledgeDocs.
+     */
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeDoc findMany
+   */
+  export type KnowledgeDocFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeDocs to fetch.
+     */
+    where?: KnowledgeDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeDocs to fetch.
+     */
+    orderBy?: KnowledgeDocOrderByWithRelationInput | KnowledgeDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KnowledgeDocs.
+     */
+    cursor?: KnowledgeDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeDocs.
+     */
+    skip?: number
+    distinct?: KnowledgeDocScalarFieldEnum | KnowledgeDocScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeDoc create
+   */
+  export type KnowledgeDocCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KnowledgeDoc.
+     */
+    data: XOR<KnowledgeDocCreateInput, KnowledgeDocUncheckedCreateInput>
+  }
+
+  /**
+   * KnowledgeDoc createMany
+   */
+  export type KnowledgeDocCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KnowledgeDocs.
+     */
+    data: KnowledgeDocCreateManyInput | KnowledgeDocCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KnowledgeDoc createManyAndReturn
+   */
+  export type KnowledgeDocCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many KnowledgeDocs.
+     */
+    data: KnowledgeDocCreateManyInput | KnowledgeDocCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KnowledgeDoc update
+   */
+  export type KnowledgeDocUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KnowledgeDoc.
+     */
+    data: XOR<KnowledgeDocUpdateInput, KnowledgeDocUncheckedUpdateInput>
+    /**
+     * Choose, which KnowledgeDoc to update.
+     */
+    where: KnowledgeDocWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeDoc updateMany
+   */
+  export type KnowledgeDocUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KnowledgeDocs.
+     */
+    data: XOR<KnowledgeDocUpdateManyMutationInput, KnowledgeDocUncheckedUpdateManyInput>
+    /**
+     * Filter which KnowledgeDocs to update
+     */
+    where?: KnowledgeDocWhereInput
+  }
+
+  /**
+   * KnowledgeDoc upsert
+   */
+  export type KnowledgeDocUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KnowledgeDoc to update in case it exists.
+     */
+    where: KnowledgeDocWhereUniqueInput
+    /**
+     * In case the KnowledgeDoc found by the `where` argument doesn't exist, create a new KnowledgeDoc with this data.
+     */
+    create: XOR<KnowledgeDocCreateInput, KnowledgeDocUncheckedCreateInput>
+    /**
+     * In case the KnowledgeDoc was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KnowledgeDocUpdateInput, KnowledgeDocUncheckedUpdateInput>
+  }
+
+  /**
+   * KnowledgeDoc delete
+   */
+  export type KnowledgeDocDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+    /**
+     * Filter which KnowledgeDoc to delete.
+     */
+    where: KnowledgeDocWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeDoc deleteMany
+   */
+  export type KnowledgeDocDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KnowledgeDocs to delete
+     */
+    where?: KnowledgeDocWhereInput
+  }
+
+  /**
+   * KnowledgeDoc.org
+   */
+  export type KnowledgeDoc$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdvocacyOrg
+     */
+    select?: AdvocacyOrgSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdvocacyOrgInclude<ExtArgs> | null
+    where?: AdvocacyOrgWhereInput
+  }
+
+  /**
+   * KnowledgeDoc.grant
+   */
+  export type KnowledgeDoc$grantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OpenGrant
+     */
+    select?: OpenGrantSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OpenGrantInclude<ExtArgs> | null
+    where?: OpenGrantWhereInput
+  }
+
+  /**
+   * KnowledgeDoc.chunks
+   */
+  export type KnowledgeDoc$chunksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    where?: KnowledgeChunkWhereInput
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    cursor?: KnowledgeChunkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeDoc without action
+   */
+  export type KnowledgeDocDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeDoc
+     */
+    select?: KnowledgeDocSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeDocInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KnowledgeChunk
+   */
+
+  export type AggregateKnowledgeChunk = {
+    _count: KnowledgeChunkCountAggregateOutputType | null
+    _avg: KnowledgeChunkAvgAggregateOutputType | null
+    _sum: KnowledgeChunkSumAggregateOutputType | null
+    _min: KnowledgeChunkMinAggregateOutputType | null
+    _max: KnowledgeChunkMaxAggregateOutputType | null
+  }
+
+  export type KnowledgeChunkAvgAggregateOutputType = {
+    chunkIndex: number | null
+    tokenCount: number | null
+  }
+
+  export type KnowledgeChunkSumAggregateOutputType = {
+    chunkIndex: number | null
+    tokenCount: number | null
+  }
+
+  export type KnowledgeChunkMinAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    workspaceId: string | null
+    orgId: string | null
+    chunkIndex: number | null
+    content: string | null
+    tokenCount: number | null
+    createdAt: Date | null
+  }
+
+  export type KnowledgeChunkMaxAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    workspaceId: string | null
+    orgId: string | null
+    chunkIndex: number | null
+    content: string | null
+    tokenCount: number | null
+    createdAt: Date | null
+  }
+
+  export type KnowledgeChunkCountAggregateOutputType = {
+    id: number
+    docId: number
+    workspaceId: number
+    orgId: number
+    chunkIndex: number
+    content: number
+    tokenCount: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type KnowledgeChunkAvgAggregateInputType = {
+    chunkIndex?: true
+    tokenCount?: true
+  }
+
+  export type KnowledgeChunkSumAggregateInputType = {
+    chunkIndex?: true
+    tokenCount?: true
+  }
+
+  export type KnowledgeChunkMinAggregateInputType = {
+    id?: true
+    docId?: true
+    workspaceId?: true
+    orgId?: true
+    chunkIndex?: true
+    content?: true
+    tokenCount?: true
+    createdAt?: true
+  }
+
+  export type KnowledgeChunkMaxAggregateInputType = {
+    id?: true
+    docId?: true
+    workspaceId?: true
+    orgId?: true
+    chunkIndex?: true
+    content?: true
+    tokenCount?: true
+    createdAt?: true
+  }
+
+  export type KnowledgeChunkCountAggregateInputType = {
+    id?: true
+    docId?: true
+    workspaceId?: true
+    orgId?: true
+    chunkIndex?: true
+    content?: true
+    tokenCount?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type KnowledgeChunkAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KnowledgeChunk to aggregate.
+     */
+    where?: KnowledgeChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeChunks to fetch.
+     */
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KnowledgeChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KnowledgeChunks
+    **/
+    _count?: true | KnowledgeChunkCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KnowledgeChunkAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KnowledgeChunkSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KnowledgeChunkMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KnowledgeChunkMaxAggregateInputType
+  }
+
+  export type GetKnowledgeChunkAggregateType<T extends KnowledgeChunkAggregateArgs> = {
+        [P in keyof T & keyof AggregateKnowledgeChunk]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKnowledgeChunk[P]>
+      : GetScalarType<T[P], AggregateKnowledgeChunk[P]>
+  }
+
+
+
+
+  export type KnowledgeChunkGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KnowledgeChunkWhereInput
+    orderBy?: KnowledgeChunkOrderByWithAggregationInput | KnowledgeChunkOrderByWithAggregationInput[]
+    by: KnowledgeChunkScalarFieldEnum[] | KnowledgeChunkScalarFieldEnum
+    having?: KnowledgeChunkScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KnowledgeChunkCountAggregateInputType | true
+    _avg?: KnowledgeChunkAvgAggregateInputType
+    _sum?: KnowledgeChunkSumAggregateInputType
+    _min?: KnowledgeChunkMinAggregateInputType
+    _max?: KnowledgeChunkMaxAggregateInputType
+  }
+
+  export type KnowledgeChunkGroupByOutputType = {
+    id: string
+    docId: string
+    workspaceId: string
+    orgId: string | null
+    chunkIndex: number
+    content: string
+    tokenCount: number
+    createdAt: Date
+    _count: KnowledgeChunkCountAggregateOutputType | null
+    _avg: KnowledgeChunkAvgAggregateOutputType | null
+    _sum: KnowledgeChunkSumAggregateOutputType | null
+    _min: KnowledgeChunkMinAggregateOutputType | null
+    _max: KnowledgeChunkMaxAggregateOutputType | null
+  }
+
+  type GetKnowledgeChunkGroupByPayload<T extends KnowledgeChunkGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KnowledgeChunkGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KnowledgeChunkGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KnowledgeChunkGroupByOutputType[P]>
+            : GetScalarType<T[P], KnowledgeChunkGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KnowledgeChunkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    chunkIndex?: boolean
+    content?: boolean
+    tokenCount?: boolean
+    createdAt?: boolean
+    doc?: boolean | KnowledgeDocDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeChunk$orgArgs<ExtArgs>
+  }, ExtArgs["result"]["knowledgeChunk"]>
+
+  export type KnowledgeChunkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    chunkIndex?: boolean
+    content?: boolean
+    tokenCount?: boolean
+    createdAt?: boolean
+    doc?: boolean | KnowledgeDocDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeChunk$orgArgs<ExtArgs>
+  }, ExtArgs["result"]["knowledgeChunk"]>
+
+  export type KnowledgeChunkSelectScalar = {
+    id?: boolean
+    docId?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    chunkIndex?: boolean
+    content?: boolean
+    tokenCount?: boolean
+    createdAt?: boolean
+  }
+
+  export type KnowledgeChunkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    doc?: boolean | KnowledgeDocDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeChunk$orgArgs<ExtArgs>
+  }
+  export type KnowledgeChunkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    doc?: boolean | KnowledgeDocDefaultArgs<ExtArgs>
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | KnowledgeChunk$orgArgs<ExtArgs>
+  }
+
+  export type $KnowledgeChunkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KnowledgeChunk"
+    objects: {
+      doc: Prisma.$KnowledgeDocPayload<ExtArgs>
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      docId: string
+      workspaceId: string
+      orgId: string | null
+      chunkIndex: number
+      content: string
+      tokenCount: number
+      createdAt: Date
+    }, ExtArgs["result"]["knowledgeChunk"]>
+    composites: {}
+  }
+
+  type KnowledgeChunkGetPayload<S extends boolean | null | undefined | KnowledgeChunkDefaultArgs> = $Result.GetResult<Prisma.$KnowledgeChunkPayload, S>
+
+  type KnowledgeChunkCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<KnowledgeChunkFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: KnowledgeChunkCountAggregateInputType | true
+    }
+
+  export interface KnowledgeChunkDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KnowledgeChunk'], meta: { name: 'KnowledgeChunk' } }
+    /**
+     * Find zero or one KnowledgeChunk that matches the filter.
+     * @param {KnowledgeChunkFindUniqueArgs} args - Arguments to find a KnowledgeChunk
+     * @example
+     * // Get one KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KnowledgeChunkFindUniqueArgs>(args: SelectSubset<T, KnowledgeChunkFindUniqueArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one KnowledgeChunk that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {KnowledgeChunkFindUniqueOrThrowArgs} args - Arguments to find a KnowledgeChunk
+     * @example
+     * // Get one KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KnowledgeChunkFindUniqueOrThrowArgs>(args: SelectSubset<T, KnowledgeChunkFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first KnowledgeChunk that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkFindFirstArgs} args - Arguments to find a KnowledgeChunk
+     * @example
+     * // Get one KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KnowledgeChunkFindFirstArgs>(args?: SelectSubset<T, KnowledgeChunkFindFirstArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first KnowledgeChunk that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkFindFirstOrThrowArgs} args - Arguments to find a KnowledgeChunk
+     * @example
+     * // Get one KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KnowledgeChunkFindFirstOrThrowArgs>(args?: SelectSubset<T, KnowledgeChunkFindFirstOrThrowArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more KnowledgeChunks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KnowledgeChunks
+     * const knowledgeChunks = await prisma.knowledgeChunk.findMany()
+     * 
+     * // Get first 10 KnowledgeChunks
+     * const knowledgeChunks = await prisma.knowledgeChunk.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const knowledgeChunkWithIdOnly = await prisma.knowledgeChunk.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KnowledgeChunkFindManyArgs>(args?: SelectSubset<T, KnowledgeChunkFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a KnowledgeChunk.
+     * @param {KnowledgeChunkCreateArgs} args - Arguments to create a KnowledgeChunk.
+     * @example
+     * // Create one KnowledgeChunk
+     * const KnowledgeChunk = await prisma.knowledgeChunk.create({
+     *   data: {
+     *     // ... data to create a KnowledgeChunk
+     *   }
+     * })
+     * 
+     */
+    create<T extends KnowledgeChunkCreateArgs>(args: SelectSubset<T, KnowledgeChunkCreateArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many KnowledgeChunks.
+     * @param {KnowledgeChunkCreateManyArgs} args - Arguments to create many KnowledgeChunks.
+     * @example
+     * // Create many KnowledgeChunks
+     * const knowledgeChunk = await prisma.knowledgeChunk.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KnowledgeChunkCreateManyArgs>(args?: SelectSubset<T, KnowledgeChunkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KnowledgeChunks and returns the data saved in the database.
+     * @param {KnowledgeChunkCreateManyAndReturnArgs} args - Arguments to create many KnowledgeChunks.
+     * @example
+     * // Create many KnowledgeChunks
+     * const knowledgeChunk = await prisma.knowledgeChunk.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KnowledgeChunks and only return the `id`
+     * const knowledgeChunkWithIdOnly = await prisma.knowledgeChunk.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KnowledgeChunkCreateManyAndReturnArgs>(args?: SelectSubset<T, KnowledgeChunkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a KnowledgeChunk.
+     * @param {KnowledgeChunkDeleteArgs} args - Arguments to delete one KnowledgeChunk.
+     * @example
+     * // Delete one KnowledgeChunk
+     * const KnowledgeChunk = await prisma.knowledgeChunk.delete({
+     *   where: {
+     *     // ... filter to delete one KnowledgeChunk
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KnowledgeChunkDeleteArgs>(args: SelectSubset<T, KnowledgeChunkDeleteArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one KnowledgeChunk.
+     * @param {KnowledgeChunkUpdateArgs} args - Arguments to update one KnowledgeChunk.
+     * @example
+     * // Update one KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KnowledgeChunkUpdateArgs>(args: SelectSubset<T, KnowledgeChunkUpdateArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more KnowledgeChunks.
+     * @param {KnowledgeChunkDeleteManyArgs} args - Arguments to filter KnowledgeChunks to delete.
+     * @example
+     * // Delete a few KnowledgeChunks
+     * const { count } = await prisma.knowledgeChunk.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KnowledgeChunkDeleteManyArgs>(args?: SelectSubset<T, KnowledgeChunkDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KnowledgeChunks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KnowledgeChunks
+     * const knowledgeChunk = await prisma.knowledgeChunk.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KnowledgeChunkUpdateManyArgs>(args: SelectSubset<T, KnowledgeChunkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one KnowledgeChunk.
+     * @param {KnowledgeChunkUpsertArgs} args - Arguments to update or create a KnowledgeChunk.
+     * @example
+     * // Update or create a KnowledgeChunk
+     * const knowledgeChunk = await prisma.knowledgeChunk.upsert({
+     *   create: {
+     *     // ... data to create a KnowledgeChunk
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KnowledgeChunk we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KnowledgeChunkUpsertArgs>(args: SelectSubset<T, KnowledgeChunkUpsertArgs<ExtArgs>>): Prisma__KnowledgeChunkClient<$Result.GetResult<Prisma.$KnowledgeChunkPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of KnowledgeChunks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkCountArgs} args - Arguments to filter KnowledgeChunks to count.
+     * @example
+     * // Count the number of KnowledgeChunks
+     * const count = await prisma.knowledgeChunk.count({
+     *   where: {
+     *     // ... the filter for the KnowledgeChunks we want to count
+     *   }
+     * })
+    **/
+    count<T extends KnowledgeChunkCountArgs>(
+      args?: Subset<T, KnowledgeChunkCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KnowledgeChunkCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KnowledgeChunk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KnowledgeChunkAggregateArgs>(args: Subset<T, KnowledgeChunkAggregateArgs>): Prisma.PrismaPromise<GetKnowledgeChunkAggregateType<T>>
+
+    /**
+     * Group by KnowledgeChunk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KnowledgeChunkGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KnowledgeChunkGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KnowledgeChunkGroupByArgs['orderBy'] }
+        : { orderBy?: KnowledgeChunkGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KnowledgeChunkGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKnowledgeChunkGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KnowledgeChunk model
+   */
+  readonly fields: KnowledgeChunkFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KnowledgeChunk.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KnowledgeChunkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    doc<T extends KnowledgeDocDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KnowledgeDocDefaultArgs<ExtArgs>>): Prisma__KnowledgeDocClient<$Result.GetResult<Prisma.$KnowledgeDocPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    org<T extends KnowledgeChunk$orgArgs<ExtArgs> = {}>(args?: Subset<T, KnowledgeChunk$orgArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KnowledgeChunk model
+   */ 
+  interface KnowledgeChunkFieldRefs {
+    readonly id: FieldRef<"KnowledgeChunk", 'String'>
+    readonly docId: FieldRef<"KnowledgeChunk", 'String'>
+    readonly workspaceId: FieldRef<"KnowledgeChunk", 'String'>
+    readonly orgId: FieldRef<"KnowledgeChunk", 'String'>
+    readonly chunkIndex: FieldRef<"KnowledgeChunk", 'Int'>
+    readonly content: FieldRef<"KnowledgeChunk", 'String'>
+    readonly tokenCount: FieldRef<"KnowledgeChunk", 'Int'>
+    readonly createdAt: FieldRef<"KnowledgeChunk", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KnowledgeChunk findUnique
+   */
+  export type KnowledgeChunkFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeChunk to fetch.
+     */
+    where: KnowledgeChunkWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeChunk findUniqueOrThrow
+   */
+  export type KnowledgeChunkFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeChunk to fetch.
+     */
+    where: KnowledgeChunkWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeChunk findFirst
+   */
+  export type KnowledgeChunkFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeChunk to fetch.
+     */
+    where?: KnowledgeChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeChunks to fetch.
+     */
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KnowledgeChunks.
+     */
+    cursor?: KnowledgeChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KnowledgeChunks.
+     */
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeChunk findFirstOrThrow
+   */
+  export type KnowledgeChunkFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeChunk to fetch.
+     */
+    where?: KnowledgeChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeChunks to fetch.
+     */
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KnowledgeChunks.
+     */
+    cursor?: KnowledgeChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeChunks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KnowledgeChunks.
+     */
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeChunk findMany
+   */
+  export type KnowledgeChunkFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter, which KnowledgeChunks to fetch.
+     */
+    where?: KnowledgeChunkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KnowledgeChunks to fetch.
+     */
+    orderBy?: KnowledgeChunkOrderByWithRelationInput | KnowledgeChunkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KnowledgeChunks.
+     */
+    cursor?: KnowledgeChunkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KnowledgeChunks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KnowledgeChunks.
+     */
+    skip?: number
+    distinct?: KnowledgeChunkScalarFieldEnum | KnowledgeChunkScalarFieldEnum[]
+  }
+
+  /**
+   * KnowledgeChunk create
+   */
+  export type KnowledgeChunkCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KnowledgeChunk.
+     */
+    data: XOR<KnowledgeChunkCreateInput, KnowledgeChunkUncheckedCreateInput>
+  }
+
+  /**
+   * KnowledgeChunk createMany
+   */
+  export type KnowledgeChunkCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KnowledgeChunks.
+     */
+    data: KnowledgeChunkCreateManyInput | KnowledgeChunkCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KnowledgeChunk createManyAndReturn
+   */
+  export type KnowledgeChunkCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many KnowledgeChunks.
+     */
+    data: KnowledgeChunkCreateManyInput | KnowledgeChunkCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * KnowledgeChunk update
+   */
+  export type KnowledgeChunkUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KnowledgeChunk.
+     */
+    data: XOR<KnowledgeChunkUpdateInput, KnowledgeChunkUncheckedUpdateInput>
+    /**
+     * Choose, which KnowledgeChunk to update.
+     */
+    where: KnowledgeChunkWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeChunk updateMany
+   */
+  export type KnowledgeChunkUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KnowledgeChunks.
+     */
+    data: XOR<KnowledgeChunkUpdateManyMutationInput, KnowledgeChunkUncheckedUpdateManyInput>
+    /**
+     * Filter which KnowledgeChunks to update
+     */
+    where?: KnowledgeChunkWhereInput
+  }
+
+  /**
+   * KnowledgeChunk upsert
+   */
+  export type KnowledgeChunkUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KnowledgeChunk to update in case it exists.
+     */
+    where: KnowledgeChunkWhereUniqueInput
+    /**
+     * In case the KnowledgeChunk found by the `where` argument doesn't exist, create a new KnowledgeChunk with this data.
+     */
+    create: XOR<KnowledgeChunkCreateInput, KnowledgeChunkUncheckedCreateInput>
+    /**
+     * In case the KnowledgeChunk was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KnowledgeChunkUpdateInput, KnowledgeChunkUncheckedUpdateInput>
+  }
+
+  /**
+   * KnowledgeChunk delete
+   */
+  export type KnowledgeChunkDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+    /**
+     * Filter which KnowledgeChunk to delete.
+     */
+    where: KnowledgeChunkWhereUniqueInput
+  }
+
+  /**
+   * KnowledgeChunk deleteMany
+   */
+  export type KnowledgeChunkDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KnowledgeChunks to delete
+     */
+    where?: KnowledgeChunkWhereInput
+  }
+
+  /**
+   * KnowledgeChunk.org
+   */
+  export type KnowledgeChunk$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdvocacyOrg
+     */
+    select?: AdvocacyOrgSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdvocacyOrgInclude<ExtArgs> | null
+    where?: AdvocacyOrgWhereInput
+  }
+
+  /**
+   * KnowledgeChunk without action
+   */
+  export type KnowledgeChunkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KnowledgeChunk
+     */
+    select?: KnowledgeChunkSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KnowledgeChunkInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OutreachSequence
+   */
+
+  export type AggregateOutreachSequence = {
+    _count: OutreachSequenceCountAggregateOutputType | null
+    _min: OutreachSequenceMinAggregateOutputType | null
+    _max: OutreachSequenceMaxAggregateOutputType | null
+  }
+
+  export type OutreachSequenceMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    orgId: string | null
+    name: string | null
+    goal: string | null
+    status: $Enums.OutreachSequenceStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutreachSequenceMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    orgId: string | null
+    name: string | null
+    goal: string | null
+    status: $Enums.OutreachSequenceStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutreachSequenceCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    orgId: number
+    name: number
+    goal: number
+    status: number
+    steps: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OutreachSequenceMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    name?: true
+    goal?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutreachSequenceMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    name?: true
+    goal?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutreachSequenceCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    orgId?: true
+    name?: true
+    goal?: true
+    status?: true
+    steps?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OutreachSequenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachSequence to aggregate.
+     */
+    where?: OutreachSequenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachSequences to fetch.
+     */
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OutreachSequenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachSequences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachSequences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OutreachSequences
+    **/
+    _count?: true | OutreachSequenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OutreachSequenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OutreachSequenceMaxAggregateInputType
+  }
+
+  export type GetOutreachSequenceAggregateType<T extends OutreachSequenceAggregateArgs> = {
+        [P in keyof T & keyof AggregateOutreachSequence]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOutreachSequence[P]>
+      : GetScalarType<T[P], AggregateOutreachSequence[P]>
+  }
+
+
+
+
+  export type OutreachSequenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachSequenceWhereInput
+    orderBy?: OutreachSequenceOrderByWithAggregationInput | OutreachSequenceOrderByWithAggregationInput[]
+    by: OutreachSequenceScalarFieldEnum[] | OutreachSequenceScalarFieldEnum
+    having?: OutreachSequenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OutreachSequenceCountAggregateInputType | true
+    _min?: OutreachSequenceMinAggregateInputType
+    _max?: OutreachSequenceMaxAggregateInputType
+  }
+
+  export type OutreachSequenceGroupByOutputType = {
+    id: string
+    workspaceId: string
+    orgId: string | null
+    name: string
+    goal: string | null
+    status: $Enums.OutreachSequenceStatus
+    steps: JsonValue
+    createdAt: Date
+    updatedAt: Date
+    _count: OutreachSequenceCountAggregateOutputType | null
+    _min: OutreachSequenceMinAggregateOutputType | null
+    _max: OutreachSequenceMaxAggregateOutputType | null
+  }
+
+  type GetOutreachSequenceGroupByPayload<T extends OutreachSequenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OutreachSequenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OutreachSequenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OutreachSequenceGroupByOutputType[P]>
+            : GetScalarType<T[P], OutreachSequenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OutreachSequenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    name?: boolean
+    goal?: boolean
+    status?: boolean
+    steps?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | OutreachSequence$orgArgs<ExtArgs>
+    contacts?: boolean | OutreachSequence$contactsArgs<ExtArgs>
+    messages?: boolean | OutreachSequence$messagesArgs<ExtArgs>
+    _count?: boolean | OutreachSequenceCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachSequence"]>
+
+  export type OutreachSequenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    name?: boolean
+    goal?: boolean
+    status?: boolean
+    steps?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | OutreachSequence$orgArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachSequence"]>
+
+  export type OutreachSequenceSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    orgId?: boolean
+    name?: boolean
+    goal?: boolean
+    status?: boolean
+    steps?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OutreachSequenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | OutreachSequence$orgArgs<ExtArgs>
+    contacts?: boolean | OutreachSequence$contactsArgs<ExtArgs>
+    messages?: boolean | OutreachSequence$messagesArgs<ExtArgs>
+    _count?: boolean | OutreachSequenceCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OutreachSequenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    org?: boolean | OutreachSequence$orgArgs<ExtArgs>
+  }
+
+  export type $OutreachSequencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OutreachSequence"
+    objects: {
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      org: Prisma.$AdvocacyOrgPayload<ExtArgs> | null
+      contacts: Prisma.$OutreachContactPayload<ExtArgs>[]
+      messages: Prisma.$OutreachMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      orgId: string | null
+      name: string
+      goal: string | null
+      status: $Enums.OutreachSequenceStatus
+      steps: Prisma.JsonValue
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["outreachSequence"]>
+    composites: {}
+  }
+
+  type OutreachSequenceGetPayload<S extends boolean | null | undefined | OutreachSequenceDefaultArgs> = $Result.GetResult<Prisma.$OutreachSequencePayload, S>
+
+  type OutreachSequenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OutreachSequenceFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OutreachSequenceCountAggregateInputType | true
+    }
+
+  export interface OutreachSequenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OutreachSequence'], meta: { name: 'OutreachSequence' } }
+    /**
+     * Find zero or one OutreachSequence that matches the filter.
+     * @param {OutreachSequenceFindUniqueArgs} args - Arguments to find a OutreachSequence
+     * @example
+     * // Get one OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OutreachSequenceFindUniqueArgs>(args: SelectSubset<T, OutreachSequenceFindUniqueArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one OutreachSequence that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OutreachSequenceFindUniqueOrThrowArgs} args - Arguments to find a OutreachSequence
+     * @example
+     * // Get one OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OutreachSequenceFindUniqueOrThrowArgs>(args: SelectSubset<T, OutreachSequenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first OutreachSequence that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceFindFirstArgs} args - Arguments to find a OutreachSequence
+     * @example
+     * // Get one OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OutreachSequenceFindFirstArgs>(args?: SelectSubset<T, OutreachSequenceFindFirstArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first OutreachSequence that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceFindFirstOrThrowArgs} args - Arguments to find a OutreachSequence
+     * @example
+     * // Get one OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OutreachSequenceFindFirstOrThrowArgs>(args?: SelectSubset<T, OutreachSequenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more OutreachSequences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OutreachSequences
+     * const outreachSequences = await prisma.outreachSequence.findMany()
+     * 
+     * // Get first 10 OutreachSequences
+     * const outreachSequences = await prisma.outreachSequence.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const outreachSequenceWithIdOnly = await prisma.outreachSequence.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OutreachSequenceFindManyArgs>(args?: SelectSubset<T, OutreachSequenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a OutreachSequence.
+     * @param {OutreachSequenceCreateArgs} args - Arguments to create a OutreachSequence.
+     * @example
+     * // Create one OutreachSequence
+     * const OutreachSequence = await prisma.outreachSequence.create({
+     *   data: {
+     *     // ... data to create a OutreachSequence
+     *   }
+     * })
+     * 
+     */
+    create<T extends OutreachSequenceCreateArgs>(args: SelectSubset<T, OutreachSequenceCreateArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many OutreachSequences.
+     * @param {OutreachSequenceCreateManyArgs} args - Arguments to create many OutreachSequences.
+     * @example
+     * // Create many OutreachSequences
+     * const outreachSequence = await prisma.outreachSequence.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OutreachSequenceCreateManyArgs>(args?: SelectSubset<T, OutreachSequenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OutreachSequences and returns the data saved in the database.
+     * @param {OutreachSequenceCreateManyAndReturnArgs} args - Arguments to create many OutreachSequences.
+     * @example
+     * // Create many OutreachSequences
+     * const outreachSequence = await prisma.outreachSequence.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OutreachSequences and only return the `id`
+     * const outreachSequenceWithIdOnly = await prisma.outreachSequence.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OutreachSequenceCreateManyAndReturnArgs>(args?: SelectSubset<T, OutreachSequenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a OutreachSequence.
+     * @param {OutreachSequenceDeleteArgs} args - Arguments to delete one OutreachSequence.
+     * @example
+     * // Delete one OutreachSequence
+     * const OutreachSequence = await prisma.outreachSequence.delete({
+     *   where: {
+     *     // ... filter to delete one OutreachSequence
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OutreachSequenceDeleteArgs>(args: SelectSubset<T, OutreachSequenceDeleteArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one OutreachSequence.
+     * @param {OutreachSequenceUpdateArgs} args - Arguments to update one OutreachSequence.
+     * @example
+     * // Update one OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OutreachSequenceUpdateArgs>(args: SelectSubset<T, OutreachSequenceUpdateArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more OutreachSequences.
+     * @param {OutreachSequenceDeleteManyArgs} args - Arguments to filter OutreachSequences to delete.
+     * @example
+     * // Delete a few OutreachSequences
+     * const { count } = await prisma.outreachSequence.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OutreachSequenceDeleteManyArgs>(args?: SelectSubset<T, OutreachSequenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OutreachSequences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OutreachSequences
+     * const outreachSequence = await prisma.outreachSequence.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OutreachSequenceUpdateManyArgs>(args: SelectSubset<T, OutreachSequenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OutreachSequence.
+     * @param {OutreachSequenceUpsertArgs} args - Arguments to update or create a OutreachSequence.
+     * @example
+     * // Update or create a OutreachSequence
+     * const outreachSequence = await prisma.outreachSequence.upsert({
+     *   create: {
+     *     // ... data to create a OutreachSequence
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OutreachSequence we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OutreachSequenceUpsertArgs>(args: SelectSubset<T, OutreachSequenceUpsertArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of OutreachSequences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceCountArgs} args - Arguments to filter OutreachSequences to count.
+     * @example
+     * // Count the number of OutreachSequences
+     * const count = await prisma.outreachSequence.count({
+     *   where: {
+     *     // ... the filter for the OutreachSequences we want to count
+     *   }
+     * })
+    **/
+    count<T extends OutreachSequenceCountArgs>(
+      args?: Subset<T, OutreachSequenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OutreachSequenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OutreachSequence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OutreachSequenceAggregateArgs>(args: Subset<T, OutreachSequenceAggregateArgs>): Prisma.PrismaPromise<GetOutreachSequenceAggregateType<T>>
+
+    /**
+     * Group by OutreachSequence.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachSequenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OutreachSequenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OutreachSequenceGroupByArgs['orderBy'] }
+        : { orderBy?: OutreachSequenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OutreachSequenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOutreachSequenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OutreachSequence model
+   */
+  readonly fields: OutreachSequenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OutreachSequence.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OutreachSequenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    org<T extends OutreachSequence$orgArgs<ExtArgs> = {}>(args?: Subset<T, OutreachSequence$orgArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    contacts<T extends OutreachSequence$contactsArgs<ExtArgs> = {}>(args?: Subset<T, OutreachSequence$contactsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findMany"> | Null>
+    messages<T extends OutreachSequence$messagesArgs<ExtArgs> = {}>(args?: Subset<T, OutreachSequence$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OutreachSequence model
+   */ 
+  interface OutreachSequenceFieldRefs {
+    readonly id: FieldRef<"OutreachSequence", 'String'>
+    readonly workspaceId: FieldRef<"OutreachSequence", 'String'>
+    readonly orgId: FieldRef<"OutreachSequence", 'String'>
+    readonly name: FieldRef<"OutreachSequence", 'String'>
+    readonly goal: FieldRef<"OutreachSequence", 'String'>
+    readonly status: FieldRef<"OutreachSequence", 'OutreachSequenceStatus'>
+    readonly steps: FieldRef<"OutreachSequence", 'Json'>
+    readonly createdAt: FieldRef<"OutreachSequence", 'DateTime'>
+    readonly updatedAt: FieldRef<"OutreachSequence", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OutreachSequence findUnique
+   */
+  export type OutreachSequenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachSequence to fetch.
+     */
+    where: OutreachSequenceWhereUniqueInput
+  }
+
+  /**
+   * OutreachSequence findUniqueOrThrow
+   */
+  export type OutreachSequenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachSequence to fetch.
+     */
+    where: OutreachSequenceWhereUniqueInput
+  }
+
+  /**
+   * OutreachSequence findFirst
+   */
+  export type OutreachSequenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachSequence to fetch.
+     */
+    where?: OutreachSequenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachSequences to fetch.
+     */
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachSequences.
+     */
+    cursor?: OutreachSequenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachSequences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachSequences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachSequences.
+     */
+    distinct?: OutreachSequenceScalarFieldEnum | OutreachSequenceScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachSequence findFirstOrThrow
+   */
+  export type OutreachSequenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachSequence to fetch.
+     */
+    where?: OutreachSequenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachSequences to fetch.
+     */
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachSequences.
+     */
+    cursor?: OutreachSequenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachSequences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachSequences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachSequences.
+     */
+    distinct?: OutreachSequenceScalarFieldEnum | OutreachSequenceScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachSequence findMany
+   */
+  export type OutreachSequenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachSequences to fetch.
+     */
+    where?: OutreachSequenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachSequences to fetch.
+     */
+    orderBy?: OutreachSequenceOrderByWithRelationInput | OutreachSequenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OutreachSequences.
+     */
+    cursor?: OutreachSequenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachSequences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachSequences.
+     */
+    skip?: number
+    distinct?: OutreachSequenceScalarFieldEnum | OutreachSequenceScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachSequence create
+   */
+  export type OutreachSequenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OutreachSequence.
+     */
+    data: XOR<OutreachSequenceCreateInput, OutreachSequenceUncheckedCreateInput>
+  }
+
+  /**
+   * OutreachSequence createMany
+   */
+  export type OutreachSequenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OutreachSequences.
+     */
+    data: OutreachSequenceCreateManyInput | OutreachSequenceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OutreachSequence createManyAndReturn
+   */
+  export type OutreachSequenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many OutreachSequences.
+     */
+    data: OutreachSequenceCreateManyInput | OutreachSequenceCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OutreachSequence update
+   */
+  export type OutreachSequenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OutreachSequence.
+     */
+    data: XOR<OutreachSequenceUpdateInput, OutreachSequenceUncheckedUpdateInput>
+    /**
+     * Choose, which OutreachSequence to update.
+     */
+    where: OutreachSequenceWhereUniqueInput
+  }
+
+  /**
+   * OutreachSequence updateMany
+   */
+  export type OutreachSequenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OutreachSequences.
+     */
+    data: XOR<OutreachSequenceUpdateManyMutationInput, OutreachSequenceUncheckedUpdateManyInput>
+    /**
+     * Filter which OutreachSequences to update
+     */
+    where?: OutreachSequenceWhereInput
+  }
+
+  /**
+   * OutreachSequence upsert
+   */
+  export type OutreachSequenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OutreachSequence to update in case it exists.
+     */
+    where: OutreachSequenceWhereUniqueInput
+    /**
+     * In case the OutreachSequence found by the `where` argument doesn't exist, create a new OutreachSequence with this data.
+     */
+    create: XOR<OutreachSequenceCreateInput, OutreachSequenceUncheckedCreateInput>
+    /**
+     * In case the OutreachSequence was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OutreachSequenceUpdateInput, OutreachSequenceUncheckedUpdateInput>
+  }
+
+  /**
+   * OutreachSequence delete
+   */
+  export type OutreachSequenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+    /**
+     * Filter which OutreachSequence to delete.
+     */
+    where: OutreachSequenceWhereUniqueInput
+  }
+
+  /**
+   * OutreachSequence deleteMany
+   */
+  export type OutreachSequenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachSequences to delete
+     */
+    where?: OutreachSequenceWhereInput
+  }
+
+  /**
+   * OutreachSequence.org
+   */
+  export type OutreachSequence$orgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdvocacyOrg
+     */
+    select?: AdvocacyOrgSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdvocacyOrgInclude<ExtArgs> | null
+    where?: AdvocacyOrgWhereInput
+  }
+
+  /**
+   * OutreachSequence.contacts
+   */
+  export type OutreachSequence$contactsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    where?: OutreachContactWhereInput
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    cursor?: OutreachContactWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachSequence.messages
+   */
+  export type OutreachSequence$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    where?: OutreachMessageWhereInput
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    cursor?: OutreachMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachSequence without action
+   */
+  export type OutreachSequenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachSequence
+     */
+    select?: OutreachSequenceSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachSequenceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OutreachContact
+   */
+
+  export type AggregateOutreachContact = {
+    _count: OutreachContactCountAggregateOutputType | null
+    _min: OutreachContactMinAggregateOutputType | null
+    _max: OutreachContactMaxAggregateOutputType | null
+  }
+
+  export type OutreachContactMinAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    sequenceId: string | null
+    orgContactId: string | null
+    name: string | null
+    title: string | null
+    email: string | null
+    channel: $Enums.OutreachChannel | null
+    status: $Enums.OutreachContactStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    advocacyOrgId: string | null
+  }
+
+  export type OutreachContactMaxAggregateOutputType = {
+    id: string | null
+    workspaceId: string | null
+    sequenceId: string | null
+    orgContactId: string | null
+    name: string | null
+    title: string | null
+    email: string | null
+    channel: $Enums.OutreachChannel | null
+    status: $Enums.OutreachContactStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    advocacyOrgId: string | null
+  }
+
+  export type OutreachContactCountAggregateOutputType = {
+    id: number
+    workspaceId: number
+    sequenceId: number
+    orgContactId: number
+    name: number
+    title: number
+    email: number
+    channel: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    advocacyOrgId: number
+    _all: number
+  }
+
+
+  export type OutreachContactMinAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    sequenceId?: true
+    orgContactId?: true
+    name?: true
+    title?: true
+    email?: true
+    channel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    advocacyOrgId?: true
+  }
+
+  export type OutreachContactMaxAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    sequenceId?: true
+    orgContactId?: true
+    name?: true
+    title?: true
+    email?: true
+    channel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    advocacyOrgId?: true
+  }
+
+  export type OutreachContactCountAggregateInputType = {
+    id?: true
+    workspaceId?: true
+    sequenceId?: true
+    orgContactId?: true
+    name?: true
+    title?: true
+    email?: true
+    channel?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    advocacyOrgId?: true
+    _all?: true
+  }
+
+  export type OutreachContactAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachContact to aggregate.
+     */
+    where?: OutreachContactWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachContacts to fetch.
+     */
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OutreachContactWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachContacts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachContacts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OutreachContacts
+    **/
+    _count?: true | OutreachContactCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OutreachContactMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OutreachContactMaxAggregateInputType
+  }
+
+  export type GetOutreachContactAggregateType<T extends OutreachContactAggregateArgs> = {
+        [P in keyof T & keyof AggregateOutreachContact]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOutreachContact[P]>
+      : GetScalarType<T[P], AggregateOutreachContact[P]>
+  }
+
+
+
+
+  export type OutreachContactGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachContactWhereInput
+    orderBy?: OutreachContactOrderByWithAggregationInput | OutreachContactOrderByWithAggregationInput[]
+    by: OutreachContactScalarFieldEnum[] | OutreachContactScalarFieldEnum
+    having?: OutreachContactScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OutreachContactCountAggregateInputType | true
+    _min?: OutreachContactMinAggregateInputType
+    _max?: OutreachContactMaxAggregateInputType
+  }
+
+  export type OutreachContactGroupByOutputType = {
+    id: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId: string | null
+    name: string
+    title: string | null
+    email: string | null
+    channel: $Enums.OutreachChannel
+    status: $Enums.OutreachContactStatus
+    createdAt: Date
+    updatedAt: Date
+    advocacyOrgId: string | null
+    _count: OutreachContactCountAggregateOutputType | null
+    _min: OutreachContactMinAggregateOutputType | null
+    _max: OutreachContactMaxAggregateOutputType | null
+  }
+
+  type GetOutreachContactGroupByPayload<T extends OutreachContactGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OutreachContactGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OutreachContactGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OutreachContactGroupByOutputType[P]>
+            : GetScalarType<T[P], OutreachContactGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OutreachContactSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    sequenceId?: boolean
+    orgContactId?: boolean
+    name?: boolean
+    title?: boolean
+    email?: boolean
+    channel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    advocacyOrgId?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    orgContact?: boolean | OutreachContact$orgContactArgs<ExtArgs>
+    messages?: boolean | OutreachContact$messagesArgs<ExtArgs>
+    AdvocacyOrg?: boolean | OutreachContact$AdvocacyOrgArgs<ExtArgs>
+    _count?: boolean | OutreachContactCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachContact"]>
+
+  export type OutreachContactSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workspaceId?: boolean
+    sequenceId?: boolean
+    orgContactId?: boolean
+    name?: boolean
+    title?: boolean
+    email?: boolean
+    channel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    advocacyOrgId?: boolean
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    orgContact?: boolean | OutreachContact$orgContactArgs<ExtArgs>
+    AdvocacyOrg?: boolean | OutreachContact$AdvocacyOrgArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachContact"]>
+
+  export type OutreachContactSelectScalar = {
+    id?: boolean
+    workspaceId?: boolean
+    sequenceId?: boolean
+    orgContactId?: boolean
+    name?: boolean
+    title?: boolean
+    email?: boolean
+    channel?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    advocacyOrgId?: boolean
+  }
+
+  export type OutreachContactInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    orgContact?: boolean | OutreachContact$orgContactArgs<ExtArgs>
+    messages?: boolean | OutreachContact$messagesArgs<ExtArgs>
+    AdvocacyOrg?: boolean | OutreachContact$AdvocacyOrgArgs<ExtArgs>
+    _count?: boolean | OutreachContactCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type OutreachContactIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workspace?: boolean | WorkspaceDefaultArgs<ExtArgs>
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    orgContact?: boolean | OutreachContact$orgContactArgs<ExtArgs>
+    AdvocacyOrg?: boolean | OutreachContact$AdvocacyOrgArgs<ExtArgs>
+  }
+
+  export type $OutreachContactPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OutreachContact"
+    objects: {
+      workspace: Prisma.$WorkspacePayload<ExtArgs>
+      sequence: Prisma.$OutreachSequencePayload<ExtArgs>
+      orgContact: Prisma.$OrgContactPayload<ExtArgs> | null
+      messages: Prisma.$OutreachMessagePayload<ExtArgs>[]
+      AdvocacyOrg: Prisma.$AdvocacyOrgPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workspaceId: string
+      sequenceId: string
+      orgContactId: string | null
+      name: string
+      title: string | null
+      email: string | null
+      channel: $Enums.OutreachChannel
+      status: $Enums.OutreachContactStatus
+      createdAt: Date
+      updatedAt: Date
+      advocacyOrgId: string | null
+    }, ExtArgs["result"]["outreachContact"]>
+    composites: {}
+  }
+
+  type OutreachContactGetPayload<S extends boolean | null | undefined | OutreachContactDefaultArgs> = $Result.GetResult<Prisma.$OutreachContactPayload, S>
+
+  type OutreachContactCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OutreachContactFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OutreachContactCountAggregateInputType | true
+    }
+
+  export interface OutreachContactDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OutreachContact'], meta: { name: 'OutreachContact' } }
+    /**
+     * Find zero or one OutreachContact that matches the filter.
+     * @param {OutreachContactFindUniqueArgs} args - Arguments to find a OutreachContact
+     * @example
+     * // Get one OutreachContact
+     * const outreachContact = await prisma.outreachContact.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OutreachContactFindUniqueArgs>(args: SelectSubset<T, OutreachContactFindUniqueArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one OutreachContact that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OutreachContactFindUniqueOrThrowArgs} args - Arguments to find a OutreachContact
+     * @example
+     * // Get one OutreachContact
+     * const outreachContact = await prisma.outreachContact.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OutreachContactFindUniqueOrThrowArgs>(args: SelectSubset<T, OutreachContactFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first OutreachContact that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactFindFirstArgs} args - Arguments to find a OutreachContact
+     * @example
+     * // Get one OutreachContact
+     * const outreachContact = await prisma.outreachContact.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OutreachContactFindFirstArgs>(args?: SelectSubset<T, OutreachContactFindFirstArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first OutreachContact that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactFindFirstOrThrowArgs} args - Arguments to find a OutreachContact
+     * @example
+     * // Get one OutreachContact
+     * const outreachContact = await prisma.outreachContact.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OutreachContactFindFirstOrThrowArgs>(args?: SelectSubset<T, OutreachContactFindFirstOrThrowArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more OutreachContacts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OutreachContacts
+     * const outreachContacts = await prisma.outreachContact.findMany()
+     * 
+     * // Get first 10 OutreachContacts
+     * const outreachContacts = await prisma.outreachContact.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const outreachContactWithIdOnly = await prisma.outreachContact.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OutreachContactFindManyArgs>(args?: SelectSubset<T, OutreachContactFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a OutreachContact.
+     * @param {OutreachContactCreateArgs} args - Arguments to create a OutreachContact.
+     * @example
+     * // Create one OutreachContact
+     * const OutreachContact = await prisma.outreachContact.create({
+     *   data: {
+     *     // ... data to create a OutreachContact
+     *   }
+     * })
+     * 
+     */
+    create<T extends OutreachContactCreateArgs>(args: SelectSubset<T, OutreachContactCreateArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many OutreachContacts.
+     * @param {OutreachContactCreateManyArgs} args - Arguments to create many OutreachContacts.
+     * @example
+     * // Create many OutreachContacts
+     * const outreachContact = await prisma.outreachContact.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OutreachContactCreateManyArgs>(args?: SelectSubset<T, OutreachContactCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OutreachContacts and returns the data saved in the database.
+     * @param {OutreachContactCreateManyAndReturnArgs} args - Arguments to create many OutreachContacts.
+     * @example
+     * // Create many OutreachContacts
+     * const outreachContact = await prisma.outreachContact.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OutreachContacts and only return the `id`
+     * const outreachContactWithIdOnly = await prisma.outreachContact.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OutreachContactCreateManyAndReturnArgs>(args?: SelectSubset<T, OutreachContactCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a OutreachContact.
+     * @param {OutreachContactDeleteArgs} args - Arguments to delete one OutreachContact.
+     * @example
+     * // Delete one OutreachContact
+     * const OutreachContact = await prisma.outreachContact.delete({
+     *   where: {
+     *     // ... filter to delete one OutreachContact
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OutreachContactDeleteArgs>(args: SelectSubset<T, OutreachContactDeleteArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one OutreachContact.
+     * @param {OutreachContactUpdateArgs} args - Arguments to update one OutreachContact.
+     * @example
+     * // Update one OutreachContact
+     * const outreachContact = await prisma.outreachContact.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OutreachContactUpdateArgs>(args: SelectSubset<T, OutreachContactUpdateArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more OutreachContacts.
+     * @param {OutreachContactDeleteManyArgs} args - Arguments to filter OutreachContacts to delete.
+     * @example
+     * // Delete a few OutreachContacts
+     * const { count } = await prisma.outreachContact.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OutreachContactDeleteManyArgs>(args?: SelectSubset<T, OutreachContactDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OutreachContacts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OutreachContacts
+     * const outreachContact = await prisma.outreachContact.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OutreachContactUpdateManyArgs>(args: SelectSubset<T, OutreachContactUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OutreachContact.
+     * @param {OutreachContactUpsertArgs} args - Arguments to update or create a OutreachContact.
+     * @example
+     * // Update or create a OutreachContact
+     * const outreachContact = await prisma.outreachContact.upsert({
+     *   create: {
+     *     // ... data to create a OutreachContact
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OutreachContact we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OutreachContactUpsertArgs>(args: SelectSubset<T, OutreachContactUpsertArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of OutreachContacts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactCountArgs} args - Arguments to filter OutreachContacts to count.
+     * @example
+     * // Count the number of OutreachContacts
+     * const count = await prisma.outreachContact.count({
+     *   where: {
+     *     // ... the filter for the OutreachContacts we want to count
+     *   }
+     * })
+    **/
+    count<T extends OutreachContactCountArgs>(
+      args?: Subset<T, OutreachContactCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OutreachContactCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OutreachContact.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OutreachContactAggregateArgs>(args: Subset<T, OutreachContactAggregateArgs>): Prisma.PrismaPromise<GetOutreachContactAggregateType<T>>
+
+    /**
+     * Group by OutreachContact.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachContactGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OutreachContactGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OutreachContactGroupByArgs['orderBy'] }
+        : { orderBy?: OutreachContactGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OutreachContactGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOutreachContactGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OutreachContact model
+   */
+  readonly fields: OutreachContactFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OutreachContact.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OutreachContactClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workspace<T extends WorkspaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WorkspaceDefaultArgs<ExtArgs>>): Prisma__WorkspaceClient<$Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    sequence<T extends OutreachSequenceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OutreachSequenceDefaultArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    orgContact<T extends OutreachContact$orgContactArgs<ExtArgs> = {}>(args?: Subset<T, OutreachContact$orgContactArgs<ExtArgs>>): Prisma__OrgContactClient<$Result.GetResult<Prisma.$OrgContactPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    messages<T extends OutreachContact$messagesArgs<ExtArgs> = {}>(args?: Subset<T, OutreachContact$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findMany"> | Null>
+    AdvocacyOrg<T extends OutreachContact$AdvocacyOrgArgs<ExtArgs> = {}>(args?: Subset<T, OutreachContact$AdvocacyOrgArgs<ExtArgs>>): Prisma__AdvocacyOrgClient<$Result.GetResult<Prisma.$AdvocacyOrgPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OutreachContact model
+   */ 
+  interface OutreachContactFieldRefs {
+    readonly id: FieldRef<"OutreachContact", 'String'>
+    readonly workspaceId: FieldRef<"OutreachContact", 'String'>
+    readonly sequenceId: FieldRef<"OutreachContact", 'String'>
+    readonly orgContactId: FieldRef<"OutreachContact", 'String'>
+    readonly name: FieldRef<"OutreachContact", 'String'>
+    readonly title: FieldRef<"OutreachContact", 'String'>
+    readonly email: FieldRef<"OutreachContact", 'String'>
+    readonly channel: FieldRef<"OutreachContact", 'OutreachChannel'>
+    readonly status: FieldRef<"OutreachContact", 'OutreachContactStatus'>
+    readonly createdAt: FieldRef<"OutreachContact", 'DateTime'>
+    readonly updatedAt: FieldRef<"OutreachContact", 'DateTime'>
+    readonly advocacyOrgId: FieldRef<"OutreachContact", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OutreachContact findUnique
+   */
+  export type OutreachContactFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachContact to fetch.
+     */
+    where: OutreachContactWhereUniqueInput
+  }
+
+  /**
+   * OutreachContact findUniqueOrThrow
+   */
+  export type OutreachContactFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachContact to fetch.
+     */
+    where: OutreachContactWhereUniqueInput
+  }
+
+  /**
+   * OutreachContact findFirst
+   */
+  export type OutreachContactFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachContact to fetch.
+     */
+    where?: OutreachContactWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachContacts to fetch.
+     */
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachContacts.
+     */
+    cursor?: OutreachContactWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachContacts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachContacts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachContacts.
+     */
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachContact findFirstOrThrow
+   */
+  export type OutreachContactFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachContact to fetch.
+     */
+    where?: OutreachContactWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachContacts to fetch.
+     */
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachContacts.
+     */
+    cursor?: OutreachContactWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachContacts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachContacts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachContacts.
+     */
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachContact findMany
+   */
+  export type OutreachContactFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachContacts to fetch.
+     */
+    where?: OutreachContactWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachContacts to fetch.
+     */
+    orderBy?: OutreachContactOrderByWithRelationInput | OutreachContactOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OutreachContacts.
+     */
+    cursor?: OutreachContactWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachContacts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachContacts.
+     */
+    skip?: number
+    distinct?: OutreachContactScalarFieldEnum | OutreachContactScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachContact create
+   */
+  export type OutreachContactCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OutreachContact.
+     */
+    data: XOR<OutreachContactCreateInput, OutreachContactUncheckedCreateInput>
+  }
+
+  /**
+   * OutreachContact createMany
+   */
+  export type OutreachContactCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OutreachContacts.
+     */
+    data: OutreachContactCreateManyInput | OutreachContactCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OutreachContact createManyAndReturn
+   */
+  export type OutreachContactCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many OutreachContacts.
+     */
+    data: OutreachContactCreateManyInput | OutreachContactCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OutreachContact update
+   */
+  export type OutreachContactUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OutreachContact.
+     */
+    data: XOR<OutreachContactUpdateInput, OutreachContactUncheckedUpdateInput>
+    /**
+     * Choose, which OutreachContact to update.
+     */
+    where: OutreachContactWhereUniqueInput
+  }
+
+  /**
+   * OutreachContact updateMany
+   */
+  export type OutreachContactUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OutreachContacts.
+     */
+    data: XOR<OutreachContactUpdateManyMutationInput, OutreachContactUncheckedUpdateManyInput>
+    /**
+     * Filter which OutreachContacts to update
+     */
+    where?: OutreachContactWhereInput
+  }
+
+  /**
+   * OutreachContact upsert
+   */
+  export type OutreachContactUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OutreachContact to update in case it exists.
+     */
+    where: OutreachContactWhereUniqueInput
+    /**
+     * In case the OutreachContact found by the `where` argument doesn't exist, create a new OutreachContact with this data.
+     */
+    create: XOR<OutreachContactCreateInput, OutreachContactUncheckedCreateInput>
+    /**
+     * In case the OutreachContact was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OutreachContactUpdateInput, OutreachContactUncheckedUpdateInput>
+  }
+
+  /**
+   * OutreachContact delete
+   */
+  export type OutreachContactDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+    /**
+     * Filter which OutreachContact to delete.
+     */
+    where: OutreachContactWhereUniqueInput
+  }
+
+  /**
+   * OutreachContact deleteMany
+   */
+  export type OutreachContactDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachContacts to delete
+     */
+    where?: OutreachContactWhereInput
+  }
+
+  /**
+   * OutreachContact.orgContact
+   */
+  export type OutreachContact$orgContactArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OrgContact
+     */
+    select?: OrgContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrgContactInclude<ExtArgs> | null
+    where?: OrgContactWhereInput
+  }
+
+  /**
+   * OutreachContact.messages
+   */
+  export type OutreachContact$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    where?: OutreachMessageWhereInput
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    cursor?: OutreachMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachContact.AdvocacyOrg
+   */
+  export type OutreachContact$AdvocacyOrgArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AdvocacyOrg
+     */
+    select?: AdvocacyOrgSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdvocacyOrgInclude<ExtArgs> | null
+    where?: AdvocacyOrgWhereInput
+  }
+
+  /**
+   * OutreachContact without action
+   */
+  export type OutreachContactDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachContact
+     */
+    select?: OutreachContactSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachContactInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model OutreachMessage
+   */
+
+  export type AggregateOutreachMessage = {
+    _count: OutreachMessageCountAggregateOutputType | null
+    _avg: OutreachMessageAvgAggregateOutputType | null
+    _sum: OutreachMessageSumAggregateOutputType | null
+    _min: OutreachMessageMinAggregateOutputType | null
+    _max: OutreachMessageMaxAggregateOutputType | null
+  }
+
+  export type OutreachMessageAvgAggregateOutputType = {
+    step: number | null
+  }
+
+  export type OutreachMessageSumAggregateOutputType = {
+    step: number | null
+  }
+
+  export type OutreachMessageMinAggregateOutputType = {
+    id: string | null
+    sequenceId: string | null
+    contactId: string | null
+    step: number | null
+    subject: string | null
+    body: string | null
+    status: $Enums.OutreachMessageStatus | null
+    scheduledFor: Date | null
+    sentAt: Date | null
+    dossierId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutreachMessageMaxAggregateOutputType = {
+    id: string | null
+    sequenceId: string | null
+    contactId: string | null
+    step: number | null
+    subject: string | null
+    body: string | null
+    status: $Enums.OutreachMessageStatus | null
+    scheduledFor: Date | null
+    sentAt: Date | null
+    dossierId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type OutreachMessageCountAggregateOutputType = {
+    id: number
+    sequenceId: number
+    contactId: number
+    step: number
+    subject: number
+    body: number
+    status: number
+    scheduledFor: number
+    sentAt: number
+    dossierId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OutreachMessageAvgAggregateInputType = {
+    step?: true
+  }
+
+  export type OutreachMessageSumAggregateInputType = {
+    step?: true
+  }
+
+  export type OutreachMessageMinAggregateInputType = {
+    id?: true
+    sequenceId?: true
+    contactId?: true
+    step?: true
+    subject?: true
+    body?: true
+    status?: true
+    scheduledFor?: true
+    sentAt?: true
+    dossierId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutreachMessageMaxAggregateInputType = {
+    id?: true
+    sequenceId?: true
+    contactId?: true
+    step?: true
+    subject?: true
+    body?: true
+    status?: true
+    scheduledFor?: true
+    sentAt?: true
+    dossierId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type OutreachMessageCountAggregateInputType = {
+    id?: true
+    sequenceId?: true
+    contactId?: true
+    step?: true
+    subject?: true
+    body?: true
+    status?: true
+    scheduledFor?: true
+    sentAt?: true
+    dossierId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OutreachMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachMessage to aggregate.
+     */
+    where?: OutreachMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachMessages to fetch.
+     */
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OutreachMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OutreachMessages
+    **/
+    _count?: true | OutreachMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OutreachMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OutreachMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OutreachMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OutreachMessageMaxAggregateInputType
+  }
+
+  export type GetOutreachMessageAggregateType<T extends OutreachMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateOutreachMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOutreachMessage[P]>
+      : GetScalarType<T[P], AggregateOutreachMessage[P]>
+  }
+
+
+
+
+  export type OutreachMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OutreachMessageWhereInput
+    orderBy?: OutreachMessageOrderByWithAggregationInput | OutreachMessageOrderByWithAggregationInput[]
+    by: OutreachMessageScalarFieldEnum[] | OutreachMessageScalarFieldEnum
+    having?: OutreachMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OutreachMessageCountAggregateInputType | true
+    _avg?: OutreachMessageAvgAggregateInputType
+    _sum?: OutreachMessageSumAggregateInputType
+    _min?: OutreachMessageMinAggregateInputType
+    _max?: OutreachMessageMaxAggregateInputType
+  }
+
+  export type OutreachMessageGroupByOutputType = {
+    id: string
+    sequenceId: string
+    contactId: string
+    step: number
+    subject: string | null
+    body: string
+    status: $Enums.OutreachMessageStatus
+    scheduledFor: Date | null
+    sentAt: Date | null
+    dossierId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: OutreachMessageCountAggregateOutputType | null
+    _avg: OutreachMessageAvgAggregateOutputType | null
+    _sum: OutreachMessageSumAggregateOutputType | null
+    _min: OutreachMessageMinAggregateOutputType | null
+    _max: OutreachMessageMaxAggregateOutputType | null
+  }
+
+  type GetOutreachMessageGroupByPayload<T extends OutreachMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OutreachMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OutreachMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OutreachMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], OutreachMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OutreachMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sequenceId?: boolean
+    contactId?: boolean
+    step?: boolean
+    subject?: boolean
+    body?: boolean
+    status?: boolean
+    scheduledFor?: boolean
+    sentAt?: boolean
+    dossierId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    contact?: boolean | OutreachContactDefaultArgs<ExtArgs>
+    dossier?: boolean | OutreachMessage$dossierArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachMessage"]>
+
+  export type OutreachMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    sequenceId?: boolean
+    contactId?: boolean
+    step?: boolean
+    subject?: boolean
+    body?: boolean
+    status?: boolean
+    scheduledFor?: boolean
+    sentAt?: boolean
+    dossierId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    contact?: boolean | OutreachContactDefaultArgs<ExtArgs>
+    dossier?: boolean | OutreachMessage$dossierArgs<ExtArgs>
+  }, ExtArgs["result"]["outreachMessage"]>
+
+  export type OutreachMessageSelectScalar = {
+    id?: boolean
+    sequenceId?: boolean
+    contactId?: boolean
+    step?: boolean
+    subject?: boolean
+    body?: boolean
+    status?: boolean
+    scheduledFor?: boolean
+    sentAt?: boolean
+    dossierId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OutreachMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    contact?: boolean | OutreachContactDefaultArgs<ExtArgs>
+    dossier?: boolean | OutreachMessage$dossierArgs<ExtArgs>
+  }
+  export type OutreachMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sequence?: boolean | OutreachSequenceDefaultArgs<ExtArgs>
+    contact?: boolean | OutreachContactDefaultArgs<ExtArgs>
+    dossier?: boolean | OutreachMessage$dossierArgs<ExtArgs>
+  }
+
+  export type $OutreachMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OutreachMessage"
+    objects: {
+      sequence: Prisma.$OutreachSequencePayload<ExtArgs>
+      contact: Prisma.$OutreachContactPayload<ExtArgs>
+      dossier: Prisma.$DossierPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      sequenceId: string
+      contactId: string
+      step: number
+      subject: string | null
+      body: string
+      status: $Enums.OutreachMessageStatus
+      scheduledFor: Date | null
+      sentAt: Date | null
+      dossierId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["outreachMessage"]>
+    composites: {}
+  }
+
+  type OutreachMessageGetPayload<S extends boolean | null | undefined | OutreachMessageDefaultArgs> = $Result.GetResult<Prisma.$OutreachMessagePayload, S>
+
+  type OutreachMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<OutreachMessageFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: OutreachMessageCountAggregateInputType | true
+    }
+
+  export interface OutreachMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OutreachMessage'], meta: { name: 'OutreachMessage' } }
+    /**
+     * Find zero or one OutreachMessage that matches the filter.
+     * @param {OutreachMessageFindUniqueArgs} args - Arguments to find a OutreachMessage
+     * @example
+     * // Get one OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OutreachMessageFindUniqueArgs>(args: SelectSubset<T, OutreachMessageFindUniqueArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one OutreachMessage that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {OutreachMessageFindUniqueOrThrowArgs} args - Arguments to find a OutreachMessage
+     * @example
+     * // Get one OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OutreachMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, OutreachMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first OutreachMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageFindFirstArgs} args - Arguments to find a OutreachMessage
+     * @example
+     * // Get one OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OutreachMessageFindFirstArgs>(args?: SelectSubset<T, OutreachMessageFindFirstArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first OutreachMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageFindFirstOrThrowArgs} args - Arguments to find a OutreachMessage
+     * @example
+     * // Get one OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OutreachMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, OutreachMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more OutreachMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OutreachMessages
+     * const outreachMessages = await prisma.outreachMessage.findMany()
+     * 
+     * // Get first 10 OutreachMessages
+     * const outreachMessages = await prisma.outreachMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const outreachMessageWithIdOnly = await prisma.outreachMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OutreachMessageFindManyArgs>(args?: SelectSubset<T, OutreachMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a OutreachMessage.
+     * @param {OutreachMessageCreateArgs} args - Arguments to create a OutreachMessage.
+     * @example
+     * // Create one OutreachMessage
+     * const OutreachMessage = await prisma.outreachMessage.create({
+     *   data: {
+     *     // ... data to create a OutreachMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends OutreachMessageCreateArgs>(args: SelectSubset<T, OutreachMessageCreateArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many OutreachMessages.
+     * @param {OutreachMessageCreateManyArgs} args - Arguments to create many OutreachMessages.
+     * @example
+     * // Create many OutreachMessages
+     * const outreachMessage = await prisma.outreachMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OutreachMessageCreateManyArgs>(args?: SelectSubset<T, OutreachMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OutreachMessages and returns the data saved in the database.
+     * @param {OutreachMessageCreateManyAndReturnArgs} args - Arguments to create many OutreachMessages.
+     * @example
+     * // Create many OutreachMessages
+     * const outreachMessage = await prisma.outreachMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OutreachMessages and only return the `id`
+     * const outreachMessageWithIdOnly = await prisma.outreachMessage.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OutreachMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, OutreachMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a OutreachMessage.
+     * @param {OutreachMessageDeleteArgs} args - Arguments to delete one OutreachMessage.
+     * @example
+     * // Delete one OutreachMessage
+     * const OutreachMessage = await prisma.outreachMessage.delete({
+     *   where: {
+     *     // ... filter to delete one OutreachMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OutreachMessageDeleteArgs>(args: SelectSubset<T, OutreachMessageDeleteArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one OutreachMessage.
+     * @param {OutreachMessageUpdateArgs} args - Arguments to update one OutreachMessage.
+     * @example
+     * // Update one OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OutreachMessageUpdateArgs>(args: SelectSubset<T, OutreachMessageUpdateArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more OutreachMessages.
+     * @param {OutreachMessageDeleteManyArgs} args - Arguments to filter OutreachMessages to delete.
+     * @example
+     * // Delete a few OutreachMessages
+     * const { count } = await prisma.outreachMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OutreachMessageDeleteManyArgs>(args?: SelectSubset<T, OutreachMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OutreachMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OutreachMessages
+     * const outreachMessage = await prisma.outreachMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OutreachMessageUpdateManyArgs>(args: SelectSubset<T, OutreachMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one OutreachMessage.
+     * @param {OutreachMessageUpsertArgs} args - Arguments to update or create a OutreachMessage.
+     * @example
+     * // Update or create a OutreachMessage
+     * const outreachMessage = await prisma.outreachMessage.upsert({
+     *   create: {
+     *     // ... data to create a OutreachMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OutreachMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OutreachMessageUpsertArgs>(args: SelectSubset<T, OutreachMessageUpsertArgs<ExtArgs>>): Prisma__OutreachMessageClient<$Result.GetResult<Prisma.$OutreachMessagePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of OutreachMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageCountArgs} args - Arguments to filter OutreachMessages to count.
+     * @example
+     * // Count the number of OutreachMessages
+     * const count = await prisma.outreachMessage.count({
+     *   where: {
+     *     // ... the filter for the OutreachMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends OutreachMessageCountArgs>(
+      args?: Subset<T, OutreachMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OutreachMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OutreachMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OutreachMessageAggregateArgs>(args: Subset<T, OutreachMessageAggregateArgs>): Prisma.PrismaPromise<GetOutreachMessageAggregateType<T>>
+
+    /**
+     * Group by OutreachMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OutreachMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OutreachMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OutreachMessageGroupByArgs['orderBy'] }
+        : { orderBy?: OutreachMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OutreachMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOutreachMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OutreachMessage model
+   */
+  readonly fields: OutreachMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OutreachMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OutreachMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sequence<T extends OutreachSequenceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OutreachSequenceDefaultArgs<ExtArgs>>): Prisma__OutreachSequenceClient<$Result.GetResult<Prisma.$OutreachSequencePayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    contact<T extends OutreachContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OutreachContactDefaultArgs<ExtArgs>>): Prisma__OutreachContactClient<$Result.GetResult<Prisma.$OutreachContactPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    dossier<T extends OutreachMessage$dossierArgs<ExtArgs> = {}>(args?: Subset<T, OutreachMessage$dossierArgs<ExtArgs>>): Prisma__DossierClient<$Result.GetResult<Prisma.$DossierPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OutreachMessage model
+   */ 
+  interface OutreachMessageFieldRefs {
+    readonly id: FieldRef<"OutreachMessage", 'String'>
+    readonly sequenceId: FieldRef<"OutreachMessage", 'String'>
+    readonly contactId: FieldRef<"OutreachMessage", 'String'>
+    readonly step: FieldRef<"OutreachMessage", 'Int'>
+    readonly subject: FieldRef<"OutreachMessage", 'String'>
+    readonly body: FieldRef<"OutreachMessage", 'String'>
+    readonly status: FieldRef<"OutreachMessage", 'OutreachMessageStatus'>
+    readonly scheduledFor: FieldRef<"OutreachMessage", 'DateTime'>
+    readonly sentAt: FieldRef<"OutreachMessage", 'DateTime'>
+    readonly dossierId: FieldRef<"OutreachMessage", 'String'>
+    readonly createdAt: FieldRef<"OutreachMessage", 'DateTime'>
+    readonly updatedAt: FieldRef<"OutreachMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OutreachMessage findUnique
+   */
+  export type OutreachMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachMessage to fetch.
+     */
+    where: OutreachMessageWhereUniqueInput
+  }
+
+  /**
+   * OutreachMessage findUniqueOrThrow
+   */
+  export type OutreachMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachMessage to fetch.
+     */
+    where: OutreachMessageWhereUniqueInput
+  }
+
+  /**
+   * OutreachMessage findFirst
+   */
+  export type OutreachMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachMessage to fetch.
+     */
+    where?: OutreachMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachMessages to fetch.
+     */
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachMessages.
+     */
+    cursor?: OutreachMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachMessages.
+     */
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachMessage findFirstOrThrow
+   */
+  export type OutreachMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachMessage to fetch.
+     */
+    where?: OutreachMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachMessages to fetch.
+     */
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OutreachMessages.
+     */
+    cursor?: OutreachMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OutreachMessages.
+     */
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachMessage findMany
+   */
+  export type OutreachMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which OutreachMessages to fetch.
+     */
+    where?: OutreachMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OutreachMessages to fetch.
+     */
+    orderBy?: OutreachMessageOrderByWithRelationInput | OutreachMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OutreachMessages.
+     */
+    cursor?: OutreachMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OutreachMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OutreachMessages.
+     */
+    skip?: number
+    distinct?: OutreachMessageScalarFieldEnum | OutreachMessageScalarFieldEnum[]
+  }
+
+  /**
+   * OutreachMessage create
+   */
+  export type OutreachMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a OutreachMessage.
+     */
+    data: XOR<OutreachMessageCreateInput, OutreachMessageUncheckedCreateInput>
+  }
+
+  /**
+   * OutreachMessage createMany
+   */
+  export type OutreachMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OutreachMessages.
+     */
+    data: OutreachMessageCreateManyInput | OutreachMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OutreachMessage createManyAndReturn
+   */
+  export type OutreachMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many OutreachMessages.
+     */
+    data: OutreachMessageCreateManyInput | OutreachMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * OutreachMessage update
+   */
+  export type OutreachMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a OutreachMessage.
+     */
+    data: XOR<OutreachMessageUpdateInput, OutreachMessageUncheckedUpdateInput>
+    /**
+     * Choose, which OutreachMessage to update.
+     */
+    where: OutreachMessageWhereUniqueInput
+  }
+
+  /**
+   * OutreachMessage updateMany
+   */
+  export type OutreachMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OutreachMessages.
+     */
+    data: XOR<OutreachMessageUpdateManyMutationInput, OutreachMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which OutreachMessages to update
+     */
+    where?: OutreachMessageWhereInput
+  }
+
+  /**
+   * OutreachMessage upsert
+   */
+  export type OutreachMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the OutreachMessage to update in case it exists.
+     */
+    where: OutreachMessageWhereUniqueInput
+    /**
+     * In case the OutreachMessage found by the `where` argument doesn't exist, create a new OutreachMessage with this data.
+     */
+    create: XOR<OutreachMessageCreateInput, OutreachMessageUncheckedCreateInput>
+    /**
+     * In case the OutreachMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OutreachMessageUpdateInput, OutreachMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * OutreachMessage delete
+   */
+  export type OutreachMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+    /**
+     * Filter which OutreachMessage to delete.
+     */
+    where: OutreachMessageWhereUniqueInput
+  }
+
+  /**
+   * OutreachMessage deleteMany
+   */
+  export type OutreachMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OutreachMessages to delete
+     */
+    where?: OutreachMessageWhereInput
+  }
+
+  /**
+   * OutreachMessage.dossier
+   */
+  export type OutreachMessage$dossierArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dossier
+     */
+    select?: DossierSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DossierInclude<ExtArgs> | null
+    where?: DossierWhereInput
+  }
+
+  /**
+   * OutreachMessage without action
+   */
+  export type OutreachMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OutreachMessage
+     */
+    select?: OutreachMessageSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OutreachMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -36272,6 +42689,7 @@ export namespace Prisma {
 
   export const OpenGrantScalarFieldEnum: {
     id: 'id',
+    slug: 'slug',
     orgId: 'orgId',
     workspaceId: 'workspaceId',
     title: 'title',
@@ -36742,6 +43160,93 @@ export namespace Prisma {
   };
 
   export type GrantApplicationScalarFieldEnum = (typeof GrantApplicationScalarFieldEnum)[keyof typeof GrantApplicationScalarFieldEnum]
+
+
+  export const KnowledgeDocScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    orgId: 'orgId',
+    grantId: 'grantId',
+    title: 'title',
+    fileName: 'fileName',
+    mimeType: 'mimeType',
+    sizeBytes: 'sizeBytes',
+    fileData: 'fileData',
+    extractedText: 'extractedText',
+    status: 'status',
+    sourceType: 'sourceType',
+    tags: 'tags',
+    error: 'error',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type KnowledgeDocScalarFieldEnum = (typeof KnowledgeDocScalarFieldEnum)[keyof typeof KnowledgeDocScalarFieldEnum]
+
+
+  export const KnowledgeChunkScalarFieldEnum: {
+    id: 'id',
+    docId: 'docId',
+    workspaceId: 'workspaceId',
+    orgId: 'orgId',
+    chunkIndex: 'chunkIndex',
+    content: 'content',
+    tokenCount: 'tokenCount',
+    createdAt: 'createdAt'
+  };
+
+  export type KnowledgeChunkScalarFieldEnum = (typeof KnowledgeChunkScalarFieldEnum)[keyof typeof KnowledgeChunkScalarFieldEnum]
+
+
+  export const OutreachSequenceScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    orgId: 'orgId',
+    name: 'name',
+    goal: 'goal',
+    status: 'status',
+    steps: 'steps',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OutreachSequenceScalarFieldEnum = (typeof OutreachSequenceScalarFieldEnum)[keyof typeof OutreachSequenceScalarFieldEnum]
+
+
+  export const OutreachContactScalarFieldEnum: {
+    id: 'id',
+    workspaceId: 'workspaceId',
+    sequenceId: 'sequenceId',
+    orgContactId: 'orgContactId',
+    name: 'name',
+    title: 'title',
+    email: 'email',
+    channel: 'channel',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    advocacyOrgId: 'advocacyOrgId'
+  };
+
+  export type OutreachContactScalarFieldEnum = (typeof OutreachContactScalarFieldEnum)[keyof typeof OutreachContactScalarFieldEnum]
+
+
+  export const OutreachMessageScalarFieldEnum: {
+    id: 'id',
+    sequenceId: 'sequenceId',
+    contactId: 'contactId',
+    step: 'step',
+    subject: 'subject',
+    body: 'body',
+    status: 'status',
+    scheduledFor: 'scheduledFor',
+    sentAt: 'sentAt',
+    dossierId: 'dossierId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OutreachMessageScalarFieldEnum = (typeof OutreachMessageScalarFieldEnum)[keyof typeof OutreachMessageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -37271,6 +43776,90 @@ export namespace Prisma {
    */
   export type ListEnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'KnowledgeDocStatus'
+   */
+  export type EnumKnowledgeDocStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KnowledgeDocStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'KnowledgeDocStatus[]'
+   */
+  export type ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KnowledgeDocStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachSequenceStatus'
+   */
+  export type EnumOutreachSequenceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachSequenceStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachSequenceStatus[]'
+   */
+  export type ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachSequenceStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachChannel'
+   */
+  export type EnumOutreachChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachChannel'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachChannel[]'
+   */
+  export type ListEnumOutreachChannelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachChannel[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachContactStatus'
+   */
+  export type EnumOutreachContactStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachContactStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachContactStatus[]'
+   */
+  export type ListEnumOutreachContactStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachContactStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachMessageStatus'
+   */
+  export type EnumOutreachMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachMessageStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'OutreachMessageStatus[]'
+   */
+  export type ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OutreachMessageStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -37383,6 +43972,10 @@ export namespace Prisma {
     agentRuns?: AgentRunListRelationFilter
     dataSources?: DataSourceListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    knowledgeDocs?: KnowledgeDocListRelationFilter
+    knowledgeChunks?: KnowledgeChunkListRelationFilter
+    outreachSequences?: OutreachSequenceListRelationFilter
+    outreachContacts?: OutreachContactListRelationFilter
   }
 
   export type WorkspaceOrderByWithRelationInput = {
@@ -37401,6 +43994,10 @@ export namespace Prisma {
     agentRuns?: AgentRunOrderByRelationAggregateInput
     dataSources?: DataSourceOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    knowledgeDocs?: KnowledgeDocOrderByRelationAggregateInput
+    knowledgeChunks?: KnowledgeChunkOrderByRelationAggregateInput
+    outreachSequences?: OutreachSequenceOrderByRelationAggregateInput
+    outreachContacts?: OutreachContactOrderByRelationAggregateInput
   }
 
   export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
@@ -37422,6 +44019,10 @@ export namespace Prisma {
     agentRuns?: AgentRunListRelationFilter
     dataSources?: DataSourceListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    knowledgeDocs?: KnowledgeDocListRelationFilter
+    knowledgeChunks?: KnowledgeChunkListRelationFilter
+    outreachSequences?: OutreachSequenceListRelationFilter
+    outreachContacts?: OutreachContactListRelationFilter
   }, "id" | "slug">
 
   export type WorkspaceOrderByWithAggregationInput = {
@@ -37550,6 +44151,10 @@ export namespace Prisma {
     pipeline?: XOR<GrantPipelineNullableRelationFilter, GrantPipelineWhereInput> | null
     dossiers?: DossierListRelationFilter
     applications?: GrantApplicationListRelationFilter
+    knowledgeDocs?: KnowledgeDocListRelationFilter
+    knowledgeChunks?: KnowledgeChunkListRelationFilter
+    outreachSequences?: OutreachSequenceListRelationFilter
+    outreachContacts?: OutreachContactListRelationFilter
   }
 
   export type AdvocacyOrgOrderByWithRelationInput = {
@@ -37588,6 +44193,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineOrderByWithRelationInput
     dossiers?: DossierOrderByRelationAggregateInput
     applications?: GrantApplicationOrderByRelationAggregateInput
+    knowledgeDocs?: KnowledgeDocOrderByRelationAggregateInput
+    knowledgeChunks?: KnowledgeChunkOrderByRelationAggregateInput
+    outreachSequences?: OutreachSequenceOrderByRelationAggregateInput
+    outreachContacts?: OutreachContactOrderByRelationAggregateInput
   }
 
   export type AdvocacyOrgWhereUniqueInput = Prisma.AtLeast<{
@@ -37630,6 +44239,10 @@ export namespace Prisma {
     pipeline?: XOR<GrantPipelineNullableRelationFilter, GrantPipelineWhereInput> | null
     dossiers?: DossierListRelationFilter
     applications?: GrantApplicationListRelationFilter
+    knowledgeDocs?: KnowledgeDocListRelationFilter
+    knowledgeChunks?: KnowledgeChunkListRelationFilter
+    outreachSequences?: OutreachSequenceListRelationFilter
+    outreachContacts?: OutreachContactListRelationFilter
   }, "id" | "workspaceId_slug">
 
   export type AdvocacyOrgOrderByWithAggregationInput = {
@@ -37708,6 +44321,7 @@ export namespace Prisma {
     isPrimary?: BoolFilter<"OrgContact"> | boolean
     createdAt?: DateTimeFilter<"OrgContact"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    outreachContacts?: OutreachContactListRelationFilter
   }
 
   export type OrgContactOrderByWithRelationInput = {
@@ -37721,6 +44335,7 @@ export namespace Prisma {
     isPrimary?: SortOrder
     createdAt?: SortOrder
     org?: AdvocacyOrgOrderByWithRelationInput
+    outreachContacts?: OutreachContactOrderByRelationAggregateInput
   }
 
   export type OrgContactWhereUniqueInput = Prisma.AtLeast<{
@@ -37737,6 +44352,7 @@ export namespace Prisma {
     isPrimary?: BoolFilter<"OrgContact"> | boolean
     createdAt?: DateTimeFilter<"OrgContact"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
+    outreachContacts?: OutreachContactListRelationFilter
   }, "id">
 
   export type OrgContactOrderByWithAggregationInput = {
@@ -37774,6 +44390,7 @@ export namespace Prisma {
     OR?: OpenGrantWhereInput[]
     NOT?: OpenGrantWhereInput | OpenGrantWhereInput[]
     id?: StringFilter<"OpenGrant"> | string
+    slug?: StringFilter<"OpenGrant"> | string
     orgId?: StringFilter<"OpenGrant"> | string
     workspaceId?: StringFilter<"OpenGrant"> | string
     title?: StringFilter<"OpenGrant"> | string
@@ -37806,10 +44423,12 @@ export namespace Prisma {
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
     applications?: GrantApplicationListRelationFilter
+    knowledgeDocs?: KnowledgeDocListRelationFilter
   }
 
   export type OpenGrantOrderByWithRelationInput = {
     id?: SortOrder
+    slug?: SortOrder
     orgId?: SortOrder
     workspaceId?: SortOrder
     title?: SortOrder
@@ -37842,13 +44461,16 @@ export namespace Prisma {
     org?: AdvocacyOrgOrderByWithRelationInput
     workspace?: WorkspaceOrderByWithRelationInput
     applications?: GrantApplicationOrderByRelationAggregateInput
+    knowledgeDocs?: KnowledgeDocOrderByRelationAggregateInput
   }
 
   export type OpenGrantWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    workspaceId_orgId_slug?: OpenGrantWorkspaceIdOrgIdSlugCompoundUniqueInput
     AND?: OpenGrantWhereInput | OpenGrantWhereInput[]
     OR?: OpenGrantWhereInput[]
     NOT?: OpenGrantWhereInput | OpenGrantWhereInput[]
+    slug?: StringFilter<"OpenGrant"> | string
     orgId?: StringFilter<"OpenGrant"> | string
     workspaceId?: StringFilter<"OpenGrant"> | string
     title?: StringFilter<"OpenGrant"> | string
@@ -37881,10 +44503,12 @@ export namespace Prisma {
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
     applications?: GrantApplicationListRelationFilter
-  }, "id">
+    knowledgeDocs?: KnowledgeDocListRelationFilter
+  }, "id" | "workspaceId_orgId_slug">
 
   export type OpenGrantOrderByWithAggregationInput = {
     id?: SortOrder
+    slug?: SortOrder
     orgId?: SortOrder
     workspaceId?: SortOrder
     title?: SortOrder
@@ -37926,6 +44550,7 @@ export namespace Prisma {
     OR?: OpenGrantScalarWhereWithAggregatesInput[]
     NOT?: OpenGrantScalarWhereWithAggregatesInput | OpenGrantScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"OpenGrant"> | string
+    slug?: StringWithAggregatesFilter<"OpenGrant"> | string
     orgId?: StringWithAggregatesFilter<"OpenGrant"> | string
     workspaceId?: StringWithAggregatesFilter<"OpenGrant"> | string
     title?: StringWithAggregatesFilter<"OpenGrant"> | string
@@ -40125,6 +46750,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Dossier"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     applications?: GrantApplicationListRelationFilter
+    outreachMessages?: OutreachMessageListRelationFilter
   }
 
   export type DossierOrderByWithRelationInput = {
@@ -40138,6 +46764,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     org?: AdvocacyOrgOrderByWithRelationInput
     applications?: GrantApplicationOrderByRelationAggregateInput
+    outreachMessages?: OutreachMessageOrderByRelationAggregateInput
   }
 
   export type DossierWhereUniqueInput = Prisma.AtLeast<{
@@ -40154,6 +46781,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Dossier"> | Date | string
     org?: XOR<AdvocacyOrgRelationFilter, AdvocacyOrgWhereInput>
     applications?: GrantApplicationListRelationFilter
+    outreachMessages?: OutreachMessageListRelationFilter
   }, "id">
 
   export type DossierOrderByWithAggregationInput = {
@@ -40302,6 +46930,489 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"GrantApplication"> | Date | string
   }
 
+  export type KnowledgeDocWhereInput = {
+    AND?: KnowledgeDocWhereInput | KnowledgeDocWhereInput[]
+    OR?: KnowledgeDocWhereInput[]
+    NOT?: KnowledgeDocWhereInput | KnowledgeDocWhereInput[]
+    id?: StringFilter<"KnowledgeDoc"> | string
+    workspaceId?: StringFilter<"KnowledgeDoc"> | string
+    orgId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    grantId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    title?: StringFilter<"KnowledgeDoc"> | string
+    fileName?: StringFilter<"KnowledgeDoc"> | string
+    mimeType?: StringFilter<"KnowledgeDoc"> | string
+    sizeBytes?: IntFilter<"KnowledgeDoc"> | number
+    fileData?: BytesFilter<"KnowledgeDoc"> | Buffer
+    extractedText?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    status?: EnumKnowledgeDocStatusFilter<"KnowledgeDoc"> | $Enums.KnowledgeDocStatus
+    sourceType?: StringFilter<"KnowledgeDoc"> | string
+    tags?: StringNullableListFilter<"KnowledgeDoc">
+    error?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    createdAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+    updatedAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+    grant?: XOR<OpenGrantNullableRelationFilter, OpenGrantWhereInput> | null
+    chunks?: KnowledgeChunkListRelationFilter
+  }
+
+  export type KnowledgeDocOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    grantId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    fileName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    fileData?: SortOrder
+    extractedText?: SortOrderInput | SortOrder
+    status?: SortOrder
+    sourceType?: SortOrder
+    tags?: SortOrder
+    error?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspace?: WorkspaceOrderByWithRelationInput
+    org?: AdvocacyOrgOrderByWithRelationInput
+    grant?: OpenGrantOrderByWithRelationInput
+    chunks?: KnowledgeChunkOrderByRelationAggregateInput
+  }
+
+  export type KnowledgeDocWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: KnowledgeDocWhereInput | KnowledgeDocWhereInput[]
+    OR?: KnowledgeDocWhereInput[]
+    NOT?: KnowledgeDocWhereInput | KnowledgeDocWhereInput[]
+    workspaceId?: StringFilter<"KnowledgeDoc"> | string
+    orgId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    grantId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    title?: StringFilter<"KnowledgeDoc"> | string
+    fileName?: StringFilter<"KnowledgeDoc"> | string
+    mimeType?: StringFilter<"KnowledgeDoc"> | string
+    sizeBytes?: IntFilter<"KnowledgeDoc"> | number
+    fileData?: BytesFilter<"KnowledgeDoc"> | Buffer
+    extractedText?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    status?: EnumKnowledgeDocStatusFilter<"KnowledgeDoc"> | $Enums.KnowledgeDocStatus
+    sourceType?: StringFilter<"KnowledgeDoc"> | string
+    tags?: StringNullableListFilter<"KnowledgeDoc">
+    error?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    createdAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+    updatedAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+    grant?: XOR<OpenGrantNullableRelationFilter, OpenGrantWhereInput> | null
+    chunks?: KnowledgeChunkListRelationFilter
+  }, "id">
+
+  export type KnowledgeDocOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    grantId?: SortOrderInput | SortOrder
+    title?: SortOrder
+    fileName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    fileData?: SortOrder
+    extractedText?: SortOrderInput | SortOrder
+    status?: SortOrder
+    sourceType?: SortOrder
+    tags?: SortOrder
+    error?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: KnowledgeDocCountOrderByAggregateInput
+    _avg?: KnowledgeDocAvgOrderByAggregateInput
+    _max?: KnowledgeDocMaxOrderByAggregateInput
+    _min?: KnowledgeDocMinOrderByAggregateInput
+    _sum?: KnowledgeDocSumOrderByAggregateInput
+  }
+
+  export type KnowledgeDocScalarWhereWithAggregatesInput = {
+    AND?: KnowledgeDocScalarWhereWithAggregatesInput | KnowledgeDocScalarWhereWithAggregatesInput[]
+    OR?: KnowledgeDocScalarWhereWithAggregatesInput[]
+    NOT?: KnowledgeDocScalarWhereWithAggregatesInput | KnowledgeDocScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    workspaceId?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    orgId?: StringNullableWithAggregatesFilter<"KnowledgeDoc"> | string | null
+    grantId?: StringNullableWithAggregatesFilter<"KnowledgeDoc"> | string | null
+    title?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    fileName?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    mimeType?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    sizeBytes?: IntWithAggregatesFilter<"KnowledgeDoc"> | number
+    fileData?: BytesWithAggregatesFilter<"KnowledgeDoc"> | Buffer
+    extractedText?: StringNullableWithAggregatesFilter<"KnowledgeDoc"> | string | null
+    status?: EnumKnowledgeDocStatusWithAggregatesFilter<"KnowledgeDoc"> | $Enums.KnowledgeDocStatus
+    sourceType?: StringWithAggregatesFilter<"KnowledgeDoc"> | string
+    tags?: StringNullableListFilter<"KnowledgeDoc">
+    error?: StringNullableWithAggregatesFilter<"KnowledgeDoc"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"KnowledgeDoc"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KnowledgeDoc"> | Date | string
+  }
+
+  export type KnowledgeChunkWhereInput = {
+    AND?: KnowledgeChunkWhereInput | KnowledgeChunkWhereInput[]
+    OR?: KnowledgeChunkWhereInput[]
+    NOT?: KnowledgeChunkWhereInput | KnowledgeChunkWhereInput[]
+    id?: StringFilter<"KnowledgeChunk"> | string
+    docId?: StringFilter<"KnowledgeChunk"> | string
+    workspaceId?: StringFilter<"KnowledgeChunk"> | string
+    orgId?: StringNullableFilter<"KnowledgeChunk"> | string | null
+    chunkIndex?: IntFilter<"KnowledgeChunk"> | number
+    content?: StringFilter<"KnowledgeChunk"> | string
+    tokenCount?: IntFilter<"KnowledgeChunk"> | number
+    createdAt?: DateTimeFilter<"KnowledgeChunk"> | Date | string
+    doc?: XOR<KnowledgeDocRelationFilter, KnowledgeDocWhereInput>
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+  }
+
+  export type KnowledgeChunkOrderByWithRelationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    chunkIndex?: SortOrder
+    content?: SortOrder
+    tokenCount?: SortOrder
+    createdAt?: SortOrder
+    doc?: KnowledgeDocOrderByWithRelationInput
+    workspace?: WorkspaceOrderByWithRelationInput
+    org?: AdvocacyOrgOrderByWithRelationInput
+  }
+
+  export type KnowledgeChunkWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: KnowledgeChunkWhereInput | KnowledgeChunkWhereInput[]
+    OR?: KnowledgeChunkWhereInput[]
+    NOT?: KnowledgeChunkWhereInput | KnowledgeChunkWhereInput[]
+    docId?: StringFilter<"KnowledgeChunk"> | string
+    workspaceId?: StringFilter<"KnowledgeChunk"> | string
+    orgId?: StringNullableFilter<"KnowledgeChunk"> | string | null
+    chunkIndex?: IntFilter<"KnowledgeChunk"> | number
+    content?: StringFilter<"KnowledgeChunk"> | string
+    tokenCount?: IntFilter<"KnowledgeChunk"> | number
+    createdAt?: DateTimeFilter<"KnowledgeChunk"> | Date | string
+    doc?: XOR<KnowledgeDocRelationFilter, KnowledgeDocWhereInput>
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+  }, "id">
+
+  export type KnowledgeChunkOrderByWithAggregationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    chunkIndex?: SortOrder
+    content?: SortOrder
+    tokenCount?: SortOrder
+    createdAt?: SortOrder
+    _count?: KnowledgeChunkCountOrderByAggregateInput
+    _avg?: KnowledgeChunkAvgOrderByAggregateInput
+    _max?: KnowledgeChunkMaxOrderByAggregateInput
+    _min?: KnowledgeChunkMinOrderByAggregateInput
+    _sum?: KnowledgeChunkSumOrderByAggregateInput
+  }
+
+  export type KnowledgeChunkScalarWhereWithAggregatesInput = {
+    AND?: KnowledgeChunkScalarWhereWithAggregatesInput | KnowledgeChunkScalarWhereWithAggregatesInput[]
+    OR?: KnowledgeChunkScalarWhereWithAggregatesInput[]
+    NOT?: KnowledgeChunkScalarWhereWithAggregatesInput | KnowledgeChunkScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KnowledgeChunk"> | string
+    docId?: StringWithAggregatesFilter<"KnowledgeChunk"> | string
+    workspaceId?: StringWithAggregatesFilter<"KnowledgeChunk"> | string
+    orgId?: StringNullableWithAggregatesFilter<"KnowledgeChunk"> | string | null
+    chunkIndex?: IntWithAggregatesFilter<"KnowledgeChunk"> | number
+    content?: StringWithAggregatesFilter<"KnowledgeChunk"> | string
+    tokenCount?: IntWithAggregatesFilter<"KnowledgeChunk"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"KnowledgeChunk"> | Date | string
+  }
+
+  export type OutreachSequenceWhereInput = {
+    AND?: OutreachSequenceWhereInput | OutreachSequenceWhereInput[]
+    OR?: OutreachSequenceWhereInput[]
+    NOT?: OutreachSequenceWhereInput | OutreachSequenceWhereInput[]
+    id?: StringFilter<"OutreachSequence"> | string
+    workspaceId?: StringFilter<"OutreachSequence"> | string
+    orgId?: StringNullableFilter<"OutreachSequence"> | string | null
+    name?: StringFilter<"OutreachSequence"> | string
+    goal?: StringNullableFilter<"OutreachSequence"> | string | null
+    status?: EnumOutreachSequenceStatusFilter<"OutreachSequence"> | $Enums.OutreachSequenceStatus
+    steps?: JsonFilter<"OutreachSequence">
+    createdAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+    contacts?: OutreachContactListRelationFilter
+    messages?: OutreachMessageListRelationFilter
+  }
+
+  export type OutreachSequenceOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    goal?: SortOrderInput | SortOrder
+    status?: SortOrder
+    steps?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    workspace?: WorkspaceOrderByWithRelationInput
+    org?: AdvocacyOrgOrderByWithRelationInput
+    contacts?: OutreachContactOrderByRelationAggregateInput
+    messages?: OutreachMessageOrderByRelationAggregateInput
+  }
+
+  export type OutreachSequenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OutreachSequenceWhereInput | OutreachSequenceWhereInput[]
+    OR?: OutreachSequenceWhereInput[]
+    NOT?: OutreachSequenceWhereInput | OutreachSequenceWhereInput[]
+    workspaceId?: StringFilter<"OutreachSequence"> | string
+    orgId?: StringNullableFilter<"OutreachSequence"> | string | null
+    name?: StringFilter<"OutreachSequence"> | string
+    goal?: StringNullableFilter<"OutreachSequence"> | string | null
+    status?: EnumOutreachSequenceStatusFilter<"OutreachSequence"> | $Enums.OutreachSequenceStatus
+    steps?: JsonFilter<"OutreachSequence">
+    createdAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    org?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+    contacts?: OutreachContactListRelationFilter
+    messages?: OutreachMessageListRelationFilter
+  }, "id">
+
+  export type OutreachSequenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    goal?: SortOrderInput | SortOrder
+    status?: SortOrder
+    steps?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OutreachSequenceCountOrderByAggregateInput
+    _max?: OutreachSequenceMaxOrderByAggregateInput
+    _min?: OutreachSequenceMinOrderByAggregateInput
+  }
+
+  export type OutreachSequenceScalarWhereWithAggregatesInput = {
+    AND?: OutreachSequenceScalarWhereWithAggregatesInput | OutreachSequenceScalarWhereWithAggregatesInput[]
+    OR?: OutreachSequenceScalarWhereWithAggregatesInput[]
+    NOT?: OutreachSequenceScalarWhereWithAggregatesInput | OutreachSequenceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OutreachSequence"> | string
+    workspaceId?: StringWithAggregatesFilter<"OutreachSequence"> | string
+    orgId?: StringNullableWithAggregatesFilter<"OutreachSequence"> | string | null
+    name?: StringWithAggregatesFilter<"OutreachSequence"> | string
+    goal?: StringNullableWithAggregatesFilter<"OutreachSequence"> | string | null
+    status?: EnumOutreachSequenceStatusWithAggregatesFilter<"OutreachSequence"> | $Enums.OutreachSequenceStatus
+    steps?: JsonWithAggregatesFilter<"OutreachSequence">
+    createdAt?: DateTimeWithAggregatesFilter<"OutreachSequence"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OutreachSequence"> | Date | string
+  }
+
+  export type OutreachContactWhereInput = {
+    AND?: OutreachContactWhereInput | OutreachContactWhereInput[]
+    OR?: OutreachContactWhereInput[]
+    NOT?: OutreachContactWhereInput | OutreachContactWhereInput[]
+    id?: StringFilter<"OutreachContact"> | string
+    workspaceId?: StringFilter<"OutreachContact"> | string
+    sequenceId?: StringFilter<"OutreachContact"> | string
+    orgContactId?: StringNullableFilter<"OutreachContact"> | string | null
+    name?: StringFilter<"OutreachContact"> | string
+    title?: StringNullableFilter<"OutreachContact"> | string | null
+    email?: StringNullableFilter<"OutreachContact"> | string | null
+    channel?: EnumOutreachChannelFilter<"OutreachContact"> | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFilter<"OutreachContact"> | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    advocacyOrgId?: StringNullableFilter<"OutreachContact"> | string | null
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    sequence?: XOR<OutreachSequenceRelationFilter, OutreachSequenceWhereInput>
+    orgContact?: XOR<OrgContactNullableRelationFilter, OrgContactWhereInput> | null
+    messages?: OutreachMessageListRelationFilter
+    AdvocacyOrg?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+  }
+
+  export type OutreachContactOrderByWithRelationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    sequenceId?: SortOrder
+    orgContactId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    title?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    channel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    advocacyOrgId?: SortOrderInput | SortOrder
+    workspace?: WorkspaceOrderByWithRelationInput
+    sequence?: OutreachSequenceOrderByWithRelationInput
+    orgContact?: OrgContactOrderByWithRelationInput
+    messages?: OutreachMessageOrderByRelationAggregateInput
+    AdvocacyOrg?: AdvocacyOrgOrderByWithRelationInput
+  }
+
+  export type OutreachContactWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OutreachContactWhereInput | OutreachContactWhereInput[]
+    OR?: OutreachContactWhereInput[]
+    NOT?: OutreachContactWhereInput | OutreachContactWhereInput[]
+    workspaceId?: StringFilter<"OutreachContact"> | string
+    sequenceId?: StringFilter<"OutreachContact"> | string
+    orgContactId?: StringNullableFilter<"OutreachContact"> | string | null
+    name?: StringFilter<"OutreachContact"> | string
+    title?: StringNullableFilter<"OutreachContact"> | string | null
+    email?: StringNullableFilter<"OutreachContact"> | string | null
+    channel?: EnumOutreachChannelFilter<"OutreachContact"> | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFilter<"OutreachContact"> | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    advocacyOrgId?: StringNullableFilter<"OutreachContact"> | string | null
+    workspace?: XOR<WorkspaceRelationFilter, WorkspaceWhereInput>
+    sequence?: XOR<OutreachSequenceRelationFilter, OutreachSequenceWhereInput>
+    orgContact?: XOR<OrgContactNullableRelationFilter, OrgContactWhereInput> | null
+    messages?: OutreachMessageListRelationFilter
+    AdvocacyOrg?: XOR<AdvocacyOrgNullableRelationFilter, AdvocacyOrgWhereInput> | null
+  }, "id">
+
+  export type OutreachContactOrderByWithAggregationInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    sequenceId?: SortOrder
+    orgContactId?: SortOrderInput | SortOrder
+    name?: SortOrder
+    title?: SortOrderInput | SortOrder
+    email?: SortOrderInput | SortOrder
+    channel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    advocacyOrgId?: SortOrderInput | SortOrder
+    _count?: OutreachContactCountOrderByAggregateInput
+    _max?: OutreachContactMaxOrderByAggregateInput
+    _min?: OutreachContactMinOrderByAggregateInput
+  }
+
+  export type OutreachContactScalarWhereWithAggregatesInput = {
+    AND?: OutreachContactScalarWhereWithAggregatesInput | OutreachContactScalarWhereWithAggregatesInput[]
+    OR?: OutreachContactScalarWhereWithAggregatesInput[]
+    NOT?: OutreachContactScalarWhereWithAggregatesInput | OutreachContactScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OutreachContact"> | string
+    workspaceId?: StringWithAggregatesFilter<"OutreachContact"> | string
+    sequenceId?: StringWithAggregatesFilter<"OutreachContact"> | string
+    orgContactId?: StringNullableWithAggregatesFilter<"OutreachContact"> | string | null
+    name?: StringWithAggregatesFilter<"OutreachContact"> | string
+    title?: StringNullableWithAggregatesFilter<"OutreachContact"> | string | null
+    email?: StringNullableWithAggregatesFilter<"OutreachContact"> | string | null
+    channel?: EnumOutreachChannelWithAggregatesFilter<"OutreachContact"> | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusWithAggregatesFilter<"OutreachContact"> | $Enums.OutreachContactStatus
+    createdAt?: DateTimeWithAggregatesFilter<"OutreachContact"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OutreachContact"> | Date | string
+    advocacyOrgId?: StringNullableWithAggregatesFilter<"OutreachContact"> | string | null
+  }
+
+  export type OutreachMessageWhereInput = {
+    AND?: OutreachMessageWhereInput | OutreachMessageWhereInput[]
+    OR?: OutreachMessageWhereInput[]
+    NOT?: OutreachMessageWhereInput | OutreachMessageWhereInput[]
+    id?: StringFilter<"OutreachMessage"> | string
+    sequenceId?: StringFilter<"OutreachMessage"> | string
+    contactId?: StringFilter<"OutreachMessage"> | string
+    step?: IntFilter<"OutreachMessage"> | number
+    subject?: StringNullableFilter<"OutreachMessage"> | string | null
+    body?: StringFilter<"OutreachMessage"> | string
+    status?: EnumOutreachMessageStatusFilter<"OutreachMessage"> | $Enums.OutreachMessageStatus
+    scheduledFor?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    sentAt?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    dossierId?: StringNullableFilter<"OutreachMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutreachMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachMessage"> | Date | string
+    sequence?: XOR<OutreachSequenceRelationFilter, OutreachSequenceWhereInput>
+    contact?: XOR<OutreachContactRelationFilter, OutreachContactWhereInput>
+    dossier?: XOR<DossierNullableRelationFilter, DossierWhereInput> | null
+  }
+
+  export type OutreachMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    sequenceId?: SortOrder
+    contactId?: SortOrder
+    step?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    scheduledFor?: SortOrderInput | SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    dossierId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sequence?: OutreachSequenceOrderByWithRelationInput
+    contact?: OutreachContactOrderByWithRelationInput
+    dossier?: DossierOrderByWithRelationInput
+  }
+
+  export type OutreachMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: OutreachMessageWhereInput | OutreachMessageWhereInput[]
+    OR?: OutreachMessageWhereInput[]
+    NOT?: OutreachMessageWhereInput | OutreachMessageWhereInput[]
+    sequenceId?: StringFilter<"OutreachMessage"> | string
+    contactId?: StringFilter<"OutreachMessage"> | string
+    step?: IntFilter<"OutreachMessage"> | number
+    subject?: StringNullableFilter<"OutreachMessage"> | string | null
+    body?: StringFilter<"OutreachMessage"> | string
+    status?: EnumOutreachMessageStatusFilter<"OutreachMessage"> | $Enums.OutreachMessageStatus
+    scheduledFor?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    sentAt?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    dossierId?: StringNullableFilter<"OutreachMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutreachMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachMessage"> | Date | string
+    sequence?: XOR<OutreachSequenceRelationFilter, OutreachSequenceWhereInput>
+    contact?: XOR<OutreachContactRelationFilter, OutreachContactWhereInput>
+    dossier?: XOR<DossierNullableRelationFilter, DossierWhereInput> | null
+  }, "id">
+
+  export type OutreachMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    sequenceId?: SortOrder
+    contactId?: SortOrder
+    step?: SortOrder
+    subject?: SortOrderInput | SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    scheduledFor?: SortOrderInput | SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    dossierId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OutreachMessageCountOrderByAggregateInput
+    _avg?: OutreachMessageAvgOrderByAggregateInput
+    _max?: OutreachMessageMaxOrderByAggregateInput
+    _min?: OutreachMessageMinOrderByAggregateInput
+    _sum?: OutreachMessageSumOrderByAggregateInput
+  }
+
+  export type OutreachMessageScalarWhereWithAggregatesInput = {
+    AND?: OutreachMessageScalarWhereWithAggregatesInput | OutreachMessageScalarWhereWithAggregatesInput[]
+    OR?: OutreachMessageScalarWhereWithAggregatesInput[]
+    NOT?: OutreachMessageScalarWhereWithAggregatesInput | OutreachMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OutreachMessage"> | string
+    sequenceId?: StringWithAggregatesFilter<"OutreachMessage"> | string
+    contactId?: StringWithAggregatesFilter<"OutreachMessage"> | string
+    step?: IntWithAggregatesFilter<"OutreachMessage"> | number
+    subject?: StringNullableWithAggregatesFilter<"OutreachMessage"> | string | null
+    body?: StringWithAggregatesFilter<"OutreachMessage"> | string
+    status?: EnumOutreachMessageStatusWithAggregatesFilter<"OutreachMessage"> | $Enums.OutreachMessageStatus
+    scheduledFor?: DateTimeNullableWithAggregatesFilter<"OutreachMessage"> | Date | string | null
+    sentAt?: DateTimeNullableWithAggregatesFilter<"OutreachMessage"> | Date | string | null
+    dossierId?: StringNullableWithAggregatesFilter<"OutreachMessage"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"OutreachMessage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OutreachMessage"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     clerkId: string
@@ -40423,6 +47534,10 @@ export namespace Prisma {
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateInput = {
@@ -40441,6 +47556,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUpdateInput = {
@@ -40459,6 +47578,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateInput = {
@@ -40477,6 +47600,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceCreateManyInput = {
@@ -40601,6 +47728,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateInput = {
@@ -40638,6 +47769,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUpdateInput = {
@@ -40675,6 +47810,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateInput = {
@@ -40712,6 +47851,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgCreateManyInput = {
@@ -40804,6 +47947,7 @@ export namespace Prisma {
     isPrimary?: boolean
     createdAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutContactsInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutOrgContactInput
   }
 
   export type OrgContactUncheckedCreateInput = {
@@ -40816,6 +47960,7 @@ export namespace Prisma {
     role?: $Enums.ContactRole
     isPrimary?: boolean
     createdAt?: Date | string
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutOrgContactInput
   }
 
   export type OrgContactUpdateInput = {
@@ -40828,6 +47973,7 @@ export namespace Prisma {
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutContactsNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutOrgContactNestedInput
   }
 
   export type OrgContactUncheckedUpdateInput = {
@@ -40840,6 +47986,7 @@ export namespace Prisma {
     role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutOrgContactNestedInput
   }
 
   export type OrgContactCreateManyInput = {
@@ -40879,6 +48026,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateInput = {
     id?: string
+    slug: string
     title: string
     description?: string | null
     fundingAmountMin?: number | null
@@ -40909,10 +48057,12 @@ export namespace Prisma {
     org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
     workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
     applications?: GrantApplicationCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateInput = {
     id?: string
+    slug: string
     orgId: string
     workspaceId: string
     title: string
@@ -40943,10 +48093,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -40977,10 +48129,12 @@ export namespace Prisma {
     org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
     workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
     applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     orgId?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -41011,10 +48165,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantCreateManyInput = {
     id?: string
+    slug: string
     orgId: string
     workspaceId: string
     title: string
@@ -41048,6 +48204,7 @@ export namespace Prisma {
 
   export type OpenGrantUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -41079,6 +48236,7 @@ export namespace Prisma {
 
   export type OpenGrantUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     orgId?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -43543,6 +50701,7 @@ export namespace Prisma {
     createdAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutDossiersInput
     applications?: GrantApplicationCreateNestedManyWithoutDossierInput
+    outreachMessages?: OutreachMessageCreateNestedManyWithoutDossierInput
   }
 
   export type DossierUncheckedCreateInput = {
@@ -43555,6 +50714,7 @@ export namespace Prisma {
     context?: string | null
     createdAt?: Date | string
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutDossierInput
+    outreachMessages?: OutreachMessageUncheckedCreateNestedManyWithoutDossierInput
   }
 
   export type DossierUpdateInput = {
@@ -43567,6 +50727,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput
     applications?: GrantApplicationUpdateManyWithoutDossierNestedInput
+    outreachMessages?: OutreachMessageUpdateManyWithoutDossierNestedInput
   }
 
   export type DossierUncheckedUpdateInput = {
@@ -43579,6 +50740,7 @@ export namespace Prisma {
     context?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput
+    outreachMessages?: OutreachMessageUncheckedUpdateManyWithoutDossierNestedInput
   }
 
   export type DossierCreateManyInput = {
@@ -43739,6 +50901,511 @@ export namespace Prisma {
     nextStep?: NullableStringFieldUpdateOperationsInput | string | null
     internalScore?: NullableIntFieldUpdateOperationsInput | number | null
     funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeDocCreateInput = {
+    id?: string
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeDocsInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeDocsInput
+    grant?: OpenGrantCreateNestedOneWithoutKnowledgeDocsInput
+    chunks?: KnowledgeChunkCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeDocsNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeDocsNestedInput
+    grant?: OpenGrantUpdateOneWithoutKnowledgeDocsNestedInput
+    chunks?: KnowledgeChunkUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chunks?: KnowledgeChunkUncheckedUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocCreateManyInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeDocUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkCreateInput = {
+    id?: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+    doc: KnowledgeDocCreateNestedOneWithoutChunksInput
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeChunksInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeChunksInput
+  }
+
+  export type KnowledgeChunkUncheckedCreateInput = {
+    id?: string
+    docId: string
+    workspaceId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doc?: KnowledgeDocUpdateOneRequiredWithoutChunksNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeChunksNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeChunksNestedInput
+  }
+
+  export type KnowledgeChunkUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkCreateManyInput = {
+    id?: string
+    docId: string
+    workspaceId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachSequenceCreateInput = {
+    id?: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachSequencesInput
+    org?: AdvocacyOrgCreateNestedOneWithoutOutreachSequencesInput
+    contacts?: OutreachContactCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contacts?: OutreachContactUncheckedCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachSequencesNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutOutreachSequencesNestedInput
+    contacts?: OutreachContactUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: OutreachContactUncheckedUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUncheckedUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceCreateManyInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachSequenceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachSequenceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactCreateInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachContactsInput
+    sequence: OutreachSequenceCreateNestedOneWithoutContactsInput
+    orgContact?: OrgContactCreateNestedOneWithoutOutreachContactsInput
+    messages?: OutreachMessageCreateNestedManyWithoutContactInput
+    AdvocacyOrg?: AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput
+  }
+
+  export type OutreachContactUncheckedCreateInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput
+    orgContact?: OrgContactUpdateOneWithoutOutreachContactsNestedInput
+    messages?: OutreachMessageUpdateManyWithoutContactNestedInput
+    AdvocacyOrg?: AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+    messages?: OutreachMessageUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactCreateManyInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+  }
+
+  export type OutreachContactUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type OutreachMessageCreateInput = {
+    id?: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sequence: OutreachSequenceCreateNestedOneWithoutMessagesInput
+    contact: OutreachContactCreateNestedOneWithoutMessagesInput
+    dossier?: DossierCreateNestedOneWithoutOutreachMessagesInput
+  }
+
+  export type OutreachMessageUncheckedCreateInput = {
+    id?: string
+    sequenceId: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutMessagesNestedInput
+    contact?: OutreachContactUpdateOneRequiredWithoutMessagesNestedInput
+    dossier?: DossierUpdateOneWithoutOutreachMessagesNestedInput
+  }
+
+  export type OutreachMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageCreateManyInput = {
+    id?: string
+    sequenceId: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -43995,6 +51662,30 @@ export namespace Prisma {
     none?: DataSourceWhereInput
   }
 
+  export type KnowledgeDocListRelationFilter = {
+    every?: KnowledgeDocWhereInput
+    some?: KnowledgeDocWhereInput
+    none?: KnowledgeDocWhereInput
+  }
+
+  export type KnowledgeChunkListRelationFilter = {
+    every?: KnowledgeChunkWhereInput
+    some?: KnowledgeChunkWhereInput
+    none?: KnowledgeChunkWhereInput
+  }
+
+  export type OutreachSequenceListRelationFilter = {
+    every?: OutreachSequenceWhereInput
+    some?: OutreachSequenceWhereInput
+    none?: OutreachSequenceWhereInput
+  }
+
+  export type OutreachContactListRelationFilter = {
+    every?: OutreachContactWhereInput
+    some?: OutreachContactWhereInput
+    none?: OutreachContactWhereInput
+  }
+
   export type AdvocacyOrgOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -44008,6 +51699,22 @@ export namespace Prisma {
   }
 
   export type DataSourceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KnowledgeDocOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KnowledgeChunkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OutreachSequenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OutreachContactOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -44474,8 +52181,15 @@ export namespace Prisma {
     not?: NestedEnumGrantTypeFilter<$PrismaModel> | $Enums.GrantType
   }
 
+  export type OpenGrantWorkspaceIdOrgIdSlugCompoundUniqueInput = {
+    workspaceId: string
+    orgId: string
+    slug: string
+  }
+
   export type OpenGrantCountOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     orgId?: SortOrder
     workspaceId?: SortOrder
     title?: SortOrder
@@ -44515,6 +52229,7 @@ export namespace Prisma {
 
   export type OpenGrantMaxOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     orgId?: SortOrder
     workspaceId?: SortOrder
     title?: SortOrder
@@ -44543,6 +52258,7 @@ export namespace Prisma {
 
   export type OpenGrantMinOrderByAggregateInput = {
     id?: SortOrder
+    slug?: SortOrder
     orgId?: SortOrder
     workspaceId?: SortOrder
     title?: SortOrder
@@ -46241,6 +53957,16 @@ export namespace Prisma {
     not?: NestedEnumDossierTypeFilter<$PrismaModel> | $Enums.DossierType
   }
 
+  export type OutreachMessageListRelationFilter = {
+    every?: OutreachMessageWhereInput
+    some?: OutreachMessageWhereInput
+    none?: OutreachMessageWhereInput
+  }
+
+  export type OutreachMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type DossierCountOrderByAggregateInput = {
     id?: SortOrder
     orgId?: SortOrder
@@ -46380,6 +54106,366 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumApplicationStatusFilter<$PrismaModel>
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
+  }
+
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Buffer | BytesFieldRefInput<$PrismaModel>
+    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Buffer
+  }
+
+  export type EnumKnowledgeDocStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.KnowledgeDocStatus | EnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel> | $Enums.KnowledgeDocStatus
+  }
+
+  export type KnowledgeDocCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    title?: SortOrder
+    fileName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    fileData?: SortOrder
+    extractedText?: SortOrder
+    status?: SortOrder
+    sourceType?: SortOrder
+    tags?: SortOrder
+    error?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KnowledgeDocAvgOrderByAggregateInput = {
+    sizeBytes?: SortOrder
+  }
+
+  export type KnowledgeDocMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    title?: SortOrder
+    fileName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    fileData?: SortOrder
+    extractedText?: SortOrder
+    status?: SortOrder
+    sourceType?: SortOrder
+    error?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KnowledgeDocMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    grantId?: SortOrder
+    title?: SortOrder
+    fileName?: SortOrder
+    mimeType?: SortOrder
+    sizeBytes?: SortOrder
+    fileData?: SortOrder
+    extractedText?: SortOrder
+    status?: SortOrder
+    sourceType?: SortOrder
+    error?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KnowledgeDocSumOrderByAggregateInput = {
+    sizeBytes?: SortOrder
+  }
+
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Buffer | BytesFieldRefInput<$PrismaModel>
+    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Buffer
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type EnumKnowledgeDocStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KnowledgeDocStatus | EnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumKnowledgeDocStatusWithAggregatesFilter<$PrismaModel> | $Enums.KnowledgeDocStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel>
+    _max?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel>
+  }
+
+  export type KnowledgeDocRelationFilter = {
+    is?: KnowledgeDocWhereInput
+    isNot?: KnowledgeDocWhereInput
+  }
+
+  export type KnowledgeChunkCountOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    chunkIndex?: SortOrder
+    content?: SortOrder
+    tokenCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type KnowledgeChunkAvgOrderByAggregateInput = {
+    chunkIndex?: SortOrder
+    tokenCount?: SortOrder
+  }
+
+  export type KnowledgeChunkMaxOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    chunkIndex?: SortOrder
+    content?: SortOrder
+    tokenCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type KnowledgeChunkMinOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    chunkIndex?: SortOrder
+    content?: SortOrder
+    tokenCount?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type KnowledgeChunkSumOrderByAggregateInput = {
+    chunkIndex?: SortOrder
+    tokenCount?: SortOrder
+  }
+
+  export type EnumOutreachSequenceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachSequenceStatus | EnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel> | $Enums.OutreachSequenceStatus
+  }
+
+  export type OutreachSequenceCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    name?: SortOrder
+    goal?: SortOrder
+    status?: SortOrder
+    steps?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutreachSequenceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    name?: SortOrder
+    goal?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutreachSequenceMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    orgId?: SortOrder
+    name?: SortOrder
+    goal?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumOutreachSequenceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachSequenceStatus | EnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachSequenceStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachSequenceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel>
+  }
+
+  export type EnumOutreachChannelFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachChannel | EnumOutreachChannelFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachChannelFilter<$PrismaModel> | $Enums.OutreachChannel
+  }
+
+  export type EnumOutreachContactStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachContactStatus | EnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachContactStatusFilter<$PrismaModel> | $Enums.OutreachContactStatus
+  }
+
+  export type OutreachSequenceRelationFilter = {
+    is?: OutreachSequenceWhereInput
+    isNot?: OutreachSequenceWhereInput
+  }
+
+  export type OrgContactNullableRelationFilter = {
+    is?: OrgContactWhereInput | null
+    isNot?: OrgContactWhereInput | null
+  }
+
+  export type OutreachContactCountOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    sequenceId?: SortOrder
+    orgContactId?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    email?: SortOrder
+    channel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    advocacyOrgId?: SortOrder
+  }
+
+  export type OutreachContactMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    sequenceId?: SortOrder
+    orgContactId?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    email?: SortOrder
+    channel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    advocacyOrgId?: SortOrder
+  }
+
+  export type OutreachContactMinOrderByAggregateInput = {
+    id?: SortOrder
+    workspaceId?: SortOrder
+    sequenceId?: SortOrder
+    orgContactId?: SortOrder
+    name?: SortOrder
+    title?: SortOrder
+    email?: SortOrder
+    channel?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    advocacyOrgId?: SortOrder
+  }
+
+  export type EnumOutreachChannelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachChannel | EnumOutreachChannelFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachChannelWithAggregatesFilter<$PrismaModel> | $Enums.OutreachChannel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachChannelFilter<$PrismaModel>
+    _max?: NestedEnumOutreachChannelFilter<$PrismaModel>
+  }
+
+  export type EnumOutreachContactStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachContactStatus | EnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachContactStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachContactStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachContactStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachContactStatusFilter<$PrismaModel>
+  }
+
+  export type EnumOutreachMessageStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachMessageStatus | EnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachMessageStatusFilter<$PrismaModel> | $Enums.OutreachMessageStatus
+  }
+
+  export type OutreachContactRelationFilter = {
+    is?: OutreachContactWhereInput
+    isNot?: OutreachContactWhereInput
+  }
+
+  export type OutreachMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    sequenceId?: SortOrder
+    contactId?: SortOrder
+    step?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    scheduledFor?: SortOrder
+    sentAt?: SortOrder
+    dossierId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutreachMessageAvgOrderByAggregateInput = {
+    step?: SortOrder
+  }
+
+  export type OutreachMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    sequenceId?: SortOrder
+    contactId?: SortOrder
+    step?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    scheduledFor?: SortOrder
+    sentAt?: SortOrder
+    dossierId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutreachMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    sequenceId?: SortOrder
+    contactId?: SortOrder
+    step?: SortOrder
+    subject?: SortOrder
+    body?: SortOrder
+    status?: SortOrder
+    scheduledFor?: SortOrder
+    sentAt?: SortOrder
+    dossierId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OutreachMessageSumOrderByAggregateInput = {
+    step?: SortOrder
+  }
+
+  export type EnumOutreachMessageStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachMessageStatus | EnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachMessageStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachMessageStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachMessageStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachMessageStatusFilter<$PrismaModel>
   }
 
   export type WorkspaceMemberCreateNestedManyWithoutUserInput = {
@@ -46741,6 +54827,34 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type KnowledgeDocCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput> | KnowledgeDocCreateWithoutWorkspaceInput[] | KnowledgeDocUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutWorkspaceInput | KnowledgeDocCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: KnowledgeDocCreateManyWorkspaceInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+  }
+
+  export type KnowledgeChunkCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput> | KnowledgeChunkCreateWithoutWorkspaceInput[] | KnowledgeChunkUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutWorkspaceInput | KnowledgeChunkCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: KnowledgeChunkCreateManyWorkspaceInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type OutreachSequenceCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput> | OutreachSequenceCreateWithoutWorkspaceInput[] | OutreachSequenceUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutWorkspaceInput | OutreachSequenceCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OutreachSequenceCreateManyWorkspaceInputEnvelope
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+  }
+
+  export type OutreachContactCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput> | OutreachContactCreateWithoutWorkspaceInput[] | OutreachContactUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutWorkspaceInput | OutreachContactCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OutreachContactCreateManyWorkspaceInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+  }
+
   export type WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -46788,6 +54902,34 @@ export namespace Prisma {
     connectOrCreate?: AuditLogCreateOrConnectWithoutWorkspaceInput | AuditLogCreateOrConnectWithoutWorkspaceInput[]
     createMany?: AuditLogCreateManyWorkspaceInputEnvelope
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput> | KnowledgeDocCreateWithoutWorkspaceInput[] | KnowledgeDocUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutWorkspaceInput | KnowledgeDocCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: KnowledgeDocCreateManyWorkspaceInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+  }
+
+  export type KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput> | KnowledgeChunkCreateWithoutWorkspaceInput[] | KnowledgeChunkUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutWorkspaceInput | KnowledgeChunkCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: KnowledgeChunkCreateManyWorkspaceInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput> | OutreachSequenceCreateWithoutWorkspaceInput[] | OutreachSequenceUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutWorkspaceInput | OutreachSequenceCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OutreachSequenceCreateManyWorkspaceInputEnvelope
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+  }
+
+  export type OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput = {
+    create?: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput> | OutreachContactCreateWithoutWorkspaceInput[] | OutreachContactUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutWorkspaceInput | OutreachContactCreateOrConnectWithoutWorkspaceInput[]
+    createMany?: OutreachContactCreateManyWorkspaceInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
   }
 
   export type WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput = {
@@ -46888,6 +55030,62 @@ export namespace Prisma {
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
+  export type KnowledgeDocUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput> | KnowledgeDocCreateWithoutWorkspaceInput[] | KnowledgeDocUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutWorkspaceInput | KnowledgeDocCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutWorkspaceInput | KnowledgeDocUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: KnowledgeDocCreateManyWorkspaceInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutWorkspaceInput | KnowledgeDocUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutWorkspaceInput | KnowledgeDocUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+  }
+
+  export type KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput> | KnowledgeChunkCreateWithoutWorkspaceInput[] | KnowledgeChunkUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutWorkspaceInput | KnowledgeChunkCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutWorkspaceInput | KnowledgeChunkUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: KnowledgeChunkCreateManyWorkspaceInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutWorkspaceInput | KnowledgeChunkUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutWorkspaceInput | KnowledgeChunkUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type OutreachSequenceUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput> | OutreachSequenceCreateWithoutWorkspaceInput[] | OutreachSequenceUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutWorkspaceInput | OutreachSequenceCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OutreachSequenceUpsertWithWhereUniqueWithoutWorkspaceInput | OutreachSequenceUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OutreachSequenceCreateManyWorkspaceInputEnvelope
+    set?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    disconnect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    delete?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    update?: OutreachSequenceUpdateWithWhereUniqueWithoutWorkspaceInput | OutreachSequenceUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OutreachSequenceUpdateManyWithWhereWithoutWorkspaceInput | OutreachSequenceUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+  }
+
+  export type OutreachContactUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput> | OutreachContactCreateWithoutWorkspaceInput[] | OutreachContactUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutWorkspaceInput | OutreachContactCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutWorkspaceInput | OutreachContactUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OutreachContactCreateManyWorkspaceInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutWorkspaceInput | OutreachContactUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutWorkspaceInput | OutreachContactUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
   export type WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput = {
     create?: XOR<WorkspaceMemberCreateWithoutWorkspaceInput, WorkspaceMemberUncheckedCreateWithoutWorkspaceInput> | WorkspaceMemberCreateWithoutWorkspaceInput[] | WorkspaceMemberUncheckedCreateWithoutWorkspaceInput[]
     connectOrCreate?: WorkspaceMemberCreateOrConnectWithoutWorkspaceInput | WorkspaceMemberCreateOrConnectWithoutWorkspaceInput[]
@@ -46984,6 +55182,62 @@ export namespace Prisma {
     update?: AuditLogUpdateWithWhereUniqueWithoutWorkspaceInput | AuditLogUpdateWithWhereUniqueWithoutWorkspaceInput[]
     updateMany?: AuditLogUpdateManyWithWhereWithoutWorkspaceInput | AuditLogUpdateManyWithWhereWithoutWorkspaceInput[]
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput> | KnowledgeDocCreateWithoutWorkspaceInput[] | KnowledgeDocUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutWorkspaceInput | KnowledgeDocCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutWorkspaceInput | KnowledgeDocUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: KnowledgeDocCreateManyWorkspaceInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutWorkspaceInput | KnowledgeDocUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutWorkspaceInput | KnowledgeDocUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput> | KnowledgeChunkCreateWithoutWorkspaceInput[] | KnowledgeChunkUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutWorkspaceInput | KnowledgeChunkCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutWorkspaceInput | KnowledgeChunkUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: KnowledgeChunkCreateManyWorkspaceInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutWorkspaceInput | KnowledgeChunkUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutWorkspaceInput | KnowledgeChunkUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput> | OutreachSequenceCreateWithoutWorkspaceInput[] | OutreachSequenceUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutWorkspaceInput | OutreachSequenceCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OutreachSequenceUpsertWithWhereUniqueWithoutWorkspaceInput | OutreachSequenceUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OutreachSequenceCreateManyWorkspaceInputEnvelope
+    set?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    disconnect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    delete?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    update?: OutreachSequenceUpdateWithWhereUniqueWithoutWorkspaceInput | OutreachSequenceUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OutreachSequenceUpdateManyWithWhereWithoutWorkspaceInput | OutreachSequenceUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput> | OutreachContactCreateWithoutWorkspaceInput[] | OutreachContactUncheckedCreateWithoutWorkspaceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutWorkspaceInput | OutreachContactCreateOrConnectWithoutWorkspaceInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutWorkspaceInput | OutreachContactUpsertWithWhereUniqueWithoutWorkspaceInput[]
+    createMany?: OutreachContactCreateManyWorkspaceInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutWorkspaceInput | OutreachContactUpdateWithWhereUniqueWithoutWorkspaceInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutWorkspaceInput | OutreachContactUpdateManyWithWhereWithoutWorkspaceInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
   }
 
   export type WorkspaceCreateNestedOneWithoutMembersInput = {
@@ -47097,6 +55351,34 @@ export namespace Prisma {
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
   }
 
+  export type KnowledgeDocCreateNestedManyWithoutOrgInput = {
+    create?: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput> | KnowledgeDocCreateWithoutOrgInput[] | KnowledgeDocUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutOrgInput | KnowledgeDocCreateOrConnectWithoutOrgInput[]
+    createMany?: KnowledgeDocCreateManyOrgInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+  }
+
+  export type KnowledgeChunkCreateNestedManyWithoutOrgInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput> | KnowledgeChunkCreateWithoutOrgInput[] | KnowledgeChunkUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutOrgInput | KnowledgeChunkCreateOrConnectWithoutOrgInput[]
+    createMany?: KnowledgeChunkCreateManyOrgInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type OutreachSequenceCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput> | OutreachSequenceCreateWithoutOrgInput[] | OutreachSequenceUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutOrgInput | OutreachSequenceCreateOrConnectWithoutOrgInput[]
+    createMany?: OutreachSequenceCreateManyOrgInputEnvelope
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+  }
+
+  export type OutreachContactCreateNestedManyWithoutAdvocacyOrgInput = {
+    create?: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput> | OutreachContactCreateWithoutAdvocacyOrgInput[] | OutreachContactUncheckedCreateWithoutAdvocacyOrgInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutAdvocacyOrgInput | OutreachContactCreateOrConnectWithoutAdvocacyOrgInput[]
+    createMany?: OutreachContactCreateManyAdvocacyOrgInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+  }
+
   export type CampaignUncheckedCreateNestedManyWithoutOrgInput = {
     create?: XOR<CampaignCreateWithoutOrgInput, CampaignUncheckedCreateWithoutOrgInput> | CampaignCreateWithoutOrgInput[] | CampaignUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: CampaignCreateOrConnectWithoutOrgInput | CampaignCreateOrConnectWithoutOrgInput[]
@@ -47164,6 +55446,34 @@ export namespace Prisma {
     connectOrCreate?: GrantApplicationCreateOrConnectWithoutOrgInput | GrantApplicationCreateOrConnectWithoutOrgInput[]
     createMany?: GrantApplicationCreateManyOrgInputEnvelope
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput> | KnowledgeDocCreateWithoutOrgInput[] | KnowledgeDocUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutOrgInput | KnowledgeDocCreateOrConnectWithoutOrgInput[]
+    createMany?: KnowledgeDocCreateManyOrgInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+  }
+
+  export type KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput> | KnowledgeChunkCreateWithoutOrgInput[] | KnowledgeChunkUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutOrgInput | KnowledgeChunkCreateOrConnectWithoutOrgInput[]
+    createMany?: KnowledgeChunkCreateManyOrgInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput = {
+    create?: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput> | OutreachSequenceCreateWithoutOrgInput[] | OutreachSequenceUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutOrgInput | OutreachSequenceCreateOrConnectWithoutOrgInput[]
+    createMany?: OutreachSequenceCreateManyOrgInputEnvelope
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+  }
+
+  export type OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput = {
+    create?: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput> | OutreachContactCreateWithoutAdvocacyOrgInput[] | OutreachContactUncheckedCreateWithoutAdvocacyOrgInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutAdvocacyOrgInput | OutreachContactCreateOrConnectWithoutAdvocacyOrgInput[]
+    createMany?: OutreachContactCreateManyAdvocacyOrgInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
   }
 
   export type AdvocacyOrgUpdatecancerTypesInput = {
@@ -47339,6 +55649,62 @@ export namespace Prisma {
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
   }
 
+  export type KnowledgeDocUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput> | KnowledgeDocCreateWithoutOrgInput[] | KnowledgeDocUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutOrgInput | KnowledgeDocCreateOrConnectWithoutOrgInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutOrgInput | KnowledgeDocUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: KnowledgeDocCreateManyOrgInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutOrgInput | KnowledgeDocUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutOrgInput | KnowledgeDocUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+  }
+
+  export type KnowledgeChunkUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput> | KnowledgeChunkCreateWithoutOrgInput[] | KnowledgeChunkUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutOrgInput | KnowledgeChunkCreateOrConnectWithoutOrgInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutOrgInput | KnowledgeChunkUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: KnowledgeChunkCreateManyOrgInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutOrgInput | KnowledgeChunkUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutOrgInput | KnowledgeChunkUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type OutreachSequenceUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput> | OutreachSequenceCreateWithoutOrgInput[] | OutreachSequenceUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutOrgInput | OutreachSequenceCreateOrConnectWithoutOrgInput[]
+    upsert?: OutreachSequenceUpsertWithWhereUniqueWithoutOrgInput | OutreachSequenceUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OutreachSequenceCreateManyOrgInputEnvelope
+    set?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    disconnect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    delete?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    update?: OutreachSequenceUpdateWithWhereUniqueWithoutOrgInput | OutreachSequenceUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OutreachSequenceUpdateManyWithWhereWithoutOrgInput | OutreachSequenceUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+  }
+
+  export type OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput> | OutreachContactCreateWithoutAdvocacyOrgInput[] | OutreachContactUncheckedCreateWithoutAdvocacyOrgInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutAdvocacyOrgInput | OutreachContactCreateOrConnectWithoutAdvocacyOrgInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutAdvocacyOrgInput | OutreachContactUpsertWithWhereUniqueWithoutAdvocacyOrgInput[]
+    createMany?: OutreachContactCreateManyAdvocacyOrgInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutAdvocacyOrgInput | OutreachContactUpdateWithWhereUniqueWithoutAdvocacyOrgInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutAdvocacyOrgInput | OutreachContactUpdateManyWithWhereWithoutAdvocacyOrgInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
   export type CampaignUncheckedUpdateManyWithoutOrgNestedInput = {
     create?: XOR<CampaignCreateWithoutOrgInput, CampaignUncheckedCreateWithoutOrgInput> | CampaignCreateWithoutOrgInput[] | CampaignUncheckedCreateWithoutOrgInput[]
     connectOrCreate?: CampaignCreateOrConnectWithoutOrgInput | CampaignCreateOrConnectWithoutOrgInput[]
@@ -47475,10 +55841,80 @@ export namespace Prisma {
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
   }
 
+  export type KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput> | KnowledgeDocCreateWithoutOrgInput[] | KnowledgeDocUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutOrgInput | KnowledgeDocCreateOrConnectWithoutOrgInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutOrgInput | KnowledgeDocUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: KnowledgeDocCreateManyOrgInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutOrgInput | KnowledgeDocUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutOrgInput | KnowledgeDocUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput> | KnowledgeChunkCreateWithoutOrgInput[] | KnowledgeChunkUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutOrgInput | KnowledgeChunkCreateOrConnectWithoutOrgInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutOrgInput | KnowledgeChunkUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: KnowledgeChunkCreateManyOrgInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutOrgInput | KnowledgeChunkUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutOrgInput | KnowledgeChunkUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput> | OutreachSequenceCreateWithoutOrgInput[] | OutreachSequenceUncheckedCreateWithoutOrgInput[]
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutOrgInput | OutreachSequenceCreateOrConnectWithoutOrgInput[]
+    upsert?: OutreachSequenceUpsertWithWhereUniqueWithoutOrgInput | OutreachSequenceUpsertWithWhereUniqueWithoutOrgInput[]
+    createMany?: OutreachSequenceCreateManyOrgInputEnvelope
+    set?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    disconnect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    delete?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    connect?: OutreachSequenceWhereUniqueInput | OutreachSequenceWhereUniqueInput[]
+    update?: OutreachSequenceUpdateWithWhereUniqueWithoutOrgInput | OutreachSequenceUpdateWithWhereUniqueWithoutOrgInput[]
+    updateMany?: OutreachSequenceUpdateManyWithWhereWithoutOrgInput | OutreachSequenceUpdateManyWithWhereWithoutOrgInput[]
+    deleteMany?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput> | OutreachContactCreateWithoutAdvocacyOrgInput[] | OutreachContactUncheckedCreateWithoutAdvocacyOrgInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutAdvocacyOrgInput | OutreachContactCreateOrConnectWithoutAdvocacyOrgInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutAdvocacyOrgInput | OutreachContactUpsertWithWhereUniqueWithoutAdvocacyOrgInput[]
+    createMany?: OutreachContactCreateManyAdvocacyOrgInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutAdvocacyOrgInput | OutreachContactUpdateWithWhereUniqueWithoutAdvocacyOrgInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutAdvocacyOrgInput | OutreachContactUpdateManyWithWhereWithoutAdvocacyOrgInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
   export type AdvocacyOrgCreateNestedOneWithoutContactsInput = {
     create?: XOR<AdvocacyOrgCreateWithoutContactsInput, AdvocacyOrgUncheckedCreateWithoutContactsInput>
     connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutContactsInput
     connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type OutreachContactCreateNestedManyWithoutOrgContactInput = {
+    create?: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput> | OutreachContactCreateWithoutOrgContactInput[] | OutreachContactUncheckedCreateWithoutOrgContactInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutOrgContactInput | OutreachContactCreateOrConnectWithoutOrgContactInput[]
+    createMany?: OutreachContactCreateManyOrgContactInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+  }
+
+  export type OutreachContactUncheckedCreateNestedManyWithoutOrgContactInput = {
+    create?: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput> | OutreachContactCreateWithoutOrgContactInput[] | OutreachContactUncheckedCreateWithoutOrgContactInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutOrgContactInput | OutreachContactCreateOrConnectWithoutOrgContactInput[]
+    createMany?: OutreachContactCreateManyOrgContactInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
   }
 
   export type EnumContactRoleFieldUpdateOperationsInput = {
@@ -47495,6 +55931,34 @@ export namespace Prisma {
     upsert?: AdvocacyOrgUpsertWithoutContactsInput
     connect?: AdvocacyOrgWhereUniqueInput
     update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutContactsInput, AdvocacyOrgUpdateWithoutContactsInput>, AdvocacyOrgUncheckedUpdateWithoutContactsInput>
+  }
+
+  export type OutreachContactUpdateManyWithoutOrgContactNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput> | OutreachContactCreateWithoutOrgContactInput[] | OutreachContactUncheckedCreateWithoutOrgContactInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutOrgContactInput | OutreachContactCreateOrConnectWithoutOrgContactInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutOrgContactInput | OutreachContactUpsertWithWhereUniqueWithoutOrgContactInput[]
+    createMany?: OutreachContactCreateManyOrgContactInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutOrgContactInput | OutreachContactUpdateWithWhereUniqueWithoutOrgContactInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutOrgContactInput | OutreachContactUpdateManyWithWhereWithoutOrgContactInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutOrgContactNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput> | OutreachContactCreateWithoutOrgContactInput[] | OutreachContactUncheckedCreateWithoutOrgContactInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutOrgContactInput | OutreachContactCreateOrConnectWithoutOrgContactInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutOrgContactInput | OutreachContactUpsertWithWhereUniqueWithoutOrgContactInput[]
+    createMany?: OutreachContactCreateManyOrgContactInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutOrgContactInput | OutreachContactUpdateWithWhereUniqueWithoutOrgContactInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutOrgContactInput | OutreachContactUpdateManyWithWhereWithoutOrgContactInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
   }
 
   export type OpenGrantCreatecancerTypesInput = {
@@ -47532,11 +55996,25 @@ export namespace Prisma {
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
   }
 
+  export type KnowledgeDocCreateNestedManyWithoutGrantInput = {
+    create?: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput> | KnowledgeDocCreateWithoutGrantInput[] | KnowledgeDocUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutGrantInput | KnowledgeDocCreateOrConnectWithoutGrantInput[]
+    createMany?: KnowledgeDocCreateManyGrantInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+  }
+
   export type GrantApplicationUncheckedCreateNestedManyWithoutGrantInput = {
     create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
     connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
     createMany?: GrantApplicationCreateManyGrantInputEnvelope
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type KnowledgeDocUncheckedCreateNestedManyWithoutGrantInput = {
+    create?: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput> | KnowledgeDocCreateWithoutGrantInput[] | KnowledgeDocUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutGrantInput | KnowledgeDocCreateOrConnectWithoutGrantInput[]
+    createMany?: KnowledgeDocCreateManyGrantInputEnvelope
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -47601,6 +56079,20 @@ export namespace Prisma {
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
   }
 
+  export type KnowledgeDocUpdateManyWithoutGrantNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput> | KnowledgeDocCreateWithoutGrantInput[] | KnowledgeDocUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutGrantInput | KnowledgeDocCreateOrConnectWithoutGrantInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutGrantInput | KnowledgeDocUpsertWithWhereUniqueWithoutGrantInput[]
+    createMany?: KnowledgeDocCreateManyGrantInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutGrantInput | KnowledgeDocUpdateWithWhereUniqueWithoutGrantInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutGrantInput | KnowledgeDocUpdateManyWithWhereWithoutGrantInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+  }
+
   export type GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput = {
     create?: XOR<GrantApplicationCreateWithoutGrantInput, GrantApplicationUncheckedCreateWithoutGrantInput> | GrantApplicationCreateWithoutGrantInput[] | GrantApplicationUncheckedCreateWithoutGrantInput[]
     connectOrCreate?: GrantApplicationCreateOrConnectWithoutGrantInput | GrantApplicationCreateOrConnectWithoutGrantInput[]
@@ -47613,6 +56105,20 @@ export namespace Prisma {
     update?: GrantApplicationUpdateWithWhereUniqueWithoutGrantInput | GrantApplicationUpdateWithWhereUniqueWithoutGrantInput[]
     updateMany?: GrantApplicationUpdateManyWithWhereWithoutGrantInput | GrantApplicationUpdateManyWithWhereWithoutGrantInput[]
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyWithoutGrantNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput> | KnowledgeDocCreateWithoutGrantInput[] | KnowledgeDocUncheckedCreateWithoutGrantInput[]
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutGrantInput | KnowledgeDocCreateOrConnectWithoutGrantInput[]
+    upsert?: KnowledgeDocUpsertWithWhereUniqueWithoutGrantInput | KnowledgeDocUpsertWithWhereUniqueWithoutGrantInput[]
+    createMany?: KnowledgeDocCreateManyGrantInputEnvelope
+    set?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    disconnect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    delete?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    connect?: KnowledgeDocWhereUniqueInput | KnowledgeDocWhereUniqueInput[]
+    update?: KnowledgeDocUpdateWithWhereUniqueWithoutGrantInput | KnowledgeDocUpdateWithWhereUniqueWithoutGrantInput[]
+    updateMany?: KnowledgeDocUpdateManyWithWhereWithoutGrantInput | KnowledgeDocUpdateManyWithWhereWithoutGrantInput[]
+    deleteMany?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
   }
 
   export type CampaignCreatecancerTypesInput = {
@@ -49386,11 +57892,25 @@ export namespace Prisma {
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
   }
 
+  export type OutreachMessageCreateNestedManyWithoutDossierInput = {
+    create?: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput> | OutreachMessageCreateWithoutDossierInput[] | OutreachMessageUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutDossierInput | OutreachMessageCreateOrConnectWithoutDossierInput[]
+    createMany?: OutreachMessageCreateManyDossierInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+  }
+
   export type GrantApplicationUncheckedCreateNestedManyWithoutDossierInput = {
     create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
     connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
     createMany?: GrantApplicationCreateManyDossierInputEnvelope
     connect?: GrantApplicationWhereUniqueInput | GrantApplicationWhereUniqueInput[]
+  }
+
+  export type OutreachMessageUncheckedCreateNestedManyWithoutDossierInput = {
+    create?: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput> | OutreachMessageCreateWithoutDossierInput[] | OutreachMessageUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutDossierInput | OutreachMessageCreateOrConnectWithoutDossierInput[]
+    createMany?: OutreachMessageCreateManyDossierInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
   }
 
   export type EnumDossierTypeFieldUpdateOperationsInput = {
@@ -49419,6 +57939,20 @@ export namespace Prisma {
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
   }
 
+  export type OutreachMessageUpdateManyWithoutDossierNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput> | OutreachMessageCreateWithoutDossierInput[] | OutreachMessageUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutDossierInput | OutreachMessageCreateOrConnectWithoutDossierInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutDossierInput | OutreachMessageUpsertWithWhereUniqueWithoutDossierInput[]
+    createMany?: OutreachMessageCreateManyDossierInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutDossierInput | OutreachMessageUpdateWithWhereUniqueWithoutDossierInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutDossierInput | OutreachMessageUpdateManyWithWhereWithoutDossierInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+  }
+
   export type GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput = {
     create?: XOR<GrantApplicationCreateWithoutDossierInput, GrantApplicationUncheckedCreateWithoutDossierInput> | GrantApplicationCreateWithoutDossierInput[] | GrantApplicationUncheckedCreateWithoutDossierInput[]
     connectOrCreate?: GrantApplicationCreateOrConnectWithoutDossierInput | GrantApplicationCreateOrConnectWithoutDossierInput[]
@@ -49431,6 +57965,20 @@ export namespace Prisma {
     update?: GrantApplicationUpdateWithWhereUniqueWithoutDossierInput | GrantApplicationUpdateWithWhereUniqueWithoutDossierInput[]
     updateMany?: GrantApplicationUpdateManyWithWhereWithoutDossierInput | GrantApplicationUpdateManyWithWhereWithoutDossierInput[]
     deleteMany?: GrantApplicationScalarWhereInput | GrantApplicationScalarWhereInput[]
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutDossierNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput> | OutreachMessageCreateWithoutDossierInput[] | OutreachMessageUncheckedCreateWithoutDossierInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutDossierInput | OutreachMessageCreateOrConnectWithoutDossierInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutDossierInput | OutreachMessageUpsertWithWhereUniqueWithoutDossierInput[]
+    createMany?: OutreachMessageCreateManyDossierInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutDossierInput | OutreachMessageUpdateWithWhereUniqueWithoutDossierInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutDossierInput | OutreachMessageUpdateManyWithWhereWithoutDossierInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
   }
 
   export type AdvocacyOrgCreateNestedOneWithoutApplicationsInput = {
@@ -49481,6 +58029,431 @@ export namespace Prisma {
     delete?: DossierWhereInput | boolean
     connect?: DossierWhereUniqueInput
     update?: XOR<XOR<DossierUpdateToOneWithWhereWithoutApplicationsInput, DossierUpdateWithoutApplicationsInput>, DossierUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type KnowledgeDocCreatetagsInput = {
+    set: string[]
+  }
+
+  export type WorkspaceCreateNestedOneWithoutKnowledgeDocsInput = {
+    create?: XOR<WorkspaceCreateWithoutKnowledgeDocsInput, WorkspaceUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutKnowledgeDocsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutKnowledgeDocsInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutKnowledgeDocsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type OpenGrantCreateNestedOneWithoutKnowledgeDocsInput = {
+    create?: XOR<OpenGrantCreateWithoutKnowledgeDocsInput, OpenGrantUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutKnowledgeDocsInput
+    connect?: OpenGrantWhereUniqueInput
+  }
+
+  export type KnowledgeChunkCreateNestedManyWithoutDocInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput> | KnowledgeChunkCreateWithoutDocInput[] | KnowledgeChunkUncheckedCreateWithoutDocInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutDocInput | KnowledgeChunkCreateOrConnectWithoutDocInput[]
+    createMany?: KnowledgeChunkCreateManyDocInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type KnowledgeChunkUncheckedCreateNestedManyWithoutDocInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput> | KnowledgeChunkCreateWithoutDocInput[] | KnowledgeChunkUncheckedCreateWithoutDocInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutDocInput | KnowledgeChunkCreateOrConnectWithoutDocInput[]
+    createMany?: KnowledgeChunkCreateManyDocInputEnvelope
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+  }
+
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Buffer
+  }
+
+  export type EnumKnowledgeDocStatusFieldUpdateOperationsInput = {
+    set?: $Enums.KnowledgeDocStatus
+  }
+
+  export type KnowledgeDocUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutKnowledgeDocsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutKnowledgeDocsInput, WorkspaceUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutKnowledgeDocsInput
+    upsert?: WorkspaceUpsertWithoutKnowledgeDocsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutKnowledgeDocsInput, WorkspaceUpdateWithoutKnowledgeDocsInput>, WorkspaceUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type AdvocacyOrgUpdateOneWithoutKnowledgeDocsNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutKnowledgeDocsInput
+    upsert?: AdvocacyOrgUpsertWithoutKnowledgeDocsInput
+    disconnect?: AdvocacyOrgWhereInput | boolean
+    delete?: AdvocacyOrgWhereInput | boolean
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutKnowledgeDocsInput, AdvocacyOrgUpdateWithoutKnowledgeDocsInput>, AdvocacyOrgUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type OpenGrantUpdateOneWithoutKnowledgeDocsNestedInput = {
+    create?: XOR<OpenGrantCreateWithoutKnowledgeDocsInput, OpenGrantUncheckedCreateWithoutKnowledgeDocsInput>
+    connectOrCreate?: OpenGrantCreateOrConnectWithoutKnowledgeDocsInput
+    upsert?: OpenGrantUpsertWithoutKnowledgeDocsInput
+    disconnect?: OpenGrantWhereInput | boolean
+    delete?: OpenGrantWhereInput | boolean
+    connect?: OpenGrantWhereUniqueInput
+    update?: XOR<XOR<OpenGrantUpdateToOneWithWhereWithoutKnowledgeDocsInput, OpenGrantUpdateWithoutKnowledgeDocsInput>, OpenGrantUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type KnowledgeChunkUpdateManyWithoutDocNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput> | KnowledgeChunkCreateWithoutDocInput[] | KnowledgeChunkUncheckedCreateWithoutDocInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutDocInput | KnowledgeChunkCreateOrConnectWithoutDocInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutDocInput | KnowledgeChunkUpsertWithWhereUniqueWithoutDocInput[]
+    createMany?: KnowledgeChunkCreateManyDocInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutDocInput | KnowledgeChunkUpdateWithWhereUniqueWithoutDocInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutDocInput | KnowledgeChunkUpdateManyWithWhereWithoutDocInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutDocNestedInput = {
+    create?: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput> | KnowledgeChunkCreateWithoutDocInput[] | KnowledgeChunkUncheckedCreateWithoutDocInput[]
+    connectOrCreate?: KnowledgeChunkCreateOrConnectWithoutDocInput | KnowledgeChunkCreateOrConnectWithoutDocInput[]
+    upsert?: KnowledgeChunkUpsertWithWhereUniqueWithoutDocInput | KnowledgeChunkUpsertWithWhereUniqueWithoutDocInput[]
+    createMany?: KnowledgeChunkCreateManyDocInputEnvelope
+    set?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    disconnect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    delete?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    connect?: KnowledgeChunkWhereUniqueInput | KnowledgeChunkWhereUniqueInput[]
+    update?: KnowledgeChunkUpdateWithWhereUniqueWithoutDocInput | KnowledgeChunkUpdateWithWhereUniqueWithoutDocInput[]
+    updateMany?: KnowledgeChunkUpdateManyWithWhereWithoutDocInput | KnowledgeChunkUpdateManyWithWhereWithoutDocInput[]
+    deleteMany?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+  }
+
+  export type KnowledgeDocCreateNestedOneWithoutChunksInput = {
+    create?: XOR<KnowledgeDocCreateWithoutChunksInput, KnowledgeDocUncheckedCreateWithoutChunksInput>
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutChunksInput
+    connect?: KnowledgeDocWhereUniqueInput
+  }
+
+  export type WorkspaceCreateNestedOneWithoutKnowledgeChunksInput = {
+    create?: XOR<WorkspaceCreateWithoutKnowledgeChunksInput, WorkspaceUncheckedCreateWithoutKnowledgeChunksInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutKnowledgeChunksInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutKnowledgeChunksInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeChunksInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutKnowledgeChunksInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type KnowledgeDocUpdateOneRequiredWithoutChunksNestedInput = {
+    create?: XOR<KnowledgeDocCreateWithoutChunksInput, KnowledgeDocUncheckedCreateWithoutChunksInput>
+    connectOrCreate?: KnowledgeDocCreateOrConnectWithoutChunksInput
+    upsert?: KnowledgeDocUpsertWithoutChunksInput
+    connect?: KnowledgeDocWhereUniqueInput
+    update?: XOR<XOR<KnowledgeDocUpdateToOneWithWhereWithoutChunksInput, KnowledgeDocUpdateWithoutChunksInput>, KnowledgeDocUncheckedUpdateWithoutChunksInput>
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutKnowledgeChunksNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutKnowledgeChunksInput, WorkspaceUncheckedCreateWithoutKnowledgeChunksInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutKnowledgeChunksInput
+    upsert?: WorkspaceUpsertWithoutKnowledgeChunksInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutKnowledgeChunksInput, WorkspaceUpdateWithoutKnowledgeChunksInput>, WorkspaceUncheckedUpdateWithoutKnowledgeChunksInput>
+  }
+
+  export type AdvocacyOrgUpdateOneWithoutKnowledgeChunksNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeChunksInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutKnowledgeChunksInput
+    upsert?: AdvocacyOrgUpsertWithoutKnowledgeChunksInput
+    disconnect?: AdvocacyOrgWhereInput | boolean
+    delete?: AdvocacyOrgWhereInput | boolean
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutKnowledgeChunksInput, AdvocacyOrgUpdateWithoutKnowledgeChunksInput>, AdvocacyOrgUncheckedUpdateWithoutKnowledgeChunksInput>
+  }
+
+  export type WorkspaceCreateNestedOneWithoutOutreachSequencesInput = {
+    create?: XOR<WorkspaceCreateWithoutOutreachSequencesInput, WorkspaceUncheckedCreateWithoutOutreachSequencesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOutreachSequencesInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutOutreachSequencesInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedCreateWithoutOutreachSequencesInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOutreachSequencesInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type OutreachContactCreateNestedManyWithoutSequenceInput = {
+    create?: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput> | OutreachContactCreateWithoutSequenceInput[] | OutreachContactUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutSequenceInput | OutreachContactCreateOrConnectWithoutSequenceInput[]
+    createMany?: OutreachContactCreateManySequenceInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+  }
+
+  export type OutreachMessageCreateNestedManyWithoutSequenceInput = {
+    create?: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput> | OutreachMessageCreateWithoutSequenceInput[] | OutreachMessageUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutSequenceInput | OutreachMessageCreateOrConnectWithoutSequenceInput[]
+    createMany?: OutreachMessageCreateManySequenceInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+  }
+
+  export type OutreachContactUncheckedCreateNestedManyWithoutSequenceInput = {
+    create?: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput> | OutreachContactCreateWithoutSequenceInput[] | OutreachContactUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutSequenceInput | OutreachContactCreateOrConnectWithoutSequenceInput[]
+    createMany?: OutreachContactCreateManySequenceInputEnvelope
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+  }
+
+  export type OutreachMessageUncheckedCreateNestedManyWithoutSequenceInput = {
+    create?: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput> | OutreachMessageCreateWithoutSequenceInput[] | OutreachMessageUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutSequenceInput | OutreachMessageCreateOrConnectWithoutSequenceInput[]
+    createMany?: OutreachMessageCreateManySequenceInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+  }
+
+  export type EnumOutreachSequenceStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OutreachSequenceStatus
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutOutreachSequencesNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutOutreachSequencesInput, WorkspaceUncheckedCreateWithoutOutreachSequencesInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOutreachSequencesInput
+    upsert?: WorkspaceUpsertWithoutOutreachSequencesInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutOutreachSequencesInput, WorkspaceUpdateWithoutOutreachSequencesInput>, WorkspaceUncheckedUpdateWithoutOutreachSequencesInput>
+  }
+
+  export type AdvocacyOrgUpdateOneWithoutOutreachSequencesNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedCreateWithoutOutreachSequencesInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOutreachSequencesInput
+    upsert?: AdvocacyOrgUpsertWithoutOutreachSequencesInput
+    disconnect?: AdvocacyOrgWhereInput | boolean
+    delete?: AdvocacyOrgWhereInput | boolean
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutOutreachSequencesInput, AdvocacyOrgUpdateWithoutOutreachSequencesInput>, AdvocacyOrgUncheckedUpdateWithoutOutreachSequencesInput>
+  }
+
+  export type OutreachContactUpdateManyWithoutSequenceNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput> | OutreachContactCreateWithoutSequenceInput[] | OutreachContactUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutSequenceInput | OutreachContactCreateOrConnectWithoutSequenceInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutSequenceInput | OutreachContactUpsertWithWhereUniqueWithoutSequenceInput[]
+    createMany?: OutreachContactCreateManySequenceInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutSequenceInput | OutreachContactUpdateWithWhereUniqueWithoutSequenceInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutSequenceInput | OutreachContactUpdateManyWithWhereWithoutSequenceInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
+  export type OutreachMessageUpdateManyWithoutSequenceNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput> | OutreachMessageCreateWithoutSequenceInput[] | OutreachMessageUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutSequenceInput | OutreachMessageCreateOrConnectWithoutSequenceInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutSequenceInput | OutreachMessageUpsertWithWhereUniqueWithoutSequenceInput[]
+    createMany?: OutreachMessageCreateManySequenceInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutSequenceInput | OutreachMessageUpdateWithWhereUniqueWithoutSequenceInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutSequenceInput | OutreachMessageUpdateManyWithWhereWithoutSequenceInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutSequenceNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput> | OutreachContactCreateWithoutSequenceInput[] | OutreachContactUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutSequenceInput | OutreachContactCreateOrConnectWithoutSequenceInput[]
+    upsert?: OutreachContactUpsertWithWhereUniqueWithoutSequenceInput | OutreachContactUpsertWithWhereUniqueWithoutSequenceInput[]
+    createMany?: OutreachContactCreateManySequenceInputEnvelope
+    set?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    disconnect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    delete?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    connect?: OutreachContactWhereUniqueInput | OutreachContactWhereUniqueInput[]
+    update?: OutreachContactUpdateWithWhereUniqueWithoutSequenceInput | OutreachContactUpdateWithWhereUniqueWithoutSequenceInput[]
+    updateMany?: OutreachContactUpdateManyWithWhereWithoutSequenceInput | OutreachContactUpdateManyWithWhereWithoutSequenceInput[]
+    deleteMany?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutSequenceNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput> | OutreachMessageCreateWithoutSequenceInput[] | OutreachMessageUncheckedCreateWithoutSequenceInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutSequenceInput | OutreachMessageCreateOrConnectWithoutSequenceInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutSequenceInput | OutreachMessageUpsertWithWhereUniqueWithoutSequenceInput[]
+    createMany?: OutreachMessageCreateManySequenceInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutSequenceInput | OutreachMessageUpdateWithWhereUniqueWithoutSequenceInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutSequenceInput | OutreachMessageUpdateManyWithWhereWithoutSequenceInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+  }
+
+  export type WorkspaceCreateNestedOneWithoutOutreachContactsInput = {
+    create?: XOR<WorkspaceCreateWithoutOutreachContactsInput, WorkspaceUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOutreachContactsInput
+    connect?: WorkspaceWhereUniqueInput
+  }
+
+  export type OutreachSequenceCreateNestedOneWithoutContactsInput = {
+    create?: XOR<OutreachSequenceCreateWithoutContactsInput, OutreachSequenceUncheckedCreateWithoutContactsInput>
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutContactsInput
+    connect?: OutreachSequenceWhereUniqueInput
+  }
+
+  export type OrgContactCreateNestedOneWithoutOutreachContactsInput = {
+    create?: XOR<OrgContactCreateWithoutOutreachContactsInput, OrgContactUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: OrgContactCreateOrConnectWithoutOutreachContactsInput
+    connect?: OrgContactWhereUniqueInput
+  }
+
+  export type OutreachMessageCreateNestedManyWithoutContactInput = {
+    create?: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput> | OutreachMessageCreateWithoutContactInput[] | OutreachMessageUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutContactInput | OutreachMessageCreateOrConnectWithoutContactInput[]
+    createMany?: OutreachMessageCreateManyContactInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+  }
+
+  export type AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOutreachContactsInput, AdvocacyOrgUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOutreachContactsInput
+    connect?: AdvocacyOrgWhereUniqueInput
+  }
+
+  export type OutreachMessageUncheckedCreateNestedManyWithoutContactInput = {
+    create?: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput> | OutreachMessageCreateWithoutContactInput[] | OutreachMessageUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutContactInput | OutreachMessageCreateOrConnectWithoutContactInput[]
+    createMany?: OutreachMessageCreateManyContactInputEnvelope
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+  }
+
+  export type EnumOutreachChannelFieldUpdateOperationsInput = {
+    set?: $Enums.OutreachChannel
+  }
+
+  export type EnumOutreachContactStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OutreachContactStatus
+  }
+
+  export type WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput = {
+    create?: XOR<WorkspaceCreateWithoutOutreachContactsInput, WorkspaceUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: WorkspaceCreateOrConnectWithoutOutreachContactsInput
+    upsert?: WorkspaceUpsertWithoutOutreachContactsInput
+    connect?: WorkspaceWhereUniqueInput
+    update?: XOR<XOR<WorkspaceUpdateToOneWithWhereWithoutOutreachContactsInput, WorkspaceUpdateWithoutOutreachContactsInput>, WorkspaceUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutContactsInput, OutreachSequenceUncheckedCreateWithoutContactsInput>
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutContactsInput
+    upsert?: OutreachSequenceUpsertWithoutContactsInput
+    connect?: OutreachSequenceWhereUniqueInput
+    update?: XOR<XOR<OutreachSequenceUpdateToOneWithWhereWithoutContactsInput, OutreachSequenceUpdateWithoutContactsInput>, OutreachSequenceUncheckedUpdateWithoutContactsInput>
+  }
+
+  export type OrgContactUpdateOneWithoutOutreachContactsNestedInput = {
+    create?: XOR<OrgContactCreateWithoutOutreachContactsInput, OrgContactUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: OrgContactCreateOrConnectWithoutOutreachContactsInput
+    upsert?: OrgContactUpsertWithoutOutreachContactsInput
+    disconnect?: OrgContactWhereInput | boolean
+    delete?: OrgContactWhereInput | boolean
+    connect?: OrgContactWhereUniqueInput
+    update?: XOR<XOR<OrgContactUpdateToOneWithWhereWithoutOutreachContactsInput, OrgContactUpdateWithoutOutreachContactsInput>, OrgContactUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type OutreachMessageUpdateManyWithoutContactNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput> | OutreachMessageCreateWithoutContactInput[] | OutreachMessageUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutContactInput | OutreachMessageCreateOrConnectWithoutContactInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutContactInput | OutreachMessageUpsertWithWhereUniqueWithoutContactInput[]
+    createMany?: OutreachMessageCreateManyContactInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutContactInput | OutreachMessageUpdateWithWhereUniqueWithoutContactInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutContactInput | OutreachMessageUpdateManyWithWhereWithoutContactInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+  }
+
+  export type AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput = {
+    create?: XOR<AdvocacyOrgCreateWithoutOutreachContactsInput, AdvocacyOrgUncheckedCreateWithoutOutreachContactsInput>
+    connectOrCreate?: AdvocacyOrgCreateOrConnectWithoutOutreachContactsInput
+    upsert?: AdvocacyOrgUpsertWithoutOutreachContactsInput
+    disconnect?: AdvocacyOrgWhereInput | boolean
+    delete?: AdvocacyOrgWhereInput | boolean
+    connect?: AdvocacyOrgWhereUniqueInput
+    update?: XOR<XOR<AdvocacyOrgUpdateToOneWithWhereWithoutOutreachContactsInput, AdvocacyOrgUpdateWithoutOutreachContactsInput>, AdvocacyOrgUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutContactNestedInput = {
+    create?: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput> | OutreachMessageCreateWithoutContactInput[] | OutreachMessageUncheckedCreateWithoutContactInput[]
+    connectOrCreate?: OutreachMessageCreateOrConnectWithoutContactInput | OutreachMessageCreateOrConnectWithoutContactInput[]
+    upsert?: OutreachMessageUpsertWithWhereUniqueWithoutContactInput | OutreachMessageUpsertWithWhereUniqueWithoutContactInput[]
+    createMany?: OutreachMessageCreateManyContactInputEnvelope
+    set?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    disconnect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    delete?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    connect?: OutreachMessageWhereUniqueInput | OutreachMessageWhereUniqueInput[]
+    update?: OutreachMessageUpdateWithWhereUniqueWithoutContactInput | OutreachMessageUpdateWithWhereUniqueWithoutContactInput[]
+    updateMany?: OutreachMessageUpdateManyWithWhereWithoutContactInput | OutreachMessageUpdateManyWithWhereWithoutContactInput[]
+    deleteMany?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+  }
+
+  export type OutreachSequenceCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<OutreachSequenceCreateWithoutMessagesInput, OutreachSequenceUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutMessagesInput
+    connect?: OutreachSequenceWhereUniqueInput
+  }
+
+  export type OutreachContactCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<OutreachContactCreateWithoutMessagesInput, OutreachContactUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutMessagesInput
+    connect?: OutreachContactWhereUniqueInput
+  }
+
+  export type DossierCreateNestedOneWithoutOutreachMessagesInput = {
+    create?: XOR<DossierCreateWithoutOutreachMessagesInput, DossierUncheckedCreateWithoutOutreachMessagesInput>
+    connectOrCreate?: DossierCreateOrConnectWithoutOutreachMessagesInput
+    connect?: DossierWhereUniqueInput
+  }
+
+  export type EnumOutreachMessageStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OutreachMessageStatus
+  }
+
+  export type OutreachSequenceUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<OutreachSequenceCreateWithoutMessagesInput, OutreachSequenceUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: OutreachSequenceCreateOrConnectWithoutMessagesInput
+    upsert?: OutreachSequenceUpsertWithoutMessagesInput
+    connect?: OutreachSequenceWhereUniqueInput
+    update?: XOR<XOR<OutreachSequenceUpdateToOneWithWhereWithoutMessagesInput, OutreachSequenceUpdateWithoutMessagesInput>, OutreachSequenceUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type OutreachContactUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<OutreachContactCreateWithoutMessagesInput, OutreachContactUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: OutreachContactCreateOrConnectWithoutMessagesInput
+    upsert?: OutreachContactUpsertWithoutMessagesInput
+    connect?: OutreachContactWhereUniqueInput
+    update?: XOR<XOR<OutreachContactUpdateToOneWithWhereWithoutMessagesInput, OutreachContactUpdateWithoutMessagesInput>, OutreachContactUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type DossierUpdateOneWithoutOutreachMessagesNestedInput = {
+    create?: XOR<DossierCreateWithoutOutreachMessagesInput, DossierUncheckedCreateWithoutOutreachMessagesInput>
+    connectOrCreate?: DossierCreateOrConnectWithoutOutreachMessagesInput
+    upsert?: DossierUpsertWithoutOutreachMessagesInput
+    disconnect?: DossierWhereInput | boolean
+    delete?: DossierWhereInput | boolean
+    connect?: DossierWhereUniqueInput
+    update?: XOR<XOR<DossierUpdateToOneWithWhereWithoutOutreachMessagesInput, DossierUpdateWithoutOutreachMessagesInput>, DossierUncheckedUpdateWithoutOutreachMessagesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -50237,6 +59210,108 @@ export namespace Prisma {
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
   }
 
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Buffer | BytesFieldRefInput<$PrismaModel>
+    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Buffer
+  }
+
+  export type NestedEnumKnowledgeDocStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.KnowledgeDocStatus | EnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel> | $Enums.KnowledgeDocStatus
+  }
+
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Buffer | BytesFieldRefInput<$PrismaModel>
+    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Buffer
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
+  }
+
+  export type NestedEnumKnowledgeDocStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KnowledgeDocStatus | EnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KnowledgeDocStatus[] | ListEnumKnowledgeDocStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumKnowledgeDocStatusWithAggregatesFilter<$PrismaModel> | $Enums.KnowledgeDocStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel>
+    _max?: NestedEnumKnowledgeDocStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOutreachSequenceStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachSequenceStatus | EnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel> | $Enums.OutreachSequenceStatus
+  }
+
+  export type NestedEnumOutreachSequenceStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachSequenceStatus | EnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachSequenceStatus[] | ListEnumOutreachSequenceStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachSequenceStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachSequenceStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachSequenceStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOutreachChannelFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachChannel | EnumOutreachChannelFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachChannelFilter<$PrismaModel> | $Enums.OutreachChannel
+  }
+
+  export type NestedEnumOutreachContactStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachContactStatus | EnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachContactStatusFilter<$PrismaModel> | $Enums.OutreachContactStatus
+  }
+
+  export type NestedEnumOutreachChannelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachChannel | EnumOutreachChannelFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachChannel[] | ListEnumOutreachChannelFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachChannelWithAggregatesFilter<$PrismaModel> | $Enums.OutreachChannel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachChannelFilter<$PrismaModel>
+    _max?: NestedEnumOutreachChannelFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOutreachContactStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachContactStatus | EnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachContactStatus[] | ListEnumOutreachContactStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachContactStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachContactStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachContactStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachContactStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOutreachMessageStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachMessageStatus | EnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachMessageStatusFilter<$PrismaModel> | $Enums.OutreachMessageStatus
+  }
+
+  export type NestedEnumOutreachMessageStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OutreachMessageStatus | EnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OutreachMessageStatus[] | ListEnumOutreachMessageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOutreachMessageStatusWithAggregatesFilter<$PrismaModel> | $Enums.OutreachMessageStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOutreachMessageStatusFilter<$PrismaModel>
+    _max?: NestedEnumOutreachMessageStatusFilter<$PrismaModel>
+  }
+
   export type WorkspaceMemberCreateWithoutUserInput = {
     id?: string
     role?: $Enums.WorkspaceRole
@@ -50850,6 +59925,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutWorkspaceInput = {
@@ -50886,6 +59965,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutWorkspaceInput = {
@@ -50900,6 +59983,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateWithoutWorkspaceInput = {
     id?: string
+    slug: string
     title: string
     description?: string | null
     fundingAmountMin?: number | null
@@ -50929,10 +60013,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
     applications?: GrantApplicationCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateWithoutWorkspaceInput = {
     id?: string
+    slug: string
     orgId: string
     title: string
     description?: string | null
@@ -50962,6 +60048,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantCreateOrConnectWithoutWorkspaceInput = {
@@ -51140,6 +60227,160 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type KnowledgeDocCreateWithoutWorkspaceInput = {
+    id?: string
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeDocsInput
+    grant?: OpenGrantCreateNestedOneWithoutKnowledgeDocsInput
+    chunks?: KnowledgeChunkCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    orgId?: string | null
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocCreateOrConnectWithoutWorkspaceInput = {
+    where: KnowledgeDocWhereUniqueInput
+    create: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeDocCreateManyWorkspaceInputEnvelope = {
+    data: KnowledgeDocCreateManyWorkspaceInput | KnowledgeDocCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KnowledgeChunkCreateWithoutWorkspaceInput = {
+    id?: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+    doc: KnowledgeDocCreateNestedOneWithoutChunksInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeChunksInput
+  }
+
+  export type KnowledgeChunkUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    docId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkCreateOrConnectWithoutWorkspaceInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    create: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeChunkCreateManyWorkspaceInputEnvelope = {
+    data: KnowledgeChunkCreateManyWorkspaceInput | KnowledgeChunkCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OutreachSequenceCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org?: AdvocacyOrgCreateNestedOneWithoutOutreachSequencesInput
+    contacts?: OutreachContactCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contacts?: OutreachContactUncheckedCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceCreateOrConnectWithoutWorkspaceInput = {
+    where: OutreachSequenceWhereUniqueInput
+    create: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OutreachSequenceCreateManyWorkspaceInputEnvelope = {
+    data: OutreachSequenceCreateManyWorkspaceInput | OutreachSequenceCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OutreachContactCreateWithoutWorkspaceInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sequence: OutreachSequenceCreateNestedOneWithoutContactsInput
+    orgContact?: OrgContactCreateNestedOneWithoutOutreachContactsInput
+    messages?: OutreachMessageCreateNestedManyWithoutContactInput
+    AdvocacyOrg?: AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput
+  }
+
+  export type OutreachContactUncheckedCreateWithoutWorkspaceInput = {
+    id?: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactCreateOrConnectWithoutWorkspaceInput = {
+    where: OutreachContactWhereUniqueInput
+    create: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OutreachContactCreateManyWorkspaceInputEnvelope = {
+    data: OutreachContactCreateManyWorkspaceInput | OutreachContactCreateManyWorkspaceInput[]
+    skipDuplicates?: boolean
+  }
+
   export type WorkspaceMemberUpsertWithWhereUniqueWithoutWorkspaceInput = {
     where: WorkspaceMemberWhereUniqueInput
     update: XOR<WorkspaceMemberUpdateWithoutWorkspaceInput, WorkspaceMemberUncheckedUpdateWithoutWorkspaceInput>
@@ -51223,6 +60464,7 @@ export namespace Prisma {
     OR?: OpenGrantScalarWhereInput[]
     NOT?: OpenGrantScalarWhereInput | OpenGrantScalarWhereInput[]
     id?: StringFilter<"OpenGrant"> | string
+    slug?: StringFilter<"OpenGrant"> | string
     orgId?: StringFilter<"OpenGrant"> | string
     workspaceId?: StringFilter<"OpenGrant"> | string
     title?: StringFilter<"OpenGrant"> | string
@@ -51354,6 +60596,139 @@ export namespace Prisma {
     data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutWorkspaceInput>
   }
 
+  export type KnowledgeDocUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: KnowledgeDocWhereUniqueInput
+    update: XOR<KnowledgeDocUpdateWithoutWorkspaceInput, KnowledgeDocUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<KnowledgeDocCreateWithoutWorkspaceInput, KnowledgeDocUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeDocUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: KnowledgeDocWhereUniqueInput
+    data: XOR<KnowledgeDocUpdateWithoutWorkspaceInput, KnowledgeDocUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeDocUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: KnowledgeDocScalarWhereInput
+    data: XOR<KnowledgeDocUpdateManyMutationInput, KnowledgeDocUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeDocScalarWhereInput = {
+    AND?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+    OR?: KnowledgeDocScalarWhereInput[]
+    NOT?: KnowledgeDocScalarWhereInput | KnowledgeDocScalarWhereInput[]
+    id?: StringFilter<"KnowledgeDoc"> | string
+    workspaceId?: StringFilter<"KnowledgeDoc"> | string
+    orgId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    grantId?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    title?: StringFilter<"KnowledgeDoc"> | string
+    fileName?: StringFilter<"KnowledgeDoc"> | string
+    mimeType?: StringFilter<"KnowledgeDoc"> | string
+    sizeBytes?: IntFilter<"KnowledgeDoc"> | number
+    fileData?: BytesFilter<"KnowledgeDoc"> | Buffer
+    extractedText?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    status?: EnumKnowledgeDocStatusFilter<"KnowledgeDoc"> | $Enums.KnowledgeDocStatus
+    sourceType?: StringFilter<"KnowledgeDoc"> | string
+    tags?: StringNullableListFilter<"KnowledgeDoc">
+    error?: StringNullableFilter<"KnowledgeDoc"> | string | null
+    createdAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+    updatedAt?: DateTimeFilter<"KnowledgeDoc"> | Date | string
+  }
+
+  export type KnowledgeChunkUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    update: XOR<KnowledgeChunkUpdateWithoutWorkspaceInput, KnowledgeChunkUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<KnowledgeChunkCreateWithoutWorkspaceInput, KnowledgeChunkUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeChunkUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    data: XOR<KnowledgeChunkUpdateWithoutWorkspaceInput, KnowledgeChunkUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeChunkUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: KnowledgeChunkScalarWhereInput
+    data: XOR<KnowledgeChunkUpdateManyMutationInput, KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type KnowledgeChunkScalarWhereInput = {
+    AND?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+    OR?: KnowledgeChunkScalarWhereInput[]
+    NOT?: KnowledgeChunkScalarWhereInput | KnowledgeChunkScalarWhereInput[]
+    id?: StringFilter<"KnowledgeChunk"> | string
+    docId?: StringFilter<"KnowledgeChunk"> | string
+    workspaceId?: StringFilter<"KnowledgeChunk"> | string
+    orgId?: StringNullableFilter<"KnowledgeChunk"> | string | null
+    chunkIndex?: IntFilter<"KnowledgeChunk"> | number
+    content?: StringFilter<"KnowledgeChunk"> | string
+    tokenCount?: IntFilter<"KnowledgeChunk"> | number
+    createdAt?: DateTimeFilter<"KnowledgeChunk"> | Date | string
+  }
+
+  export type OutreachSequenceUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: OutreachSequenceWhereUniqueInput
+    update: XOR<OutreachSequenceUpdateWithoutWorkspaceInput, OutreachSequenceUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<OutreachSequenceCreateWithoutWorkspaceInput, OutreachSequenceUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OutreachSequenceUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: OutreachSequenceWhereUniqueInput
+    data: XOR<OutreachSequenceUpdateWithoutWorkspaceInput, OutreachSequenceUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type OutreachSequenceUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: OutreachSequenceScalarWhereInput
+    data: XOR<OutreachSequenceUpdateManyMutationInput, OutreachSequenceUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type OutreachSequenceScalarWhereInput = {
+    AND?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+    OR?: OutreachSequenceScalarWhereInput[]
+    NOT?: OutreachSequenceScalarWhereInput | OutreachSequenceScalarWhereInput[]
+    id?: StringFilter<"OutreachSequence"> | string
+    workspaceId?: StringFilter<"OutreachSequence"> | string
+    orgId?: StringNullableFilter<"OutreachSequence"> | string | null
+    name?: StringFilter<"OutreachSequence"> | string
+    goal?: StringNullableFilter<"OutreachSequence"> | string | null
+    status?: EnumOutreachSequenceStatusFilter<"OutreachSequence"> | $Enums.OutreachSequenceStatus
+    steps?: JsonFilter<"OutreachSequence">
+    createdAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachSequence"> | Date | string
+  }
+
+  export type OutreachContactUpsertWithWhereUniqueWithoutWorkspaceInput = {
+    where: OutreachContactWhereUniqueInput
+    update: XOR<OutreachContactUpdateWithoutWorkspaceInput, OutreachContactUncheckedUpdateWithoutWorkspaceInput>
+    create: XOR<OutreachContactCreateWithoutWorkspaceInput, OutreachContactUncheckedCreateWithoutWorkspaceInput>
+  }
+
+  export type OutreachContactUpdateWithWhereUniqueWithoutWorkspaceInput = {
+    where: OutreachContactWhereUniqueInput
+    data: XOR<OutreachContactUpdateWithoutWorkspaceInput, OutreachContactUncheckedUpdateWithoutWorkspaceInput>
+  }
+
+  export type OutreachContactUpdateManyWithWhereWithoutWorkspaceInput = {
+    where: OutreachContactScalarWhereInput
+    data: XOR<OutreachContactUpdateManyMutationInput, OutreachContactUncheckedUpdateManyWithoutWorkspaceInput>
+  }
+
+  export type OutreachContactScalarWhereInput = {
+    AND?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+    OR?: OutreachContactScalarWhereInput[]
+    NOT?: OutreachContactScalarWhereInput | OutreachContactScalarWhereInput[]
+    id?: StringFilter<"OutreachContact"> | string
+    workspaceId?: StringFilter<"OutreachContact"> | string
+    sequenceId?: StringFilter<"OutreachContact"> | string
+    orgContactId?: StringNullableFilter<"OutreachContact"> | string | null
+    name?: StringFilter<"OutreachContact"> | string
+    title?: StringNullableFilter<"OutreachContact"> | string | null
+    email?: StringNullableFilter<"OutreachContact"> | string | null
+    channel?: EnumOutreachChannelFilter<"OutreachContact"> | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFilter<"OutreachContact"> | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachContact"> | Date | string
+    advocacyOrgId?: StringNullableFilter<"OutreachContact"> | string | null
+  }
+
   export type WorkspaceCreateWithoutMembersInput = {
     id?: string
     slug: string
@@ -51369,6 +60744,10 @@ export namespace Prisma {
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutMembersInput = {
@@ -51386,6 +60765,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutMembersInput = {
@@ -51458,6 +60841,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutMembersInput = {
@@ -51475,6 +60862,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutWorkspaceMembershipsInput = {
@@ -51537,6 +60928,10 @@ export namespace Prisma {
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAdvocacyOrgsInput = {
@@ -51554,6 +60949,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAdvocacyOrgsInput = {
@@ -51762,6 +61161,7 @@ export namespace Prisma {
     role?: $Enums.ContactRole
     isPrimary?: boolean
     createdAt?: Date | string
+    outreachContacts?: OutreachContactCreateNestedManyWithoutOrgContactInput
   }
 
   export type OrgContactUncheckedCreateWithoutOrgInput = {
@@ -51773,6 +61173,7 @@ export namespace Prisma {
     role?: $Enums.ContactRole
     isPrimary?: boolean
     createdAt?: Date | string
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutOrgContactInput
   }
 
   export type OrgContactCreateOrConnectWithoutOrgInput = {
@@ -51787,6 +61188,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateWithoutOrgInput = {
     id?: string
+    slug: string
     title: string
     description?: string | null
     fundingAmountMin?: number | null
@@ -51816,10 +61218,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
     applications?: GrantApplicationCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateWithoutOrgInput = {
     id?: string
+    slug: string
     workspaceId: string
     title: string
     description?: string | null
@@ -51849,6 +61253,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantCreateOrConnectWithoutOrgInput = {
@@ -51949,6 +61354,7 @@ export namespace Prisma {
     context?: string | null
     createdAt?: Date | string
     applications?: GrantApplicationCreateNestedManyWithoutDossierInput
+    outreachMessages?: OutreachMessageCreateNestedManyWithoutDossierInput
   }
 
   export type DossierUncheckedCreateWithoutOrgInput = {
@@ -51960,6 +61366,7 @@ export namespace Prisma {
     context?: string | null
     createdAt?: Date | string
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutDossierInput
+    outreachMessages?: OutreachMessageUncheckedCreateNestedManyWithoutDossierInput
   }
 
   export type DossierCreateOrConnectWithoutOrgInput = {
@@ -52018,6 +61425,160 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type KnowledgeDocCreateWithoutOrgInput = {
+    id?: string
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeDocsInput
+    grant?: OpenGrantCreateNestedOneWithoutKnowledgeDocsInput
+    chunks?: KnowledgeChunkCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocUncheckedCreateWithoutOrgInput = {
+    id?: string
+    workspaceId: string
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocCreateOrConnectWithoutOrgInput = {
+    where: KnowledgeDocWhereUniqueInput
+    create: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput>
+  }
+
+  export type KnowledgeDocCreateManyOrgInputEnvelope = {
+    data: KnowledgeDocCreateManyOrgInput | KnowledgeDocCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KnowledgeChunkCreateWithoutOrgInput = {
+    id?: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+    doc: KnowledgeDocCreateNestedOneWithoutChunksInput
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeChunksInput
+  }
+
+  export type KnowledgeChunkUncheckedCreateWithoutOrgInput = {
+    id?: string
+    docId: string
+    workspaceId: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkCreateOrConnectWithoutOrgInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    create: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput>
+  }
+
+  export type KnowledgeChunkCreateManyOrgInputEnvelope = {
+    data: KnowledgeChunkCreateManyOrgInput | KnowledgeChunkCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OutreachSequenceCreateWithoutOrgInput = {
+    id?: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachSequencesInput
+    contacts?: OutreachContactCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUncheckedCreateWithoutOrgInput = {
+    id?: string
+    workspaceId: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contacts?: OutreachContactUncheckedCreateNestedManyWithoutSequenceInput
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceCreateOrConnectWithoutOrgInput = {
+    where: OutreachSequenceWhereUniqueInput
+    create: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OutreachSequenceCreateManyOrgInputEnvelope = {
+    data: OutreachSequenceCreateManyOrgInput | OutreachSequenceCreateManyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OutreachContactCreateWithoutAdvocacyOrgInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachContactsInput
+    sequence: OutreachSequenceCreateNestedOneWithoutContactsInput
+    orgContact?: OrgContactCreateNestedOneWithoutOutreachContactsInput
+    messages?: OutreachMessageCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactUncheckedCreateWithoutAdvocacyOrgInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactCreateOrConnectWithoutAdvocacyOrgInput = {
+    where: OutreachContactWhereUniqueInput
+    create: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput>
+  }
+
+  export type OutreachContactCreateManyAdvocacyOrgInputEnvelope = {
+    data: OutreachContactCreateManyAdvocacyOrgInput | OutreachContactCreateManyAdvocacyOrgInput[]
+    skipDuplicates?: boolean
+  }
+
   export type WorkspaceUpsertWithoutAdvocacyOrgsInput = {
     update: XOR<WorkspaceUpdateWithoutAdvocacyOrgsInput, WorkspaceUncheckedUpdateWithoutAdvocacyOrgsInput>
     create: XOR<WorkspaceCreateWithoutAdvocacyOrgsInput, WorkspaceUncheckedCreateWithoutAdvocacyOrgsInput>
@@ -52044,6 +61605,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAdvocacyOrgsInput = {
@@ -52061,6 +61626,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type CampaignUpsertWithWhereUniqueWithoutOrgInput = {
@@ -52354,6 +61923,70 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"GrantApplication"> | Date | string
   }
 
+  export type KnowledgeDocUpsertWithWhereUniqueWithoutOrgInput = {
+    where: KnowledgeDocWhereUniqueInput
+    update: XOR<KnowledgeDocUpdateWithoutOrgInput, KnowledgeDocUncheckedUpdateWithoutOrgInput>
+    create: XOR<KnowledgeDocCreateWithoutOrgInput, KnowledgeDocUncheckedCreateWithoutOrgInput>
+  }
+
+  export type KnowledgeDocUpdateWithWhereUniqueWithoutOrgInput = {
+    where: KnowledgeDocWhereUniqueInput
+    data: XOR<KnowledgeDocUpdateWithoutOrgInput, KnowledgeDocUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type KnowledgeDocUpdateManyWithWhereWithoutOrgInput = {
+    where: KnowledgeDocScalarWhereInput
+    data: XOR<KnowledgeDocUpdateManyMutationInput, KnowledgeDocUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type KnowledgeChunkUpsertWithWhereUniqueWithoutOrgInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    update: XOR<KnowledgeChunkUpdateWithoutOrgInput, KnowledgeChunkUncheckedUpdateWithoutOrgInput>
+    create: XOR<KnowledgeChunkCreateWithoutOrgInput, KnowledgeChunkUncheckedCreateWithoutOrgInput>
+  }
+
+  export type KnowledgeChunkUpdateWithWhereUniqueWithoutOrgInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    data: XOR<KnowledgeChunkUpdateWithoutOrgInput, KnowledgeChunkUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type KnowledgeChunkUpdateManyWithWhereWithoutOrgInput = {
+    where: KnowledgeChunkScalarWhereInput
+    data: XOR<KnowledgeChunkUpdateManyMutationInput, KnowledgeChunkUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type OutreachSequenceUpsertWithWhereUniqueWithoutOrgInput = {
+    where: OutreachSequenceWhereUniqueInput
+    update: XOR<OutreachSequenceUpdateWithoutOrgInput, OutreachSequenceUncheckedUpdateWithoutOrgInput>
+    create: XOR<OutreachSequenceCreateWithoutOrgInput, OutreachSequenceUncheckedCreateWithoutOrgInput>
+  }
+
+  export type OutreachSequenceUpdateWithWhereUniqueWithoutOrgInput = {
+    where: OutreachSequenceWhereUniqueInput
+    data: XOR<OutreachSequenceUpdateWithoutOrgInput, OutreachSequenceUncheckedUpdateWithoutOrgInput>
+  }
+
+  export type OutreachSequenceUpdateManyWithWhereWithoutOrgInput = {
+    where: OutreachSequenceScalarWhereInput
+    data: XOR<OutreachSequenceUpdateManyMutationInput, OutreachSequenceUncheckedUpdateManyWithoutOrgInput>
+  }
+
+  export type OutreachContactUpsertWithWhereUniqueWithoutAdvocacyOrgInput = {
+    where: OutreachContactWhereUniqueInput
+    update: XOR<OutreachContactUpdateWithoutAdvocacyOrgInput, OutreachContactUncheckedUpdateWithoutAdvocacyOrgInput>
+    create: XOR<OutreachContactCreateWithoutAdvocacyOrgInput, OutreachContactUncheckedCreateWithoutAdvocacyOrgInput>
+  }
+
+  export type OutreachContactUpdateWithWhereUniqueWithoutAdvocacyOrgInput = {
+    where: OutreachContactWhereUniqueInput
+    data: XOR<OutreachContactUpdateWithoutAdvocacyOrgInput, OutreachContactUncheckedUpdateWithoutAdvocacyOrgInput>
+  }
+
+  export type OutreachContactUpdateManyWithWhereWithoutAdvocacyOrgInput = {
+    where: OutreachContactScalarWhereInput
+    data: XOR<OutreachContactUpdateManyMutationInput, OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgInput>
+  }
+
   export type AdvocacyOrgCreateWithoutContactsInput = {
     id?: string
     slug: string
@@ -52388,6 +62021,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutContactsInput = {
@@ -52424,11 +62061,55 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutContactsInput = {
     where: AdvocacyOrgWhereUniqueInput
     create: XOR<AdvocacyOrgCreateWithoutContactsInput, AdvocacyOrgUncheckedCreateWithoutContactsInput>
+  }
+
+  export type OutreachContactCreateWithoutOrgContactInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachContactsInput
+    sequence: OutreachSequenceCreateNestedOneWithoutContactsInput
+    messages?: OutreachMessageCreateNestedManyWithoutContactInput
+    AdvocacyOrg?: AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput
+  }
+
+  export type OutreachContactUncheckedCreateWithoutOrgContactInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactCreateOrConnectWithoutOrgContactInput = {
+    where: OutreachContactWhereUniqueInput
+    create: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput>
+  }
+
+  export type OutreachContactCreateManyOrgContactInputEnvelope = {
+    data: OutreachContactCreateManyOrgContactInput | OutreachContactCreateManyOrgContactInput[]
+    skipDuplicates?: boolean
   }
 
   export type AdvocacyOrgUpsertWithoutContactsInput = {
@@ -52476,6 +62157,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutContactsInput = {
@@ -52512,6 +62197,26 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type OutreachContactUpsertWithWhereUniqueWithoutOrgContactInput = {
+    where: OutreachContactWhereUniqueInput
+    update: XOR<OutreachContactUpdateWithoutOrgContactInput, OutreachContactUncheckedUpdateWithoutOrgContactInput>
+    create: XOR<OutreachContactCreateWithoutOrgContactInput, OutreachContactUncheckedCreateWithoutOrgContactInput>
+  }
+
+  export type OutreachContactUpdateWithWhereUniqueWithoutOrgContactInput = {
+    where: OutreachContactWhereUniqueInput
+    data: XOR<OutreachContactUpdateWithoutOrgContactInput, OutreachContactUncheckedUpdateWithoutOrgContactInput>
+  }
+
+  export type OutreachContactUpdateManyWithWhereWithoutOrgContactInput = {
+    where: OutreachContactScalarWhereInput
+    data: XOR<OutreachContactUpdateManyMutationInput, OutreachContactUncheckedUpdateManyWithoutOrgContactInput>
   }
 
   export type AdvocacyOrgCreateWithoutOpenGrantsInput = {
@@ -52548,6 +62253,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput = {
@@ -52584,6 +62293,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutOpenGrantsInput = {
@@ -52606,6 +62319,10 @@ export namespace Prisma {
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutOpenGrantsInput = {
@@ -52623,6 +62340,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutOpenGrantsInput = {
@@ -52676,6 +62397,54 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type KnowledgeDocCreateWithoutGrantInput = {
+    id?: string
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeDocsInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeDocsInput
+    chunks?: KnowledgeChunkCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocUncheckedCreateWithoutGrantInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutDocInput
+  }
+
+  export type KnowledgeDocCreateOrConnectWithoutGrantInput = {
+    where: KnowledgeDocWhereUniqueInput
+    create: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput>
+  }
+
+  export type KnowledgeDocCreateManyGrantInputEnvelope = {
+    data: KnowledgeDocCreateManyGrantInput | KnowledgeDocCreateManyGrantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AdvocacyOrgUpsertWithoutOpenGrantsInput = {
     update: XOR<AdvocacyOrgUpdateWithoutOpenGrantsInput, AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput>
     create: XOR<AdvocacyOrgCreateWithoutOpenGrantsInput, AdvocacyOrgUncheckedCreateWithoutOpenGrantsInput>
@@ -52721,6 +62490,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutOpenGrantsInput = {
@@ -52757,6 +62530,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type WorkspaceUpsertWithoutOpenGrantsInput = {
@@ -52785,6 +62562,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutOpenGrantsInput = {
@@ -52802,6 +62583,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type GrantApplicationUpsertWithWhereUniqueWithoutGrantInput = {
@@ -52818,6 +62603,22 @@ export namespace Prisma {
   export type GrantApplicationUpdateManyWithWhereWithoutGrantInput = {
     where: GrantApplicationScalarWhereInput
     data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyWithoutGrantInput>
+  }
+
+  export type KnowledgeDocUpsertWithWhereUniqueWithoutGrantInput = {
+    where: KnowledgeDocWhereUniqueInput
+    update: XOR<KnowledgeDocUpdateWithoutGrantInput, KnowledgeDocUncheckedUpdateWithoutGrantInput>
+    create: XOR<KnowledgeDocCreateWithoutGrantInput, KnowledgeDocUncheckedCreateWithoutGrantInput>
+  }
+
+  export type KnowledgeDocUpdateWithWhereUniqueWithoutGrantInput = {
+    where: KnowledgeDocWhereUniqueInput
+    data: XOR<KnowledgeDocUpdateWithoutGrantInput, KnowledgeDocUncheckedUpdateWithoutGrantInput>
+  }
+
+  export type KnowledgeDocUpdateManyWithWhereWithoutGrantInput = {
+    where: KnowledgeDocScalarWhereInput
+    data: XOR<KnowledgeDocUpdateManyMutationInput, KnowledgeDocUncheckedUpdateManyWithoutGrantInput>
   }
 
   export type AdvocacyOrgCreateWithoutCampaignsInput = {
@@ -52854,6 +62655,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutCampaignsInput = {
@@ -52890,6 +62695,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutCampaignsInput = {
@@ -53140,6 +62949,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutCampaignsInput = {
@@ -53176,6 +62989,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type InitiativeUpsertWithWhereUniqueWithoutCampaignInput = {
@@ -55467,6 +65284,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPatientStoriesInput = {
@@ -55503,6 +65324,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPatientStoriesInput = {
@@ -55594,6 +65419,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPatientStoriesInput = {
@@ -55630,6 +65459,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type UserUpsertWithoutPatientStoriesInput = {
@@ -55850,6 +65683,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutCoalitionLinksInput = {
@@ -55886,6 +65723,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutCoalitionLinksInput = {
@@ -55979,6 +65820,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutCoalitionLinksInput = {
@@ -56015,6 +65860,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgCreateWithoutPolicyTargetsInput = {
@@ -56051,6 +65900,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPolicyTargetsInput = {
@@ -56087,6 +65940,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPolicyTargetsInput = {
@@ -56231,6 +66088,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPolicyTargetsInput = {
@@ -56267,6 +66128,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type CampaignUpsertWithoutPolicyTargetsInput = {
@@ -56388,6 +66253,10 @@ export namespace Prisma {
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutPagesInput = {
@@ -56405,6 +66274,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutPagesInput = {
@@ -56446,6 +66319,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPagesInput = {
@@ -56482,6 +66359,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPagesInput = {
@@ -56746,6 +66627,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutPagesInput = {
@@ -56763,6 +66648,10 @@ export namespace Prisma {
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type AdvocacyOrgUpsertWithoutPagesInput = {
@@ -56810,6 +66699,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPagesInput = {
@@ -56846,6 +66739,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type CampaignUpsertWithoutPagesInput = {
@@ -57283,6 +67180,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAgentRunsInput = {
@@ -57300,6 +67201,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAgentRunsInput = {
@@ -57470,6 +67375,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAgentRunsInput = {
@@ -57487,6 +67396,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutAgentRunsInput = {
@@ -57693,6 +67606,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutDataSourcesInput = {
@@ -57710,6 +67627,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutDataSourcesInput = {
@@ -57743,6 +67664,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutDataSourcesInput = {
@@ -57760,6 +67685,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type TaskCreateWithoutCommentsInput = {
@@ -57985,6 +67914,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceUncheckedCreateWithoutAuditLogsInput = {
@@ -58002,6 +67935,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
     agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
     dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
   }
 
   export type WorkspaceCreateOrConnectWithoutAuditLogsInput = {
@@ -58074,6 +68011,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type WorkspaceUncheckedUpdateWithoutAuditLogsInput = {
@@ -58091,6 +68032,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
     agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
     dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
   }
 
   export type UserUpsertWithoutAuditLogsInput = {
@@ -58172,6 +68117,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutPipelineInput = {
@@ -58208,6 +68157,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutPipelineInput = {
@@ -58260,6 +68213,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutPipelineInput = {
@@ -58296,6 +68253,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgCreateWithoutDossiersInput = {
@@ -58332,6 +68293,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutOrgInput
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutDossiersInput = {
@@ -58368,6 +68333,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutDossiersInput = {
@@ -58421,6 +68390,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type OutreachMessageCreateWithoutDossierInput = {
+    id?: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sequence: OutreachSequenceCreateNestedOneWithoutMessagesInput
+    contact: OutreachContactCreateNestedOneWithoutMessagesInput
+  }
+
+  export type OutreachMessageUncheckedCreateWithoutDossierInput = {
+    id?: string
+    sequenceId: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageCreateOrConnectWithoutDossierInput = {
+    where: OutreachMessageWhereUniqueInput
+    create: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput>
+  }
+
+  export type OutreachMessageCreateManyDossierInputEnvelope = {
+    data: OutreachMessageCreateManyDossierInput | OutreachMessageCreateManyDossierInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AdvocacyOrgUpsertWithoutDossiersInput = {
     update: XOR<AdvocacyOrgUpdateWithoutDossiersInput, AdvocacyOrgUncheckedUpdateWithoutDossiersInput>
     create: XOR<AdvocacyOrgCreateWithoutDossiersInput, AdvocacyOrgUncheckedCreateWithoutDossiersInput>
@@ -58466,6 +68473,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutOrgNestedInput
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutDossiersInput = {
@@ -58502,6 +68513,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type GrantApplicationUpsertWithWhereUniqueWithoutDossierInput = {
@@ -58518,6 +68533,40 @@ export namespace Prisma {
   export type GrantApplicationUpdateManyWithWhereWithoutDossierInput = {
     where: GrantApplicationScalarWhereInput
     data: XOR<GrantApplicationUpdateManyMutationInput, GrantApplicationUncheckedUpdateManyWithoutDossierInput>
+  }
+
+  export type OutreachMessageUpsertWithWhereUniqueWithoutDossierInput = {
+    where: OutreachMessageWhereUniqueInput
+    update: XOR<OutreachMessageUpdateWithoutDossierInput, OutreachMessageUncheckedUpdateWithoutDossierInput>
+    create: XOR<OutreachMessageCreateWithoutDossierInput, OutreachMessageUncheckedCreateWithoutDossierInput>
+  }
+
+  export type OutreachMessageUpdateWithWhereUniqueWithoutDossierInput = {
+    where: OutreachMessageWhereUniqueInput
+    data: XOR<OutreachMessageUpdateWithoutDossierInput, OutreachMessageUncheckedUpdateWithoutDossierInput>
+  }
+
+  export type OutreachMessageUpdateManyWithWhereWithoutDossierInput = {
+    where: OutreachMessageScalarWhereInput
+    data: XOR<OutreachMessageUpdateManyMutationInput, OutreachMessageUncheckedUpdateManyWithoutDossierInput>
+  }
+
+  export type OutreachMessageScalarWhereInput = {
+    AND?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+    OR?: OutreachMessageScalarWhereInput[]
+    NOT?: OutreachMessageScalarWhereInput | OutreachMessageScalarWhereInput[]
+    id?: StringFilter<"OutreachMessage"> | string
+    sequenceId?: StringFilter<"OutreachMessage"> | string
+    contactId?: StringFilter<"OutreachMessage"> | string
+    step?: IntFilter<"OutreachMessage"> | number
+    subject?: StringNullableFilter<"OutreachMessage"> | string | null
+    body?: StringFilter<"OutreachMessage"> | string
+    status?: EnumOutreachMessageStatusFilter<"OutreachMessage"> | $Enums.OutreachMessageStatus
+    scheduledFor?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    sentAt?: DateTimeNullableFilter<"OutreachMessage"> | Date | string | null
+    dossierId?: StringNullableFilter<"OutreachMessage"> | string | null
+    createdAt?: DateTimeFilter<"OutreachMessage"> | Date | string
+    updatedAt?: DateTimeFilter<"OutreachMessage"> | Date | string
   }
 
   export type AdvocacyOrgCreateWithoutApplicationsInput = {
@@ -58554,6 +68603,10 @@ export namespace Prisma {
     pages?: PageCreateNestedManyWithoutOrgInput
     pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
     dossiers?: DossierCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgUncheckedCreateWithoutApplicationsInput = {
@@ -58590,6 +68643,10 @@ export namespace Prisma {
     pages?: PageUncheckedCreateNestedManyWithoutOrgInput
     pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
     dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
   }
 
   export type AdvocacyOrgCreateOrConnectWithoutApplicationsInput = {
@@ -58599,6 +68656,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateWithoutApplicationsInput = {
     id?: string
+    slug: string
     title: string
     description?: string | null
     fundingAmountMin?: number | null
@@ -58628,10 +68686,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
     workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantUncheckedCreateWithoutApplicationsInput = {
     id?: string
+    slug: string
     orgId: string
     workspaceId: string
     title: string
@@ -58661,6 +68721,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutGrantInput
   }
 
   export type OpenGrantCreateOrConnectWithoutApplicationsInput = {
@@ -58677,6 +68738,7 @@ export namespace Prisma {
     context?: string | null
     createdAt?: Date | string
     org: AdvocacyOrgCreateNestedOneWithoutDossiersInput
+    outreachMessages?: OutreachMessageCreateNestedManyWithoutDossierInput
   }
 
   export type DossierUncheckedCreateWithoutApplicationsInput = {
@@ -58688,6 +68750,7 @@ export namespace Prisma {
     model?: string
     context?: string | null
     createdAt?: Date | string
+    outreachMessages?: OutreachMessageUncheckedCreateNestedManyWithoutDossierInput
   }
 
   export type DossierCreateOrConnectWithoutApplicationsInput = {
@@ -58740,6 +68803,10 @@ export namespace Prisma {
     pages?: PageUpdateManyWithoutOrgNestedInput
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutApplicationsInput = {
@@ -58776,6 +68843,10 @@ export namespace Prisma {
     pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type OpenGrantUpsertWithoutApplicationsInput = {
@@ -58791,6 +68862,7 @@ export namespace Prisma {
 
   export type OpenGrantUpdateWithoutApplicationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -58820,10 +68892,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
     workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateWithoutApplicationsInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     orgId?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -58853,6 +68927,7 @@ export namespace Prisma {
     metadata?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type DossierUpsertWithoutApplicationsInput = {
@@ -58875,6 +68950,7 @@ export namespace Prisma {
     context?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput
+    outreachMessages?: OutreachMessageUpdateManyWithoutDossierNestedInput
   }
 
   export type DossierUncheckedUpdateWithoutApplicationsInput = {
@@ -58886,6 +68962,1909 @@ export namespace Prisma {
     model?: StringFieldUpdateOperationsInput | string
     context?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    outreachMessages?: OutreachMessageUncheckedUpdateManyWithoutDossierNestedInput
+  }
+
+  export type WorkspaceCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
+    pages?: PageCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
+    pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutKnowledgeDocsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutKnowledgeDocsInput, WorkspaceUncheckedCreateWithoutKnowledgeDocsInput>
+  }
+
+  export type AdvocacyOrgCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutKnowledgeDocsInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeDocsInput>
+  }
+
+  export type OpenGrantCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutOpenGrantsInput
+    workspace: WorkspaceCreateNestedOneWithoutOpenGrantsInput
+    applications?: GrantApplicationCreateNestedManyWithoutGrantInput
+  }
+
+  export type OpenGrantUncheckedCreateWithoutKnowledgeDocsInput = {
+    id?: string
+    slug: string
+    orgId: string
+    workspaceId: string
+    title: string
+    description?: string | null
+    fundingAmountMin?: number | null
+    fundingAmountMax?: number | null
+    currency?: string
+    deadline?: Date | string | null
+    deadlineRaw?: string | null
+    applicationUrl?: string | null
+    status?: $Enums.GrantStatus
+    grantType?: $Enums.GrantType
+    cancerTypes?: OpenGrantCreatecancerTypesInput | string[]
+    geographicScope?: OpenGrantCreategeographicScopeInput | string[]
+    eligibilityCriteria?: string | null
+    eligibilityStages?: OpenGrantCreateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantCreateeligibilityOrgTypesInput | string[]
+    requiresLOI?: boolean
+    loiDeadline?: Date | string | null
+    loiDeadlineRaw?: string | null
+    awardDuration?: string | null
+    numberOfAwards?: number | null
+    contactName?: string | null
+    contactEmail?: string | null
+    notes?: string | null
+    sourceNotes?: string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutGrantInput
+  }
+
+  export type OpenGrantCreateOrConnectWithoutKnowledgeDocsInput = {
+    where: OpenGrantWhereUniqueInput
+    create: XOR<OpenGrantCreateWithoutKnowledgeDocsInput, OpenGrantUncheckedCreateWithoutKnowledgeDocsInput>
+  }
+
+  export type KnowledgeChunkCreateWithoutDocInput = {
+    id?: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeChunksInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeChunksInput
+  }
+
+  export type KnowledgeChunkUncheckedCreateWithoutDocInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkCreateOrConnectWithoutDocInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    create: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput>
+  }
+
+  export type KnowledgeChunkCreateManyDocInputEnvelope = {
+    data: KnowledgeChunkCreateManyDocInput | KnowledgeChunkCreateManyDocInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkspaceUpsertWithoutKnowledgeDocsInput = {
+    update: XOR<WorkspaceUpdateWithoutKnowledgeDocsInput, WorkspaceUncheckedUpdateWithoutKnowledgeDocsInput>
+    create: XOR<WorkspaceCreateWithoutKnowledgeDocsInput, WorkspaceUncheckedCreateWithoutKnowledgeDocsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutKnowledgeDocsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutKnowledgeDocsInput, WorkspaceUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type WorkspaceUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type AdvocacyOrgUpsertWithoutKnowledgeDocsInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedUpdateWithoutKnowledgeDocsInput>
+    create: XOR<AdvocacyOrgCreateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeDocsInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutKnowledgeDocsInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutKnowledgeDocsInput, AdvocacyOrgUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type OpenGrantUpsertWithoutKnowledgeDocsInput = {
+    update: XOR<OpenGrantUpdateWithoutKnowledgeDocsInput, OpenGrantUncheckedUpdateWithoutKnowledgeDocsInput>
+    create: XOR<OpenGrantCreateWithoutKnowledgeDocsInput, OpenGrantUncheckedCreateWithoutKnowledgeDocsInput>
+    where?: OpenGrantWhereInput
+  }
+
+  export type OpenGrantUpdateToOneWithWhereWithoutKnowledgeDocsInput = {
+    where?: OpenGrantWhereInput
+    data: XOR<OpenGrantUpdateWithoutKnowledgeDocsInput, OpenGrantUncheckedUpdateWithoutKnowledgeDocsInput>
+  }
+
+  export type OpenGrantUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
+    applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
+  }
+
+  export type OpenGrantUncheckedUpdateWithoutKnowledgeDocsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    fundingAmountMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    currency?: StringFieldUpdateOperationsInput | string
+    deadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumGrantStatusFieldUpdateOperationsInput | $Enums.GrantStatus
+    grantType?: EnumGrantTypeFieldUpdateOperationsInput | $Enums.GrantType
+    cancerTypes?: OpenGrantUpdatecancerTypesInput | string[]
+    geographicScope?: OpenGrantUpdategeographicScopeInput | string[]
+    eligibilityCriteria?: NullableStringFieldUpdateOperationsInput | string | null
+    eligibilityStages?: OpenGrantUpdateeligibilityStagesInput | string[]
+    eligibilityOrgTypes?: OpenGrantUpdateeligibilityOrgTypesInput | string[]
+    requiresLOI?: BoolFieldUpdateOperationsInput | boolean
+    loiDeadline?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    loiDeadlineRaw?: NullableStringFieldUpdateOperationsInput | string | null
+    awardDuration?: NullableStringFieldUpdateOperationsInput | string | null
+    numberOfAwards?: NullableIntFieldUpdateOperationsInput | number | null
+    contactName?: NullableStringFieldUpdateOperationsInput | string | null
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
+  }
+
+  export type KnowledgeChunkUpsertWithWhereUniqueWithoutDocInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    update: XOR<KnowledgeChunkUpdateWithoutDocInput, KnowledgeChunkUncheckedUpdateWithoutDocInput>
+    create: XOR<KnowledgeChunkCreateWithoutDocInput, KnowledgeChunkUncheckedCreateWithoutDocInput>
+  }
+
+  export type KnowledgeChunkUpdateWithWhereUniqueWithoutDocInput = {
+    where: KnowledgeChunkWhereUniqueInput
+    data: XOR<KnowledgeChunkUpdateWithoutDocInput, KnowledgeChunkUncheckedUpdateWithoutDocInput>
+  }
+
+  export type KnowledgeChunkUpdateManyWithWhereWithoutDocInput = {
+    where: KnowledgeChunkScalarWhereInput
+    data: XOR<KnowledgeChunkUpdateManyMutationInput, KnowledgeChunkUncheckedUpdateManyWithoutDocInput>
+  }
+
+  export type KnowledgeDocCreateWithoutChunksInput = {
+    id?: string
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutKnowledgeDocsInput
+    org?: AdvocacyOrgCreateNestedOneWithoutKnowledgeDocsInput
+    grant?: OpenGrantCreateNestedOneWithoutKnowledgeDocsInput
+  }
+
+  export type KnowledgeDocUncheckedCreateWithoutChunksInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeDocCreateOrConnectWithoutChunksInput = {
+    where: KnowledgeDocWhereUniqueInput
+    create: XOR<KnowledgeDocCreateWithoutChunksInput, KnowledgeDocUncheckedCreateWithoutChunksInput>
+  }
+
+  export type WorkspaceCreateWithoutKnowledgeChunksInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
+    pages?: PageCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutKnowledgeChunksInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
+    pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutKnowledgeChunksInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutKnowledgeChunksInput, WorkspaceUncheckedCreateWithoutKnowledgeChunksInput>
+  }
+
+  export type AdvocacyOrgCreateWithoutKnowledgeChunksInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutKnowledgeChunksInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutKnowledgeChunksInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeChunksInput>
+  }
+
+  export type KnowledgeDocUpsertWithoutChunksInput = {
+    update: XOR<KnowledgeDocUpdateWithoutChunksInput, KnowledgeDocUncheckedUpdateWithoutChunksInput>
+    create: XOR<KnowledgeDocCreateWithoutChunksInput, KnowledgeDocUncheckedCreateWithoutChunksInput>
+    where?: KnowledgeDocWhereInput
+  }
+
+  export type KnowledgeDocUpdateToOneWithWhereWithoutChunksInput = {
+    where?: KnowledgeDocWhereInput
+    data: XOR<KnowledgeDocUpdateWithoutChunksInput, KnowledgeDocUncheckedUpdateWithoutChunksInput>
+  }
+
+  export type KnowledgeDocUpdateWithoutChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeDocsNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeDocsNestedInput
+    grant?: OpenGrantUpdateOneWithoutKnowledgeDocsNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateWithoutChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkspaceUpsertWithoutKnowledgeChunksInput = {
+    update: XOR<WorkspaceUpdateWithoutKnowledgeChunksInput, WorkspaceUncheckedUpdateWithoutKnowledgeChunksInput>
+    create: XOR<WorkspaceCreateWithoutKnowledgeChunksInput, WorkspaceUncheckedCreateWithoutKnowledgeChunksInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutKnowledgeChunksInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutKnowledgeChunksInput, WorkspaceUncheckedUpdateWithoutKnowledgeChunksInput>
+  }
+
+  export type WorkspaceUpdateWithoutKnowledgeChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutKnowledgeChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type AdvocacyOrgUpsertWithoutKnowledgeChunksInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedUpdateWithoutKnowledgeChunksInput>
+    create: XOR<AdvocacyOrgCreateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedCreateWithoutKnowledgeChunksInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutKnowledgeChunksInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutKnowledgeChunksInput, AdvocacyOrgUncheckedUpdateWithoutKnowledgeChunksInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutKnowledgeChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutKnowledgeChunksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type WorkspaceCreateWithoutOutreachSequencesInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
+    pages?: PageCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutOutreachSequencesInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
+    pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutOutreachSequencesInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutOutreachSequencesInput, WorkspaceUncheckedCreateWithoutOutreachSequencesInput>
+  }
+
+  export type AdvocacyOrgCreateWithoutOutreachSequencesInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutOutreachSequencesInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachContacts?: OutreachContactUncheckedCreateNestedManyWithoutAdvocacyOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutOutreachSequencesInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedCreateWithoutOutreachSequencesInput>
+  }
+
+  export type OutreachContactCreateWithoutSequenceInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachContactsInput
+    orgContact?: OrgContactCreateNestedOneWithoutOutreachContactsInput
+    messages?: OutreachMessageCreateNestedManyWithoutContactInput
+    AdvocacyOrg?: AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput
+  }
+
+  export type OutreachContactUncheckedCreateWithoutSequenceInput = {
+    id?: string
+    workspaceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutContactInput
+  }
+
+  export type OutreachContactCreateOrConnectWithoutSequenceInput = {
+    where: OutreachContactWhereUniqueInput
+    create: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput>
+  }
+
+  export type OutreachContactCreateManySequenceInputEnvelope = {
+    data: OutreachContactCreateManySequenceInput | OutreachContactCreateManySequenceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OutreachMessageCreateWithoutSequenceInput = {
+    id?: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contact: OutreachContactCreateNestedOneWithoutMessagesInput
+    dossier?: DossierCreateNestedOneWithoutOutreachMessagesInput
+  }
+
+  export type OutreachMessageUncheckedCreateWithoutSequenceInput = {
+    id?: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageCreateOrConnectWithoutSequenceInput = {
+    where: OutreachMessageWhereUniqueInput
+    create: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput>
+  }
+
+  export type OutreachMessageCreateManySequenceInputEnvelope = {
+    data: OutreachMessageCreateManySequenceInput | OutreachMessageCreateManySequenceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkspaceUpsertWithoutOutreachSequencesInput = {
+    update: XOR<WorkspaceUpdateWithoutOutreachSequencesInput, WorkspaceUncheckedUpdateWithoutOutreachSequencesInput>
+    create: XOR<WorkspaceCreateWithoutOutreachSequencesInput, WorkspaceUncheckedCreateWithoutOutreachSequencesInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutOutreachSequencesInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutOutreachSequencesInput, WorkspaceUncheckedUpdateWithoutOutreachSequencesInput>
+  }
+
+  export type WorkspaceUpdateWithoutOutreachSequencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutOutreachSequencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type AdvocacyOrgUpsertWithoutOutreachSequencesInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedUpdateWithoutOutreachSequencesInput>
+    create: XOR<AdvocacyOrgCreateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedCreateWithoutOutreachSequencesInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutOutreachSequencesInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutOutreachSequencesInput, AdvocacyOrgUncheckedUpdateWithoutOutreachSequencesInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutOutreachSequencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutOutreachSequencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
+  }
+
+  export type OutreachContactUpsertWithWhereUniqueWithoutSequenceInput = {
+    where: OutreachContactWhereUniqueInput
+    update: XOR<OutreachContactUpdateWithoutSequenceInput, OutreachContactUncheckedUpdateWithoutSequenceInput>
+    create: XOR<OutreachContactCreateWithoutSequenceInput, OutreachContactUncheckedCreateWithoutSequenceInput>
+  }
+
+  export type OutreachContactUpdateWithWhereUniqueWithoutSequenceInput = {
+    where: OutreachContactWhereUniqueInput
+    data: XOR<OutreachContactUpdateWithoutSequenceInput, OutreachContactUncheckedUpdateWithoutSequenceInput>
+  }
+
+  export type OutreachContactUpdateManyWithWhereWithoutSequenceInput = {
+    where: OutreachContactScalarWhereInput
+    data: XOR<OutreachContactUpdateManyMutationInput, OutreachContactUncheckedUpdateManyWithoutSequenceInput>
+  }
+
+  export type OutreachMessageUpsertWithWhereUniqueWithoutSequenceInput = {
+    where: OutreachMessageWhereUniqueInput
+    update: XOR<OutreachMessageUpdateWithoutSequenceInput, OutreachMessageUncheckedUpdateWithoutSequenceInput>
+    create: XOR<OutreachMessageCreateWithoutSequenceInput, OutreachMessageUncheckedCreateWithoutSequenceInput>
+  }
+
+  export type OutreachMessageUpdateWithWhereUniqueWithoutSequenceInput = {
+    where: OutreachMessageWhereUniqueInput
+    data: XOR<OutreachMessageUpdateWithoutSequenceInput, OutreachMessageUncheckedUpdateWithoutSequenceInput>
+  }
+
+  export type OutreachMessageUpdateManyWithWhereWithoutSequenceInput = {
+    where: OutreachMessageScalarWhereInput
+    data: XOR<OutreachMessageUpdateManyMutationInput, OutreachMessageUncheckedUpdateManyWithoutSequenceInput>
+  }
+
+  export type WorkspaceCreateWithoutOutreachContactsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantCreateNestedManyWithoutWorkspaceInput
+    pages?: PageCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceUncheckedCreateWithoutOutreachContactsInput = {
+    id?: string
+    slug: string
+    name: string
+    description?: string | null
+    logoUrl?: string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    members?: WorkspaceMemberUncheckedCreateNestedManyWithoutWorkspaceInput
+    advocacyOrgs?: AdvocacyOrgUncheckedCreateNestedManyWithoutWorkspaceInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutWorkspaceInput
+    pages?: PageUncheckedCreateNestedManyWithoutWorkspaceInput
+    agentRuns?: AgentRunUncheckedCreateNestedManyWithoutWorkspaceInput
+    dataSources?: DataSourceUncheckedCreateNestedManyWithoutWorkspaceInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutWorkspaceInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutWorkspaceInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutWorkspaceInput
+  }
+
+  export type WorkspaceCreateOrConnectWithoutOutreachContactsInput = {
+    where: WorkspaceWhereUniqueInput
+    create: XOR<WorkspaceCreateWithoutOutreachContactsInput, WorkspaceUncheckedCreateWithoutOutreachContactsInput>
+  }
+
+  export type OutreachSequenceCreateWithoutContactsInput = {
+    id?: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachSequencesInput
+    org?: AdvocacyOrgCreateNestedOneWithoutOutreachSequencesInput
+    messages?: OutreachMessageCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUncheckedCreateWithoutContactsInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: OutreachMessageUncheckedCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceCreateOrConnectWithoutContactsInput = {
+    where: OutreachSequenceWhereUniqueInput
+    create: XOR<OutreachSequenceCreateWithoutContactsInput, OutreachSequenceUncheckedCreateWithoutContactsInput>
+  }
+
+  export type OrgContactCreateWithoutOutreachContactsInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.ContactRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutContactsInput
+  }
+
+  export type OrgContactUncheckedCreateWithoutOutreachContactsInput = {
+    id?: string
+    orgId: string
+    name: string
+    title?: string | null
+    email?: string | null
+    phone?: string | null
+    role?: $Enums.ContactRole
+    isPrimary?: boolean
+    createdAt?: Date | string
+  }
+
+  export type OrgContactCreateOrConnectWithoutOutreachContactsInput = {
+    where: OrgContactWhereUniqueInput
+    create: XOR<OrgContactCreateWithoutOutreachContactsInput, OrgContactUncheckedCreateWithoutOutreachContactsInput>
+  }
+
+  export type OutreachMessageCreateWithoutContactInput = {
+    id?: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sequence: OutreachSequenceCreateNestedOneWithoutMessagesInput
+    dossier?: DossierCreateNestedOneWithoutOutreachMessagesInput
+  }
+
+  export type OutreachMessageUncheckedCreateWithoutContactInput = {
+    id?: string
+    sequenceId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageCreateOrConnectWithoutContactInput = {
+    where: OutreachMessageWhereUniqueInput
+    create: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput>
+  }
+
+  export type OutreachMessageCreateManyContactInputEnvelope = {
+    data: OutreachMessageCreateManyContactInput | OutreachMessageCreateManyContactInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AdvocacyOrgCreateWithoutOutreachContactsInput = {
+    id?: string
+    slug: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutAdvocacyOrgsInput
+    campaigns?: CampaignCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantCreateNestedManyWithoutOrgInput
+    pages?: PageCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineCreateNestedOneWithoutOrgInput
+    dossiers?: DossierCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgUncheckedCreateWithoutOutreachContactsInput = {
+    id?: string
+    slug: string
+    workspaceId: string
+    name: string
+    shortName?: string | null
+    description?: string | null
+    mission?: string | null
+    website?: string | null
+    logoUrl?: string | null
+    cancerTypes?: AdvocacyOrgCreatecancerTypesInput | string[]
+    orgType?: $Enums.OrgType
+    taxId?: string | null
+    foundedYear?: number | null
+    memberCount?: number | null
+    annualBudget?: number | null
+    researchSpend?: number | null
+    country?: string | null
+    externalId?: string | null
+    headquarters?: string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: $Enums.OrgStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    campaigns?: CampaignUncheckedCreateNestedManyWithoutOrgInput
+    coalitionLinks?: CoalitionMemberUncheckedCreateNestedManyWithoutOrgInput
+    patientStories?: PatientStoryUncheckedCreateNestedManyWithoutOrgInput
+    policyTargets?: PolicyTargetUncheckedCreateNestedManyWithoutOrgInput
+    contacts?: OrgContactUncheckedCreateNestedManyWithoutOrgInput
+    openGrants?: OpenGrantUncheckedCreateNestedManyWithoutOrgInput
+    pages?: PageUncheckedCreateNestedManyWithoutOrgInput
+    pipeline?: GrantPipelineUncheckedCreateNestedOneWithoutOrgInput
+    dossiers?: DossierUncheckedCreateNestedManyWithoutOrgInput
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeDocs?: KnowledgeDocUncheckedCreateNestedManyWithoutOrgInput
+    knowledgeChunks?: KnowledgeChunkUncheckedCreateNestedManyWithoutOrgInput
+    outreachSequences?: OutreachSequenceUncheckedCreateNestedManyWithoutOrgInput
+  }
+
+  export type AdvocacyOrgCreateOrConnectWithoutOutreachContactsInput = {
+    where: AdvocacyOrgWhereUniqueInput
+    create: XOR<AdvocacyOrgCreateWithoutOutreachContactsInput, AdvocacyOrgUncheckedCreateWithoutOutreachContactsInput>
+  }
+
+  export type WorkspaceUpsertWithoutOutreachContactsInput = {
+    update: XOR<WorkspaceUpdateWithoutOutreachContactsInput, WorkspaceUncheckedUpdateWithoutOutreachContactsInput>
+    create: XOR<WorkspaceCreateWithoutOutreachContactsInput, WorkspaceUncheckedCreateWithoutOutreachContactsInput>
+    where?: WorkspaceWhereInput
+  }
+
+  export type WorkspaceUpdateToOneWithWhereWithoutOutreachContactsInput = {
+    where?: WorkspaceWhereInput
+    data: XOR<WorkspaceUpdateWithoutOutreachContactsInput, WorkspaceUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type WorkspaceUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type WorkspaceUncheckedUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    settings?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    members?: WorkspaceMemberUncheckedUpdateManyWithoutWorkspaceNestedInput
+    advocacyOrgs?: AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutWorkspaceNestedInput
+    pages?: PageUncheckedUpdateManyWithoutWorkspaceNestedInput
+    agentRuns?: AgentRunUncheckedUpdateManyWithoutWorkspaceNestedInput
+    dataSources?: DataSourceUncheckedUpdateManyWithoutWorkspaceNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutWorkspaceNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutWorkspaceNestedInput
+  }
+
+  export type OutreachSequenceUpsertWithoutContactsInput = {
+    update: XOR<OutreachSequenceUpdateWithoutContactsInput, OutreachSequenceUncheckedUpdateWithoutContactsInput>
+    create: XOR<OutreachSequenceCreateWithoutContactsInput, OutreachSequenceUncheckedCreateWithoutContactsInput>
+    where?: OutreachSequenceWhereInput
+  }
+
+  export type OutreachSequenceUpdateToOneWithWhereWithoutContactsInput = {
+    where?: OutreachSequenceWhereInput
+    data: XOR<OutreachSequenceUpdateWithoutContactsInput, OutreachSequenceUncheckedUpdateWithoutContactsInput>
+  }
+
+  export type OutreachSequenceUpdateWithoutContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachSequencesNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutOutreachSequencesNestedInput
+    messages?: OutreachMessageUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateWithoutContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: OutreachMessageUncheckedUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OrgContactUpsertWithoutOutreachContactsInput = {
+    update: XOR<OrgContactUpdateWithoutOutreachContactsInput, OrgContactUncheckedUpdateWithoutOutreachContactsInput>
+    create: XOR<OrgContactCreateWithoutOutreachContactsInput, OrgContactUncheckedCreateWithoutOutreachContactsInput>
+    where?: OrgContactWhereInput
+  }
+
+  export type OrgContactUpdateToOneWithWhereWithoutOutreachContactsInput = {
+    where?: OrgContactWhereInput
+    data: XOR<OrgContactUpdateWithoutOutreachContactsInput, OrgContactUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type OrgContactUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutContactsNestedInput
+  }
+
+  export type OrgContactUncheckedUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
+    isPrimary?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageUpsertWithWhereUniqueWithoutContactInput = {
+    where: OutreachMessageWhereUniqueInput
+    update: XOR<OutreachMessageUpdateWithoutContactInput, OutreachMessageUncheckedUpdateWithoutContactInput>
+    create: XOR<OutreachMessageCreateWithoutContactInput, OutreachMessageUncheckedCreateWithoutContactInput>
+  }
+
+  export type OutreachMessageUpdateWithWhereUniqueWithoutContactInput = {
+    where: OutreachMessageWhereUniqueInput
+    data: XOR<OutreachMessageUpdateWithoutContactInput, OutreachMessageUncheckedUpdateWithoutContactInput>
+  }
+
+  export type OutreachMessageUpdateManyWithWhereWithoutContactInput = {
+    where: OutreachMessageScalarWhereInput
+    data: XOR<OutreachMessageUpdateManyMutationInput, OutreachMessageUncheckedUpdateManyWithoutContactInput>
+  }
+
+  export type AdvocacyOrgUpsertWithoutOutreachContactsInput = {
+    update: XOR<AdvocacyOrgUpdateWithoutOutreachContactsInput, AdvocacyOrgUncheckedUpdateWithoutOutreachContactsInput>
+    create: XOR<AdvocacyOrgCreateWithoutOutreachContactsInput, AdvocacyOrgUncheckedCreateWithoutOutreachContactsInput>
+    where?: AdvocacyOrgWhereInput
+  }
+
+  export type AdvocacyOrgUpdateToOneWithWhereWithoutOutreachContactsInput = {
+    where?: AdvocacyOrgWhereInput
+    data: XOR<AdvocacyOrgUpdateWithoutOutreachContactsInput, AdvocacyOrgUncheckedUpdateWithoutOutreachContactsInput>
+  }
+
+  export type AdvocacyOrgUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutAdvocacyOrgsNestedInput
+    campaigns?: CampaignUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUpdateManyWithoutOrgNestedInput
+    pages?: PageUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+  }
+
+  export type AdvocacyOrgUncheckedUpdateWithoutOutreachContactsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    shortName?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    mission?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    cancerTypes?: AdvocacyOrgUpdatecancerTypesInput | string[]
+    orgType?: EnumOrgTypeFieldUpdateOperationsInput | $Enums.OrgType
+    taxId?: NullableStringFieldUpdateOperationsInput | string | null
+    foundedYear?: NullableIntFieldUpdateOperationsInput | number | null
+    memberCount?: NullableIntFieldUpdateOperationsInput | number | null
+    annualBudget?: NullableFloatFieldUpdateOperationsInput | number | null
+    researchSpend?: NullableFloatFieldUpdateOperationsInput | number | null
+    country?: NullableStringFieldUpdateOperationsInput | string | null
+    externalId?: NullableStringFieldUpdateOperationsInput | string | null
+    headquarters?: NullableStringFieldUpdateOperationsInput | string | null
+    socialLinks?: JsonNullValueInput | InputJsonValue
+    metadata?: JsonNullValueInput | InputJsonValue
+    status?: EnumOrgStatusFieldUpdateOperationsInput | $Enums.OrgStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    campaigns?: CampaignUncheckedUpdateManyWithoutOrgNestedInput
+    coalitionLinks?: CoalitionMemberUncheckedUpdateManyWithoutOrgNestedInput
+    patientStories?: PatientStoryUncheckedUpdateManyWithoutOrgNestedInput
+    policyTargets?: PolicyTargetUncheckedUpdateManyWithoutOrgNestedInput
+    contacts?: OrgContactUncheckedUpdateManyWithoutOrgNestedInput
+    openGrants?: OpenGrantUncheckedUpdateManyWithoutOrgNestedInput
+    pages?: PageUncheckedUpdateManyWithoutOrgNestedInput
+    pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
+    dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
+    applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+  }
+
+  export type OutreachSequenceCreateWithoutMessagesInput = {
+    id?: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachSequencesInput
+    org?: AdvocacyOrgCreateNestedOneWithoutOutreachSequencesInput
+    contacts?: OutreachContactCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contacts?: OutreachContactUncheckedCreateNestedManyWithoutSequenceInput
+  }
+
+  export type OutreachSequenceCreateOrConnectWithoutMessagesInput = {
+    where: OutreachSequenceWhereUniqueInput
+    create: XOR<OutreachSequenceCreateWithoutMessagesInput, OutreachSequenceUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type OutreachContactCreateWithoutMessagesInput = {
+    id?: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    workspace: WorkspaceCreateNestedOneWithoutOutreachContactsInput
+    sequence: OutreachSequenceCreateNestedOneWithoutContactsInput
+    orgContact?: OrgContactCreateNestedOneWithoutOutreachContactsInput
+    AdvocacyOrg?: AdvocacyOrgCreateNestedOneWithoutOutreachContactsInput
+  }
+
+  export type OutreachContactUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+  }
+
+  export type OutreachContactCreateOrConnectWithoutMessagesInput = {
+    where: OutreachContactWhereUniqueInput
+    create: XOR<OutreachContactCreateWithoutMessagesInput, OutreachContactUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type DossierCreateWithoutOutreachMessagesInput = {
+    id?: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    org: AdvocacyOrgCreateNestedOneWithoutDossiersInput
+    applications?: GrantApplicationCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierUncheckedCreateWithoutOutreachMessagesInput = {
+    id?: string
+    orgId: string
+    type: $Enums.DossierType
+    title: string
+    content: string
+    model?: string
+    context?: string | null
+    createdAt?: Date | string
+    applications?: GrantApplicationUncheckedCreateNestedManyWithoutDossierInput
+  }
+
+  export type DossierCreateOrConnectWithoutOutreachMessagesInput = {
+    where: DossierWhereUniqueInput
+    create: XOR<DossierCreateWithoutOutreachMessagesInput, DossierUncheckedCreateWithoutOutreachMessagesInput>
+  }
+
+  export type OutreachSequenceUpsertWithoutMessagesInput = {
+    update: XOR<OutreachSequenceUpdateWithoutMessagesInput, OutreachSequenceUncheckedUpdateWithoutMessagesInput>
+    create: XOR<OutreachSequenceCreateWithoutMessagesInput, OutreachSequenceUncheckedCreateWithoutMessagesInput>
+    where?: OutreachSequenceWhereInput
+  }
+
+  export type OutreachSequenceUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: OutreachSequenceWhereInput
+    data: XOR<OutreachSequenceUpdateWithoutMessagesInput, OutreachSequenceUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type OutreachSequenceUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachSequencesNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutOutreachSequencesNestedInput
+    contacts?: OutreachContactUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: OutreachContactUncheckedUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachContactUpsertWithoutMessagesInput = {
+    update: XOR<OutreachContactUpdateWithoutMessagesInput, OutreachContactUncheckedUpdateWithoutMessagesInput>
+    create: XOR<OutreachContactCreateWithoutMessagesInput, OutreachContactUncheckedCreateWithoutMessagesInput>
+    where?: OutreachContactWhereInput
+  }
+
+  export type OutreachContactUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: OutreachContactWhereInput
+    data: XOR<OutreachContactUpdateWithoutMessagesInput, OutreachContactUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type OutreachContactUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput
+    orgContact?: OrgContactUpdateOneWithoutOutreachContactsNestedInput
+    AdvocacyOrg?: AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DossierUpsertWithoutOutreachMessagesInput = {
+    update: XOR<DossierUpdateWithoutOutreachMessagesInput, DossierUncheckedUpdateWithoutOutreachMessagesInput>
+    create: XOR<DossierCreateWithoutOutreachMessagesInput, DossierUncheckedCreateWithoutOutreachMessagesInput>
+    where?: DossierWhereInput
+  }
+
+  export type DossierUpdateToOneWithWhereWithoutOutreachMessagesInput = {
+    where?: DossierWhereInput
+    data: XOR<DossierUpdateWithoutOutreachMessagesInput, DossierUncheckedUpdateWithoutOutreachMessagesInput>
+  }
+
+  export type DossierUpdateWithoutOutreachMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneRequiredWithoutDossiersNestedInput
+    applications?: GrantApplicationUpdateManyWithoutDossierNestedInput
+  }
+
+  export type DossierUncheckedUpdateWithoutOutreachMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: StringFieldUpdateOperationsInput | string
+    type?: EnumDossierTypeFieldUpdateOperationsInput | $Enums.DossierType
+    title?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    model?: StringFieldUpdateOperationsInput | string
+    context?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput
   }
 
   export type WorkspaceMemberCreateManyUserInput = {
@@ -59415,6 +71394,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateManyWorkspaceInput = {
     id?: string
+    slug: string
     orgId: string
     title: string
     description?: string | null
@@ -59504,6 +71484,59 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type KnowledgeDocCreateManyWorkspaceInput = {
+    id?: string
+    orgId?: string | null
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeChunkCreateManyWorkspaceInput = {
+    id?: string
+    docId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type OutreachSequenceCreateManyWorkspaceInput = {
+    id?: string
+    orgId?: string | null
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachContactCreateManyWorkspaceInput = {
+    id?: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+  }
+
   export type WorkspaceMemberUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumWorkspaceRoleFieldUpdateOperationsInput | $Enums.WorkspaceRole
@@ -59559,6 +71592,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateWithoutWorkspaceInput = {
@@ -59595,6 +71632,10 @@ export namespace Prisma {
     pipeline?: GrantPipelineUncheckedUpdateOneWithoutOrgNestedInput
     dossiers?: DossierUncheckedUpdateManyWithoutOrgNestedInput
     applications?: GrantApplicationUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutOrgNestedInput
+    knowledgeChunks?: KnowledgeChunkUncheckedUpdateManyWithoutOrgNestedInput
+    outreachSequences?: OutreachSequenceUncheckedUpdateManyWithoutOrgNestedInput
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgNestedInput
   }
 
   export type AdvocacyOrgUncheckedUpdateManyWithoutWorkspaceInput = {
@@ -59625,6 +71666,7 @@ export namespace Prisma {
 
   export type OpenGrantUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -59654,10 +71696,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     org?: AdvocacyOrgUpdateOneRequiredWithoutOpenGrantsNestedInput
     applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     orgId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59687,10 +71731,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateManyWithoutWorkspaceInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     orgId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -59906,6 +71952,173 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type KnowledgeDocUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeDocsNestedInput
+    grant?: OpenGrantUpdateOneWithoutKnowledgeDocsNestedInput
+    chunks?: KnowledgeChunkUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chunks?: KnowledgeChunkUncheckedUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doc?: KnowledgeDocUpdateOneRequiredWithoutChunksNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeChunksNestedInput
+  }
+
+  export type KnowledgeChunkUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachSequenceUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    org?: AdvocacyOrgUpdateOneWithoutOutreachSequencesNestedInput
+    contacts?: OutreachContactUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: OutreachContactUncheckedUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUncheckedUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput
+    orgContact?: OrgContactUpdateOneWithoutOutreachContactsNestedInput
+    messages?: OutreachMessageUpdateManyWithoutContactNestedInput
+    AdvocacyOrg?: AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+    messages?: OutreachMessageUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutWorkspaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type CampaignCreateManyOrgInput = {
     id?: string
     slug: string
@@ -59990,6 +72203,7 @@ export namespace Prisma {
 
   export type OpenGrantCreateManyOrgInput = {
     id?: string
+    slug: string
     workspaceId: string
     title: string
     description?: string | null
@@ -60061,6 +72275,59 @@ export namespace Prisma {
     nextStep?: string | null
     internalScore?: number | null
     funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeDocCreateManyOrgInput = {
+    id?: string
+    workspaceId: string
+    grantId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeChunkCreateManyOrgInput = {
+    id?: string
+    docId: string
+    workspaceId: string
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type OutreachSequenceCreateManyOrgInput = {
+    id?: string
+    workspaceId: string
+    name: string
+    goal?: string | null
+    status?: $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachContactCreateManyAdvocacyOrgInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60297,6 +72564,7 @@ export namespace Prisma {
     role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    outreachContacts?: OutreachContactUpdateManyWithoutOrgContactNestedInput
   }
 
   export type OrgContactUncheckedUpdateWithoutOrgInput = {
@@ -60308,6 +72576,7 @@ export namespace Prisma {
     role?: EnumContactRoleFieldUpdateOperationsInput | $Enums.ContactRole
     isPrimary?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    outreachContacts?: OutreachContactUncheckedUpdateManyWithoutOrgContactNestedInput
   }
 
   export type OrgContactUncheckedUpdateManyWithoutOrgInput = {
@@ -60323,6 +72592,7 @@ export namespace Prisma {
 
   export type OpenGrantUpdateWithoutOrgInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     fundingAmountMin?: NullableFloatFieldUpdateOperationsInput | number | null
@@ -60352,10 +72622,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     workspace?: WorkspaceUpdateOneRequiredWithoutOpenGrantsNestedInput
     applications?: GrantApplicationUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateWithoutOrgInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60385,10 +72657,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUncheckedUpdateManyWithoutGrantNestedInput
+    knowledgeDocs?: KnowledgeDocUncheckedUpdateManyWithoutGrantNestedInput
   }
 
   export type OpenGrantUncheckedUpdateManyWithoutOrgInput = {
     id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
     workspaceId?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60483,6 +72757,7 @@ export namespace Prisma {
     context?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUpdateManyWithoutDossierNestedInput
+    outreachMessages?: OutreachMessageUpdateManyWithoutDossierNestedInput
   }
 
   export type DossierUncheckedUpdateWithoutOrgInput = {
@@ -60494,6 +72769,7 @@ export namespace Prisma {
     context?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: GrantApplicationUncheckedUpdateManyWithoutDossierNestedInput
+    outreachMessages?: OutreachMessageUncheckedUpdateManyWithoutDossierNestedInput
   }
 
   export type DossierUncheckedUpdateManyWithoutOrgInput = {
@@ -60560,6 +72836,231 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type KnowledgeDocUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeDocsNestedInput
+    grant?: OpenGrantUpdateOneWithoutKnowledgeDocsNestedInput
+    chunks?: KnowledgeChunkUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chunks?: KnowledgeChunkUncheckedUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    grantId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    doc?: KnowledgeDocUpdateOneRequiredWithoutChunksNestedInput
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeChunksNestedInput
+  }
+
+  export type KnowledgeChunkUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachSequenceUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachSequencesNestedInput
+    contacts?: OutreachContactUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contacts?: OutreachContactUncheckedUpdateManyWithoutSequenceNestedInput
+    messages?: OutreachMessageUncheckedUpdateManyWithoutSequenceNestedInput
+  }
+
+  export type OutreachSequenceUncheckedUpdateManyWithoutOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    goal?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumOutreachSequenceStatusFieldUpdateOperationsInput | $Enums.OutreachSequenceStatus
+    steps?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactUpdateWithoutAdvocacyOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput
+    orgContact?: OrgContactUpdateOneWithoutOutreachContactsNestedInput
+    messages?: OutreachMessageUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateWithoutAdvocacyOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: OutreachMessageUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutAdvocacyOrgInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactCreateManyOrgContactInput = {
+    id?: string
+    workspaceId: string
+    sequenceId: string
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+  }
+
+  export type OutreachContactUpdateWithoutOrgContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutContactsNestedInput
+    messages?: OutreachMessageUpdateManyWithoutContactNestedInput
+    AdvocacyOrg?: AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateWithoutOrgContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+    messages?: OutreachMessageUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutOrgContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type GrantApplicationCreateManyGrantInput = {
     id?: string
     orgId: string
@@ -60574,6 +73075,24 @@ export namespace Prisma {
     nextStep?: string | null
     internalScore?: number | null
     funderScore?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KnowledgeDocCreateManyGrantInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    title: string
+    fileName: string
+    mimeType: string
+    sizeBytes: number
+    fileData: Buffer
+    extractedText?: string | null
+    status?: $Enums.KnowledgeDocStatus
+    sourceType?: string
+    tags?: KnowledgeDocCreatetagsInput | string[]
+    error?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60628,6 +73147,62 @@ export namespace Prisma {
     nextStep?: NullableStringFieldUpdateOperationsInput | string | null
     internalScore?: NullableIntFieldUpdateOperationsInput | number | null
     funderScore?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeDocUpdateWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeDocsNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeDocsNestedInput
+    chunks?: KnowledgeChunkUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chunks?: KnowledgeChunkUncheckedUpdateManyWithoutDocNestedInput
+  }
+
+  export type KnowledgeDocUncheckedUpdateManyWithoutGrantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    title?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    sizeBytes?: IntFieldUpdateOperationsInput | number
+    fileData?: BytesFieldUpdateOperationsInput | Buffer
+    extractedText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumKnowledgeDocStatusFieldUpdateOperationsInput | $Enums.KnowledgeDocStatus
+    sourceType?: StringFieldUpdateOperationsInput | string
+    tags?: KnowledgeDocUpdatetagsInput | string[]
+    error?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -61962,6 +74537,20 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type OutreachMessageCreateManyDossierInput = {
+    id?: string
+    sequenceId: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type GrantApplicationUpdateWithoutDossierInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -62016,6 +74605,258 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OutreachMessageUpdateWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutMessagesNestedInput
+    contact?: OutreachContactUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type OutreachMessageUncheckedUpdateWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutDossierInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkCreateManyDocInput = {
+    id?: string
+    workspaceId: string
+    orgId?: string | null
+    chunkIndex: number
+    content: string
+    tokenCount?: number
+    createdAt?: Date | string
+  }
+
+  export type KnowledgeChunkUpdateWithoutDocInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutKnowledgeChunksNestedInput
+    org?: AdvocacyOrgUpdateOneWithoutKnowledgeChunksNestedInput
+  }
+
+  export type KnowledgeChunkUncheckedUpdateWithoutDocInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KnowledgeChunkUncheckedUpdateManyWithoutDocInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunkIndex?: IntFieldUpdateOperationsInput | number
+    content?: StringFieldUpdateOperationsInput | string
+    tokenCount?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachContactCreateManySequenceInput = {
+    id?: string
+    workspaceId: string
+    orgContactId?: string | null
+    name: string
+    title?: string | null
+    email?: string | null
+    channel?: $Enums.OutreachChannel
+    status?: $Enums.OutreachContactStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    advocacyOrgId?: string | null
+  }
+
+  export type OutreachMessageCreateManySequenceInput = {
+    id?: string
+    contactId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachContactUpdateWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workspace?: WorkspaceUpdateOneRequiredWithoutOutreachContactsNestedInput
+    orgContact?: OrgContactUpdateOneWithoutOutreachContactsNestedInput
+    messages?: OutreachMessageUpdateManyWithoutContactNestedInput
+    AdvocacyOrg?: AdvocacyOrgUpdateOneWithoutOutreachContactsNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+    messages?: OutreachMessageUncheckedUpdateManyWithoutContactNestedInput
+  }
+
+  export type OutreachContactUncheckedUpdateManyWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workspaceId?: StringFieldUpdateOperationsInput | string
+    orgContactId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    channel?: EnumOutreachChannelFieldUpdateOperationsInput | $Enums.OutreachChannel
+    status?: EnumOutreachContactStatusFieldUpdateOperationsInput | $Enums.OutreachContactStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    advocacyOrgId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type OutreachMessageUpdateWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contact?: OutreachContactUpdateOneRequiredWithoutMessagesNestedInput
+    dossier?: DossierUpdateOneWithoutOutreachMessagesNestedInput
+  }
+
+  export type OutreachMessageUncheckedUpdateWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutSequenceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageCreateManyContactInput = {
+    id?: string
+    sequenceId: string
+    step?: number
+    subject?: string | null
+    body: string
+    status?: $Enums.OutreachMessageStatus
+    scheduledFor?: Date | string | null
+    sentAt?: Date | string | null
+    dossierId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type OutreachMessageUpdateWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sequence?: OutreachSequenceUpdateOneRequiredWithoutMessagesNestedInput
+    dossier?: DossierUpdateOneWithoutOutreachMessagesNestedInput
+  }
+
+  export type OutreachMessageUncheckedUpdateWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OutreachMessageUncheckedUpdateManyWithoutContactInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    sequenceId?: StringFieldUpdateOperationsInput | string
+    step?: IntFieldUpdateOperationsInput | number
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    body?: StringFieldUpdateOperationsInput | string
+    status?: EnumOutreachMessageStatusFieldUpdateOperationsInput | $Enums.OutreachMessageStatus
+    scheduledFor?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dossierId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
 
 
   /**
@@ -62033,6 +74874,10 @@ export namespace Prisma {
      * @deprecated Use AdvocacyOrgCountOutputTypeDefaultArgs instead
      */
     export type AdvocacyOrgCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AdvocacyOrgCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OrgContactCountOutputTypeDefaultArgs instead
+     */
+    export type OrgContactCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OrgContactCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use OpenGrantCountOutputTypeDefaultArgs instead
      */
@@ -62077,6 +74922,18 @@ export namespace Prisma {
      * @deprecated Use DossierCountOutputTypeDefaultArgs instead
      */
     export type DossierCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DossierCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use KnowledgeDocCountOutputTypeDefaultArgs instead
+     */
+    export type KnowledgeDocCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = KnowledgeDocCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OutreachSequenceCountOutputTypeDefaultArgs instead
+     */
+    export type OutreachSequenceCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutreachSequenceCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OutreachContactCountOutputTypeDefaultArgs instead
+     */
+    export type OutreachContactCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutreachContactCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
@@ -62193,6 +75050,26 @@ export namespace Prisma {
      * @deprecated Use GrantApplicationDefaultArgs instead
      */
     export type GrantApplicationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GrantApplicationDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use KnowledgeDocDefaultArgs instead
+     */
+    export type KnowledgeDocArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = KnowledgeDocDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use KnowledgeChunkDefaultArgs instead
+     */
+    export type KnowledgeChunkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = KnowledgeChunkDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OutreachSequenceDefaultArgs instead
+     */
+    export type OutreachSequenceArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutreachSequenceDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OutreachContactDefaultArgs instead
+     */
+    export type OutreachContactArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutreachContactDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use OutreachMessageDefaultArgs instead
+     */
+    export type OutreachMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OutreachMessageDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
